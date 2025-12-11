@@ -1,0 +1,4 @@
+- For documentation standards please follow strictly /.github/instructions/documentation.instructions.md
+- For code style guidelines please follow strictly /.github/instructions/coding.instructions.md
+- For a project from scratch, please scan code base repository and follow strictly the same workflow as existing code.
+- For a oproject with existing code, please scan code base repository and follow strictly the same workflow, as you execute / .github/workflows/documents.workflows.md 
