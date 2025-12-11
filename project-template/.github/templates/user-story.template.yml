@@ -1,0 +1,68 @@
+# User Story Template
+
+user_story:
+  id: "<Unique Story ID>"
+  title: "<Short, descriptive title>"
+  epic: "<Related epic or feature group>"
+  project: "<Project Name>"
+  author: "<Author Name>"
+  date_created: "<YYYY-MM-DD>"
+
+context:
+  overview: "<High-level context for the story, business value, and why it matters>"
+  stakeholders:
+    - name: "<Stakeholder Name>"
+      role: "<Role/Responsibility>"
+      contact: "<Email/Slack/etc>"
+
+as_a: "<User role or persona>"
+i_want: "<Goal, action, or feature>"
+so_that: "<Business value or benefit>"
+
+details:
+  description: "<Detailed explanation of the story, including background, motivation, and scope>"
+  assumptions:
+    - "<Assumption 1>"
+    - "<Assumption 2>"
+  dependencies:
+    - "<Dependency 1>"
+    - "<Dependency 2>"
+
+acceptance_criteria:
+  - "<Criterion 1: What must be true for this story to be considered done>"
+  - "<Criterion 2>"
+  # ...add more as needed
+
+requirements:
+  functional:
+    - "<Functional requirement 1>"
+    - "<Functional requirement 2>"
+  non_functional:
+    - "<Performance, usability, reliability, security, compliance>"
+
+test_cases:
+  - id: "<Test Case ID>"
+    description: "<Test case description>"
+    expected_result: "<Expected outcome>"
+
+design_notes:
+  wireframes: "<Link or description of wireframes/mockups>"
+  ui_elements:
+    - "<UI element 1>"
+    - "<UI element 2>"
+
+risks_and_mitigations:
+  - risk: "<Risk description>"
+    mitigation: "<Mitigation strategy>"
+
+comments:
+  - author: "<Comment author>"
+    date: "<YYYY-MM-DD>"
+    text: "<Comment text>"
+
+appendix:
+  glossary:
+    - term: "<Term>"
+      definition: "<Definition>"
+  references:
+    - "<Link or document reference>"
