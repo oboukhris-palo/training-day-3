@@ -13,11 +13,75 @@ The system uses three coordinated workflow documents that orchestrate the entire
 ### 1. **documents.workflows.md** - PDLC Orchestration (8 Stages)
 Master workflow that coordinates all agents through the complete Product Development Lifecycle with strict sequential stage progression, approval gates, and document generation at each stage.
 
-### 2. **code-generation.workflows.md** - Development Execution (5 Phases)
-Specialized workflow for the development team showing how to build features using TDD discipline with RED→GREEN→REFACTOR cycles, layer-by-layer implementation, and BDD validation.
+### 2. **implementation.workflows.md** - Development Execution (6 Phases)
+Specialized workflow for the development team showing how to build features by Epic, using TDD discipline with RED→GREEN→REFACTOR cycles, layer-by-layer implementation, and BDD validation.
 
 ### 3. **cicd.workflows.md** - CI/CD Pipeline (3 Phases)
 Automation workflow that evolves through Bootstrap, Stabilization, and Optimization phases, handling continuous integration, testing, and deployment with progressive quality gates and observability.
+
+---
+
+## Epic-Driven Development Model
+
+This project uses **epics as organizational groupings** of related user stories, with **user-stories as the granulation level** for implementation:
+
+```
+Requirements (Stage 1)
+     ↓
+Epics (Feature Groupings in Stage 3)
+     ├─ Epic 1: Authentication & User Management
+     ├─ Epic 2: Core Business Features  
+     ├─ Epic 3: Reporting & Analytics
+     └─ Epic 4: Admin Controls
+     ↓
+User Stories (Grouped by Epic - These are the WORK UNITS)
+     ├─ Auth Epic
+     │  ├─ Story 1.1: User Registration ← IMPLEMENT THIS
+     │  ├─ Story 1.2: Email Verification ← IMPLEMENT THIS
+     │  └─ Story 1.3: Password Reset ← IMPLEMENT THIS
+     ├─ Core Epic
+     │  ├─ Story 2.1: Create Item ← IMPLEMENT THIS
+     │  ├─ Story 2.2: Edit Item ← IMPLEMENT THIS
+     │  └─ Story 2.3: Delete Item ← IMPLEMENT THIS
+     └─ ... (more stories per epic)
+     
+     NOTE: Epic completion = ALL child stories completed
+     ↓
+Development Execution (implementation.workflows.md)
+     ├─ Phase 0: Epic Review & User Story Sequencing
+     │  └─ Determine story implementation order
+     ├─ Phase 1: Sprint Planning
+     │  └─ Select user-stories for current sprint
+     ├─ Phase 2: User Story Breakdown
+     │  └─ Create GitHub Issue PER STORY (tagged with parent epic)
+     ├─ Phase 3: TDD Development (ONE STORY AT A TIME)
+     │  └─ Implement one story through all 4 layers
+     ├─ Phase 4: BDD Validation
+     │  └─ Test individual story acceptance criteria
+     └─ Phase 5: Code Commit
+        └─ Merge story when complete; mark epic done if all stories done
+     ↓
+Deployment (cicd.workflows.md)
+     ├─ Deploy when story/epic features are ready
+     ├─ Canary/Blue-green per epic release
+     └─ Rollback capability per epic
+```
+
+### Critical Concept:
+- **EPICS are organizational containers**, NOT units of work
+- **USER-STORIES are the granulation level** - each story gets a GitHub Issue and is developed independently
+- **EPIC completion is automatic**: When ALL user-stories in an epic are implemented, the epic is marked complete
+- Developers work on **ONE story at a time**, not a whole epic
+
+### Benefits of User-Story-Level Granularity:
+- **Incremental Development**: Each story is independently implementable
+- **Clear Work Units**: Stories define specific, testable features
+- **Team Parallelization**: Multiple developers can work on different stories (in same/different epics)
+- **Risk Management**: Issues are tracked at story level, aggregated at epic level
+- **Stakeholder Visibility**: Epics group stories for business/reporting value
+- **Jira Synchronization**: Stories link to epics for hierarchical project management
+
+---
 
 ### Workflow Interaction Diagram
 
@@ -25,7 +89,7 @@ Automation workflow that evolves through Bootstrap, Stabilization, and Optimizat
 graph TD
     A["Project Requirements<br/>(From documents.workflows.md)"] -->|Stage 1-6| B["Feature Specification<br/>(Ready for Development)"]
     
-    B -->|Input to| C["code-generation.workflows.md<br/>5 Phases"]
+    B -->|Input to| C["implementation.workflows.md<br/>6 Phases"]
     
     C -->|Phase 1: Planning| C1["Sprint Planning<br/>User Story Breakdown"]
     C -->|Phase 2: Breakdown| C2["Dev-Lead Scaffolding<br/>Task Estimation"]
@@ -59,56 +123,68 @@ graph TD
 
 ---
 
-### Detailed Workflow Execution: code-generation.workflows.md
+### Detailed Workflow Execution: implementation.workflows.md
 
-The **code-generation.workflows.md** is the critical workflow for feature implementation. Here's how agents collaborate through the 5 phases:
+The **implementation.workflows.md** is the critical workflow for feature implementation. Here's how agents collaborate through the 6 phases:
 
-#### Phase 1-5 Agent Collaboration Sequence
+#### Phase 1-6 Agent Collaboration Sequence (BDD-Driven TDD)
 
 ```mermaid
 sequenceDiagram
+    participant PM as PM Agent
     participant PO as PO Agent
-    participant TL as Tech Lead
     participant BA as BA Agent
+    participant TL as Tech Lead
     participant TDD as TDD Navigator
     participant Dev as Developer
     
-    PO->>TL: Phase 1: Sprint Planning<br/>User Stories + Tasks
-    TL->>TL: Estimate story points<br/>Break into tasks
-    TL->>Dev: Phase 2: Code Scaffolding<br/>Project structure + Stubs
+    PM->>TL: Phase 0: Review Epics & Stories<br/>from user-stories.md
+    TL->>TL: Determine story<br/>implementation sequence
     
-    Note over TDD,Dev: Phase 3: TDD Execution
-    TDD->>Dev: RED: Write failing test<br/>based on acceptance criteria
-    Dev->>Dev: RED: Test fails (expected)
+    PM->>PO: Phase 1: Sprint Planning<br/>Select USER-STORIES for sprint
+    PO->>TL: Here are stories<br/>with BDD scenarios attached
     
-    Dev->>Dev: GREEN: Implement minimal code<br/>to pass test
-    Dev->>Dev: Test passes
+    TL->>TL: Phase 2: BDD Integration<br/>For EACH story selected
+    TL->>TL: Extract Gherkin scenarios<br/>Create feature files
+    TL->>TL: Create step definitions<br/>with API/component calls
+    TL->>TL: Run BDD tests<br/>They FAIL (expected)
     
-    Dev->>Dev: REFACTOR: Improve code quality<br/>while keeping test green
-    Dev->>TDD: Code + Tests ready
+    TL->>Dev: Phase 2: GitHub Issue<br/>Here are FAILING BDD tests<br/>to make pass (story tagged with epic)
     
-    TDD->>BA: Phase 4: BDD Validation<br/>Run Gherkin scenarios
-    BA->>BA: Execute: Given → When → Then
-    BA->>BA: Test against real data<br/>Validate acceptance criteria
+    Note over TDD,Dev: Phase 3: TDD per LAYER<br/>DRIVEN by failing BDD tests<br/>One story at a time
     
-    alt BDD Tests Pass
-        BA->>PO: Feature meets acceptance criteria ✓
-        PO->>TL: Phase 5: Code Review<br/>Approve for merge
-    else BDD Tests Fail
-        BA->>Dev: Scenario failed<br/>Back to TDD cycle
-        Dev->>TDD: Fix implementation
-        TDD->>BA: Re-run BDD
+    loop For Each Layer (DB → Backend → Config → Frontend)
+        TDD->>Dev: Run BDD tests<br/>See which assertions fail
+        TDD->>Dev: RED: Write failing test<br/>supporting BDD assertion
+        Dev->>Dev: GREEN: Implement code<br/>make BDD assertion pass
+        Dev->>Dev: REFACTOR: Clean code<br/>keep BDD tests passing
+        Dev->>TL: Layer complete<br/>BDD progress updated
     end
     
-    TL->>Dev: Code quality gate: <br/>Coverage, style, complexity
-    Dev->>TL: Submit for review
-    TL->>PO: Ready for CI/CD pipeline
+    TL->>BA: Phase 4: BDD Validation<br/>Full environment test
+    BA->>BA: Execute Gherkin scenarios<br/>with REAL test data
+    BA->>BA: Verify story acceptance<br/>criteria met
+    
+    alt All BDD Scenarios Pass
+        BA->>TL: Story complete ✓
+        TL->>TL: Phase 5: Code Review<br/>Verify architecture/quality
+        TL->>TL: If ALL epic stories done:<br/>Mark epic "Implemented"
+    else BDD Scenarios Fail
+        BA->>Dev: Scenarios failing<br/>Fix implementation
+        Dev->>TDD: Re-run BDD tests<br/>Back to TDD cycle
+        TDD->>BA: Re-test
+    end
+    
+    TL->>PM: Move to next user-story
 ```
 
-#### Layer-by-Layer TDD Implementation Pattern
+#### Layer-by-Layer TDD Implementation (BDD-Driven)
 
 ```mermaid
 graph LR
+    
+    BDD["BDD Scenarios<br/>(Entry Point)<br/>Failing Tests"]
+    
     subgraph Layer1 ["Layer 1: Database"]
         D1["1.1 Create Migration<br/>1.2 Define Model<br/>1.3 Add Indexes"]
     end
@@ -125,69 +201,84 @@ graph LR
         D4["4.1 Components<br/>4.2 State Management<br/>4.3 Styling"]
     end
     
-    subgraph TDD ["TDD Cycle (Each Layer)"]
-        T["RED: Failing Test<br/>GREEN: Pass Test<br/>REFACTOR: Clean Code"]
+    subgraph TDD ["TDD Cycle (Per Layer)<br/>DRIVEN BY BDD"]
+        T["RED: Write test<br/>supporting BDD assertion<br/>GREEN: Make test pass<br/>REFACTOR: Clean code"]
     end
     
+    BDD -->|Drives| Layer1
     D1 -->|Implements| TDD
+    TDD -->|Some BDD tests<br/>now passing| BDD
+    
+    TDD -->|Proceed to| Layer2
     D2 -->|Implements| TDD
+    TDD -->|More BDD tests<br/>now passing| BDD
+    
+    TDD -->|Proceed to| Layer3
     D3 -->|Implements| TDD
+    TDD -->|More BDD tests<br/>now passing| BDD
+    
+    TDD -->|Proceed to| Layer4
     D4 -->|Implements| TDD
+    TDD -->|Remaining BDD tests<br/>now passing| BDD
     
-    TDD -->|Tests Validate| V["BDD Scenarios<br/>(BA Agent)"]
-    V -->|Acceptance Criteria<br/>Met?| Q{Quality Gate}
+    BDD -->|All passing?| Q{Quality Gate}
     
-    Q -->|Pass| C["Ready for<br/>CI/CD"]
-    Q -->|Fail| TDD
+    Q -->|Yes| C["✓ Ready for<br/>Phase 4: Full<br/>Environment Test"]
+    Q -->|No| TDD
     
+    style BDD fill:#FFD700,stroke:#333,color:#000
     style D1 fill:#E8F4F8,stroke:#333
     style D2 fill:#E8F4F8,stroke:#333
     style D3 fill:#E8F4F8,stroke:#333
     style D4 fill:#E8F4F8,stroke:#333
     style TDD fill:#90EE90,stroke:#333
-    style V fill:#FFD700,stroke:#333
     style C fill:#50C878,stroke:#333,color:#fff
 ```
 
-#### RED → GREEN → REFACTOR Detailed Cycle
+**Key Insight**: BDD scenarios are NOT an endpoint - they are the **entry point** that drives layer-by-layer TDD implementation.
+
+#### RED → GREEN → REFACTOR Detailed Cycle (BDD-Driven)
 
 ```mermaid
 sequenceDiagram
-    participant AC as Acceptance Criteria
+    participant BDD as BDD Scenario
     participant TDD as TDD Navigator
-    participant Test as Test File
+    participant Test as Unit Test
     participant Code as Implementation
-    participant Lint as Code Quality
+    participant Quality as Code Quality
     
-    AC->>TDD: Feature requirements
+    BDD->>TDD: Here's the failing<br/>Gherkin scenario
+    BDD->>BDD: e.g., "When user creates item<br/>Then system returns ID"
+    
     TDD->>Test: Phase: RED
-    Note over TDD,Test: Write failing test from<br/>acceptance criteria
+    Note over TDD,Test: Write unit test<br/>supporting BDD assertion<br/>e.g., test_create_returns_id()
     
     Test->>Code: Run test
     Code-->>Test: ❌ Test FAILS (expected)
+    Note over Test: BDD scenario assertion<br/>still failing in test
     
     TDD->>Code: Phase: GREEN
-    Note over TDD,Code: Write minimal code<br/>to pass the test
+    Note over TDD,Code: Write minimal code<br/>to make test pass<br/>Make the BDD assertion true
     Code->>Test: Run test
     Test-->>Code: ✅ Test PASSES
+    Note over Test: BDD scenario assertion<br/>now satisfied!
     
     TDD->>Code: Phase: REFACTOR
-    Note over TDD,Code: Improve code quality<br/>while keeping test green
-    Code->>Lint: Check: naming, complexity,<br/>duplication, structure
+    Note over TDD,Code: Improve code quality<br/>while keeping BDD test passing
+    Code->>Quality: Check: naming,<br/>complexity, duplication
     
     alt Quality Issues Found
-        Lint-->>Code: Suggestions
+        Quality-->>Code: Suggestions
         Code->>Code: Improve code
-        Code->>Test: Verify test still passes
+        Code->>Test: Verify BDD test still passing
+        Test-->>Code: ✅ Still Green
     else Quality OK
-        Lint->>Code: ✅ Quality Approved
+        Quality->>Code: ✅ Approved
     end
     
-    Code->>Test: Final test run
-    Test-->>Code: ✅ All Tests Green
+    Code->>BDD: This layer makes<br/>some BDD assertions pass
     
-    Note over TDD: CYCLE COMPLETE<br/>Ready for next feature
-    TDD->>TDD: Move to next<br/>acceptance criterion
+    Note over TDD: Move to next layer<br/>and repeat until<br/>ALL BDD assertions pass
 ```
 
 #### BDD Validation and Feedback Loop
@@ -198,7 +289,7 @@ graph TD
     
     B -->|Converted to| C["Gherkin Scenarios<br/>Feature files"]
     
-    C -->|Input to<br/>code-generation.md| D["TDD Development<br/>RED → GREEN → REFACTOR"]
+    C -->|Input to<br/>implementation.workflows.md| D["TDD Development<br/>RED → GREEN → REFACTOR"]
     
     D -->|Produces| E["Implementation Code<br/>+ Unit Tests"]
     
@@ -234,43 +325,48 @@ graph TD
     style N fill:#50C878,stroke:#333,color:#fff
 ```
 
-#### Team Responsibilities Across code-generation.workflows.md Phases
+#### Team Responsibilities Across implementation.workflows.md Phases (Epic-Driven)
 
 ```mermaid
 graph LR
+    subgraph Phase0 ["Phase 0: Epic Planning"]
+        P0["👥 PM: Review epics<br/>🗂️ Sequence by dependencies<br/>✅ Identify blockers"]
+    end
+    
     subgraph Phase1 ["Phase 1: Sprint Planning"]
-        P1["🗂️ PO: Prioritize stories<br/>📊 TL: Estimate points<br/>✏️ Break into tasks"]
+        P1["📊 PM: Sprint scope<br/>🎯 PO: Select epics<br/>✏️ TL: Estimate effort"]
     end
     
-    subgraph Phase2 ["Phase 2: Breakdown"]
-        P2["🏗️ TL: Create scaffolds<br/>📁 Define structure<br/>⚙️ Setup config"]
+    subgraph Phase2 ["Phase 2: Story Breakdown"]
+        P2["🏗️ TL: Create issues per story<br/>📁 Link stories to epic<br/>⚙️ Layer breakdown"]
     end
     
-    subgraph Phase3 ["Phase 3: TDD"]
-        P3["❌ TDD: Write failing test<br/>✅ Dev: Implement code<br/>🧹 Dev: Refactor"]
+    subgraph Phase3 ["Phase 3: TDD by Epic"]
+        P3["❌ TDD: Write failing test<br/>✅ Dev: Implement story<br/>🧹 Dev: Refactor code"]
     end
     
-    subgraph Phase4 ["Phase 4: BDD"]
-        P4["📋 BA: Execute scenarios<br/>✔️ Validate criteria<br/>📊 Test results"]
+    subgraph Phase4 ["Phase 4: BDD Validation"]
+        P4["📋 BA: Execute epic scenarios<br/>✔️ Validate epic completeness<br/>📊 All stories work?"]
     end
     
-    subgraph Phase5 ["Phase 5: Quality"]
-        P5["👀 TL: Code review<br/>📈 Coverage check<br/>✅ Approve merge"]
+    subgraph Phase5 ["Phase 5: Quality & Commit"]
+        P5["👀 TL: Code review<br/>📈 Coverage check<br/>✅ Epic approved for merge"]
     end
     
-    Phase1 -->|Input| Phase2
-    Phase2 -->|Input| Phase3
-    Phase3 -->|Input| Phase4
-    Phase4 -->|Feedback Loop| Phase3
+    Phase0 -->|Epic Sequence| Phase1
+    Phase1 -->|Selected Epics| Phase2
+    Phase2 -->|Ready to Code| Phase3
+    Phase3 -->|Implemented| Phase4
     Phase4 -->|Approved| Phase5
-    Phase5 -->|CI/CD Ready| CI["Deployment"]
+    Phase5 -->|CI/CD Ready| Deploy["🚀 Deployment<br/>(by epic)"]
     
+    style Phase0 fill:#E8F4F8,stroke:#333
     style Phase1 fill:#E8F4F8,stroke:#333
     style Phase2 fill:#E8F4F8,stroke:#333
     style Phase3 fill:#90EE90,stroke:#333
     style Phase4 fill:#FFD700,stroke:#333
     style Phase5 fill:#FFB6C1,stroke:#333
-    style CI fill:#50C878,stroke:#333,color:#fff
+    style Deploy fill:#50C878,stroke:#333,color:#fff
 ```
 
 ---
@@ -426,7 +522,7 @@ graph LR
 - Key Success Factors (sequential stages, quality gates)
 - Anti-Patterns to Avoid (risks to prevent)
 
-#### [code-generation.workflows.md](/.github/workflows/code-generation.workflows.md)
+#### [implementation.workflows.md](/.github/workflows/implementation.workflows.md)
 **Purpose**: Development execution workflow showing layer-by-layer TDD implementation from feature specification through testing
 
 **Structure**: 132 lines covering:
@@ -491,7 +587,7 @@ graph LR
 - Failure scenarios and recovery strategies
 - Agent responsibilities (Dev-Lead approval, Architect validation, PM coordination, BA testing)
 - Success metrics for each phase
-- Integration with code-generation.workflows.md for TDD adherence
+- Integration with implementation.workflows.md for TDD adherence
 
 ---
 
@@ -620,7 +716,10 @@ All documents trace back to **requirements.md** (Stage 1 output):
 requirements.md (Stage 1 - Truth Source)
   ├→ personas.md (Stage 2) - User types
   ├→ business-case.md (Stage 2) - Business rationale
-  ├→ user-stories.md (Stage 3) - Functional requirements
+  ├→ user-stories.md (Stage 3) - Feature Epics & User Stories
+  │   ├─ EPICS (Feature Groupings)
+  │   │   └─ Each epic groups related user stories
+  │   └─ USER STORIES (Individual Stories grouped by epic)
   ├→ journey-maps.md (Stage 3) - User workflows
   ├→ blueprints.md (Stage 3) - UI structures
   ├→ architecture-design.md (Stage 3) - Technical design
@@ -630,7 +729,7 @@ requirements.md (Stage 1 - Truth Source)
   ├→ code-generation.md (Stage 4) - Code templates
   ├→ test-strategies.md (Stage 5) - Test plans
   └→ iteration-planning.md (Stage 6) - Release plan
-        ├→ Deployment execution
+        ├→ Deployment execution (by epic)
         ├→ Monitoring plan
         └─→ Feedback loop → Updates requirements.md (Stage 8)
 ```
@@ -693,13 +792,14 @@ This integrated system succeeds when:
 | **Templates** | Define document structure | [.github/templates/](.github/templates/) | All agents |
 | **Agents** | Specialized AI roles | [.github/agents/](.github/agents/) | Workflow |
 | **PDLC Workflow** | Stage-by-stage orchestration (8 stages) | [.github/workflows/documents.workflows.md](.github/workflows/documents.workflows.md) | Project leads, all agents |
-| **Code Generation Workflow** | Development execution with TDD (5 phases) | [.github/workflows/code-generation.workflows.md](.github/workflows/code-generation.workflows.md) | Dev-Lead, TDD Navigator, BA Agent |
+| **Implementation Workflow** | Development execution with TDD (6 phases) | [.github/workflows/implementation.workflows.md](.github/workflows/implementation.workflows.md) | Dev-Lead, TDD Navigator, BA Agent |
 | **CI/CD Workflow** | Continuous integration & deployment (3 phases) | [.github/workflows/cicd.workflows.md](.github/workflows/cicd.workflows.md) | All agents, DevOps, development teams |
 | **Documentation Prompt** | Reusable prompt for any documentation | [.github/prompts/documentation.prompt.md](.github/prompts/documentation.prompt.md) | PO Agent, Tech Lead |
 | **Coding Standards** | Language-agnostic best practices | [.github/instructions/coding.instruction.md](.github/instructions/coding.instruction.md) | All developers, code reviewers |
 | **Requirements** | Truth source document | docs/prd/requirements.md | All stages |
 | **Personas** | User understanding document | docs/prd/personas.md | Stage 2+ |
-| **User Stories** | Feature definitions | docs/prd/user-stories.md | Stage 3+ |
+| **Epics** | Feature groupings (in user-stories.md) | docs/prd/user-stories.md#epics | Stage 3+ |
+| **User Stories** | Story definitions grouped by epic | docs/prd/user-stories.md#stories | Stage 3+ |
 | **Architecture** | Technical design document | docs/prd/architecture-design.md | Stage 3+ |
 | **Tech Spec** | Implementation guide | docs/prd/tech-spec.md | Stage 4+ |
 | **Test Strategy** | Quality assurance plan | docs/prd/test-strategies.md | Stage 5+ |
@@ -916,7 +1016,7 @@ Requirements Exist
 
 **Language-Agnostic**: All guidelines apply across Python, Java, JavaScript, Go, Rust, C#, and other programming languages
 
-**Integration with Workflows**: Used throughout code-generation.workflows.md (TDD discipline) and cicd.workflows.md (code quality gates)
+**Integration with Workflows**: Used throughout implementation.workflows.md (TDD discipline) and cicd.workflows.md (code quality gates)
 
 ---
 
@@ -975,7 +1075,7 @@ Requirements Exist
 
 1. **Understand the Architecture**
    - Review [.github/workflows/documents.workflows.md](.github/workflows/documents.workflows.md) for PDLC 8-stage overview
-   - Review [.github/workflows/code-generation.workflows.md](.github/workflows/code-generation.workflows.md) for TDD execution approach
+   - Review [.github/workflows/implementation.workflows.md](.github/workflows/implementation.workflows.md) for TDD execution approach
    - Review [.github/workflows/cicd.workflows.md](.github/workflows/cicd.workflows.md) for CI/CD phased evolution
 
 2. **Know Your Agents**
@@ -1006,7 +1106,7 @@ Requirements Exist
    - Progress through PDLC stages sequentially with required approvals
 
 7. **Implement with TDD**
-   - Reference code-generation.workflows.md for layer-by-layer development
+   - Reference implementation.workflows.md for layer-by-layer development
    - Follow TDD strictly: RED→GREEN→REFACTOR at each layer
    - Have BA Agent execute BDD scenarios before code commit
    - Use coding standards for all code reviews

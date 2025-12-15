@@ -250,7 +250,9 @@ Validation        Base       Documents  & Testing    Gates      Environment Impr
 
 ### Documents Generated
 - **journey-maps.md** - User experience flows (follows [prd.template.yml](prd.template.yml) Stage 3)
-- **user-stories.md** - Feature requirements (follows [user-story.template.yml](user-story.template.yml))
+- **user-stories.md** - Feature requirements grouped by epics (follows [user-story.template.yml](user-story.template.yml))
+  - Epics section: Major feature groupings organizing user stories
+  - User Stories section: Individual stories grouped under their parent epic
 - **blueprints.md** - UI structure and layout (follows [prd.template.yml](prd.template.yml) Stage 3)
 - **architecture-design.md** - System technical design (follows [tech-doc.template.yml](tech-doc.template.yml))
 - **flow-diagrams.md** - Process and interaction flows (follows [prd.template.yml](prd.template.yml) Stage 3)
@@ -277,21 +279,92 @@ Validation        Base       Documents  & Testing    Gates      Environment Impr
 
 **Output**: journey-maps.md with detailed user experience flows
 
-### Workflow: Requirements + Personas → User Stories
+### Workflow: Requirements + Personas → Epics & User Stories (Defined Together)
 
-**Step 1: User Story Creation** (PO leads with BA)
+**IMPORTANT CONCEPT**: 
+- **Epics are organizational groupings** of related user stories (not separate work units)
+- **User Stories are the granulation level** for implementation and tracking
+- Both epics and stories are defined in the SAME document: **user-stories.md**
+- An epic is "complete" when ALL its user-stories are implemented
+
+**Step 1: Epic Definition** (PO leads with BA and Architect)
+- Invoke PO Agent via **subagentType: `po-epics-definition`**
+  ```
+  Prompt: "Define epics from requirements.md. Group related functionality into major feature categories/epics. For each epic, document:
+    - Epic name and description
+    - Business value and objectives
+    - Scope and boundaries
+    - Key features/user stories it will contain
+    - Success criteria
+    - Timeline and priority
+    Reference journey-maps.md and personas.md to ensure epics align with user workflows.
+    
+    NOTE: These are GROUPING containers, not units of work. Implementation will occur at user-story level."
+  ```
+
+**Step 2: Epic Validation** (BA and Architect validate)
+- Invoke BA Agent via **subagentType: `ba-epics-validation`**
+  ```
+  Prompt: "Review and validate epic definitions. Ensure:
+    - Epics are properly scoped as feature groupings (not as separate deployable units)
+    - Each epic can logically contain multiple user-stories
+    - Epics align with requirements.md and business objectives
+    - Epic boundaries are clear and non-overlapping
+    
+    NOTE: These are organizing containers. Actual work will be tracked at user-story level."
+  ```
+
+**Output**: Epic groupings defined and ready for story breakdown
+
+**Step 3: User Story Creation Within Epics** (PO leads with BA)
 - Invoke PO Agent via **subagentType: `po-user-stories`**
   ```
-  Prompt: "Create user-stories.md following [user-story.template.yml](user-story.template.yml). Break requirements.md into user stories. Map each story to personas and journey-maps.md stages. Define acceptance criteria derived from requirements. Estimate complexity and identify dependencies."
+  Prompt: "Create user-stories.md following [user-story.template.yml](user-story.template.yml). Structure document with:
+    1. EPICS SECTION: List all epics with:
+       - Epic name and objectives
+       - Business value and timeline
+       - Expected implementation sequence
+       - Epic completion criteria: 'COMPLETE when all child user-stories are IMPLEMENTED'
+    
+    2. USER STORIES SECTION: For each epic, list its user-stories:
+       - Story number and epic assignment
+       - User persona (from personas.md)
+       - Acceptance criteria (from requirements)
+       - Complexity estimate
+       - Dependencies (both within epic and cross-epic)
+       - BDD scenario outline
+    
+    Map each story to journey-maps.md stages and its parent epic.
+    
+    NOTE: Development work happens at USER-STORY level. Epics are tracking/reporting containers."
   ```
 
-**Step 2: BA Story Validation & BDD Prep** (BA validates)
+**Step 4: BA Story Validation & BDD Scenario Attachment** (BA validates and creates BDD)
 - Invoke BA Agent via **subagentType: `ba-stories-validation`**
   ```
-  Prompt: "Review and validate user-stories.md for clarity and completeness. Ensure acceptance criteria are testable. Identify any missing stories from requirements.md. Prepare BDD scenario structure for later conversion to Gherkin."
+  Prompt: "Review and validate user-stories.md for clarity and completeness. Ensure:
+    - Each epic clearly lists its constituent user-stories
+    - Stories are grouped correctly under parent epics
+    - Each user-story has clear, testable acceptance criteria
+    - No missing stories from requirements.md
+    - Dependencies between stories (within epic and cross-epic) are identified
+    - Epic completion is defined as: 'All child user-stories are IMPLEMENTED'
+    
+    CRITICAL: For each user-story, create and attach Gherkin/Cucumber BDD scenarios:
+    - Create one Gherkin feature file per user-story (e.g., feature-X.feature)
+    - Write Given-When-Then scenarios for each acceptance criterion
+    - Ensure every acceptance criterion has a BDD scenario that tests it
+    - Include test data setup, expected outcomes, and edge cases
+    - Include the feature file content in the user-story definition
+    
+    These BDD scenarios will be the entry point for Dev-Lead agent in Phase 2 of implementation.workflows.md"
   ```
 
-**Output**: user-stories.md with actionable feature definitions
+**Output**: user-stories.md with:
+  - EPICS SECTION: Feature groupings with clear scope and boundaries
+  - USER STORIES SECTION: Individual implementable stories grouped by epic
+    - **Each story includes: Acceptance criteria + Attached BDD/Gherkin scenarios**
+  - Epic completion = ALL child stories completed (automatic status roll-up)
 
 ### Workflow: Journey Maps + User Stories → Blueprints
 
@@ -445,28 +518,47 @@ Validation        Base       Documents  & Testing    Gates      Environment Impr
 - **QA Lead**: Defines testing strategy
 - **Product Owner** ([po.agent.md](po.agent.md)): Validates acceptance criteria
 
-### Workflow: User Stories → BDD Scenarios → Test Strategies
+### Workflow: User Stories (with BDD) → Test Strategies
 
-**Step 1: BDD Scenario Creation** (BA leads)
-- Invoke BA Agent via **subagentType: `ba-bdd-scenarios`**
-  ```
-  Prompt: "Create test-strategies.md following [prd.template.yml](prd.template.yml) Stage 5. Convert each user story in user-stories.md to Gherkin/Cucumber BDD scenarios. Define Given-When-Then for each acceptance criterion. Specify test data, preconditions, and expected outcomes. Ensure all acceptance criteria from user-stories.md are covered by BDD scenarios."
-  ```
+**IMPORTANT**: BDD scenarios are **already attached to each user-story** (from Stage 3, Step 4). This stage consolidates overall testing strategy.
 
-**Step 2: Test Strategy Definition** (QA leads with Tech Lead)
+**Step 1: Test Strategy Definition** (BA and Tech Lead lead)
 - Invoke Tech Lead Agent via **subagentType: `dev-lead-test-strategies`**
   ```
-  Prompt: "Develop comprehensive testing approach in test-strategies.md. Define unit testing scope and coverage targets based on tech-spec.md. Define integration testing approach for component interactions from flow-diagrams.md. Define e2e testing for user workflows from journey-maps.md. Define performance testing benchmarks and security testing checklist based on requirements.md."
+  Prompt: "Develop comprehensive testing approach in test-strategies.md. User-stories already have individual BDD/Gherkin scenarios attached.
+  
+  Your responsibility:
+  - Define unit testing scope and coverage targets based on tech-spec.md (minimum 80% coverage)
+  - Define integration testing approach for component interactions from flow-diagrams.md
+  - Define e2e testing for critical user workflows from journey-maps.md
+  - Define performance testing benchmarks and targets
+  - Define security testing checklist based on requirements.md
+  - Reference the BDD scenarios already attached to each user-story in user-stories.md
+  
+  The BDD scenarios are the acceptance tests. This document defines the supporting test strategy (unit, integration, e2e, performance, security)."
   ```
 
-**Step 3: Test Strategy Documentation & Approval** (BA and PO finalize)
-- Document all BDD feature files with scenarios
-- Document unit test coverage targets
-- Document integration and e2e test approach
-- Document performance and security tests
+**Step 2: BDD Scenario Consolidation & Test Strategy Documentation** (BA finalizes)
+- Invoke BA Agent via **subagentType: `ba-bdd-scenarios-consolidation`**
+  ```
+  Prompt: "Consolidate test-strategies.md with reference to BDD scenarios. 
+  - Verify all BDD scenarios from user-stories.md are listed/referenced
+  - Ensure BDD scenarios cover all acceptance criteria from user-stories.md
+  - Document the BDD scenarios as executable acceptance tests for each story
+  - Organize by epic/story hierarchy to show test coverage
+  - Confirm unit, integration, e2e, performance, and security test approaches align with BDD scenarios"
+  ```
+
+**Step 3: Test Strategy Review & Approval** (PO validates)
 - Invoke PO Agent via **subagentType: `po-test-strategies-approval`**
   ```
-  Prompt: "Review and approve test-strategies.md. Validate BDD scenarios cover all acceptance criteria from user-stories.md. Ensure testing approach validates all requirements.md. Get stakeholder sign-off on quality standards."
+  Prompt: "Review and approve test-strategies.md. Validate:
+    - All user-story acceptance criteria have BDD scenarios (from user-stories.md)
+    - Unit test coverage targets are realistic (80%+)
+    - Integration tests cover component interactions from flow-diagrams.md
+    - E2E tests cover critical user workflows from journey-maps.md
+    - Performance and security testing align with requirements.md
+    - Overall testing strategy validates all requirements are met"
   ```
 
 **Output**: test-strategies.md with comprehensive testing approach
