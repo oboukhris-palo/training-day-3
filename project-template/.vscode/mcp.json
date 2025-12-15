@@ -1,0 +1,12 @@
+{
+    "servers": {
+        "TalkToFigma": {
+            "command": "npx",
+            "args": ["ai-figma-mcp@latest"]
+        },
+        "github": {
+            "type": "http",
+            "url": "https://api.githubcopilot.com/mcp/"
+        }
+    }
+}

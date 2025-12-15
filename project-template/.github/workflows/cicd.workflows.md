@@ -4,12 +4,12 @@
 
 This document defines the **Continuous Integration & Continuous Deployment (CI/CD) Workflow** - the automated pipeline for validating code quality, running tests, and deploying features to production environments.
 
-This workflow operates in parallel with [code-generation.workflows.md](.github/workflows/code-generation.workflows.md), providing automated validation at every commit. It evolves from a **simple bootstrap approach** for project startup through increasingly sophisticated stages as the project matures.
+This workflow operates in parallel with [implementation.workflows.md](.github/workflows/implementation.workflows.md), providing automated validation at every commit. It evolves from a **simple bootstrap approach** for project startup through increasingly sophisticated stages as the project matures.
 
 **Prerequisites**: 
 - Git repository with main and develop branches
 - GitHub Actions configured for automation
-- Passing [code-generation.workflows.md](.github/workflows/code-generation.workflows.md) requirements
+- Passing [implementation.workflows.md](.github/workflows/implementation.workflows.md) requirements
 - Tech stack defined in [architecture-design.md](../docs/prd/architecture-design.md)
 - Code standards in [coding.instructions.md](../instructions/coding.instructions.md)
 
@@ -639,7 +639,7 @@ gh workflow run performance-tests.yml -f environment=staging
 - **Tech Spec Document** (Stage 4): Deployment targets and infrastructure defined here
 - **Architecture Document** (Stage 3): Architecture rules enforced by CI/CD compliance checks
 
-### Integration with [code-generation.workflows.md](.github/workflows/code-generation.workflows.md)
+### Integration with [implementation.workflows.md](.github/workflows/implementation.workflows.md)
 
 - **Phase 3 (TDD Development)**: Code committed after RED→GREEN→REFACTOR cycle
 - **CI/CD Pipeline**: Automatically validates code via build and unit tests
@@ -751,7 +751,7 @@ gh workflow run performance-tests.yml -f environment=staging
 ## Related Documents
 
 - [documents.workflows.md](.github/workflows/documents.workflows.md) - PDLC document generation
-- [code-generation.workflows.md](.github/workflows/code-generation.workflows.md) - Development execution
+- [implementation.workflows.md](.github/workflows/implementation.workflows.md) - Development execution
 - [architecture-design.md](../docs/prd/architecture-design.md) - System architecture
 - [tech-spec.md](../docs/prd/tech-spec.md) - Implementation specifications
 - [test-strategies.md](../docs/prd/test-strategies.md) - Testing approach

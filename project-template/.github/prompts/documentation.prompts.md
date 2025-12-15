@@ -349,7 +349,7 @@ When documentation output needs improvement:
 
 This prompt is used in:
 - [documents.workflows.md](../workflows/documents.workflows.md) - PDLC stages requiring documentation
-- [code-generation.workflows.md](../workflows/code-generation.workflows.md) - Development execution documentation
+- [implementation.workflows.md](../workflows/implementation.workflows.md) - Development execution documentation
 - All project stages requiring specification documents
 
 ---
