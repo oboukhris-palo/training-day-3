@@ -6,6 +6,275 @@ This guide explains how the complete AI-driven Product Development Lifecycle sys
 
 ---
 
+## Workflows Overview
+
+The system uses three coordinated workflow documents that orchestrate the entire product development lifecycle:
+
+### 1. **documents.workflows.md** - PDLC Orchestration (8 Stages)
+Master workflow that coordinates all agents through the complete Product Development Lifecycle with strict sequential stage progression, approval gates, and document generation at each stage.
+
+### 2. **code-generation.workflows.md** - Development Execution (5 Phases)
+Specialized workflow for the development team showing how to build features using TDD discipline with RED→GREEN→REFACTOR cycles, layer-by-layer implementation, and BDD validation.
+
+### 3. **cicd.workflows.md** - CI/CD Pipeline (3 Phases)
+Automation workflow that evolves through Bootstrap, Stabilization, and Optimization phases, handling continuous integration, testing, and deployment with progressive quality gates and observability.
+
+### Workflow Interaction Diagram
+
+```mermaid
+graph TD
+    A["Project Requirements<br/>(From documents.workflows.md)"] -->|Stage 1-6| B["Feature Specification<br/>(Ready for Development)"]
+    
+    B -->|Input to| C["code-generation.workflows.md<br/>5 Phases"]
+    
+    C -->|Phase 1: Planning| C1["Sprint Planning<br/>User Story Breakdown"]
+    C -->|Phase 2: Breakdown| C2["Dev-Lead Scaffolding<br/>Task Estimation"]
+    C -->|Phase 3: TDD| C3["TDD Execution<br/>RED → GREEN → REFACTOR"]
+    C -->|Phase 4: BDD| C4["BDD Testing<br/>BA Agent Validation"]
+    C -->|Phase 5: Quality| C5["Code Review<br/>Quality Gates"]
+    
+    C5 -->|Ready to Deploy| D["cicd.workflows.md<br/>3 Phases"]
+    
+    D -->|Phase 1: Bootstrap| D1["GitHub Actions<br/>Basic CI"]
+    D -->|Phase 2: Stabilization| D2["Enhanced Testing<br/>Canary Deployment"]
+    D -->|Phase 3: Optimization| D3["Advanced Automation<br/>Blue-Green Deploy"]
+    
+    D3 -->|Production| E["Monitoring & Feedback<br/>(Stage 8)"]
+    E -->|Loop Back| A
+    
+    style A fill:#4BADE8,stroke:#333,color:#fff
+    style B fill:#4BADE8,stroke:#333,color:#fff
+    style C fill:#50C878,stroke:#333,color:#fff
+    style C1 fill:#90EE90,stroke:#333,color:#000
+    style C2 fill:#90EE90,stroke:#333,color:#000
+    style C3 fill:#90EE90,stroke:#333,color:#000
+    style C4 fill:#90EE90,stroke:#333,color:#000
+    style C5 fill:#90EE90,stroke:#333,color:#000
+    style D fill:#FF6B6B,stroke:#333,color:#fff
+    style D1 fill:#FFB6C1,stroke:#333,color:#000
+    style D2 fill:#FFB6C1,stroke:#333,color:#000
+    style D3 fill:#FFB6C1,stroke:#333,color:#000
+    style E fill:#FFD700,stroke:#333,color:#000
+```
+
+---
+
+### Detailed Workflow Execution: code-generation.workflows.md
+
+The **code-generation.workflows.md** is the critical workflow for feature implementation. Here's how agents collaborate through the 5 phases:
+
+#### Phase 1-5 Agent Collaboration Sequence
+
+```mermaid
+sequenceDiagram
+    participant PO as PO Agent
+    participant TL as Tech Lead
+    participant BA as BA Agent
+    participant TDD as TDD Navigator
+    participant Dev as Developer
+    
+    PO->>TL: Phase 1: Sprint Planning<br/>User Stories + Tasks
+    TL->>TL: Estimate story points<br/>Break into tasks
+    TL->>Dev: Phase 2: Code Scaffolding<br/>Project structure + Stubs
+    
+    Note over TDD,Dev: Phase 3: TDD Execution
+    TDD->>Dev: RED: Write failing test<br/>based on acceptance criteria
+    Dev->>Dev: RED: Test fails (expected)
+    
+    Dev->>Dev: GREEN: Implement minimal code<br/>to pass test
+    Dev->>Dev: Test passes
+    
+    Dev->>Dev: REFACTOR: Improve code quality<br/>while keeping test green
+    Dev->>TDD: Code + Tests ready
+    
+    TDD->>BA: Phase 4: BDD Validation<br/>Run Gherkin scenarios
+    BA->>BA: Execute: Given → When → Then
+    BA->>BA: Test against real data<br/>Validate acceptance criteria
+    
+    alt BDD Tests Pass
+        BA->>PO: Feature meets acceptance criteria ✓
+        PO->>TL: Phase 5: Code Review<br/>Approve for merge
+    else BDD Tests Fail
+        BA->>Dev: Scenario failed<br/>Back to TDD cycle
+        Dev->>TDD: Fix implementation
+        TDD->>BA: Re-run BDD
+    end
+    
+    TL->>Dev: Code quality gate: <br/>Coverage, style, complexity
+    Dev->>TL: Submit for review
+    TL->>PO: Ready for CI/CD pipeline
+```
+
+#### Layer-by-Layer TDD Implementation Pattern
+
+```mermaid
+graph LR
+    subgraph Layer1 ["Layer 1: Database"]
+        D1["1.1 Create Migration<br/>1.2 Define Model<br/>1.3 Add Indexes"]
+    end
+    
+    subgraph Layer2 ["Layer 2: Backend Logic"]
+        D2["2.1 API Endpoints<br/>2.2 Business Logic<br/>2.3 Service Classes"]
+    end
+    
+    subgraph Layer3 ["Layer 3: Configuration"]
+        D3["3.1 Routes<br/>3.2 Dependency Injection<br/>3.3 Feature Flags"]
+    end
+    
+    subgraph Layer4 ["Layer 4: Frontend"]
+        D4["4.1 Components<br/>4.2 State Management<br/>4.3 Styling"]
+    end
+    
+    subgraph TDD ["TDD Cycle (Each Layer)"]
+        T["RED: Failing Test<br/>GREEN: Pass Test<br/>REFACTOR: Clean Code"]
+    end
+    
+    D1 -->|Implements| TDD
+    D2 -->|Implements| TDD
+    D3 -->|Implements| TDD
+    D4 -->|Implements| TDD
+    
+    TDD -->|Tests Validate| V["BDD Scenarios<br/>(BA Agent)"]
+    V -->|Acceptance Criteria<br/>Met?| Q{Quality Gate}
+    
+    Q -->|Pass| C["Ready for<br/>CI/CD"]
+    Q -->|Fail| TDD
+    
+    style D1 fill:#E8F4F8,stroke:#333
+    style D2 fill:#E8F4F8,stroke:#333
+    style D3 fill:#E8F4F8,stroke:#333
+    style D4 fill:#E8F4F8,stroke:#333
+    style TDD fill:#90EE90,stroke:#333
+    style V fill:#FFD700,stroke:#333
+    style C fill:#50C878,stroke:#333,color:#fff
+```
+
+#### RED → GREEN → REFACTOR Detailed Cycle
+
+```mermaid
+sequenceDiagram
+    participant AC as Acceptance Criteria
+    participant TDD as TDD Navigator
+    participant Test as Test File
+    participant Code as Implementation
+    participant Lint as Code Quality
+    
+    AC->>TDD: Feature requirements
+    TDD->>Test: Phase: RED
+    Note over TDD,Test: Write failing test from<br/>acceptance criteria
+    
+    Test->>Code: Run test
+    Code-->>Test: ❌ Test FAILS (expected)
+    
+    TDD->>Code: Phase: GREEN
+    Note over TDD,Code: Write minimal code<br/>to pass the test
+    Code->>Test: Run test
+    Test-->>Code: ✅ Test PASSES
+    
+    TDD->>Code: Phase: REFACTOR
+    Note over TDD,Code: Improve code quality<br/>while keeping test green
+    Code->>Lint: Check: naming, complexity,<br/>duplication, structure
+    
+    alt Quality Issues Found
+        Lint-->>Code: Suggestions
+        Code->>Code: Improve code
+        Code->>Test: Verify test still passes
+    else Quality OK
+        Lint->>Code: ✅ Quality Approved
+    end
+    
+    Code->>Test: Final test run
+    Test-->>Code: ✅ All Tests Green
+    
+    Note over TDD: CYCLE COMPLETE<br/>Ready for next feature
+    TDD->>TDD: Move to next<br/>acceptance criterion
+```
+
+#### BDD Validation and Feedback Loop
+
+```mermaid
+graph TD
+    A["User Story from<br/>documents.workflows.md"] -->|Contains| B["Acceptance Criteria"]
+    
+    B -->|Converted to| C["Gherkin Scenarios<br/>Feature files"]
+    
+    C -->|Input to<br/>code-generation.md| D["TDD Development<br/>RED → GREEN → REFACTOR"]
+    
+    D -->|Produces| E["Implementation Code<br/>+ Unit Tests"]
+    
+    E -->|BA Agent Executes| F["BDD Testing"]
+    
+    F -->|Steps| F1["Given: Setup test data<br/>When: Execute action<br/>Then: Verify results"]
+    
+    F1 -->|Tests Against| G["Real Data<br/>Real Database"]
+    
+    G -->|Validates| H{All Scenarios<br/>Pass?}
+    
+    H -->|Yes| I["✅ Feature Complete<br/>Ready for Code Review"]
+    H -->|No| J["❌ Scenario Failed"]
+    
+    J -->|Details| K["Failed Step<br/>Expected vs Actual"]
+    K -->|Feedback to| L["Developer"]
+    L -->|Debug & Fix| D
+    
+    I -->|Next Phase| M["Code Quality Review<br/>Coverage, Lint, Complexity"]
+    M -->|Pass| N["✅ Ready for CI/CD<br/>Pipeline"]
+    M -->|Fail| L
+    
+    style A fill:#4BADE8,stroke:#333,color:#fff
+    style B fill:#4BADE8,stroke:#333,color:#fff
+    style C fill:#9370DB,stroke:#333,color:#fff
+    style D fill:#90EE90,stroke:#333,color:#000
+    style E fill:#90EE90,stroke:#333,color:#000
+    style F fill:#FFD700,stroke:#333,color:#000
+    style G fill:#FFD700,stroke:#333,color:#000
+    style H fill:#FFB6C1,stroke:#333,color:#000
+    style I fill:#50C878,stroke:#333,color:#fff
+    style J fill:#FF6B6B,stroke:#333,color:#fff
+    style N fill:#50C878,stroke:#333,color:#fff
+```
+
+#### Team Responsibilities Across code-generation.workflows.md Phases
+
+```mermaid
+graph LR
+    subgraph Phase1 ["Phase 1: Sprint Planning"]
+        P1["🗂️ PO: Prioritize stories<br/>📊 TL: Estimate points<br/>✏️ Break into tasks"]
+    end
+    
+    subgraph Phase2 ["Phase 2: Breakdown"]
+        P2["🏗️ TL: Create scaffolds<br/>📁 Define structure<br/>⚙️ Setup config"]
+    end
+    
+    subgraph Phase3 ["Phase 3: TDD"]
+        P3["❌ TDD: Write failing test<br/>✅ Dev: Implement code<br/>🧹 Dev: Refactor"]
+    end
+    
+    subgraph Phase4 ["Phase 4: BDD"]
+        P4["📋 BA: Execute scenarios<br/>✔️ Validate criteria<br/>📊 Test results"]
+    end
+    
+    subgraph Phase5 ["Phase 5: Quality"]
+        P5["👀 TL: Code review<br/>📈 Coverage check<br/>✅ Approve merge"]
+    end
+    
+    Phase1 -->|Input| Phase2
+    Phase2 -->|Input| Phase3
+    Phase3 -->|Input| Phase4
+    Phase4 -->|Feedback Loop| Phase3
+    Phase4 -->|Approved| Phase5
+    Phase5 -->|CI/CD Ready| CI["Deployment"]
+    
+    style Phase1 fill:#E8F4F8,stroke:#333
+    style Phase2 fill:#E8F4F8,stroke:#333
+    style Phase3 fill:#90EE90,stroke:#333
+    style Phase4 fill:#FFD700,stroke:#333
+    style Phase5 fill:#FFB6C1,stroke:#333
+    style CI fill:#50C878,stroke:#333,color:#fff
+```
+
+---
+
 ## System Architecture
 
 ```
