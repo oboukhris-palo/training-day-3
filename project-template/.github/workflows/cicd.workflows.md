@@ -475,10 +475,10 @@ RESULT: Zero-downtime deployment with optimization
 
 **Continuous Integration**:
 - **Platform**: GitHub Actions
-- **Build Tools**: Maven (Java), npm (Node.js/Angular)
-- **Testing**: JUnit 5, Mockito (Java), Jasmine/Karma (Angular)
-- **Code Quality**: SonarQube, ESLint, Checkstyle
-- **Security**: OWASP Dependency Check, Snyk
+- **Build Tools**: Language-specific build tools (e.g., Maven for Java, Gradle for Java, npm for Node.js)
+- **Testing**: Unit testing frameworks (per language), mocking libraries, test runners
+- **Code Quality**: Code quality analysis tools (SonarQube, ESLint, etc.)
+- **Security**: Dependency vulnerability scanning (OWASP Dependency Check, Snyk, etc.)
 
 **Continuous Deployment**:
 - **Containerization**: Docker

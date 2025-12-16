@@ -481,7 +481,7 @@ Validation        Base       Documents  & Testing    Gates      Environment Impr
 **Step 1: Code Generation Strategy** (Tech Lead leads with Architect)
 - Invoke Tech Lead Agent via **subagentType: `dev-lead-code-generation`**
   ```
-  Prompt: "Create code-generation.md following [prd.template.yml](prd.template.yml) Stage 4. Define code generation templates for frontend (Angular), backend (Spring Boot), and database migrations. Specify scaffolding approach, code organization, naming conventions. Document OpenAPI-to-code generation strategy."
+  Prompt: "Create code-generation.md following [prd.template.yml](prd.template.yml) Stage 4. Define code generation templates for frontend, backend, and database migrations. Specify scaffolding approach, code organization, naming conventions. Document API contract generation strategy (OpenAPI, GraphQL, or similar).\"
   ```
 
 **Step 2: Architect Code Generation Review** (Architect validates)

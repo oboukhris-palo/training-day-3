@@ -6,18 +6,18 @@ handoffs:
     agent: tdd-green
     prompt: Make it pass
     send: true
-tools: ['edit', 'search', 'runCommands/runInTerminal', 'runSubagent', 'usages', 'problems', 'testFailure', 'memory', 'runTests']
+tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'semantic_search', 'grep_search', 'runSubagent', 'runTests', 'get_errors', 'run_in_terminal', 'list_code_usages']
 model: GPT-5 (copilot)
 ---
 
-> Make sure Executable Test Spec `TDD.md` from #tool:memory is in context.
+> Make sure Executable Test Spec `/docs/tdd.execution.md` from #tool:memory is in context.
 
-## If `TDD.md` doesn't exist:
+## If `/docs/tdd.execution.md` doesn't exist:
 
 1. Gather context via #tool:runSubagent using read-only tools:
   1. Research test setup and test suite
   2. Research requirements for the given task
-2. Save a Executable Test Spec `TDD.md` to #tool:memory → 30–60 line MINIMAL living document with:
+2. Save a Executable Test Spec `/docs/tdd.execution.md` to #tool:memory → 30–60 line MINIMAL living document with:
   - **Goal** (1 sentence - what behavior/feature are we building)
   - **Test List (Next)** (checklist of 2–3 concrete behaviors to test first)
   - **Edge Cases / Invariants** (boundary conditions, constraints)
@@ -29,7 +29,7 @@ model: GPT-5 (copilot)
 ## You run the 🟥 RED phase of TDD
 
 Start by planning via #tool:runSubagent :
-1. Find the next unchecked item in `TDD.md` > `Test List (Next)`
+1. Find the next unchecked item in `/docs/tdd.execution.md` > `Test List (Next)`
 2. Understand the behavior to be tested
 
 **Discipline:**
