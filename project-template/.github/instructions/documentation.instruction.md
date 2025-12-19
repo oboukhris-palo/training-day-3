@@ -1,4 +1,0 @@
-- NEVER generate a documentation that i did not be asked for.
-- Never summarize the code base modification in an MD file or a document unless i asked for it.
-- Follow up documentation workflow as described in /.github/workflows/documentation.workflows.md
-- Use documentation task prompt from /.github/tasks/documentation.prompts.md

@@ -168,7 +168,7 @@ The complete workflow execution happens in 6 coordinated phases:
   1. **Layer 1: Database** (schemas, migrations, indexes) - implement until DB-related BDD test steps pass
   2. **Layer 2: Backend** (APIs, services, business logic) - implement until backend BDD test steps pass
   3. **Layer 3: Configuration** (environment, integration, feature flags) - implement until configuration BDD test steps pass
-  4. **Layer 4: Frontend** (Angular components, services, UI with UX guidance) - implement until UI BDD test steps pass
+  4. **Layer 4: Frontend** (UI components, services, styling) - implement until UI BDD test steps pass
 - For each layer:
   - Run BDD tests to see which assertions are failing
   - **RED**: Write failing unit/integration test supporting BDD step assertions

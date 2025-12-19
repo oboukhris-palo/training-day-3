@@ -143,13 +143,19 @@ Generate a complete, production-ready documentation document following these gui
    - Group related information together
    - Use bullet lists for related items
    - Use tables for comparative information
-   - Use diagrams (Mermaid) for complex concepts
+   - Use diagrams (Mermai & plantUML) for complex concepts
    - Logical flow that guides reader from simple to complex
 
    VISUAL SUPPORT:
-   - Include Mermaid diagrams for: architecture, data flows, workflows, processes
+   - Include Mermaid and PlantUML diagrams for: architecture, data flows, workflows, processes
+   - Choose diagram tool based on complexity:
+     * Mermaid: Simple flows, ER diagrams, basic class diagrams, simple sequence diagrams
+     * PlantUML: Complex class diagrams, detailed UML (component, deployment, state), detailed sequence diagrams
+   - For implementation documentation: Prefer PlantUML for class diagrams (better UML notation)
+   - For user-facing workflows: Prefer Mermaid (simpler, more readable)
    - Ensure diagrams are readable and clearly labeled
    - Reference diagrams in text
+   - Include diagram source code in markdown code blocks
 
 6. REQUIREMENTS & ACCEPTANCE CRITERIA
 
@@ -202,7 +208,9 @@ Generate a complete, production-ready documentation document following these gui
    - Code blocks with language specified (```java, ```json, etc)
    - Tables for structured data
    - Lists (bullet and numbered) for related items
-   - Mermaid diagrams for complex concepts
+   - Mermaid diagrams for flows and simple visualizations (```mermaid)
+   - PlantUML diagrams for detailed UML and class diagrams (```plantuml)
+   - Choose diagram type based on audience and complexity
 
 4. Include a Table of Contents for documents > 1000 words
 
@@ -341,7 +349,7 @@ When documentation output needs improvement:
 | Missing examples | Add: "Include at least 5 realistic examples with actual values" |
 | Vague requirements | Add: "All requirements must have numbered acceptance criteria" |
 | Poor organization | Add: "Reorder sections: Overview → Requirements → Implementation → Testing" |
-| No diagrams | Add: "Include Mermaid diagram for every workflow/architecture section" |
+| No diagrams | Add: "Include Mermaid/PlantUML diagram for every workflow/architecture section" |
 
 ---
 

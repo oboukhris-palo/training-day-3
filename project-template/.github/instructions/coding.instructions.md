@@ -289,10 +289,10 @@ Class Human implements Workable, Eatable, Sleepable
 **Bad Example**:
 ```
 Class UserService:
-  private database = new PostgreSQLDatabase()
+  private database = new SpecificDatabaseImpl()
   
   function createUser(user):
-    database.insert(user) // Tightly coupled to PostgreSQL
+    database.insert(user) // Tightly coupled to specific database
 ```
 
 **Good Example**:
@@ -307,7 +307,7 @@ Class UserService:
     this.database = database // Injected
   
   function createUser(user):
-    database.insert(user) // Works with any database
+    database.insert(user) // Works with any database implementation
 ```
 
 ---
