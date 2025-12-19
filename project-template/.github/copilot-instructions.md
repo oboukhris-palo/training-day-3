@@ -21,3 +21,5 @@
 - The programming language will be determined later for the project depending on the application requirements
 - Help refine this project instructions file, rules, workflows and prompts as needed
 - When trying to make an important choice for the project such as architecture, frameworks, libraries, database, or any other technology, always provide 3 options to choose from with pros and cons for each option
+- Regardless of the technology stack, always follow best practices for code structure, design patterns, security, performance, and scalability
+- Regardless of the document type if it's too long, break it into multiple parts and ask for confirmation after each part before proceeding

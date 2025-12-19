@@ -7,5 +7,6 @@
         "tdd": true
     },
     "github.copilot.chat.codeGeneration.useInstructionFiles": true,
-    "github.copilot.chat.cli.customAgents.enabled": true
+    "github.copilot.chat.cli.customAgents.enabled": true,
+    "markdown-preview-enhanced.plantumlServer": "https://kroki.io/plantuml/svg/"
 }

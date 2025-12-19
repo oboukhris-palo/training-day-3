@@ -39,7 +39,9 @@ architecture:
 
 data_model:
   diagrams:
-    - "<Class Mermaid Diagrams>"
+    - "<Class Diagrams: Use Mermaid or PlantUML depending on complexity>"
+    - "<For simple models: Use Mermaid class diagrams>"
+    - "<For complex class relationships/implementations: Use PlantUML for better UML notation support>"
   entities:
     - name: "<Entity Name>"
       attributes:
@@ -51,7 +53,10 @@ data_model:
 
 workflow:
   diagrams:
-    - "<Workflow Mermaid Diagrams>"
+    - "<Workflow Diagrams: Use Mermaid or PlantUML>"
+    - "<For sequence/flow diagrams: Mermaid flowcharts or PlantUML sequence diagrams>"
+    - "<For component interactions: PlantUML component diagrams>"
+    - "<For state machines: PlantUML state diagrams>"
   steps:
     - step: "<Step Name>"
       description: "<What happens in this step>"
