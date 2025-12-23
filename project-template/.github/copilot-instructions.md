@@ -273,7 +273,6 @@ Only for independent research/analysis tasks:
 ## 📚 Key Reference Files
 
 **Essential Reading**:
-- `.github/ORCHESTRATION_GUIDE.md` - Complete usage guide (read first!)
 - `.github/README.md` - System overview and workflow diagrams
 - `.github/workflows/` - All three workflow definitions (PDLC, Implementation, CI/CD)
 - `.github/agents/` - Agent profiles with subagentType definitions
