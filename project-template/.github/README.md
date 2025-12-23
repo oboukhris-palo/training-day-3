@@ -23,16 +23,8 @@ Then follow the recommendation.
 
 ## 📚 Documentation Map
 
-### Start Here (Read First)
-**[ADAPTIVE_WORKFLOW_GUIDE.md](ADAPTIVE_WORKFLOW_GUIDE.md)** - Complete guide (30 minutes)
-
-### Then Use These
-- **[ORCHESTRATION_GUIDE.md](ORCHESTRATION_GUIDE.md)** - Quick command reference
-- **[tasks/README.md](tasks/README.md)** - Launcher guide (assessment-first)
-
 ### For Specific Cases
 - **[tasks/assess-project-status.prompts.md](tasks/assess-project-status.prompts.md)** - How assessment works
-- **[tasks/PROJECT_STATUS_WORKFLOWS.md](tasks/PROJECT_STATUS_WORKFLOWS.md)** - Each status explained
 - **[tasks/start-pdlc.prompts.md](tasks/start-pdlc.prompts.md)** - PDLC workflow
 - **[tasks/start-implementation.prompts.md](tasks/start-implementation.prompts.md)** - Implementation workflow
 
@@ -246,5 +238,3 @@ Referenced in Stage 7 (implementation) and CI/CD quality gates.
 4. **Launch Project**: Use `.github/tasks/start-pdlc.prompts.md`, invoke `@orchestrator`
 5. **Implement with TDD**: Follow implementation.workflows.md layer-by-layer
 6. **Deploy**: Start CI/CD Phase 1, evolve to Phase 2/3
-
-**Reference**: See ORCHESTRATION_GUIDE.md for complete system usage
