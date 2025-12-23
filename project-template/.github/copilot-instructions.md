@@ -35,14 +35,20 @@ project-root/
 │   │   ├── personas.md               # Stage 2: User personas
 │   │   ├── business-case.md          # Stage 2: Business justification
 │   │   ├── architecture-design.md    # Stage 3: System architecture
+│   │   ├── user-stories.md           # Stage 4: User stories catalog (PRD - read-only reference)
+│   │   │                             # Contains all epics & stories with BDD scenarios
 │   │   ├── tech-spec.md              # Stage 4: Technical specifications
 │   │   ├── test-strategies.md        # Stage 5: Testing approach
 │   │   ├── design-systems.md         # Stage 3: Design tokens/components
 │   │   ├── deployment-plan.md        # Stage 6: Deployment strategy
 │   │   └── ... (13 PRD documents total)
 │   │
-│   ├── user-stories/                  # User Story Documents
-│   │   ├── user-stories.md                    # Master list with epics and stories
+│   ├── user-stories/                  # User Story Implementation Tracking
+│   │   ├── user-stories.md                    # ⭐ SINGLE SOURCE OF TRUTH for implementation status
+│   │   │                                      # Mirrors /docs/prd/user-stories.md structure
+│   │   │                                      # Adds: Not Started / In Progress / In Review / Implemented
+│   │   │                                      # Synchronized with issue tracker
+│   │   │                                      # Orchestrator checks this to determine next work
 │   │   ├── <USER-STORY-REF>/                  # Per-story folder (e.g., US-001/)
 │   │   │   ├── implementation-plan.md         # Detailed layer-by-layer plan
 │   │   │   └── bdd-scenarios/                 # Copy of BDD feature files
@@ -66,7 +72,16 @@ project-root/
 
 **Key Principles**:
 - **All PRD documents** → `/docs/prd/`
-- **User stories master list** → `/docs/user-stories/user-stories.md`
+- **User stories catalog (PRD)** → `/docs/prd/user-stories.md`
+  - Created during PDLC Stage 4
+  - Contains all epics and user stories with BDD scenarios
+  - Read-only reference for implementation
+- **⭐ Implementation status tracking (SINGLE SOURCE OF TRUTH)** → `/docs/user-stories/user-stories.md`
+  - Mirrors `/docs/prd/user-stories.md` structure
+  - Adds status: Not Started / In Progress / In Review / Implemented
+  - Synchronized with issue tracker
+  - Orchestrator checks this file to determine which story to tackle next
+  - Updated by agents as stories progress through implementation phases
 - **Per-story folder** → `/docs/user-stories/<USER-STORY-REF>/`
 - **Implementation plan** → `/docs/user-stories/<USER-STORY-REF>/implementation-plan.md` (guides TDD execution)
 - **BDD scenarios** → Project source `features/` with copies in `/docs/user-stories/<USER-STORY-REF>/bdd-scenarios/` for reference

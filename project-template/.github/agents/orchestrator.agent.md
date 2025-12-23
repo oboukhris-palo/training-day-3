@@ -71,8 +71,11 @@ Ensure efficient progress by skipping completed work and resuming at correct poi
 ```
 
 **What happens**:
-1. Check /docs/prd/ for PDLC documents
-2. Check /docs/user-stories/ for user stories
+1. Check /docs/prd/ for PDLC documents (including `/docs/prd/user-stories.md` - PRD reference)
+2. **Read `/docs/user-stories/user-stories.md`** - SINGLE SOURCE OF TRUTH for implementation status
+   - Check which user stories are "Not Started" / "In Progress" / "In Review" / "Implemented"
+   - Determine which epic each story belongs to
+   - Calculate epic completion percentage (% of stories "Implemented")
 3. Check /src (or project root) for code implementation
 4. Assess BDD test status
 5. Generate maturity assessment report
@@ -111,11 +114,13 @@ Ensure efficient progress by skipping completed work and resuming at correct poi
 
 **Conditions**: Partial code (25-85%), mixed documentation
 **Flow**: 
-1. Assess current state
-2. Identify completed stories (skip)
-3. Identify incomplete stories (resume)
-4. Create missing docs in parallel
-5. Continue TDD where left off
+1. **Read `/docs/user-stories/user-stories.md`** to assess current state
+2. Identify completed stories (status: "Implemented" - skip these)
+3. Identify stories "In Review" or "In Progress" (resume these first)
+4. Identify stories "Not Started" (plan for sprint)
+5. Create missing docs in parallel
+6. Continue TDD where left off
+7. **Update user-stories.md** as stories progress through phases
 
 ### Command: Validate and Complete
 ```bash
@@ -188,10 +193,10 @@ Gates: Architecture, Tech Stack, Sprint Scope, Story Accept, CI/CD Phase
 | Stage 1 | PM | PO | Charter, stakeholder needs | requirements.md |
 | Stage 2 | PO | BA | requirements.md | personas.md, business-case.md |
 | Stage 2 | BA | UX | personas.md | journey-maps.md |
-| Stage 3 | UX | Architect | journey-maps.md, user-stories.md | blueprints.md, design-systems.md |
+| Stage 3 | UX | Architect | journey-maps.md, /docs/prd/user-stories.md | blueprints.md, design-systems.md |
 | Stage 3-4 | Architect | PO | architecture-design.md | Approval gate |
 | Stage 4 | PO | Architect | Approved architecture | tech-spec.md |
-| Stage 5 | PO | BA | user-stories.md | BDD scenarios (Gherkin) |
+| Stage 5 | PO | BA | /docs/prd/user-stories.md | BDD scenarios (Gherkin) |
 | Phase 1 | Orchestrator | PM | Epic/stories | Sprint plan |
 | Phase 2 | PM | Dev-Lead | Sprint plan, stories | BDD integration, implementation plan |
 | Phase 3 | Dev-Lead | TDD | Implementation plan, failing tests | Layer-by-layer TDD |
@@ -293,9 +298,10 @@ ORCHESTRATOR:
 "Starting implementation for Epic E001: User Authentication
 
 Phase 0: Prerequisites Check
-✓ requirements.md exists
-✓ user-stories.md exists  
-✓ architecture-design.md exists
+✓ /docs/prd/requirements.md exists
+✓ /docs/prd/user-stories.md exists (PRD reference)
+✓ /docs/user-stories/user-stories.md exists (status tracking)
+✓ /docs/prd/architecture-design.md exists
 ✓ BDD scenarios ready
 
 Phase 1: Sprint Planning"
@@ -379,10 +385,30 @@ Ready to plan next sprint? [Yes/Continue current epic]"
 ## Metrics
 Stage %, docs approved, trace 100%, gate pass rate, throughput, BDD %, CI/CD health
 
-## Files
+## Key Files
 
-workflows/, agents/, templates/, instructions/ → .github/
-docs/prd/, docs/user-stories/<US-REF>/implementation-plan.md
+**PRD Documents** (Read-only reference):
+- `/docs/prd/user-stories.md` - All epics and user stories with BDD scenarios (created in PDLC Stage 4)
+  - Contains complete story definitions and acceptance criteria
+  - Reference for implementation details
+
+**Status Tracking** (SINGLE SOURCE OF TRUTH):
+- `/docs/user-stories/user-stories.md` - Implementation status for all stories (Not Started / In Progress / In Review / Implemented)
+  - Mirrors structure from `/docs/prd/user-stories.md`
+  - Adds status tracking fields
+  - Orchestrator checks this file to determine current state and next work
+  - Synchronized with issue tracker
+  - Updated by agents as stories progress through phases
+
+**Workflow Definitions**:
+- `.github/workflows/` - PDLC, Implementation, CI/CD workflow definitions
+- `.github/agents/` - All agent profiles
+- `.github/templates/` - Document templates
+- `.github/instructions/` - Coding and documentation standards
+
+**Generated Documents**:
+- `/docs/prd/` - All PRD documents
+- `/docs/user-stories/<US-REF>/implementation-plan.md` - Layer-by-layer implementation guidance
 
 ---
 
