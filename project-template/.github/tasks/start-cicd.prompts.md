@@ -1,52 +1,24 @@
-# Start CI/CD Pipeline - Interactive Launcher
+# Start CI/CD Pipeline
 
-**Purpose**: Setup and configure CI/CD pipeline with phased evolution from Bootstrap through Optimization
+## Prerequisites
 
-**Workflow Reference**: [.github/workflows/cicd.workflows.md](/.github/workflows/cicd.workflows.md)
+- ✅ Git repo with main/develop
+- ✅ Tech stack in architecture-design.md
+- ✅ Build config (package.json/pom.xml)
+- ✅ Tests runnable
 
-**Orchestrator Agent**: [.github/agents/orchestrator.agent.md](/.github/agents/orchestrator.agent.md)
-
----
-
-## Prerequisites Checklist
-
-Before setting up CI/CD, verify project state:
-
-- ✅ Git repository initialized with main and develop branches
-- ✅ GitHub repository created and linked
-- ✅ Tech stack defined in architecture-design.md
-- ✅ Build configuration exists (package.json, pom.xml, etc.)
-- ✅ At least one user-story implemented with tests
-- ✅ Test suite executable (unit tests runnable)
-
----
-
-## Usage
-
-Copy and paste this prompt to GitHub Copilot Chat to setup CI/CD:
+## Command Template
 
 ```
 @orchestrator Setup CI/CD pipeline for [PROJECT_NAME]
 
 Project State:
-- Tech Stack: [Backend framework, Frontend framework, Database]
-- Current Phase: [Bootstrap / Stabilization / Optimization]
-- Team Size: [Number of developers]
-- Deployment Target: [Cloud provider or on-premise]
+- Tech Stack: [Backend, Frontend, Database]
+- Phase: [Bootstrap / Stabilization / Optimization]
+- Team: [Number]
+- Target: [Cloud provider]
 
-Orchestrate me through CI/CD setup with the following approach:
-1. Assess project maturity and recommend appropriate CI/CD phase
-2. Present 3 CI/CD phase options with infrastructure requirements and benefits
-3. Configure GitHub Actions workflows for selected phase
-4. Setup quality gates appropriate to project phase
-5. Configure deployment strategy (dev → staging → production)
-6. Setup monitoring and observability
-7. Test CI/CD pipeline execution
-8. Present options for future enhancements
-
-Start by assessing project maturity and recommending CI/CD phase.
-
-Let's begin!
+Orchestrate: Assess → Present 3 options → Configure → Test
 ```
 
 ---
