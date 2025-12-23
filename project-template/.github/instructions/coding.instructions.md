@@ -1,101 +1,61 @@
-# Comprehensive Coding Standards & Best Practices
+# Coding Standards & Best Practices
 
-**Version**: 1.0.0  
-**Last Updated**: December 2025  
-**Status**: Active  
-**Scope**: Language-agnostic best practices for sustainable, maintainable code
+**Standards**: Clean Code | SOLID | YAGNI | Patterns | Testing | Security | Refactoring
 
 ---
 
-## Table of Contents
+## Clean Code
 
-1. [Clean Code Fundamentals](#clean-code-fundamentals)
-2. [SOLID Principles](#solid-principles)
-3. [YAGNI & Simplicity](#yagni--simplicity)
-4. [Design Patterns](#design-patterns)
-5. [Code Organization](#code-organization)
-6. [Testing Standards](#testing-standards)
-7. [Documentation & Comments](#documentation--comments)
-8. [Error Handling](#error-handling)
-9. [Performance & Scalability](#performance--scalability)
-10. [Security Practices](#security-practices)
-11. [Refactoring Guidelines](#refactoring-guidelines)
-12. [Anti-Patterns to Avoid](#anti-patterns-to-avoid)
-13. [Code Review Checklist](#code-review-checklist)
+### Naming
+**Rules**: Classes=nouns, Functions=verbs, Variables=specific, Constants=UPPER, Booleans=is/has/can
+❌ Bad: a, x1, tmp, data | ✅ Good: totalPrice, calculateRevenue, isActive
 
----
+## SOLID
+SRP | OCP | LSP | ISP | DIP
 
-## Clean Code Fundamentals
+## YAGNI
+Build only required features. No future-proofing, no premature optimization.
 
-### 1. Naming Conventions
+## Patterns
+**Creational**: Singleton, Factory, Builder  
+**Structural**: Adapter, Decorator, Facade  
+**Behavioral**: Strategy, Observer, Command  
+**Anti-pattern**: Using patterns when simple code suffices
 
-**Principle**: Names should reveal intent and be pronounceable.
+## Testing
+**Pyramid**: 70% unit, 20% integration, 10% E2E  
+**TDD**: RED → GREEN → REFACTOR  
+**Characteristics**: Isolated, repeatable, fast, readable
 
-**Naming Rules**:
-- **Classes/Types**: Nouns (User, PaymentProcessor, DatabaseConnection)
-- **Functions/Methods**: Verbs describing action (calculateTotal, validateEmail, processOrder)
-- **Variables**: Clear, specific names (totalAmount not ta; userEmail not ue)
-- **Constants**: Upper case with underscores (MAX_RETRY_COUNT, API_TIMEOUT)
-- **Booleans**: Prefix with is/has/can/should (isActive, hasPermission, canDelete)
+## Documentation
+Code=WHAT, Comments=WHY. README, API docs, ADRs.
 
-**Bad Examples**:
-```
-❌ a, x1, tmp, data, obj, val
-❌ getUserData_v2_final_working
-❌ processDataAndDoStuff
-```
+## Errors
+Fail fast, fail explicitly, handle specifically, log before re-throw
 
-**Good Examples**:
-```
-✅ totalPrice, userLoginAttempt, transactionStatus
-✅ calculateMonthlyRevenue, validateCreditCard
-✅ isTransactionPending, hasAdminPermission, canAccessResource
-```
+## Security
+Validate input, encrypt data, authenticate/authorize, log securely (no secrets)
 
-### 2. Function/Method Design
+## Performance
+Measure first, optimize Big O, cache, paginate, index
 
-**Principles**:
-- **Single Responsibility**: One job, one reason to change
-- **Small Size**: Aim for functions that fit on one screen (10-20 lines)
-- **Few Parameters**: 0-2 is ideal, max 3 before creating an object
-- **No Side Effects**: Function behavior should be predictable
-- **Pure Functions Preferred**: Same input = same output, no external state modification
+## Refactoring
+**When**: Hard to understand, duplication, too large  
+**Techniques**: Extract method/class, rename, simplify, remove duplication
 
-**Function Characteristics**:
+## Code Review Checklist
+- [ ] Implements requirements
+- [ ] SOLID principles
+- [ ] No duplication
+- [ ] Clear naming
+- [ ] Tests cover happy/edge/error paths
+- [ ] Input validated
+- [ ] No hardcoded secrets
+- [ ] No obvious performance issues
+- [ ] Code is self-documenting
 
-| Good | Bad |
-|------|-----|
-| Clear purpose | Does multiple unrelated things |
-| Handles one concern | Has side effects |
-| Testable in isolation | Depends on global state |
-| Predictable output | Output varies with external state |
-| Short and focused | Long with many conditionals |
-| Easy to understand | Requires mental debugging |
-
-### 3. Code Readability
-
-**Rules**:
-- **Self-documenting**: Code should explain itself without comments
-- **Obvious Logic**: Reader shouldn't need to trace execution in head
-- **Consistent Style**: Same patterns used throughout codebase
-- **Whitespace**: Strategic spacing improves comprehension
-- **Early Returns**: Reduce nesting by returning early
-
-**Example - Hard to Read**:
-```
-function process(d) {
-  if (d && d.length > 0) {
-    for (let i = 0; i < d.length; i++) {
-      if (d[i].status === 'active') {
-        if (d[i].balance > 100) {
-          return calculate(d[i].balance * 0.9);
-        }
-      }
-    }
-  }
-  return 0;
-}
-```
+**Goal**: Write code you'd maintain in 5 years.
+````
 
 **Example - Easy to Read**:
 ```
@@ -126,193 +86,14 @@ function calculateActiveAccountBonus(accounts) {
 
 ---
 
-## SOLID Principles
+## SOLID
+**SRP**: One class, one reason to change
+**OCP**: Open for extension, closed for modification (interfaces/plugins)
+**LSP**: Subtypes substitutable for base types
+**ISP**: Small focused interfaces, not fat ones
+**DIP**: Depend on abstractions, not concretions (DI)
 
-### 1. Single Responsibility Principle (SRP)
-
-**Definition**: A class/module should have one, and only one, reason to change.
-
-**Practice**:
-- Each class handles one concept
-- One reason for modification
-- Easy to test, understand, and modify
-
-**Bad Example**:
-```
-Class User:
-  - validateEmail() ← Validation logic
-  - sendWelcomeEmail() ← Email logic
-  - calculateSubscriptionFee() ← Business logic
-  - formatForDisplay() ← Presentation logic
-  - saveToDatabase() ← Persistence logic
-```
-*This class has 5 reasons to change!*
-
-**Good Example**:
-```
-Class User:
-  - getProfile() ← User data only
-
-Class UserValidator:
-  - validateEmail()
-
-Class UserNotificationService:
-  - sendWelcomeEmail()
-
-Class SubscriptionCalculator:
-  - calculateSubscriptionFee()
-
-Class UserRepository:
-  - saveToDatabase()
-```
-
-### 2. Open/Closed Principle (OCP)
-
-**Definition**: Open for extension, closed for modification.
-
-**Practice**:
-- Add new features through extension, not modification
-- Use abstraction (interfaces, base classes)
-- Plugin architecture for flexibility
-- Minimize changes to existing code
-
-**Bad Example**:
-```
-Class ReportGenerator:
-  if (reportType === 'pdf'):
-    // PDF generation code
-  else if (reportType === 'excel'):
-    // Excel generation code
-  else if (reportType === 'csv'):
-    // CSV generation code
-  // Adding new format requires modifying this class
-```
-
-**Good Example**:
-```
-Interface ReportFormatter:
-  - format(data): String
-
-Class PDFFormatter implements ReportFormatter
-Class ExcelFormatter implements ReportFormatter
-Class CSVFormatter implements ReportFormatter
-
-Class ReportGenerator:
-  - generate(data, formatter: ReportFormatter)
-  // New formats added without modifying this class
-```
-
-### 3. Liskov Substitution Principle (LSP)
-
-**Definition**: Subtypes must be substitutable for their base types.
-
-**Practice**:
-- Child classes respect parent contracts
-- No surprising behavior changes
-- Predictable inheritance hierarchies
-- Contracts honored, not violated
-
-**Bad Example**:
-```
-Class Bird:
-  - fly()
-
-Class Penguin extends Bird:
-  - fly() → throw new Exception("Penguins can't fly")
-  // Violates LSP: Can't substitute Penguin for Bird safely
-```
-
-**Good Example**:
-```
-Class Bird:
-  - move()
-
-Class FlyingBird extends Bird:
-  - move() → fly()
-
-Class SwimmingBird extends Bird:
-  - move() → swim()
-
-Class Penguin extends SwimmingBird:
-  - move() → swim()
-  // Penguin is properly substitutable as SwimmingBird
-```
-
-### 4. Interface Segregation Principle (ISP)
-
-**Definition**: Don't force classes to implement interfaces they don't need.
-
-**Practice**:
-- Small, focused interfaces
-- Clients depend only on methods they use
-- Multiple specific interfaces > one fat interface
-- Reduced coupling
-
-**Bad Example**:
-```
-Interface Worker:
-  - work()
-  - eat()
-  - sleep()
-
-Class Robot implements Worker:
-  - work() ✓
-  - eat() ✗ (Robots don't eat)
-  - sleep() ✗ (Robots don't sleep)
-```
-
-**Good Example**:
-```
-Interface Workable:
-  - work()
-
-Interface Eatable:
-  - eat()
-
-Interface Sleepable:
-  - sleep()
-
-Class Robot implements Workable
-Class Human implements Workable, Eatable, Sleepable
-```
-
-### 5. Dependency Inversion Principle (DIP)
-
-**Definition**: Depend on abstractions, not concretions.
-
-**Practice**:
-- High-level modules don't depend on low-level modules
-- Both depend on abstractions
-- Inject dependencies (don't create them)
-- Easier testing and flexibility
-
-**Bad Example**:
-```
-Class UserService:
-  private database = new SpecificDatabaseImpl()
-  
-  function createUser(user):
-    database.insert(user) // Tightly coupled to specific database
-```
-
-**Good Example**:
-```
-Interface Database:
-  - insert(data)
-
-Class UserService:
-  private database: Database
-  
-  function UserService(database: Database):
-    this.database = database // Injected
-  
-  function createUser(user):
-    database.insert(user) // Works with any database implementation
-```
-
----
-
-## YAGNI & Simplicity
+## YAGNI
 
 ### 1. You Aren't Gonna Need It (YAGNI)
 
@@ -360,51 +141,11 @@ Class UserService:
 
 ---
 
-## Design Patterns
-
-### 1. Creational Patterns
-
-#### Singleton Pattern
-- **Use When**: Need exactly one instance (logger, config, connection pool)
-- **Warning**: Can hide dependencies, makes testing harder
-
-#### Factory Pattern
-- **Use When**: Object creation complex or depends on runtime conditions
-- **Benefit**: Decouples object creation from usage
-
-#### Builder Pattern
-- **Use When**: Objects have many optional parameters
-- **Benefit**: Clear, readable object construction
-
-### 2. Structural Patterns
-
-#### Adapter Pattern
-- **Use When**: Need to use incompatible interfaces together
-- **Benefit**: Makes old code work with new code
-
-#### Decorator Pattern
-- **Use When**: Need to add behavior to objects dynamically
-- **Benefit**: More flexible than inheritance
-
-#### Facade Pattern
-- **Use When**: Complex system needs simple interface
-- **Benefit**: Hides complexity, simplifies usage
-
-### 3. Behavioral Patterns
-
-#### Strategy Pattern
-- **Use When**: Multiple algorithms for same task, chosen at runtime
-- **Benefit**: Easy to switch algorithms, reduces conditionals
-
-#### Observer Pattern
-- **Use When**: Objects need to notify others of state changes
-- **Benefit**: Loose coupling between subjects and observers
-
-#### Command Pattern
-- **Use When**: Need to parameterize operations or queue them
-- **Benefit**: Enables undo/redo, scheduling, logging
-
-### 4. When NOT to Use Patterns
+## Patterns
+**Creational**: Singleton (one instance), Factory (complex creation), Builder (many params)
+**Structural**: Adapter (incompatible interfaces), Decorator (add behavior), Facade (simplify complex)
+**Behavioral**: Strategy (switchable algorithms), Observer (notify changes), Command (queue operations)
+**Anti-pattern**: Using patterns when simple code suffices. Don't force patterns.
 
 **Anti-Pattern Checklist**:
 - ❌ Using patterns when simple code would suffice
@@ -417,68 +158,12 @@ Class UserService:
 
 ---
 
-## Code Organization
+## Organization
+**Modular**: High cohesion, low coupling, clear boundaries
+**Layered**: Presentation → Business Logic → Data Access → Infrastructure
+**By Feature**: Group related code (users/, products/) not by type (controllers/, services/)
 
-### 1. Modular Design
-
-**Principles**:
-- **High Cohesion**: Related code grouped together
-- **Low Coupling**: Modules minimize dependencies on others
-- **Clear Boundaries**: Each module has defined responsibility
-- **Reusable Components**: Don't repeat code across modules
-
-**Module Structure**:
-```
-Module = Clear Responsibility
-├─ Public Interface (what others use)
-├─ Internal Implementation (how it works)
-└─ Hidden Complexity (details)
-```
-
-### 2. Layered Architecture
-
-**Recommended Structure**:
-```
-Presentation Layer
-    ↓ (depends on)
-Business Logic Layer
-    ↓ (depends on)
-Data Access Layer
-    ↓ (depends on)
-Infrastructure Layer
-```
-
-**Layer Responsibilities**:
-- **Presentation**: User interaction, formatting output
-- **Business Logic**: Core algorithms, decision-making
-- **Data Access**: Database queries, caching
-- **Infrastructure**: External services, utilities
-
-### 3. Package/Module Organization
-
-**By Feature** (Recommended):
-```
-features/
-├─ users/
-│  ├─ UserController
-│  ├─ UserService
-│  ├─ UserRepository
-│  └─ User (domain object)
-├─ products/
-│  ├─ ProductController
-│  ├─ ProductService
-│  └─ Product (domain object)
-```
-
-**Advantages**:
-- Feature changes isolated to one folder
-- Clear feature boundaries
-- Easy to find related code
-- Scales well as project grows
-
----
-
-## Testing Standards
+## Testing
 
 ### 1. Test Levels (Testing Pyramid)
 
@@ -539,57 +224,13 @@ features/
 
 ---
 
-## Documentation & Comments
+## Documentation
+**Rule**: Code explains WHAT. Comments explain WHY.
+❌ Bad: `i = i + 1 // increment i`
+✅ Good: Explain surprising behavior, workarounds, gotchas, public API
+**Docs**: README (build/run), API docs, architecture docs, ADRs (decisions)
 
-### 1. Self-Documenting Code
-
-**Rule**: Code should explain itself. Comments explain WHY, not WHAT.
-
-**Bad Comments**:
-```
-❌ i = i + 1 // increment i
-❌ x = x * 2 // double x
-❌ return result // return result
-```
-
-**Good Code** (no comments needed):
-```
-✅ userCount = userCount + 1
-✅ totalPrice = totalPrice * 2
-✅ return calculatedResult
-```
-
-### 2. When Comments Are Needed
-
-**Write Comments For**:
-- **WHY**: Why this approach vs alternatives
-- **SURPRISING**: Unexpected behavior or side effects
-- **WORKAROUNDS**: Why we can't use the obvious solution
-- **GOTCHAS**: Subtle behaviors that cause bugs
-- **PUBLIC API**: What parameters mean, what it returns
-
-**Example**:
-```
-// We use a LinkedHashMap instead of HashMap to preserve
-// insertion order for consistent test output ordering
-LinkedHashMap<String, Integer> results = new LinkedHashMap<>();
-
-// WARNING: This regex pattern may cause ReDoS with long strings.
-// Performance testing shows it only safe for < 50 character inputs
-Pattern safePattern = Pattern.compile(validationRegex);
-```
-
-### 3. Documentation Standards
-
-- **README**: How to build, run, and develop
-- **API Docs**: What functions do, parameters, return values
-- **Architecture Docs**: How system is organized
-- **CONTRIBUTING**: How to contribute code
-- **ADRs** (Architecture Decision Records): Why architectural choices were made
-
----
-
-## Error Handling
+## Errors
 
 ### 1. Error Handling Principles
 
@@ -638,37 +279,12 @@ try {
 
 ---
 
-## Performance & Scalability
+## Performance
+**Rules**: Measure first, optimize what matters, readability > micro-optimization
+**Focus**: Algorithm efficiency (Big O), data structures, DB queries, caching, lazy loading
+**Scale**: Stateless services, caching, pagination, indexes, connection pooling
 
-### 1. Performance Principles
-
-**Rules**:
-- **Measure First**: Profile before optimizing
-- **Premature Optimization is Evil**: Don't optimize code that doesn't matter
-- **Optimize for Readability**: Fast, unreadable code is worse than slow, readable code
-- **Benchmark Changes**: Verify optimizations actually improve performance
-- **Profile Real Usage**: Optimize what actually matters, not what you think matters
-
-**Performance Focus Areas** (in order):
-1. Algorithm efficiency (Big O complexity)
-2. Data structure selection
-3. Database query optimization
-4. Caching strategy
-5. Code-level micro-optimizations
-
-### 2. Scalability Considerations
-
-**Design for Scale**:
-- **Statelessness**: Services don't hold state, can scale horizontally
-- **Caching**: Reduce repeated expensive operations
-- **Lazy Loading**: Don't load what you won't use
-- **Pagination**: Don't load all data at once
-- **Indexes**: Fast data lookup
-- **Connection Pooling**: Reuse expensive resources
-
----
-
-## Security Practices
+## Security
 
 ### 1. Security Principles
 
@@ -705,43 +321,13 @@ try {
 
 ---
 
-## Refactoring Guidelines
+## Refactoring
+**When**: Hard to understand, duplication, too large, hard to test, better solution found
+**Don't**: When code won't change, time pressure, no tests, unclear requirements
+**Safe**: Tests pass before → Small changes → Test after each → Commit on success
+**Techniques**: Extract method/class, rename, simplify conditionals, remove duplication
 
-### 1. When to Refactor
-
-**Refactor When**:
-- Code is hard to understand
-- Duplication appears
-- Function is too large
-- Tests are hard to write
-- New requirements reveal better design
-- You find a better way to solve the problem
-
-**Don't Refactor When**:
-- Code is working and won't change
-- Time pressure is critical
-- You don't have tests
-- Requirements are unclear
-
-### 2. Refactoring Principles
-
-**Safe Refactoring**:
-1. Tests passing before refactoring
-2. Small, focused changes (one refactoring at a time)
-3. Run tests after each change
-4. Revert if tests fail
-5. Commit after each successful refactoring
-
-**Refactoring Techniques**:
-- Extract Method: Large function → smaller functions
-- Extract Class: Class with multiple responsibilities → multiple classes
-- Rename: Unclear names → clear names
-- Simplify Conditional: Complex logic → simple logic
-- Remove Duplication: Copy-paste code → shared code
-
----
-
-## Anti-Patterns to Avoid
+## Anti-Patterns
 
 ### 1. Code Smells
 
@@ -779,8 +365,6 @@ try {
 ---
 
 ## Code Review Checklist
-
-Use this checklist for all code reviews:
 
 ### Functionality
 - [ ] Code implements specified requirements
@@ -834,28 +418,15 @@ Use this checklist for all code reviews:
 ---
 
 ## Continuous Improvement
-
-This coding standards document is **living and evolving**. It should be:
-
-✅ **Updated** when team discovers better practices  
-✅ **Refined** based on lessons learned  
-✅ **Specialized** with language-specific guidance when needed  
-✅ **Referenced** during code reviews and development  
-✅ **Discussed** during retrospectives for improvements  
-
-**Version Control**: All changes tracked with dates and explanations
-
----
+Update this document based on lessons learned. Track changes with dates.
 
 ## Summary
+1. Clean Code: Easy to read/understand/modify
+2. SOLID Design: Flexible, maintainable
+3. YAGNI: Avoid over-engineering
+4. Comprehensive Tests: Confidence in changes
+5. Security First: Protect data
+6. Optimize What Matters: Measure before optimizing
+7. Clear Communication: Code explains itself
 
-**Core Principles**:
-1. **Clean Code**: Easy to read, understand, and modify
-2. **SOLID Design**: Flexible, maintainable architecture
-3. **Simple Solutions**: Avoid over-engineering
-4. **Comprehensive Tests**: Confidence in code
-5. **Security First**: Protect user data
-6. **Performance Conscious**: Optimize what matters
-7. **Clear Communication**: Code explains itself
-
-**Remember**: Good code is a *craft*, not an assembly line. Write code you'd be proud to maintain in 5 years.
+**Goal**: Write code you'd be proud to maintain in 5 years.

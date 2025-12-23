@@ -7,16 +7,28 @@ This document defines the **Implementation & Development Execution Workflow** - 
 This workflow orchestrates the interaction between all development agents to execute User Stories through coordinated TDD cycles, BDD testing, and quality validation. Epics serve as organizational groupings of User Stories - an Epic is considered complete when all of its User Stories are implemented.
 
 **Prerequisite**: All PDLC stages (1-6) must be completed with approved documents:
-- ✅ requirements.md (business requirements)
-- ✅ personas.md (user archetypes)
-- ✅ user-stories.md with two sections:
+- ✅ requirements.md (business requirements) - stored in `/docs/prd/`
+- ✅ personas.md (user archetypes) - stored in `/docs/prd/`
+- ✅ user-stories.md with two sections: - stored in `/docs/user-stories/`
   - Epics section: Feature groupings and boundaries
   - User Stories section: Individual stories grouped under their parent epic
-- ✅ architecture-design.md (system design)
-- ✅ tech-spec.md (implementation specifications)
-- ✅ design-systems.md (UI components and design tokens)
-- ✅ test-strategies.md (testing approach)
+- ✅ architecture-design.md (system design) - stored in `/docs/prd/`
+- ✅ tech-spec.md (implementation specifications) - stored in `/docs/prd/`
+- ✅ design-systems.md (UI components and design tokens) - stored in `/docs/design/`
+- ✅ test-strategies.md (testing approach) - stored in `/docs/prd/`
 - ✅ BDD scenarios (Gherkin feature files from user stories)
+
+**Folder Structure**:
+```
+/docs/
+  ├── prd/                          # All PRD documents (requirements, personas, architecture, tech-spec, etc.)
+  ├── user-stories/                 # User story documents and implementation plans
+  │   ├── user-stories.md           # Master user stories document
+  │   └── <USER-STORY-REF>/         # Individual story folders (e.g., US-001/)
+  │       ├── implementation-plan.md # Layer breakdown and technical approach
+  │       └── bdd-scenarios/        # Story-specific BDD feature files
+  └── design/                       # UX/UI design documents and design systems
+```
 
 ---
 
@@ -148,24 +160,33 @@ The complete workflow execution happens in 6 coordinated phases:
 - For each user-story:
   - Create GitHub Issue (tag with parent epic label for tracking)
   - **Extract and integrate BDD/Gherkin scenarios into project**:
-    - Create feature file (e.g., `feature/auth/login.feature`) with Gherkin scenarios
+    - Create feature file (e.g., `features/auth/login.feature`) with Gherkin scenarios
     - Create step definition stubs that implement scenario steps (Given, When, Then)
     - Step implementations call actual API endpoints/services with scenario input parameters
     - Step implementations perform assertions/validations with expected results
   - **Run BDD tests** - they FAIL at this point (endpoints/components don't exist)
-  - Document layer breakdown (DB, Backend, Config, Frontend) needed to make BDD tests pass
+  - **Generate implementation plan document** at `/docs/user-stories/<USER-STORY-REF>/implementation-plan.md`:
+    - Layer 1 (Database): Tables, columns, indexes, migrations, models needed
+    - Layer 2 (Backend): API endpoints, services, business logic, validation rules
+    - Layer 3 (Configuration): Routes, DI containers, feature flags, environment variables
+    - Layer 4 (Frontend): Components, state management, API integration, styling
+    - For each layer: List specific files to create/modify, TDD approach, BDD test coverage
+    - Include architectural constraints from `/docs/prd/architecture-design.md`
+    - Include technical specifications from `/docs/prd/tech-spec.md`
+    - Include design requirements from `/docs/design/design-systems.md`
   - Establish architectural requirements from design-systems.md and tech-spec.md
-  - **Assign failing BDD tests + layers to Dev-TDD Agent** - one story at a time
-  - Include: "Make these failing BDD tests pass by implementing layers X, Y, Z"
+  - **Assign failing BDD tests + implementation plan to Dev-TDD Agent** - one story at a time
+  - Include: "Make these failing BDD tests pass by following implementation-plan.md"
   - Include epic context: "This story is part of Epic: [Epic Name]"
-- Key Point: **BDD tests are the entry point** that drive TDD implementation
-- Input: User-stories selected in Phase 1 (each with attached BDD scenarios), user-stories.md, architecture-design.md, tech-spec.md
-- Output: GitHub Issues with integrated, failing BDD tests, ready for Dev-TDD to drive implementation
-- Outcome: Clear failing test requirements drive TDD RED → GREEN → REFACTOR cycles
+- Key Point: **BDD tests are the entry point**, **implementation plan is the roadmap** that drive TDD implementation
+- Input: User-stories selected in Phase 1 (each with attached BDD scenarios), `/docs/user-stories/user-stories.md`, `/docs/prd/architecture-design.md`, `/docs/prd/tech-spec.md`, `/docs/design/design-systems.md`
+- Output: GitHub Issues with integrated failing BDD tests + detailed implementation plans in `/docs/user-stories/<USER-STORY-REF>/implementation-plan.md`
+- Outcome: Clear failing test requirements + structured layer breakdown drive TDD RED → GREEN → REFACTOR cycles
 
-### PHASE 3: TDD DEVELOPMENT EXECUTION (DRIVEN BY BDD TESTS)
-- Dev-TDD Agent implements **ONE user-story at a time** in 4 layers, **driven by failing BDD tests**:
-  1. **Layer 1: Database** (schemas, migrations, indexes) - implement until DB-related BDD test steps pass
+### PHASE 3: TDD DEVELOPMENT EXECUTION (DRIVEN BY BDD TESTS + IMPLEMENTATION PLAN)
+- Dev-TDD Agent implements **ONE user-story at a time** in 4 layers, **guided by implementation plan** and **driven by failing BDD tests**:
+  - **Reference Document**: `/docs/user-stories/<USER-STORY-REF>/implementation-plan.md` (layer breakdown, files, approach)
+  1. **Layer 1: Database** (schemas, migrations, indexes) - follow implementation plan, implement until DB-related BDD test steps pass
   2. **Layer 2: Backend** (APIs, services, business logic) - implement until backend BDD test steps pass
   3. **Layer 3: Configuration** (environment, integration, feature flags) - implement until configuration BDD test steps pass
   4. **Layer 4: Frontend** (UI components, services, styling) - implement until UI BDD test steps pass

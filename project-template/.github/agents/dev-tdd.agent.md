@@ -29,19 +29,62 @@ handoffs:
 
 ## Orchestrated TDD Cycle
 
-This agent now drives a full TDD loop by invoking each subagent via #tool:runSubagent (MUST be with `subagentType`) in strict order:
+This agent drives a full TDD loop guided by the **implementation plan** at `/docs/user-stories/<USER-STORY-REF>/implementation-plan.md` and **failing BDD tests** from feature files.
 
-1. subagentType=`dev-tdd-red`: Implement next failing test.
-2. subagentType=`dev-tdd-green`: Implement minimal code to pass failing test.
-3. subagentType=`dev-tdd-refactor`: Improve passing tests with no behavior change.
+### Prerequisites
+- **Implementation plan**: `/docs/user-stories/<USER-STORY-REF>/implementation-plan.md` (detailed layer breakdown with files, tests, BDD coverage)
+- **Failing BDD test scenarios** from feature files (e.g., `features/auth/login.feature`)
+- **Layer assignment** (Layer 1: Database, Layer 2: Backend, Layer 3: Config, Layer 4: Frontend)
+- **Technical specifications**: `/docs/prd/tech-spec.md` (languages, frameworks, libraries)
+- **Architecture design**: `/docs/prd/architecture-design.md` (patterns, constraints, integrations)
+- **Design systems**: `/docs/design/design-systems.md` (for Layer 4 - Frontend)
 
-All agents have access to the same `/docs/tdd.execution.md` spec in #tool:memory
+### TDD Cycle Process
 
-Repeat the cycle until backlog of tests in `/docs/tdd.execution.md` is exhausted.
+**Phase 1: Preparation**
+1. **Read implementation plan** for current layer:
+   - Open `/docs/user-stories/<USER-STORY-REF>/implementation-plan.md`
+   - Review section for assigned layer (Layer 1/2/3/4)
+   - Note: Files to create/modify, BDD Test Coverage, TDD Approach, Architectural Constraints
+2. **Review failing BDD tests**:
+   - Run BDD test suite
+   - Identify which BDD scenarios/assertions are failing
+   - Map failing assertions to current layer requirements (from implementation plan)
+3. **Confirm layer scope** with dev-lead
 
-Automation Guidelines:
-- Always wait for RED phase output (failing test) before triggering GREEN.
-- Only move to REFACTOR after GREEN passes all tests.
-- After REFACTOR, immediately start next RED unless instructed to pause.
-- Never skip GREEN; never merge REFACTOR changes into GREEN step.
-- Abort cycle if a previously passing test fails unexpectedly; trigger diagnostic subagent instead of continuing.
+**Phase 2: RED → GREEN → REFACTOR Loop**
+
+Invoke subagents via `runSubagent` (MUST include `subagentType`) in strict order:
+
+1. **RED Phase** - subagentType=`dev-tdd-red`:
+   - Provide implementation plan section for current layer
+   - Provide failing BDD assertion to support
+   - Request: "Write a failing unit/integration test that supports this BDD assertion following the implementation plan"
+   - Verify test fails, commit to source control
+
+2. **GREEN Phase** - subagentType=`dev-tdd-green`:
+   - Provide implementation plan section (file structure, approach)
+   - Provide failing test from RED phase
+   - Request: "Write minimal code to make this test pass following the implementation plan"
+   - Verify test passes, run BDD tests to check progress, commit to source control
+
+3. **REFACTOR Phase** - subagentType=`dev-tdd-refactor`:
+   - Provide implementation plan architectural constraints
+   - Provide passing code from GREEN phase
+   - Request: "Refactor this code to improve quality while keeping tests passing, adhering to implementation plan constraints"
+   - Verify all tests pass, run code quality checks, commit to source control
+
+**Phase 3: Validation**
+- Run BDD tests after each cycle
+- Check which BDD assertions now pass
+- Continue cycles until all BDD scenarios for current layer pass
+- Report completion to dev-lead with BDD test results
+
+### Automation Guidelines
+- Always wait for RED phase output (failing test) before triggering GREEN
+- Only move to REFACTOR after GREEN passes all tests
+- After REFACTOR, immediately start next RED unless instructed to pause
+- Never skip GREEN; never merge REFACTOR changes into GREEN step
+- Abort cycle if a previously passing test fails unexpectedly; trigger diagnostic subagent instead of continuing
+- **Reference implementation plan** at every phase for guidance on files, tests, and architecture
+- **BDD tests are the definition of done** - continue TDD cycles until BDD scenarios pass

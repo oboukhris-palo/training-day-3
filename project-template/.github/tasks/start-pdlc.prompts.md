@@ -1,62 +1,70 @@
-# Start PDLC Workflow - Interactive Launcher
+# Start PDLC Workflow
 
-**Purpose**: Launch the complete Product Development Lifecycle (PDLC) workflow from Stage 1 through Stage 8
+## Prerequisites
 
-**Workflow Reference**: [.github/workflows/documents.workflows.md](/.github/workflows/documents.workflows.md)
+Before starting, verify:
+- ✅ Project vision defined
+- ✅ Stakeholders identified
 
-**Orchestrator Agent**: [.github/agents/orchestrator.agent.md](/.github/agents/orchestrator.agent.md)
-
----
-
-## Usage
-
-Copy and paste this prompt to GitHub Copilot Chat to start the PDLC workflow:
+## Command Template
 
 ```
 @orchestrator Start new PDLC workflow for [PROJECT_NAME]
 
-Project Type: [web-application / mobile-app / api-service / desktop-app / other]
-Project Description: [Brief description of what the project will do]
-Initial Requirements: [High-level goals and objectives]
+Project Type: [web-app / mobile / api / other]
+Description: [Brief description]
 
-Orchestrate me through the complete PDLC workflow (8 stages) with the following approach:
+Orchestrate through 8 stages:
 1. Go step-by-step interactively
-2. Present 3 options with pros/cons for all critical decisions (architecture, technology stack, design patterns)
-3. Invoke appropriate agents at each stage with proper subagentType
-4. Maintain todo list tracking all stages and progress
-5. Enforce quality gates and approval processes
-6. Ensure all documents trace back to requirements.md
-7. Pause at decision gates for my input before proceeding
+2. Present 3 options with pros/cons for decisions
+3. Invoke agents with correct subagentType
+4. Track progress via todo list
+5. Enforce quality gates
 
 Start with Stage 1: Requirements Gathering
-- Invoke PM Agent (pm-kickoff) for project charter
-- Invoke PO Agent (po-requirements-analysis) for requirements.md
-- Invoke Architect Agent (architect-requirements-review) for feasibility
-
-Let's begin!
 ```
 
----
+## Stages
 
-## Expected Workflow Execution
+### 1: Requirements (Week 1)
+**Agents**: PM, PO, Architect  
+**Deliverables**: Charter, requirements.md, feasibility  
+**Gates**: Charter approval, Requirements approval
 
-### Stage 1: Requirements Gathering (Week 1)
-**Agents**: PM, PO, Architect
+### 2: Analysis (Week 1-2)
+**Agents**: BA, PO  
+**Deliverables**: personas.md, business-case.md  
+**Gates**: Persona validation, Business case approval
 
-**Orchestrator Actions**:
-1. Invokes PM Agent (pm-kickoff) → Creates project charter
-2. Invokes PO Agent (po-requirements-analysis) → Creates requirements.md
-3. Invokes Architect Agent (architect-requirements-review) → Feasibility assessment
-4. Presents to user for approval
+### 3: Design (Week 2-4)
+**Agents**: UX, Architect, PO  
+**Deliverables**: journey-maps.md, architecture-design.md, user-stories.md, flow-diagrams.md  
+**Gates**: Architecture selection (3 options), UX approval, Stories validation
 
-**Deliverables**:
-- Project charter document
-- docs/prd/requirements.md
-- Feasibility assessment report
+### 4: Planning (Week 4-5)
+**Agents**: Architect, Tech Lead, UX  
+**Deliverables**: tech-spec.md, code-generation.md, design-systems.md  
+**Gates**: Tech stack selection (3 options), Spec approval
 
-**Decision Gates**:
-- ✋ **Gate 1.1**: Project charter approval (PM, PO, Stakeholders)
-- ✋ **Gate 1.2**: Requirements baseline approval (PO, Architect)
+### 5: Testing Strategy (Week 5-6)
+**Agents**: BA, Tech Lead  
+**Deliverables**: Gherkin features, test-strategies.md  
+**Gates**: BDD completeness, Test strategy approval
+
+### 6: Deployment (Week 6)
+**Agents**: PO, Architect, PM  
+**Deliverables**: iteration-planning.md, deployment-plan.md  
+**Gates**: Iteration approval, Deployment readiness
+
+### 7: Development (Weeks 7+)
+**Agents**: Tech Lead, TDD Navigator, BA  
+**Deliverables**: Code, tests, BDD passing  
+**Gates**: Sprint scope (3 options), Story acceptance, Sprint review
+
+### 8: Improvement (Ongoing)
+**Agents**: PO, Architect, PM  
+**Deliverables**: Feedback reports, updated requirements.md  
+**Gates**: Improvement prioritization (3 options)
 
 ---
 

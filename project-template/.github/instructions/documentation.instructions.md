@@ -2,6 +2,21 @@
 - Never summarize the code base modification in an MD file or a document unless i asked for it.
 - Follow up documentation workflow as described in /.github/workflows/documentation.workflows.md
 - Use documentation task prompt from /.github/tasks/documentation.prompts.md
+- All PRD documents are stored in docs/prd/ please make sure you read it in case you need to refer to it.
+- All User Story documents are stored in docs/user-stories/ please make sure you read it in case you need to refer to it.
+- All ux/ui Design documents are stored in docs/design/ please make sure you read it in case you need to refer to it.
+
+## Folder Structure**:
+```
+/docs/
+  ├── prd/                          # All PRD documents (requirements, personas, architecture, tech-spec, etc.)
+  ├── user-stories/                 # User story documents and implementation plans
+  │   ├── user-stories.md           # Master user stories document
+  │   └── <USER-STORY-REF>/         # Individual story folders (e.g., US-001/)
+  │       ├── implementation-plan.md # Layer breakdown and technical approach
+  │       └── bdd-scenarios/        # Story-specific BDD feature files
+  └── design/                       # UX/UI design documents and design systems
+```
 
 ## Diagram Standards
 

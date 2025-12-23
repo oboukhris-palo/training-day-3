@@ -1,67 +1,36 @@
 # Documentation Generation Prompt
 
-## Purpose
+## Parameters
 
-This is a reusable, parameterized prompt for generating complete, detailed, and well-structured technical or functional documentation. Fill in the parameters below and use with an AI agent to create consistent documentation throughout your project lifecycle.
+| Parameter | Example |
+|-----------|---------|
+| {DOCUMENT_NAME} | Title |
+| {DOC_TYPE} | technical/functional |
+| {SCOPE} | application/feature/user-story |
+| {AUDIENCE} | developer/architect/end-user |
+| {PROJECT_CONTEXT} | Brief description |
+| {REQUIREMENTS_REFERENCE} | Path to requirements |
 
----
-
-## How to Use This Prompt
-
-1. **Fill in the Parameters** (Section below)
-2. **Copy the Complete Prompt** (Main Prompt section)
-3. **Replace all {PLACEHOLDERS}** with your filled parameter values
-4. **Invoke with AI Agent** using the complete prompt
-5. **Evaluate** documentation against quality gates
-6. **Refine** prompt if needed based on output quality
-
----
-
-## Parameters to Fill In
-
-Replace these values before using the prompt:
-
-| Parameter | Required | Description | Example |
-|-----------|----------|-------------|---------|
-| `{DOCUMENT_NAME}` | Yes | Title of the documentation | `User Authentication API Specification` |
-| `{DOC_TYPE}` | Yes | `technical` or `functional` | `technical` |
-| `{SCOPE}` | Yes | `application`, `feature`, `user-story`, `installation-guide`, or `developer-guide` | `feature` |
-| `{AUDIENCE}` | Yes | `end-user`, `developer`, `architect`, `devops`, or `business-stakeholder` | `developer` |
-| `{PROJECT_CONTEXT}` | Yes | Brief description of project, tech stack, goals | `E-commerce platform with Spring Boot backend and Angular frontend managing product catalog...` |
-| `{REQUIREMENTS_REFERENCE}` | Yes | Path to requirements document | `/docs/prd/user-stories.md#authentication` |
-| `{EXISTING_DOCUMENTATION}` | Yes | Related documents to reference | `/docs/prd/architecture-design.md, /docs/prd/tech-spec.md` |
-
----
-
-## Complete Prompt
-
-Copy this entire section, replace all {PARAMETERS} with your values, and use with an AI agent:
+## Template
 
 ```
-You are an expert technical and functional documentation specialist.
-Your task is to create a comprehensive, well-structured, complete documentation document.
+Generate documentation:
 
-=== PARAMETERS ===
-Document Name: {DOCUMENT_NAME}
-Document Type: {DOC_TYPE}
-Documentation Scope: {SCOPE}
-Primary Audience: {AUDIENCE}
+Parameters:
+- Name: {DOCUMENT_NAME}
+- Type: {DOC_TYPE}
+- Scope: {SCOPE}
+- Audience: {AUDIENCE}
+- Context: {PROJECT_CONTEXT}
+- Requirements: {REQUIREMENTS_REFERENCE}
 
-Project Context:
-{PROJECT_CONTEXT}
+Guidelines:
 
-Requirements Reference: {REQUIREMENTS_REFERENCE}
-Existing Documentation: {EXISTING_DOCUMENTATION}
-
-=== YOUR TASK ===
-
-Generate a complete, production-ready documentation document following these guidelines:
-
-1. DOCUMENT TYPE
-   - If "technical": Focus on system architecture, components, APIs, data models, 
-     integration points, deployment, security, and technical implementation details.
-   - If "functional": Focus on business logic, user workflows, requirements, 
-     acceptance criteria, data flows, business rules, and processes.
+1. **Type**: technical=architecture/APIs/deployment, functional=workflows/requirements
+2. **Structure**: Overview → Requirements → Design → Implementation → Testing
+3. **Quality**: Clear, complete, examples, diagrams (Mermaid/PlantUML), testable requirements
+4. **Format**: Markdown, hierarchical headings, code blocks, tables
+```
 
 2. SCOPE DEFINITION
    - If "application": Document the entire system at a high level
