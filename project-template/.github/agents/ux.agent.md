@@ -6,18 +6,18 @@ target: vscode
 model: Claude Sonnet 4.5
 tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'semantic_search', 'grep_search', 'runSubagent', 'mcp_talktofigma_join_channel', 'mcp_talktofigma_get_document_info', 'activate_node_management_tools', 'activate_creation_tools', 'activate_annotation_tools']
 handoffs:
-  - label: 📋 BA Functional Specs
-    agent: business-analyst
-    prompt: Create functional specifications based on these designs
-    send: false
-  - label: 💻 Frontend Implementation
-    agent: dev-frontend
-    prompt: Implement these UI designs and components
-    send: false
-  - label: 🎨 Design System
-    agent: design-system-manager
-    prompt: Establish design tokens and component library
-    send: false
+  - label: 🏗️ Hand off to Architect
+    agent: architect
+    prompt: Create architecture-design.md and tech-spec.md based on UX designs and user stories. After completion, hand back to PO for approval.
+    send: true
+  - label: 📊 Back to Product Owner
+    agent: po
+    prompt: UX design artifacts complete. Ready for architecture design or user story refinement.
+    send: true
+  - label: 📋 Hand off to BA
+    agent: ba
+    prompt: Review UX designs and refine functional specifications or BDD scenarios
+    send: true
 ---
 
 ## Agent Profile: Isabella Romano (UX/UI Designer)

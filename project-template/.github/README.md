@@ -1,14 +1,47 @@
-# PDLC Workflow Guide
+# AI-Driven PDLC Orchestration System
 
-## Workflows
+## 🎯 System Overview
 
-**1. documents.workflows.md** (8 stages): Requirements → Production, sequential with approval gates
-**2. implementation.workflows.md** (6 phases): User-story TDD execution (RED-GREEN-REFACTOR), layer-by-layer
-**3. cicd.workflows.md** (3 phases): CI/CD evolution (Bootstrap → Stabilization → Optimization)
+This is an **adaptive, assessment-driven AI orchestration system** that intelligently handles projects at any stage of completion. Instead of guessing which workflow to use, you run one assessment command that tells you exactly where to start.
 
----
+## 🚀 Quick Start (Always Do This First!)
 
-## Epic-Driven Model
+```bash
+@orchestrator Assess project status for [PROJECT_NAME]
+```
+
+This generates a comprehensive report showing:
+- ✓ What documentation exists
+- ✓ What code is implemented
+- ✓ Code quality and test coverage
+- ✓ Project maturity level (0-5)
+- ✓ Recommended next workflow
+
+Then follow the recommendation.
+
+**That's it!** No guessing, no wasted time, no repeated work.
+
+## 📚 Documentation Map
+
+### Start Here (Read First)
+**[ADAPTIVE_WORKFLOW_GUIDE.md](ADAPTIVE_WORKFLOW_GUIDE.md)** - Complete guide (30 minutes)
+
+### Then Use These
+- **[ORCHESTRATION_GUIDE.md](ORCHESTRATION_GUIDE.md)** - Quick command reference
+- **[tasks/README.md](tasks/README.md)** - Launcher guide (assessment-first)
+
+### For Specific Cases
+- **[tasks/assess-project-status.prompts.md](tasks/assess-project-status.prompts.md)** - How assessment works
+- **[tasks/PROJECT_STATUS_WORKFLOWS.md](tasks/PROJECT_STATUS_WORKFLOWS.md)** - Each status explained
+- **[tasks/start-pdlc.prompts.md](tasks/start-pdlc.prompts.md)** - PDLC workflow
+- **[tasks/start-implementation.prompts.md](tasks/start-implementation.prompts.md)** - Implementation workflow
+
+### Detailed References
+- **[agents/orchestrator.agent.md](agents/orchestrator.agent.md)** - Orchestrator logic
+- **[workflows/documents.workflows.md](workflows/documents.workflows.md)** - PDLC details
+- **[workflows/implementation.workflows.md](workflows/implementation.workflows.md)** - Implementation details
+
+## 📊 Project Status Types
 
 **Epics** = Organizational containers (NOT work units)
 **User Stories** = Work units (implement ONE at a time through all 4 layers)

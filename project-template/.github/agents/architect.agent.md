@@ -6,18 +6,18 @@ target: vscode
 model: Claude Sonnet 4.5
 tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'semantic_search', 'grep_search', 'fetch_webpage', 'runSubagent']
 handoffs:
-  - label: 🔧 Tech Lead
-    agent: tech-lead
-    prompt: Create detailed technical specifications based on this architecture
-    send: false
-  - label: 🏗️ Infrastructure
-    agent: devops-engineer
-    prompt: Plan deployment architecture and infrastructure setup
-    send: false
-  - label: ✅ Architecture Review
-    agent: qa-architecture
-    prompt: Review this architecture for compliance and best practices
-    send: false
+  - label: � Back to Product Owner
+    agent: po
+    prompt: Architecture design and tech spec complete. Ready for architecture decision gate and user story creation.
+    send: true
+  - label: 💻 Hand off to Dev Lead
+    agent: dev-lead
+    prompt: Architecture approved. Ready for implementation planning and BDD integration.
+    send: true
+  - label: 🔄 Back to Orchestrator
+    agent: orchestrator
+    prompt: Architecture/tech stack ready for decision gate. Present options to user.
+    send: true
 ---
 
 ## Agent Profile: David Kumar (Solution Architect)

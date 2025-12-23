@@ -74,28 +74,54 @@ project-root/
 
 ## 🤖 Agent Invocation Pattern
 
-**CRITICAL**: Always invoke agents with correct `subagentType`. Never call agents directly without the orchestrator coordinating.
+**CRITICAL**: Use **handoffs for collaborative work**, not `runSubagent`.
+
+### Handoff-Based Collaboration (Same Workspace)
+Agents hand off control to each other while maintaining shared file state:
 
 ```bash
-# Correct: Orchestrator coordinates agent invocation
-@orchestrator Start implementation workflow for ProjectX
+# Correct: Orchestrator coordinates via handoffs
+@orchestrator Start new PDLC workflow for ProjectX
 
-# The orchestrator will automatically:
-# 1. Invoke dev-lead with subagentType="dev-lead-bdd-integration"
-# 2. Invoke dev-tdd-orchestrator for TDD cycles
-# 3. Invoke ba with subagentType="ba-bdd-execution"
-# 4. Present decision gates for user approval
+# The orchestrator will:
+# 1. Present workflow overview and decision gates
+# 2. Hand off to PM → PO → BA → UX → Architect → Dev-Lead → TDD
+# 3. Each agent creates/edits files in shared workspace
+# 4. User makes decisions at gates (architecture, tech stack, sprint scope)
+# 5. Progress is visible incrementally
 ```
 
+**Handoff Chain**:
+```
+Orchestrator (gates) → PM (charter) → PO (requirements.md) → 
+BA (personas.md, business-case.md) → UX (journey-maps.md, design-systems.md) → 
+Architect (architecture-design.md, tech-spec.md) → Dev-Lead (BDD, implementation plan) →
+TDD (RED→GREEN→REFACTOR) → BA (validation) → Orchestrator (acceptance gate)
+```
+
+### When to Use runSubagent (Isolated Research)
+Only for independent research/analysis tasks:
+- Market research reports
+- Competitive analysis
+- Technical feasibility studies (read-only)
+- Code quality metrics (no edits)
+
+**Never use runSubagent for**:
+- Creating/editing project documents
+- Writing code
+- BDD/TDD cycles
+- Any work requiring shared file state
+
 **Agent Registry** (`.github/agents/`):
-- `orchestrator.agent.md` - Master coordinator (use for ALL workflow launches)
-- `pm.agent.md` - Project Manager (subagentTypes: pm-kickoff, pm-sprint-planning)
-- `po.agent.md` - Product Owner (subagentTypes: po-requirements-analysis, po-user-stories, po-feature-acceptance)
-- `ba.agent.md` - Business Analyst (subagentTypes: ba-personas, ba-bdd-scenarios, ba-bdd-execution)
-- `ux.agent.md` - UX Designer (subagentTypes: ux-journey-maps, ux-design-systems)
-- `architect.agent.md` - Solution Architect (subagentTypes: architect-design, architect-tech-spec, architect-deployment)
-- `dev-lead.agent.md` - Tech Lead (subagentTypes: dev-lead-bdd-integration, dev-lead-code-review)
-- `dev-tdd*.agent.md` - TDD Navigators (orchestrator, red, green, refactor phases)
+- `orchestrator.agent.md` - Master coordinator with handoff definitions
+- `pm.agent.md` - Project Manager (handoffs: PO, Architect, Dev-Lead)
+- `po.agent.md` - Product Owner (handoffs: BA, UX, Architect)
+- `ba.agent.md` - Business Analyst (handoffs: UX, Dev-Lead, Orchestrator)
+- `ux.agent.md` - UX Designer (handoffs: Architect, PO, BA)
+- `architect.agent.md` - Solution Architect (handoffs: PO, Dev-Lead, Orchestrator)
+- `dev-lead.agent.md` - Tech Lead (handoffs: TDD, BA, Orchestrator)
+- `dev-tdd.agent.md` - TDD Orchestrator (handoffs: RED/GREEN/REFACTOR agents)
+- `dev-tdd-red/green/refactor.agent.md` - TDD phase agents
 
 ## 📋 Workflow Execution Rules
 

@@ -6,18 +6,18 @@ target: vscode
 model: Claude Sonnet 4.5
 tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'semantic_search', 'grep_search', 'runSubagent', 'manage_todo_list', 'run_in_terminal']
 handoffs:
-  - label: 📊 Product Owner
-    agent: product-owner
-    prompt: Define requirements and priorities for the next sprint
-    send: false
-  - label: 🏗️ Architecture
+  - label: 📊 Hand off to Product Owner
+    agent: po
+    prompt: Create requirements.md from project charter and stakeholder inputs. After completion, hand off to BA for personas and business case.
+    send: true
+  - label: 🏗️ Hand off to Architect
     agent: architect
-    prompt: Design technical approach for this project phase
-    send: false
-  - label: 👥 Team Coordination
-    agent: scrum-master
-    prompt: Organize sprint execution and remove blockers
-    send: false
+    prompt: Review technical specifications and architecture design for this project phase
+    send: true
+  - label: 💻 Hand off to Dev Lead
+    agent: dev-lead
+    prompt: Start sprint planning with approved user stories and BDD scenarios
+    send: true
 ---
 
 ## Agent Profile: Michael Torres (Project Manager)

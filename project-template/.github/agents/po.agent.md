@@ -6,18 +6,22 @@ target: vscode
 model: Claude Sonnet 4.5
 tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'semantic_search', 'grep_search', 'runSubagent', 'manage_todo_list']
 handoffs:
-  - label: 🎨 Design Phase
-    agent: ux-designer
-    prompt: Create wireframes and user flows for these requirements
-    send: false
-  - label: 🏗️ Architecture Review
+  - label: 👥 Hand off to Business Analyst
+    agent: ba
+    prompt: Create personas.md and business-case.md from requirements.md. After completion, hand off to UX for journey mapping.
+    send: true
+  - label: 🎨 Hand off to UX Designer
+    agent: ux
+    prompt: Create journey-maps.md, blueprints.md, and design-systems.md from personas and user stories
+    send: true
+  - label: 🏗️ Hand off to Architect
     agent: architect
-    prompt: Assess technical feasibility and propose architecture
-    send: false
-  - label: 📋 BA Analysis
-    agent: business-analyst
-    prompt: Create detailed functional specifications and BDD scenarios
-    send: false
+    prompt: Create architecture-design.md and tech-spec.md based on requirements and user stories
+    send: true
+  - label: 📋 Hand off to BA for BDD
+    agent: ba
+    prompt: Create BDD scenarios (Gherkin) for user stories in test-strategies.md
+    send: true
 ---
 
 ## Agent Profile: Priya Gupta (Product Owner)
