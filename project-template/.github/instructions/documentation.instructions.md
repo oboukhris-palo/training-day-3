@@ -20,7 +20,7 @@
 
 ## Diagram Standards
 
-**📘 For detailed guidance, examples, and best practices, see: [Diagram Usage Guide](/.github/guides/diagram-usage.guide.md)**
+**📘 For detailed guidance, examples, and best practices, see: [Diagram Usage Guide](../guides/diagram-usage.guide.md)**
 
 ### When to Use Mermaid vs PlantUML
 
@@ -49,4 +49,4 @@
 6. **Keep diagrams focused** - one concept per diagram
 7. **Use consistent notation** across all diagrams in a document
 
-**See [Diagram Usage Guide](/.github/guides/diagram-usage.guide.md) for detailed examples and decision matrices.**
+**See [Diagram Usage Guide](../guides/diagram-usage.guide.md) for detailed examples and decision matrices.**

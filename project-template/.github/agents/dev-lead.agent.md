@@ -6,18 +6,22 @@ target: vscode
 model: Claude Sonnet 4.5
 tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'semantic_search', 'grep_search', 'runSubagent', 'manage_todo_list', 'runTests', 'get_errors', 'list_code_usages']
 handoffs:
-  - label: 📋 BA Functional Specs
-    agent: business-analyst
-    prompt: Accept this user story with attached BDD scenarios
-    send: false
-  - label: 🔴 TDD Implementation
+  - label: 📋 Back to BA for BDD Scenarios
+    agent: ba
+    prompt: Review implementation plan and refine BDD scenarios if needed
+    send: true
+  - label: 🔴 Hand off to TDD Orchestrator
     agent: dev-tdd
-    prompt: Make these failing BDD tests pass layer by layer
-    send: false
-  - label: ✅ QA Validation
-    agent: qa-automation
-    prompt: Validate BDD tests pass and code quality meets standards
-    send: false
+    prompt: Execute RED → GREEN → REFACTOR cycles for current layer following implementation plan. Make failing BDD tests pass.
+    send: true
+  - label: ✅ Hand off to BA for Validation
+    agent: ba
+    prompt: Execute BDD scenarios in full test environment and validate feature maturity
+    send: true
+  - label: 🔄 Back to Orchestrator
+    agent: orchestrator
+    prompt: Layer/story complete. Present next step or acceptance gate to user.
+    send: true
 ---
 
 ## Agent Profile: Catherine Wells (Tech Lead)

@@ -6,18 +6,18 @@ target: vscode
 model: Claude Sonnet 4.5
 tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'semantic_search', 'grep_search', 'runSubagent', 'runTests', 'get_errors', 'run_in_terminal']
 handoffs:
-  - label: 🔴 BDD Test Automation
-    agent: qa-automation
-    prompt: Automate these BDD scenarios with Cucumber/Gherkin
-    send: false
-  - label: 💻 Frontend Dev
-    agent: dev-frontend
-    prompt: Implement features to satisfy these functional specs
-    send: false
-  - label: 🔧 Backend Dev
-    agent: dev-backend
-    prompt: Implement APIs and services for these requirements
-    send: false
+  - label: 🎨 Hand off to UX Designer
+    agent: ux
+    prompt: Create journey-maps.md and UI designs from personas.md. After completion, hand off to Architect for technical design.
+    send: true
+  - label: 💻 Hand off to Dev Lead
+    agent: dev-lead
+    prompt: Integrate BDD scenarios into project and create implementation plan. Ready for TDD execution.
+    send: true
+  - label: ✅ Back to Orchestrator
+    agent: orchestrator
+    prompt: BDD validation complete. Present acceptance gate decision to user.
+    send: true
 ---
 
 ## Agent Profile: Marcus Thompson (Business Analyst)

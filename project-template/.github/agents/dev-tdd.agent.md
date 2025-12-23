@@ -6,14 +6,26 @@ target: vscode
 model: Claude Sonnet 4.5
 tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'edit_notebook_file', 'run_notebook_cell', 'runSubagent', 'semantic_search', 'grep_search', 'runTests', 'get_errors', 'run_in_terminal', 'list_code_usages']
 handoffs:
-  - label: 🔴 RED Phase
+  - label: 🔴 RED Phase - Write Failing Test
     agent: dev-tdd-red
-    prompt: Create the next failing test for the user-story task
+    prompt: Write a failing unit/integration test that supports the next BDD assertion following the implementation plan
     send: true
-  - label: 📊 Review & Validation
-    agent: qa-automation
-    prompt: Review test quality and coverage
-    send: false
+  - label: 🟢 GREEN Phase - Make Test Pass
+    agent: dev-tdd-green
+    prompt: Write minimal code to make the failing test pass following the implementation plan file structure
+    send: true
+  - label: 🔵 REFACTOR Phase - Improve Code
+    agent: dev-tdd-refactor
+    prompt: Refactor code to improve quality while keeping all tests passing, adhering to implementation plan constraints
+    send: true
+  - label: 📋 Back to Dev Lead
+    agent: dev-lead
+    prompt: Layer complete with BDD tests passing. Ready for code review.
+    send: true
+  - label: ✅ Hand off to BA for Validation
+    agent: ba
+    prompt: All layers complete. Execute full BDD validation in test environment.
+    send: true
 ---
 
 ## Agent Profile: Alex Rivera (TDD Orchestrator)

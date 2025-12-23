@@ -1,27 +1,136 @@
 # AI-Driven Workflow Orchestration Guide
 
 **Quick Start:**
-```
+
+For **NEW** projects:
+```bash
 @orchestrator Start new PDLC workflow for [PROJECT_NAME]
+```
+
+For **EXISTING** projects (assess first):
+```bash
+@orchestrator Assess project status for [PROJECT_NAME]
+```
+
+Then follow the recommended workflow from the assessment report.
+
+For **BROWNFIELD** projects (continue implementation):
+```bash
+@orchestrator Continue implementation for [PROJECT_NAME]
+```
+
+---
+
+## 🎯 What This System Does
+
+The AI-driven orchestration system adapts to your project status and coordinates specialized agents through three interconnected workflows:
+
+1. **PDLC Workflow** (8 stages) - Requirements → Analysis → Design → Planning → Testing → Deployment → Development → Improvement
+2. **Implementation Workflow** (6 phases) - Epic Review → Sprint Planning → BDD Integration → TDD Execution → BDD Validation → Code Quality
+3. **CI/CD Workflow** (3 phases) - Bootstrap → Stabilization → Optimization
+
+**Key Innovation**: The system **assesses project maturity** and adapts the starting point, skipping completed work and resuming at the right place.
+
+---
+
+## Project Status Assessment
+
+Before starting, **always assess your project status**:
+
+```bash
+@orchestrator Assess project status for [PROJECT_NAME]
+```
+
+This runs a comprehensive analysis that checks:
+- ✓ Existing PDLC documents (which exist, which are missing)
+- ✓ Implementation status (which user stories are done)
+- ✓ Code quality (test coverage, architecture alignment)
+- ✓ BDD test status (passing vs failing)
+- ✓ Documentation gaps
+
+**Output**: Project maturity report with recommended next steps.
+
+---
+
+## 🗂️ Folder Structure
+
+```
+.github/  
+├── workflows/          # PDLC, Implementation, CI/CD definitions
+├── agents/             # All agent profiles with handoff definitions
+├── templates/          # Document templates
+├── instructions/       # Coding and documentation standards
+├── tasks/              # Workflow launchers and guides
+│   ├── assess-project-status.prompts.md
+│   ├── start-pdlc.prompts.md
+│   ├── start-implementation.prompts.md
+│   └── PROJECT_STATUS_WORKFLOWS.md (this guide)
+└── README.md
+
+docs/
+├── prd/                # All 13 PDLC documents
+│   ├── requirements.md
+│   ├── personas.md
+│   ├── architecture-design.md
+│   └── ... (10 more)
+├── user-stories/       # User stories organized by reference
+│   ├── user-stories.md (master list)
+│   ├── US-001/
+│   │   ├── implementation-plan.md
+│   │   └── bdd-scenarios/
+│   └── US-002/
+│       └── ...
+└── design/             # UX/UI design documents
+
+features/               # BDD feature files
+src/                    # Application source code
+```
+
+## Common Workflows by Project Status
+
+### 1️⃣ NEW Project (No docs, no code)
+```bash
+@orchestrator Start new PDLC workflow for [PROJECT_NAME]
+```
+**Flow**: PDLC Stages 1-8 → Implementation → CI/CD  
+**Timeline**: 3-4 months
+
+### 2️⃣ PDLC In Progress (Some docs, no code)
+```bash
+@orchestrator Resume PDLC workflow at Stage [X] for [PROJECT_NAME]
+```
+**Flow**: Skip completed stages → Continue at Stage X → Implementation  
+**Timeline**: 2-4 weeks
+
+### 3️⃣ Planning Complete (All docs, no code)
+```bash
 @orchestrator Start implementation workflow for [PROJECT_NAME]
-@orchestrator Setup CI/CD pipeline for [PROJECT_NAME]
 ```
+**Flow**: Implementation Phases 1-6 → CI/CD  
+**Timeline**: 4-12 weeks
+
+### 4️⃣ Brownfield (Mixed docs & code)
+```bash
+@orchestrator Continue implementation for [PROJECT_NAME]
+```
+**Flow**: Assess → Skip completed stories → Resume at incomplete → Parallel doc completion  
+**Timeline**: 1-4 weeks
+
+### 5️⃣ Near Complete (Most code done)
+```bash
+@orchestrator Validate and complete implementation for [PROJECT_NAME]
+```
+**Flow**: Fix failing tests → Complete final stories → Prepare deployment  
+**Timeline**: 1-2 weeks
+
+### 6️⃣ Migration Project (New features on existing code)
+```bash
+@orchestrator Start migration for [PROJECT_NAME]
+```
+**Flow**: Document existing → Plan migration → Implement new → Migrate existing  
+**Timeline**: 2-6 months
 
 ---
-
-## Folder Structure
-
-```
-.github/  → workflows, agents, templates, instructions, tasks
-docs/prd/ → All 13 PDLC documents
-docs/user-stories/ → user-stories.md + <US-REF>/implementation-plan.md + bdd-scenarios/
-features/ → BDD feature files
-src/ → Application code
-```
-
----
-
-## �📋 The Three Core Workflows
 
 ### 1. PDLC (8 Stages)
 1-2. Requirements & Analysis → requirements.md, personas.md
@@ -58,15 +167,58 @@ Launcher: `.github/tasks/start-cicd.prompts.md`
 
 ---
 
-## Agents
-- **PM**: Timeline, coordination
-- **PO**: Requirements, PRDs, acceptance
-- **BA**: BDD scenarios, validation
-- **UX**: Design, Figma
-- **Architect**: Architecture, tech decisions
-- **Dev-Lead**: BDD integration, code review
-- **TDD Navigator**: RED-GREEN-REFACTOR
-- **Orchestrator**: Master coordinator
+## 🤖 Agent Coordination
+
+**Handoff-Based Collaboration** (agents work in same workspace):
+- Agents use handoffs to transfer control while maintaining shared context
+- All agents see and edit the same files
+- Incremental progress visible to user
+- Interactive decision gates at critical points
+
+**Handoff Chain**:
+```
+Orchestrator presents workflow options
+    ↓
+PM creates project charter
+    ↓ (handoff)
+PO creates requirements.md
+    ↓ (handoff)
+BA creates personas.md, business-case.md
+    ↓ (handoff)
+UX creates journey-maps.md, blueprints.md, design-systems.md
+    ↓ (handoff)
+Architect creates architecture-design.md, tech-spec.md
+    ↓ (decision gate - orchestrator)
+PO creates user-stories.md
+    ↓ (handoff)
+BA creates BDD scenarios (Gherkin)
+    ↓ (handoff)
+Dev-Lead integrates BDD, creates implementation plan
+    ↓ (handoff)
+TDD executes RED→GREEN→REFACTOR cycles
+    ↓ (handoff)
+BA validates BDD scenarios in full environment
+    ↓ (decision gate - orchestrator)
+Dev-Lead approves code review
+    ↓
+Orchestrator presents next sprint/epic options
+```
+
+**Agent Roles**:
+- **Orchestrator**: Presents options, manages decision gates, coordinates handoffs
+- **PM**: Project charter, timeline, sprint planning
+- **PO**: Requirements, PRDs, user stories, acceptance
+- **BA**: Personas, business case, BDD scenarios, validation
+- **UX**: Journey maps, UI design, design systems (with Figma MCP)
+- **Architect**: Architecture design, tech stack, technical specifications
+- **Dev-Lead**: BDD integration, implementation planning, code review
+- **TDD Navigator**: RED-GREEN-REFACTOR cycles (red/green/refactor agents)
+
+**When Orchestrator Uses runSubagent** (for isolated research only):
+- Market research, competitive analysis
+- Technical feasibility studies  
+- Code quality reports (read-only analysis)
+- Any task that doesn't require editing project files
 
 ---
 
