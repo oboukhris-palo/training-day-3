@@ -202,4 +202,106 @@ ADR, Architecture Diagrams, Tech Stack, Data Model, API Specs, Security Architec
 
 ---
 
+## 🎯 Executable Prompt Templates
+
+### Prompt 1: Requirements Feasibility Review
+
+**When to Use**: PDLC Stage 1 (Requirements Gathering)
+
+**Context Required**: `/docs/prd/requirements.md`, `/docs/prd/business-case.md`, team skill inventory
+
+**Task**: Analyze all functional and non-functional requirements for technical feasibility. For each requirement: assess complexity (LOW/MEDIUM/HIGH), estimate effort, identify risks, recommend mitigation. Flag infeasible requirements, identify gaps, recommend phasing (MVP vs full scope). Scope POCs for high-risk items.
+
+**Output**: Add "Architect Feasibility Review" section to requirements.md with: requirement-by-requirement analysis, infeasible/high-risk items flagged, missing requirements identified, phased approach recommended, POCs scoped with success criteria, budget/timeline impact quantified, clear recommendation (FEASIBLE/CONDITIONAL/INFEASIBLE).
+
+**Quality Gates**: 100% requirement coverage, complexity/effort estimated, risks identified with mitigation, phasing recommended, POCs scoped, budget impact quantified, clear go/no-go recommendation.
+
+**Confidence Threshold**: 90%
+
+**Escalation**: Immediate if >3 requirements infeasible, budget misaligned >30%, missing critical skills, all high-risk POCs required for MVP.
+
+---
+
+### Prompt 2: Architecture Design
+
+**When to Use**: PDLC Stage 3 (Design)
+
+**Context Required**: `/docs/prd/requirements.md` (approved), `/docs/design/journey-maps.md`, `/docs/design/blueprints.md`, scale projections
+
+**Task**: Design system architecture with 3 pattern options (Monolithic/Microservices/Modular Monolith). For each: describe with diagram, list pros/cons, estimate cost, assess complexity, evaluate team fit. Recommend one with rationale. Create C4 diagrams (Context, Container, Component, Deployment). Document data flow for critical journeys. Define quality attributes (scalability, security, availability). Create ADRs for key decisions.
+
+**Output**: Save to `/docs/prd/architecture-design.md` with: 3 architecture options with pros/cons/cost, clear recommendation with rationale, C4 diagrams (all 4 levels), data flow diagrams (critical paths), quality attributes addressed, technology stack overview, ADRs for key decisions, NFR mapping to strategies, risks with mitigation, cost estimate ($/month).
+
+**Quality Gates**: 3 options presented, clear recommendation, C4 diagrams complete, critical data flows mapped, quality attributes addressed, ADRs documented, costs estimated, risks identified.
+
+**Confidence Threshold**: 95%
+
+**Escalation**: Immediate if stakeholders disagree on pattern, budget insufficient, team lacks skills, requirements change significantly.
+
+---
+
+### Prompt 3: Technology Stack Selection
+
+**When to Use**: PDLC Stage 4 (Planning) - After architecture approved
+
+**Context Required**: `/docs/prd/architecture-design.md` (approved), team skills, budget
+
+**Task**: Select specific technologies for each layer with 3 options per decision (frontend framework, backend language/framework, database, hosting/cloud). For each option: list pros/cons, assess learning curve, evaluate community/maturity, estimate cost. Recommend technology with rationale based on team skills, budget, timeline, architecture alignment. Document supporting technologies (caching, queue, monitoring).
+
+**Output**: Add "Technology Stack" section to `/docs/prd/tech-spec.md` with: 3 options per technology decision, pros/cons for each, clear recommendation with rationale, team skills considered, budget impact quantified, tech stack summary table, development environment setup, decision rationale summary, risks with mitigation, training needs identified.
+
+**Quality Gates**: 3 options per tech decision, pros/cons complete, clear recommendations, team skills considered, budget quantified, stack summary table, dev setup documented, risks identified.
+
+**Confidence Threshold**: 90%
+
+**Escalation**: Immediate if team lacks critical skills, budget insufficient, stakeholders request different tech, new requirements demand different stack.
+
+---
+
+### Prompt 4: Technical Specification
+
+**When to Use**: PDLC Stage 4 (Planning) - After tech stack approved
+
+**Context Required**: `/docs/prd/architecture-design.md`, `/docs/prd/user-stories.md`, `/docs/design/blueprints.md`, tech stack decisions
+
+**Task**: Create detailed technical specifications with complete database schema (all tables with constraints, indexes), all API endpoints (request/response schemas, error responses), data models with types, security specifications (authentication flow, authorization middleware). Map endpoints to user stories and BDD scenarios. Document validation rules, error handling patterns, performance considerations.
+
+**Output**: Save to `/docs/prd/tech-spec.md` with: complete database schema (SQL DDL), all API endpoints (REST/GraphQL specs), data models with TypeScript types, security specifications, endpoint-to-story mapping, validation rules, error handling patterns, performance strategies.
+
+**Quality Gates**: All tables defined with constraints/indexes, all endpoints specified, error responses documented, endpoints mapped to stories, data models with types, security specs complete, validation documented.
+
+**Confidence Threshold**: 95%
+
+**Escalation**: Immediate if API design unclear, schema conflicts with requirements, security approach insufficient, performance targets unachievable.
+
+---
+
+### Prompt 5: Deployment Planning
+
+**When to Use**: PDLC Stage 6 (Deployment)
+
+**Context Required**: `/docs/prd/architecture-design.md`, tech stack, infrastructure budget
+
+**Task**: Design deployment strategy with all environments (dev/test/staging/prod), CI/CD pipeline (test, build, deploy stages), Infrastructure as Code (Terraform/CloudFormation), deployment procedures, rollback plan, monitoring/alerting strategy. Define health checks, scaling policies, backup/recovery procedures. Document deployment checklist and runbooks.
+
+**Output**: Save to `/docs/prd/deployment-plan.md` with: all environments defined, CI/CD pipeline (GitHub Actions YAML), IaC templates (Terraform), deployment procedures with checklist, rollback plan, monitoring metrics and alerts, scaling policies, backup/recovery procedures, cost breakdown by environment.
+
+**Quality Gates**: All environments defined, CI/CD pipeline specified, IaC templates complete, deployment procedures documented, rollback plan defined, monitoring/alerts specified, costs estimated.
+
+**Confidence Threshold**: 90%
+
+**Escalation**: Immediate if infrastructure requirements unclear, CI/CD too complex, monitoring insufficient, disaster recovery undefined.
+
+---
+
+## 📊 Quality Thresholds
+
+- **Feasibility Review**: 92% minimum (all requirements analyzed, risks identified, phasing recommended)
+- **Architecture Design**: 95% minimum (3 options, C4 diagrams, quality attributes, ADRs)
+- **Tech Stack Selection**: 90% minimum (3 options per tech, team considered, budget quantified)
+- **Technical Specification**: 95% minimum (complete schema, all APIs, security specs)
+- **Deployment Planning**: 90% minimum (all envs, CI/CD, IaC, monitoring)
+
+---
+
 This agent ensures that every IT project has a solid technical foundation, with architectural decisions that enable scalability, security, and maintainability from day one. The architect is most active during kickoff but remains available for consultation throughout implementation.

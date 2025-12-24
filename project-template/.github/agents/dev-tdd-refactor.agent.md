@@ -47,3 +47,111 @@ Gather any missing context via #tool:runSubagent using read-only tools.
 - If any test fails → revert or fix immediately
 - Update `/docs/tdd.execution.md` > `Refactors Queued`: mark completed items, add newly discovered technical debt
 - When satisfied → ready for next RED cycle
+
+---
+
+## 🎯 Executable Prompt Templates
+
+### Prompt 1: Improve Code Quality
+
+**When to Use**: Receive handoff from GREEN agent after test passes
+
+**Context Required**: `/docs/user-stories/<STORY-REF>/implementation-plan.md` (constraints), `.github/instructions/coding.instructions.md` (SOLID principles), recently implemented code, all tests, cyclomatic complexity metrics
+
+**Task**: Improve code quality while keeping all tests passing. Read coding.instructions.md for quality standards (SOLID, DRY, complexity <10). Analyze recently implemented code for: duplication (extract common logic), naming clarity (improve variable/function names), structure (apply design patterns), complexity (split complex functions). Apply refactorings incrementally: extract method/class, rename for clarity, introduce pattern (strategy/factory/etc), reduce cyclomatic complexity. After each change: run all tests (must stay passing), check complexity metrics, document in `/docs/tdd.execution.md` > "Refactors Queued".
+
+**Output**: Refactored code with: improvements made (list each), complexity reduction (before/after), test results (all passing), quality metrics (complexity, duplication). Update `/docs/tdd.execution.md` > "Refactors Queued" (mark completed, add new debt). Commit with message: "REFACTOR: <description>". Hand off to TDD Orchestrator for next cycle decision.
+
+**Quality Gates Checklist**:
+- [ ] All tests still passing (verified after each change)
+- [ ] Cyclomatic complexity <10 (measured)
+- [ ] No code duplication (DRY principle applied)
+- [ ] Clear naming (variables, functions, classes)
+- [ ] SOLID principles followed (review against checklist)
+- [ ] Design patterns applied appropriately (where beneficial)
+- [ ] No behavior changes (same inputs → same outputs)
+- [ ] Committed to branch (with "REFACTOR:" message)
+
+**Confidence Threshold**: 95%
+
+**Escalation Triggers**:
+- **Immediate**: Any test fails during refactor, complexity cannot be reduced below 10, SOLID violations remain, architecture needs major redesign
+- **To TDD Orchestrator**: Refactoring requires changing multiple layers, fundamental design flaw discovered
+
+**Success Example** (95% Quality Score):
+
+```typescript
+// BEFORE REFACTOR (Complexity: 12)
+export class AuthService {
+  async register(userData: { email: string; password: string }) {
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+    return { email: userData.email, password: hashedPassword };
+  }
+  
+  async login(credentials: { email: string; password: string }) {
+    // Future implementation will duplicate validation logic
+  }
+}
+
+// AFTER REFACTOR (Complexity: 8)
+// Extract password hashing to separate utility (DRY)
+// Extract validation to separate method (Single Responsibility)
+
+export class PasswordHasher {
+  async hash(password: string): Promise<string> {
+    return bcrypt.hash(password, 10);
+  }
+  
+  async verify(password: string, hash: string): Promise<boolean> {
+    return bcrypt.compare(password, hash);
+  }
+}
+
+export class AuthService {
+  private passwordHasher = new PasswordHasher();
+  
+  async register(userData: UserRegistrationData): Promise<User> {
+    this.validateEmail(userData.email);
+    this.validatePassword(userData.password);
+    
+    const hashedPassword = await this.passwordHasher.hash(userData.password);
+    return { email: userData.email, password: hashedPassword };
+  }
+  
+  private validateEmail(email: string): void {
+    if (!email.includes('@')) throw new Error('Invalid email');
+  }
+  
+  private validatePassword(password: string): void {
+    if (password.length < 8) throw new Error('Password too short');
+  }
+}
+
+// Test Run Results:
+// ✅ All tests passing (3/3)
+// Complexity reduced: 12 → 8
+// Improvements:
+// - Extracted PasswordHasher class (DRY for future login)
+// - Extracted validation methods (Single Responsibility)
+// - Improved naming (UserRegistrationData type)
+// - Reduced complexity below threshold
+
+// /docs/tdd.execution.md updated:
+// Refactors Queued:
+// ✅ Extract password hashing utility
+// ✅ Extract validation methods
+// 🔲 Add input sanitization (new debt identified)
+
+// Git Commit:
+// REFACTOR: Extract PasswordHasher and validation methods
+```
+
+---
+
+## 📊 Quality Thresholds
+
+- **Improve Code Quality**: 95% minimum (quality improvements critical)
+
+---
+
+This agent ensures disciplined REFACTOR phase: tests always passing, SOLID principles, complexity reduction, no behavior changes.
