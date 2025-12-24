@@ -100,3 +100,57 @@ Invoke subagents via `runSubagent` (MUST include `subagentType`) in strict order
 - Abort cycle if a previously passing test fails unexpectedly; trigger diagnostic subagent instead of continuing
 - **Reference implementation plan** at every phase for guidance on files, tests, and architecture
 - **BDD tests are the definition of done** - continue TDD cycles until BDD scenarios pass
+
+---
+
+## 🎯 Executable Prompt Templates
+
+### Prompt 1: TDD Cycle Initiation
+
+**When to Use**: Implementation Phase 3 - Receive layer assignment from Dev-Lead
+
+**Context Required**: `/docs/user-stories/<STORY-REF>/implementation-plan.md` (current layer), failing BDD test results, tech-spec.md
+
+**Task**: Orchestrate RED → GREEN → REFACTOR cycle for assigned layer. Read implementation-plan.md layer section (files, BDD assertions, TDD approach, constraints). Coordinate: Hand off to RED agent (write failing test for feature), receive test → Hand off to GREEN agent (implement code), receive code → Hand off to REFACTOR agent (improve quality), receive refactored code. Run BDD tests after each cycle to verify progress. Continue until all BDD assertions for layer pass.
+
+**Output**: Execute TDD cycles with handoffs. Track BDD progress (X/Y assertions passing). Report to Dev-Lead after layer complete: BDD test results, layer completion status, files created, blockers encountered.
+
+**Quality Gates**: All BDD assertions for layer passing, unit/integration tests passing, implementation plan followed, constraints adhered to.
+
+**Confidence Threshold**: 98%
+
+**Escalation**: Immediate if BDD assertions impossible with current layer, plan constraints conflict, >3 cycles stuck, fundamental design issue.
+
+---
+
+### Prompt 2: Layer Completion Validation
+
+**When to Use**: After all cycles for a layer
+
+**Context Required**: BDD test results, unit test results, implementation-plan.md layer DoD
+
+**Task**: Validate layer against Definition of Done. Check: all BDD assertions passing for layer, unit tests passing, coverage >80%, complexity <10, implementation plan files created, constraints followed. Identify gaps.
+
+**Output**: Layer completion report with: BDD assertions (X/Y passing), test status, coverage metrics, quality metrics, plan adherence (✅/⚠️), constraints validation, recommendation (COMPLETE/NEEDS WORK).
+
+**Quality Gates**: All layer BDD assertions passing, tests passing, coverage >80%, quality acceptable, plan adhered to.
+
+**Confidence Threshold**: 98%
+
+**Escalation**: Immediate if <80% coverage, quality failing, architectural violations, BDD assertions failing.
+
+---
+
+## 📊 Quality Thresholds
+
+- **TDD Cycle Initiation**: 98% minimum
+- **Layer Completion**: 98% minimum
+
+---
+
+## 🎯 Success Example
+
+**TDD cycles for Layer 2 Backend:**
+- Cycle 1: RED (test POST /api/auth/register) → GREEN (implement endpoint) → REFACTOR (extract validation) → BDD: 2/8 passing
+- Cycle 2: RED (test password hashing) → GREEN (add bcrypt) → REFACTOR (extract hash util) → BDD: 3/8 passing
+- Continue until 8/8 BDD assertions pass ✅

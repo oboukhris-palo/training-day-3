@@ -18,8 +18,8 @@ Strict workflow for generating 13 PRD documents through PDLC stages. Each docume
 | **BA** | Requirements analysis, BDD | personas, business-case, bdd-scenarios, bdd-execution | 2, 5, 7 | Persona accuracy, test completeness |
 | **UX** | UX design, journey mapping | journey-maps, blueprints, design-systems | 3, 4 | UX/UI decisions, accessibility |
 | **Architect** | System architecture, tech stack | requirements-review, tech-spec, design, flow-diagrams, deployment, impact-assessment | 1-4, 6, 8 | Architecture, technology, security |
-| **Dev-Lead** | Technical execution, TDD | tech-spec, code-generation, test-strategies, sprint-planning | 4, 5, 7 | Implementation plans, test strategy |
-| **TDD Navigator** | Test-driven development | tdd-red, tdd-green, tdd-refactor | 7 | Code quality, test coverage |
+| **Dev-Lead** | Technical execution, TDD orchestration | tech-spec-review, bdd-integration, implementation-planning, code-review | 4, 5, 7 | Implementation plans, code quality |
+| **TDD Orchestrator** | Layer-by-layer TDD execution | layer-execution, tdd-cycle-coordination | 7 | Layer completion, BDD test validation |
 
 ---
 
@@ -133,11 +133,25 @@ Strict workflow for generating 13 PRD documents through PDLC stages. Each docume
 ## STAGE 7: DEVELOPMENT & TESTING EXECUTION
 
 **Inputs**: All Stage 1-6 docs (approved), particularly user-stories.md, tech-spec.md, test-strategies.md
-**Agents**: Dev-Lead (orchestration), TDD Navigator (execution), BA (validation), PO (acceptance)
+**Agents**: Dev-Lead (sprint orchestration), TDD Orchestrator (layer execution), BA (validation), PO (acceptance)
 
-**Process**: Dev-Lead (`dev-lead-sprint-planning`) → Plan sprints | For each story: TDD Navigator (RED-GREEN-REFACTOR cycles) → BA (`ba-bdd-execution`) validates → PO (`po-feature-acceptance`) accepts
+**Refined Process with Clear Role Boundaries**:
+1. **Dev-Lead** (`dev-lead-sprint-planning`) → Plan sprint scope + create implementation plans
+2. **Dev-Lead** (`dev-lead-bdd-integration`) → Setup BDD feature files + assign Layer 1 to TDD Orchestrator  
+3. **TDD Orchestrator** (`tdd-layer-execution`) → Execute RED-GREEN-REFACTOR cycles for Layer 1
+4. **Dev-Lead** (`dev-lead-layer-review`) → Approve Layer 1 completion, assign Layer 2 
+5. **TDD Orchestrator** → Execute Layer 2 (repeat for Layers 3-4)
+6. **Dev-Lead** (`dev-lead-story-review`) → Final code review when all layers complete
+7. **BA** (`ba-bdd-execution`) → Validate story in full test environment
+8. **PO** (`po-feature-acceptance`) → Accept story
 
-**TDD Cycle**: RED (failing test) → GREEN (minimal code) → REFACTOR (improve quality) | Entry: Failing BDD tests | Exit: All BDD tests pass
+**Key Clarifications**:
+- **Dev-Lead Domain**: Strategic orchestration (sprint/story/architecture compliance)
+- **TDD Orchestrator Domain**: Tactical execution (layer-by-layer TDD cycles)
+- **Handoff Trigger**: Implementation plan ready + failing BDD tests + layer assignment
+- **Return Trigger**: Layer complete + BDD assertions passing + code committed
+
+**TDD Cycle per Layer**: RED (failing test supporting BDD) → GREEN (minimal code) → REFACTOR (improve quality) | **Entry**: Failing BDD tests for layer | **Exit**: Layer BDD tests pass
 
 **Output**: Working features, test reports, deployment-ready artifacts
 

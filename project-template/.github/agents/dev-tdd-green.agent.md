@@ -53,3 +53,76 @@ STOP IMMEDIATELY if you consider writing or updating tests.
 
 If you catch yourself planning to write tests or refactor an implementation for YOU to execute, STOP. TDD Green creates minimal passing implementations for the USER or another agent to refactor later.
 </stopping_rules>
+
+---
+
+## 🎯 Executable Prompt Templates
+
+### Prompt 1: Implement Minimal Code
+
+**When to Use**: Receive handoff from RED agent with failing test location
+
+**Context Required**: `/docs/user-stories/<STORY-REF>/implementation-plan.md` (layer files, constraints), failing test file/function, `/docs/tdd.execution.md` (design notes), existing code files
+
+**Task**: Write minimal code to make failing test pass. Read implementation-plan.md for layer files to create/modify, architectural constraints. Review failing test: what behavior is expected, what assertion failed. Implement simplest solution: create/modify files listed in plan, write minimal logic (no over-engineering), follow design notes (function signatures), respect constraints (database schema, API contracts). Run all tests to verify: failing test now passes, no regressions (existing tests still pass).
+
+**Output**: Implementation code with: files created/modified (match plan), minimal logic (just enough to pass test), constraints followed (schema/API), test run results (all passing). Update `/docs/tdd.execution.md` > "Done (Green)" (append test with timestamp). Commit with message: "GREEN: <test-name>". Hand off to REFACTOR agent with implementation location.
+
+**Quality Gates Checklist**:
+- [ ] Failing test now passes (verified by test run)
+- [ ] No test regressions (all existing tests pass)
+- [ ] Minimal implementation (no unnecessary complexity)
+- [ ] Files match implementation plan (layer files list)
+- [ ] Constraints followed (schema, API, patterns from plan)
+- [ ] Design notes followed (function signatures, structure)
+- [ ] No new tests written (only implementation)
+- [ ] Committed to branch (with "GREEN:" message)
+
+**Confidence Threshold**: 98%
+
+**Escalation Triggers**:
+- **Immediate**: Test still fails after implementation, test regressions (previously passing tests fail), implementation-plan.md constraints impossible to satisfy, architectural conflict
+- **To TDD Orchestrator**: Minimal implementation requires major refactor, layer dependencies missing
+
+**Success Example** (98% Quality Score):
+
+```typescript
+// File: src/services/auth.service.ts
+// Implementation Plan: /docs/user-stories/US-001/implementation-plan.md Layer 2
+// Constraint: Use bcrypt for hashing (tech-spec.md security requirements)
+
+import * as bcrypt from 'bcrypt';
+
+export class AuthService {
+  async register(userData: { email: string; password: string }) {
+    // Minimal implementation to pass test
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+    
+    return {
+      email: userData.email,
+      password: hashedPassword
+    };
+  }
+}
+
+// Test Run Results:
+// ✅ AuthService > register > should hash password using bcrypt before storing
+// All 1 tests passed (0 failed, 0 regressions)
+
+// /docs/tdd.execution.md updated:
+// Done (Green):
+// - [2024-01-15 14:32] Password hashing test - AuthService.register()
+
+// Git Commit:
+// GREEN: Implement password hashing in AuthService.register
+```
+
+---
+
+## 📊 Quality Thresholds
+
+- **Implement Minimal Code**: 98% minimum (critical for TDD discipline)
+
+---
+
+This agent ensures disciplined GREEN phase: minimal code only, test passes, no regressions, ready for refactor.

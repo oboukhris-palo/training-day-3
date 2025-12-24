@@ -242,4 +242,157 @@ Drive technical execution of features from business requirements through validat
 **Collaboration**: Mob programming, code reviews, knowledge sharing  
 **Traceability**: Clear links from BDD scenarios → layer breakdown → TDD cycles → passing tests  
 **Verification**: Rigorous testing at every layer with BDD tests as acceptance criteria
+
+---
+
+## 🎯 Executable Prompt Templates
+
+### Prompt 1: Tech Spec Review & Validation
+
+**When to Use**: PDLC Stage 4 (Planning) - After architect creates tech-spec.md
+
+**Context Required**: `/docs/prd/tech-spec.md`, `/docs/prd/architecture-design.md`, `/docs/prd/user-stories.md`
+
+**Task**: Review technical specifications for implementability. Validate: database schema supports all user stories, API endpoints cover all story requirements, data models match wireframes, security specs are complete, performance strategies are concrete. Identify gaps, ambiguities, or conflicts. Recommend clarifications or changes.
+
+**Output**: Add "Tech Lead Review" section to tech-spec.md with: validation results per section (schema/APIs/models/security), gaps identified with user story references, ambiguities flagged, recommendations for clarification, implementation risks with mitigation, approval status (APPROVED/NEEDS REVISION).
+
+**Quality Gates**: All sections reviewed, gaps identified with story references, ambiguities documented, recommendations concrete, risks assessed, clear approval decision.
+
+**Confidence Threshold**: 90%
+
+**Escalation**: Immediate if >5 gaps, fundamental schema issues, API design conflicts with requirements, security specs insufficient, unclear implementation path for >20% of stories.
+
+---
+
+### Prompt 2: BDD Integration (Feature File Creation)
+
+**When to Use**: Implementation Phase 1 (Epic Review) - Receive user story from BA
+
+**Context Required**: User story with BDD scenarios from BA, `/docs/prd/tech-spec.md`, project structure
+
+**Task**: Integrate BDD scenarios into project as failing tests. Create story folder `/docs/user-stories/<STORY-REF>/`. Create feature file in project `features/<epic>/<story-ref>.feature` with Gherkin scenarios from BA. Create step definitions file with stubs calling actual APIs/components. Copy feature file to `/docs/user-stories/<STORY-REF>/bdd-scenarios/` for reference. Run BDD tests to verify they fail. Document failing test summary.
+
+**Output**: Files created: `/docs/user-stories/<STORY-REF>/` folder, `features/<epic>/<story-ref>.feature`, `features/<epic>/<story-ref>.steps.ts`, `/docs/user-stories/<STORY-REF>/bdd-scenarios/<story-ref>.feature` (copy). Run test command and document failing scenarios in `/docs/user-stories/<STORY-REF>/failing-tests-summary.md`.
+
+**Quality Gates**: Feature file created in project, step definitions with API/component calls (not mocks), BDD tests run and fail as expected, failing scenarios documented, traceability to user story maintained.
+
+**Confidence Threshold**: 95%
+
+**Escalation**: Immediate if BDD scenarios ambiguous, unclear API endpoints to call, missing design specs for UI assertions, test framework not configured.
+
+---
+
+### Prompt 3: Implementation Plan Creation
+
+**When to Use**: Implementation Phase 2 (Sprint Planning) - After BDD integration
+
+**Context Required**: `/docs/user-stories/<STORY-REF>/bdd-scenarios/`, `/docs/prd/tech-spec.md`, `/docs/prd/architecture-design.md`, `/docs/design/design-systems.md`
+
+**Task**: Create detailed layer-by-layer implementation plan. For each layer (Database → Backend → Config → Frontend): specify files to create/modify, BDD assertions covered by this layer, TDD approach with suggested test cases, architectural constraints from architecture-design.md, design specs from design-systems.md, estimated complexity. Define implementation sequence, dependencies, parallel work opportunities, risk areas. Document Definition of Done: all BDD scenarios passing, >80% coverage, code reviewed, specs met.
+
+**Output**: Save to `/docs/user-stories/<STORY-REF>/implementation-plan.md` with header (story ref, epic, BDD link, failing test summary), Layer 1-4 sections (files, BDD coverage, TDD approach, constraints, complexity), implementation sequence, Definition of Done.
+
+**Quality Gates**: All 4 layers planned, files specified, BDD assertions mapped to layers, TDD approach suggested, architectural constraints referenced, design specs referenced, sequence defined, dependencies identified, DoD clear.
+
+**Confidence Threshold**: 95%
+
+**Escalation**: Immediate if layer dependencies unclear, BDD-to-layer mapping ambiguous, architectural constraints conflict, design specs incomplete, complexity estimate uncertain >50%.
+
+---
+
+### Prompt 4: Code Review & Approval
+
+**When to Use**: Implementation Phase 5 (Code Quality & Review) - After TDD execution
+
+**Context Required**: Implementation code, `/docs/user-stories/<STORY-REF>/implementation-plan.md`, `/docs/prd/tech-spec.md`, BDD test results
+
+**Task**: Conduct comprehensive code review against 13-point checklist from coding.instructions.md: SOLID principles, test coverage >80%, cyclomatic complexity <10, security best practices, error handling, documentation, no code smells, performance considerations, architectural alignment, design patterns, code style, tech spec adherence, BDD scenarios passing. Provide detailed feedback per layer. Approve or request changes with specific action items.
+
+**Output**: Create `/docs/user-stories/<STORY-REF>/code-review-report.md` with: 13-point checklist results (✅/⚠️/❌), per-layer feedback (Database/Backend/Config/Frontend), BDD test results (X/Y passing), test coverage metrics, code quality metrics (complexity, duplication), security scan results, performance benchmarks, approval decision (APPROVED/CHANGES REQUESTED/REJECTED), action items if changes requested.
+
+**Quality Gates**: All 13 checklist items evaluated, per-layer feedback provided, BDD tests status reported, coverage measured, metrics captured, security scanned, performance benchmarked, clear decision with rationale.
+
+**Confidence Threshold**: 95%
+
+**Escalation**: Immediate if <80% coverage, critical security issues, architectural violations, >3 BDD scenarios failing, performance below targets, fundamental design flaws.
+
+---
+
+## 📊 Quality Thresholds
+
+- **Tech Spec Review**: 92% minimum (all sections validated, gaps identified, clear approval)
+- **BDD Integration**: 98% minimum (feature files created, tests fail correctly, step definitions complete)
+- **Implementation Plan**: 95% minimum (all layers planned, BDD mapped, constraints documented, DoD clear)
+- **Code Review**: 95% minimum (13-point checklist complete, metrics captured, clear decision)
+
+---
+
+## 🚨 Escalation Triggers
+
+**Immediate Escalation**:
+- Tech spec has >5 gaps or fundamental issues
+- BDD scenarios ambiguous or unimplementable
+- Implementation plan layer dependencies unresolvable
+- Code review reveals critical security issues or architectural violations
+- >3 BDD scenarios still failing after TDD execution
+- Test coverage <80%
+- Performance significantly below targets
+
+**Weekly Escalation**:
+- Tech spec needs >3 iterations
+- BDD integration blocked by missing infrastructure
+- Implementation plan complexity estimates off by >50%
+- Code reviews consistently finding same issues (team training needed)
+
+---
+
+## 🎯 Success Example
+
+### Implementation Plan Excerpt (Quality Score: 96%)
+
+```markdown
+## Layer 2 - Backend Logic
+
+### Files to Create
+- `src/controllers/AuthController.ts` (registration endpoint)
+- `src/services/AuthService.ts` (business logic: hash password, create user, generate token)
+- `src/services/EmailService.ts` (send verification email)
+- `src/validators/RegisterValidator.ts` (Joi schema for email/password validation)
+- `src/middlewares/RateLimitMiddleware.ts` (5 attempts/hour per IP)
+
+### BDD Test Coverage
+After this layer, these assertions will pass:
+- ✅ "I should receive HTTP 201 Created" (POST /api/auth/register)
+- ✅ "I should receive a verification token in database" (tokens table)
+- ✅ "Email service should be called with verification link" (EmailService mock verified)
+- ⏳ "I should receive email within 60 seconds" (Layer 3: Background worker)
+
+### TDD Approach
+1. **RED**: Write unit test for AuthService.register() expecting hashed password
+2. **GREEN**: Implement bcrypt hashing (cost factor 12)
+3. **RED**: Write integration test for POST /api/auth/register expecting 201
+4. **GREEN**: Implement AuthController calling AuthService
+5. **REFACTOR**: Extract validation to RegisterValidator
+6. **RED**: Write test for rate limiting (6th request returns 429)
+7. **GREEN**: Implement RateLimitMiddleware with Redis
+8. **REFACTOR**: Clean up error responses
+
+### Architectural Constraints
+- Use Sequelize ORM for database access (from architecture-design.md)
+- JWT tokens with 15-minute expiry (from tech-spec.md)
+- Password hashing: bcrypt cost factor 12 (from tech-spec.md)
+- Rate limiting: Redis-backed (from architecture-design.md)
+
+### Estimated Complexity
+- Story Points: 5
+- Hours: 16 (2 days)
+- Risk: MEDIUM (email service integration external dependency)
+```
+
+✅ **Why 96%**: Files specified, BDD mapped clearly, TDD steps concrete, constraints referenced, complexity estimated, risk noted.
+
+---
+
+This Tech Lead agent now has 4 comprehensive executable prompts ensuring disciplined BDD-driven TDD with clear plans, quality gates, and traceability from failing tests to approved code.
  
