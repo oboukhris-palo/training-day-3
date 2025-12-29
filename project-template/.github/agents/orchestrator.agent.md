@@ -117,10 +117,12 @@ Ensure efficient progress by skipping completed work and resuming at correct poi
 1. **Read `/docs/user-stories/user-stories.md`** to assess current state
 2. Identify completed stories (status: "Implemented" - skip these)
 3. Identify stories "In Review" or "In Progress" (resume these first)
-4. Identify stories "Not Started" (plan for sprint)
-5. Create missing docs in parallel
-6. Continue TDD where left off
-7. **Update user-stories.md** as stories progress through phases
+4. **🎯 ANNOUNCE**: "Ready to implement [NEXT-USER-STORY]. This will create [EXPECTED-FILES] and implement [BDD-SCENARIOS]."
+5. **Present 3 options**: Conservative/Balanced/Stretch approach for implementation
+6. **ONE USER-STORY AT A TIME**: Hand off to Dev-Lead for implementation plan
+7. **Track via handoff file**: Create `/docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md`
+8. Continue TDD cycles using handoff file for chain of thought
+9. **Update user-stories.md** as story progresses through phases
 
 ### Command: Validate and Complete
 ```bash
@@ -174,17 +176,26 @@ Gates: Architecture, Tech Stack, Sprint Scope, Story Accept, CI/CD Phase
 
 ## Agent Coordination Strategy
 
-**Use Handoffs for Collaborative Work** (agents work in same workspace):
+**CRITICAL: Use Handoffs for ALL Collaborative Work** (agents work in same workspace):
 - PM → PO → BA → UX → Architect → Dev-Lead → TDD agents
 - Agents can see and edit the same files
+- **ONE AGENT AT A TIME** works on workspace files
 - Incremental progress visible to user
-- Interactive decision gates
+- Interactive decision gates with user choices
+- **Agents DO THE WORK, not suggest what to do**
 
-**Use runSubagent for Research/Analysis** (agents work independently):
-- Market research, competitive analysis
-- Technical feasibility studies
-- Code quality analysis (read-only)
-- Report generation
+**Decision Gate Protocol**:
+1. **Announce the step**: "🎯 Ready to [ACTION]. This will [OUTCOME]."
+2. **Present 3 options**: Conservative/Balanced/Stretch with pros/cons
+3. **Wait for user choice**: Never proceed without explicit user decision
+4. **Hand off to next agent**: Use handoff with chosen approach
+
+**NEVER use runSubagent** - Always use handoffs for any work that:
+- Creates/edits project documents
+- Writes/modifies code
+- Executes BDD/TDD cycles
+- Requires shared file state
+- Changes implementation status
 
 ## Agent Handoff Chain
 

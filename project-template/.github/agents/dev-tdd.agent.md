@@ -4,7 +4,7 @@ description: Orchestrate RED → GREEN → REFACTOR TDD cycle for executable spe
 argument-hint: Pick a test to implement or just "next"
 target: vscode
 model: Claude Sonnet 4.5
-tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'edit_notebook_file', 'run_notebook_cell', 'runSubagent', 'semantic_search', 'grep_search', 'runTests', 'get_errors', 'run_in_terminal', 'list_code_usages']
+tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'edit_notebook_file', 'run_notebook_cell', 'semantic_search', 'grep_search', 'runTests', 'get_errors', 'run_in_terminal', 'list_code_usages']
 handoffs:
   - label: 🔴 RED Phase - Write Failing Test
     agent: dev-tdd-red
@@ -56,31 +56,36 @@ This agent drives a full TDD loop guided by the **implementation plan** at `/doc
 **Phase 1: Preparation**
 1. **Read implementation plan** for current layer:
    - Open `/docs/user-stories/<USER-STORY-REF>/implementation-plan.md`
+   - **Read handoff file** `/docs/user-stories/<USER-STORY-REF>/<USER-STORY-REF>-HANDOFF.md` for context
    - Review section for assigned layer (Layer 1/2/3/4)
    - Note: Files to create/modify, BDD Test Coverage, TDD Approach, Architectural Constraints
 2. **Review failing BDD tests**:
    - Run BDD test suite
    - Identify which BDD scenarios/assertions are failing
    - Map failing assertions to current layer requirements (from implementation plan)
-3. **Confirm layer scope** with dev-lead
+3. **Update handoff file** with TDD orchestrator taking control
+4. **Confirm layer scope** with dev-lead
 
 **Phase 2: RED → GREEN → REFACTOR Loop**
 
-Invoke subagents via `runSubagent` (MUST include `subagentType`) in strict order:
+Execute handoffs (NO runSubagent) in strict order:
 
-1. **RED Phase** - subagentType=`dev-tdd-red`:
-   - Provide implementation plan section for current layer
-   - Provide failing BDD assertion to support
-   - Request: "Write a failing unit/integration test that supports this BDD assertion following the implementation plan"
-   - Verify test fails, commit to source control
+1. **🎯 ANNOUNCE**: "Ready to start TDD cycle for [LAYER]. This will implement [BDD-SCENARIOS]."
 
-2. **GREEN Phase** - subagentType=`dev-tdd-green`:
-   - Provide implementation plan section (file structure, approach)
-   - Provide failing test from RED phase
-   - Request: "Write minimal code to make this test pass following the implementation plan"
-   - Verify test passes, run BDD tests to check progress, commit to source control
+2. **RED Phase** - Hand off to `dev-tdd-red.agent.md`:
+   - Pass: Implementation plan layer section, current BDD failures, handoff file
+   - RED agent writes failing test, updates handoff file with progress
+   - RED agent hands back with: failing test code, updated handoff context
 
-3. **REFACTOR Phase** - subagentType=`dev-tdd-refactor`:
+3. **GREEN Phase** - Hand off to `dev-tdd-green.agent.md`:
+   - Pass: Failing test, implementation plan constraints, handoff file
+   - GREEN agent implements minimal code, updates handoff file
+   - GREEN agent hands back with: passing test, implemented code, updated handoff
+
+4. **REFACTOR Phase** - Hand off to `dev-tdd-refactor.agent.md`:
+   - Pass: Working code, coding standards, handoff file
+   - REFACTOR agent improves quality, updates handoff file
+   - REFACTOR agent hands back with: refactored code, updated handoff
    - Provide implementation plan architectural constraints
    - Provide passing code from GREEN phase
    - Request: "Refactor this code to improve quality while keeping tests passing, adhering to implementation plan constraints"

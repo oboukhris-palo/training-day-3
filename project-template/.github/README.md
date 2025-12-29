@@ -2,7 +2,7 @@
 
 ## 🎯 System Overview
 
-This is an **adaptive, assessment-driven AI orchestration system** that intelligently handles projects at any stage of completion. Instead of guessing which workflow to use, you run one assessment command that tells you exactly where to start.
+This is an **adaptive, handoff-driven AI orchestration system** that intelligently coordinates specialized agents through collaborative workflows. Agents work **one at a time** on shared workspace files, with **decision gates** for user choices and **chain-of-thought tracking** for TDD implementation.
 
 ## 🚀 Quick Start (Always Do This First!)
 
@@ -40,32 +40,33 @@ Then follow the recommendation.
 **Epic completion** = Automatic when ALL stories done
 
 Benefits:
-- Incremental delivery per story
-- Team parallelization
-- Granular tracking
-- Business visibility via epic grouping
+- **🔄 Handoff coordination**: One agent at a time, clear responsibility
+- **🎯 Decision gates**: User controls important architectural choices
+- **📝 Chain of thought**: TDD progress tracked in handoff files
+- **⚡ Incremental delivery**: Complete stories before moving to next
+- **👁️ Transparency**: Real-time progress visibility
 
 ---
 
 ## Implementation Workflow (6 Phases)
 
-Phases:
+**🔄 Handoff-Driven Process**:
 
-0. **Epic Review**: Sequence stories by dependencies
-1. **Sprint Planning**: Select stories (3 scope options: conservative/balanced/stretch)
-2. **BDD Integration**: Create feature files, failing tests per story
-3. **TDD Cycle**: RED-GREEN-REFACTOR per layer (DB → Backend → Config → Frontend)
-4. **BDD Validation**: BA executes scenarios in real environment
-5. **Code Quality**: Review, coverage check, merge approval
-6. **Epic Status**: Mark "Implemented" when all stories done
+0. **Epic Review**: 🔄 PM → PO → BA → Dev-Lead (sequence stories)
+1. **Sprint Planning**: 🎯 ANNOUNCE + 3 options → User chooses approach
+2. **BDD Integration**: Dev-Lead creates implementation plan + handoff file
+3. **TDD Cycle**: 🔄 TDD-Orchestrator → RED → GREEN → REFACTOR (with handoff updates)
+4. **BDD Validation**: BA executes scenarios, hands off results
+5. **Code Quality**: Dev-Lead reviews, updates status, hands off to next story
+6. **Epic Status**: Automatic when all stories "Implemented"
 
-**Layers** (implement in order):
+**Layers** (implement ONE story at a time through all layers):
 - Layer 1 (DB): Migrations, models, indexes
 - Layer 2 (Backend): API endpoints, business logic
 - Layer 3 (Config): Routes, DI, feature flags
 - Layer 4 (Frontend): Components, state, styling
 
-**TDD per layer**: Failing BDD tests drive RED-GREEN-REFACTOR cycles
+**TDD Chain of Thought**: Each cycle tracked in `/docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md`
 
 
 
@@ -117,28 +118,39 @@ graph LR
 
 ## System Architecture
 
-**Components**: Templates + AI Agents + Documents
-- **Templates**: prd, tech-doc, user-story
-- **Agents**: PM, PO, BA, UX, Architect, Dev-Lead, TDD Navigator
-- **Documents**: 13 PRD docs (requirements, personas, user-stories, architecture, tech-spec, test-strategies, design-systems, etc.)
+**🔄 Handoff-Coordinated Components**: Templates + AI Agents + Documents + Decision Gates
+- **Templates**: prd, tech-doc, user-story, **handoff tracking**
+- **Agents**: PM, PO, BA, UX, Architect, Dev-Lead, TDD Navigator (coordinated via handoffs)
+- **Documents**: 13 PRD docs + implementation plans + handoff files
+- **Decision Gates**: 🎯 Architecture, Technology, Sprint Scope, Implementation Approach
+- **Progress Tracking**: Real-time via handoff files and status updates
 
 ## Components
 
 ### Templates ([.github/templates](/.github/templates/))
 - **prd.template.yml**: 13 PRD documents structure
 - **user-story.template.yml**: Story format + acceptance criteria
+- **user-story-handoff.template.md**: 📝 TDD chain-of-thought tracking
 - **tech-doc.template.yml**: API contracts, data models, architecture
 - **func-doc.template.yml**: Business process flows
 
-### AI Agents ([.github/agents](/.github/agents/))
+### 📝 Handoff Tracking Files
+- **Implementation Plan**: `/docs/user-stories/<US-REF>/implementation-plan.md`
+- **Handoff File**: `/docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md`
+- **Progress Tracking**: Real-time TDD cycle progress and chain of thought
+- **Decision Log**: Technical decisions and architecture notes
 
-**PM** - Project Manager: Coordination, timeline, budget (Stages 1, 6, 8)
-**PO** - Product Owner: Requirements, features, acceptance (All stages)
-**BA** - Business Analyst: Analysis, BDD scenarios, personas (Stages 2, 5, 7)
+### AI Agents ([.github/agents](/.github/agents/)) - Handoff Coordinated
+
+**🔄 Handoff Chain**: PM → PO → BA → UX → Architect → Dev-Lead → TDD Agents
+
+**PM** - Project Manager: 🎯 Announces steps, coordinates handoffs (Stages 1, 6, 8)
+**PO** - Product Owner: Requirements, features, hands off to BA/UX (All stages)
+**BA** - Business Analyst: Analysis, BDD scenarios, validates implementations (Stages 2, 5, 7)
 **UX** - Designer: Journeys, blueprints, design systems (Stages 3, 4)
-**Architect** - System design, tech stack, deployment (Stages 1-4, 6, 8)
-**Dev-Lead** - Implementation planning, code review (Stages 4, 5, 7)
-**TDD Navigator** - RED-GREEN-REFACTOR execution (Stage 7)
+**Architect** - System design, 🎯 presents tech choices for user decision (Stages 1-4, 6, 8)
+**Dev-Lead** - Creates implementation plans + handoff files (Stages 4, 5, 7)
+**TDD Navigator** - Orchestrates RED-GREEN-REFACTOR with handoff tracking (Stage 7)
 
 ### Workflows ([.github/workflows](/.github/workflows/))
 - **documents.workflows.md** (880 lines): 8-stage PDLC with agent invocations
@@ -163,7 +175,9 @@ graph LR
 **Implementation**: Use `.github/tasks/start-implementation.prompts.md`
 **CI/CD Setup**: Use `.github/tasks/start-cicd.prompts.md`
 
-**Key Pattern**: Invoke agents via `runSubagent` with correct `subagentType`
+**🔄 Handoff Pattern**: Agents coordinate via handoffs, **one at a time** on workspace files
+**🎯 Decision Gates**: System announces steps and presents 3 options for user choice
+**📝 Progress Tracking**: TDD implementation tracked via handoff files
 ```
 
 ## Traceability
@@ -232,9 +246,10 @@ Referenced in Stage 7 (implementation) and CI/CD quality gates.
 
 ## Next Steps
 
-1. **Understand**: Read workflows (documents, implementation, cicd)
-2. **Study Agents**: Review `.github/agents/` for expertise + subagent types
-3. **Review Templates**: Check `.github/templates/` for document structure
-4. **Launch Project**: Use `.github/tasks/start-pdlc.prompts.md`, invoke `@orchestrator`
-5. **Implement with TDD**: Follow implementation.workflows.md layer-by-layer
-6. **Deploy**: Start CI/CD Phase 1, evolve to Phase 2/3
+1. **🔍 Assess First**: Always run `@orchestrator Assess project status for [PROJECT_NAME]`
+2. **📚 Understand Handoffs**: Read workflows to see agent coordination patterns
+3. **🤖 Study Agent Roles**: Review `.github/agents/` for handoff definitions
+4. **📋 Review Templates**: Check `.github/templates/` including handoff tracking
+5. **🎯 Launch with Decision Gates**: Use task prompts, make choices at decision gates
+6. **📝 Track Progress**: Monitor implementation via handoff files
+7. **🔄 Follow Handoff Chain**: Let agents coordinate through handoffs, one at a time

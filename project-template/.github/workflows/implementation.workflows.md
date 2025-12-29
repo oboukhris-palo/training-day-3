@@ -72,19 +72,26 @@ PDLC Complete Documents
         ↓
 Create /docs/user-stories/user-stories.md (status tracking mirror)
         ↓
-Epic Review & User Story Sequencing (PM + PO + BA + Dev-Lead)
+Epic Review & User Story Sequencing (PM + PO + BA + Dev-Lead via handoffs)
+        ├─ 🔄 PM hands off to → PO for epic priority
+        ├─ 🔄 PO hands off to → BA for story validation  
+        ├─ 🔄 BA hands off to → Dev-Lead for technical sequencing
+        ├─ 🎯 ANNOUNCE: "Ready to sequence [X] user stories for implementation"
         ├─ Epics are organizational groupings (not work units)
         ├─ User-Stories are the granulation level for implementation
         ├─ Each story already has BDD scenarios attached (from Stage 3)
         ├─ Determine story implementation order
         └─ Epic completion = ALL its child stories completed
         ↓
-Sprint Planning (PM + PO + BA + Dev-Lead)
-        ├─ Select User-Stories for sprint
+Sprint Planning (PM + PO + BA + Dev-Lead via handoffs)
+        ├─ 🎯 ANNOUNCE: "Ready to plan sprint. Choose approach: Conservative/Balanced/Stretch"
+        ├─ Select User-Stories for sprint (ONE AT A TIME implementation)
+        ├─ Conservative: 3-5 stories | Balanced: 6-8 stories | Stretch: 9+ stories
         ├─ (Each story has BDD scenarios attached)
         ├─ Stories grouped by epic for context
         ├─ Estimate story-level effort
-        └─ Sprint backlog ready
+        ├─ Each story = full 4-layer implementation before next story
+        └─ 🔄 Hand off to → Dev-Lead for implementation planning
         ↓
 BDD Integration & User Story Breakdown (Dev-Lead) ← CRITICAL PHASE
         ├─ For each story: Extract Gherkin BDD scenarios

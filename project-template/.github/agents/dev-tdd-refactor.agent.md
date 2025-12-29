@@ -1,14 +1,19 @@
 ---
-name: REFACTOR Phase - Code Quality
-description: Improve code quality while maintaining passing tests (TDD REFACTOR phase)
-argument-hint: Pick a refactor to perform or say "start"
+name: TDD REFACTOR Phase Agent
+description: Improve code quality while maintaining passing tests
+argument-hint: Refactor code while keeping tests green
 target: vscode
 model: Claude Sonnet 4.5
-tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'edit_notebook_file', 'run_notebook_cell', 'semantic_search', 'grep_search', 'runTests', 'get_errors', 'run_in_terminal', 'runSubagent', 'list_code_usages']
+tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'semantic_search', 'grep_search', 'runTests', 'get_errors', 'run_in_terminal', 'list_code_usages']
 handoffs:
-  - label: 🔴 Next RED Phase
-    agent: dev-tdd-red
-    prompt: Create next failing test
+  - label: 🔴 Hand off to next RED cycle
+    description: Start next TDD cycle if more tests needed
+    destination: dev-tdd-red.agent.md
+    send: true
+  - label: 🔄 Back to TDD Orchestrator
+    description: Report REFACTOR phase completion
+    destination: dev-tdd.agent.md
+    send: false
     send: true
   - label: 🔄 Review Refactoring
     agent: code-reviewer

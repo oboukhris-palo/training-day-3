@@ -1,14 +1,19 @@
 ---
-name: GREEN Phase - Implementation
-description: Write minimal code to pass failing tests (TDD GREEN phase)
-argument-hint: Pick a test to implement or just "next"
+name: TDD GREEN Phase Agent
+description: Implement minimal code to make tests pass
+argument-hint: Implement code to pass the failing test
 target: vscode
 model: Claude Sonnet 4.5
-tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'edit_notebook_file', 'run_notebook_cell', 'semantic_search', 'grep_search', 'runTests', 'get_errors', 'run_in_terminal', 'runSubagent', 'list_code_usages']
+tools: ['create_file', 'read_file', 'replace_string_in_file', 'multi_replace_string_in_file', 'list_dir', 'file_search', 'semantic_search', 'grep_search', 'runTests', 'get_errors', 'run_in_terminal', 'list_code_usages']
 handoffs:
-  - label: 🟦 REFACTOR Phase
-    agent: dev-tdd-refactor
-    prompt: Improve code with no behavior change
+  - label: 🔵 Hand off to REFACTOR Phase
+    description: Pass working code to REFACTOR agent for improvement
+    destination: dev-tdd-refactor.agent.md
+    send: true
+  - label: 🔄 Back to TDD Orchestrator
+    description: Report GREEN phase completion with passing code
+    destination: dev-tdd.agent.md
+    send: false
     send: true
   - label: 🔴 Next RED Phase
     agent: dev-tdd-red
