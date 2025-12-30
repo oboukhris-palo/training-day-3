@@ -2,9 +2,14 @@
 
 ## Prerequisites
 
-- ✅ requirements.md, personas.md, user-stories.md, architecture-design.md, tech-spec.md, design-systems.md, test-strategies.md
-- ✅ Gherkin BDD files (features/**/*.feature)
-- ✅ PDLC Stages 1-6 complete
+**CRITICAL**: Verify these exist before starting implementation:
+
+- ✅ **PDLC Documents**: requirements.md, personas.md, user-stories.md (PRD), architecture-design.md, tech-spec.md, design-systems.md, test-strategies.md  
+- ⚠️ **MUST CREATE**: /docs/user-stories/user-stories.md (SINGLE SOURCE OF TRUTH for status tracking)
+- ✅ **BDD Scenarios**: Gherkin BDD files (features/**/*.feature) or extractable from user stories
+- ✅ **PDLC Stages 1-6 complete**: All planning documents approved
+
+**If any missing**: Run `@orchestrator Assess project status for [PROJECT_NAME]` first.
 
 ## Command
 

@@ -9,9 +9,14 @@ Determine project maturity level and recommend starting workflow based on existi
 ```bash
 @orchestrator Assess project status for [PROJECT_NAME]
 
-Project Path: [absolute or relative path to project]
-Codebase Status: [new / brownfield / migration]
-Desired Outcome: [check docs / plan next / continue dev / migrate to new]
+**CRITICAL**: This command will:
+1. **Check documentation status** - scan /docs/prd/ for PDLC documents
+2. **Read /docs/user-stories/user-stories.md** - SINGLE SOURCE OF TRUTH for implementation status
+3. **Analyze code completion** - estimate % implementation by layer
+4. **Generate recommendations** - exact next workflow to execute
+5. **Present 3 options** - conservative/balanced/stretch approach
+
+**DO NOT** skip this assessment - it prevents wasted work and ensures correct workflow.
 ```
 
 ## Assessment Process
