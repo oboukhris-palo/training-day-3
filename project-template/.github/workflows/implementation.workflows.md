@@ -98,28 +98,40 @@ SPRINT N CYCLE (Repeat until all epics completed)
         ↓
 PHASE 1: PM SPRINT PLANNING (Start of Sprint)
 ├─ 🎯 ANNOUNCE: "Ready to plan Sprint [N]. Selecting stories from not-started queue."
+├─ **🔴 CRITICAL: Read `/docs/prd/user-stories.md` to get EXACT user-story references (US-001, US-002, etc.)**
+├─ **NUMBERING RULE: All sprint planning MUST use exact US-REF from `/docs/prd/user-stories.md`**
+│  ├─ Do NOT create or use different numbering schemes (e.g., S1, FEAT-01, STORY-1, etc.)
+│  ├─ Do NOT truncate or abbreviate references
+│  └─ Do NOT reorder or renumber stories in current-sprint.md
 ├─ Present 3 scope options:
 │  ├─ Conservative (50-70% capacity): Safe stories, low risk
 │  ├─ Balanced (70-100% capacity): Mix of priorities, reasonable challenge ⭐
 │  └─ Stretch (100-120% capacity): High complexity, requires perfect execution
 ├─ Create /docs/user-stories/current-sprint.md with:
-│  ├─ Selected user-stories (marked in table)
+│  ├─ **VALIDATION: Copy each story reference DIRECTLY from `/docs/prd/user-stories.md` (do NOT edit)**
+│  ├─ Selected user-stories (marked in table with exact US-REF like US-001, US-002)
 │  ├─ Story points and capacity utilization
 │  ├─ Dependency map and blocker list
 │  ├─ Definition of Ready (DOR) and Definition of Done (DOD)
 │  └─ Team assignments
+├─ **POST-CREATION VALIDATION: Compare user-story references in current-sprint.md with `/docs/prd/user-stories.md`**
+│  └─ Ensure 1:1 match (no typos, no abbreviations, exact format: US-XXX)
 ├─ Update /docs/user-stories/project-status.md with:
 │  ├─ Active sprint section
-│  ├─ Selected stories list
-│  ├─ Epic progress (auto-calculated)
+│  ├─ Selected stories list (use exact US-REF from current-sprint.md)
+│  ├─ Epic progress (auto-calculated from `/docs/prd/user-stories.md`)
 │  └─ Risk register for sprint
 ├─ Update all GitHub Issues: Add "Sprint-[N]" label and milestone
-└─ Hand off to BA: "Sprint [N] planned. Stories selected. Begin enrichment."
+│  └─ GitHub Issue titles must include exact US-REF (e.g., "[US-001] User can login with email")
+└─ Hand off to BA: "Sprint [N] planned. Stories selected using exact US-REF from PRD. Begin enrichment."
         ↓
 PHASE 2: BA ENRICHES USER STORIES (During Sprint Planning)
 ├─ 🎯 ANNOUNCE: "Ready to enrich stories in current sprint. Enriching /docs/user-stories/<US-REF>/<US-REF>.md for each."
+├─ **🔴 CRITICAL VALIDATION: Verify <US-REF> in all artifacts MATCHES EXACTLY with `/docs/prd/user-stories.md`**
+│  └─ If any divergence found (typos, abbreviations, renumbering), PAUSE and correct before proceeding
 ├─ For EACH user-story in current-sprint.md:
-│  ├─ Open/create /docs/user-stories/<US-REF>/<US-REF>.md
+│  ├─ **VERIFY US-REF**: Confirm reference matches exactly with `/docs/prd/user-stories.md` (no typos, abbreviations)
+│  ├─ Open/create /docs/user-stories/<US-REF>/<US-REF>.md (using exact US-REF from PRD)
 │  ├─ Import PO-validated acceptance criteria from /docs/prd/user-stories.md (update acceptance_criteria section)
 │  ├─ Extract and validate Gherkin BDD scenarios (update bdd_scenarios section)
 │  ├─ Integrate UI inputs from UX agent and /docs/design/design-systems.md (update ui_ux_inputs section)
@@ -131,10 +143,10 @@ PHASE 2: BA ENRICHES USER STORIES (During Sprint Planning)
 ├─ Present enrichment sign-off options:
 │  ├─ Option A: All items complete, ready for Dev-Lead
 │  ├─ Option B: Some items need PO clarification
-│  ├─ Option C: UX inputs missing, request from UX agent
+│  └─ Option C: UX inputs missing, request from UX agent
 ├─ Mark story DOR status in current-sprint.md ("Ready" / "Blocked")
 ├─ Block stories from dev entry if any DOR item missing
-└─ Hand off to Dev-Lead: "Enriched stories ready. Begin implementation planning."
+└─ Hand off to Dev-Lead: "Enriched stories ready (US-REF validated against PRD). Begin implementation planning."
         ↓
 PHASE 3: DEV-LEAD CREATES IMPLEMENTATION PLANS (During Sprint Planning)
 ├─ 🎯 ANNOUNCE: "Ready to plan implementation. Creating implementation-plan.md for each story."
@@ -156,7 +168,15 @@ PHASE 3: DEV-LEAD CREATES IMPLEMENTATION PLANS (During Sprint Planning)
 │  ├─ Document why in current-sprint.md "Risk Management" section
 │  ├─ Update GitHub Issue: "⚠️ Blocked: [Missing item]"
 │  └─ Escalate to PM for resolution
-└─ Hand off to TDD-Orchestrator: "Implementation plans ready. BDD tests failing. Ready for TDD cycles."
+├─ **🔴 CRITICAL: Validate numbering consistency before handoff**
+│  ├─ Verify <US-REF> matches exactly across:
+│  │  ├─ /docs/user-stories/user-stories.md (status tracking)
+│  │  ├─ /docs/user-stories/<US-REF>/implementation-plan.md (path and file name)
+│  │  ├─ /docs/prd/user-stories.md (source of truth)
+│  │  ├─ GitHub Issue title (should include [US-XXX])
+│  │  └─ current-sprint.md (story reference list)
+│  └─ If ANY divergence found, PAUSE and correct before handing off to TDD
+└─ Hand off to TDD-Orchestrator: "Implementation plans ready (numbering validated). BDD tests failing. Ready for TDD cycles."
         ↓
 PHASE 4: TDD-ORCHESTRATOR EXECUTES IMPLEMENTATION (During Sprint)
 ├─ 🎯 ANNOUNCE: "Ready to implement Sprint [N] stories via TDD. Executing RED→GREEN→REFACTOR per layer."
@@ -507,9 +527,19 @@ GitHub Issue & Hand Off**:
 
 ---
 
-### PHASE 4: TDD-ORCHESTRATOR EXECUTION (DRIVEN BY IMPLEMENTATION PLAN)
+PHASE 4: TDD-ORCHESTRATOR EXECUTION (DRIVEN BY IMPLEMENTATION PLAN)
 
 **Goal**: Implement all 4 layers using disciplined TDD cycles, guided by implementation-plan and driven by failing BDD tests. **Implementation IS simply applying TDD to the implementation-plan specification.**
+
+**🔴 CRITICAL VALIDATION BEFORE STARTING**:
+- Verify <USER-STORY-REF> matches EXACTLY in:
+  - implementation-plan.md file path: `/docs/user-stories/<EXACT-US-REF>/implementation-plan.md`
+  - implementation-plan.md header section
+  - /docs/user-stories/user-stories.md
+  - /docs/prd/user-stories.md (source of truth)
+  - GitHub Issue title (should include [US-XXX])
+- If ANY divergence found: STOP immediately and escalate to PM/Lead Dev to correct before proceeding
+- Do NOT proceed with implementation if numbering is inconsistent
 
 **Flow**:
 ```
@@ -778,37 +808,52 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
 
 ## Critical Success Factors
 
-1. **Implementation-Plan Quality**: The more detailed the plan (layer breakdown, files to create, BDD assertions per layer), the faster TDD-Orchestrator executes
-2. **Failing BDD Tests as Entry Point**: BDD tests are not validation at the end—they are the specification that drives implementation
-3. **One Story at a Time**: Complete all 4 layers for one story before moving to next, ensures focused work and clean git history
-4. **Clear Layer Boundaries**: Each layer has specific scope (DB doesn't test code, Backend doesn't test UI), makes TDD cycles clean and fast
-5. **Status Tracking**: `/docs/user-stories/user-stories.md` is the orchestrator's source of truth for what to do next
-6. **Epic Tracking**: Stories are tagged with parent epic; when all stories of an epic are "Implemented", epic is automatically "Implemented"
+1. **🔴 NUMBERING CONSISTENCY (MOST CRITICAL)**: All references to user-stories MUST use exact <USER-STORY-REF> from `/docs/prd/user-stories.md`. No abbreviations, typos, or renumbering schemes allowed. Any divergence breaks orchestration workflow.
+   - Validate at EVERY phase handoff
+   - Source of truth: `/docs/prd/user-stories.md`
+   - Check: current-sprint.md, implementation-plan.md paths, GitHub Issue titles, /docs/user-stories/user-stories.md
+   - Pause workflow immediately if ANY inconsistency found
+2. **Implementation-Plan Quality**: The more detailed the plan (layer breakdown, files to create, BDD assertions per layer), the faster TDD-Orchestrator executes
+3. **Failing BDD Tests as Entry Point**: BDD tests are not validation at the end—they are the specification that drives implementation
+4. **One Story at a Time**: Complete all 4 layers for one story before moving to next, ensures focused work and clean git history
+5. **Clear Layer Boundaries**: Each layer has specific scope (DB doesn't test code, Backend doesn't test UI), makes TDD cycles clean and fast
+6. **Status Tracking**: `/docs/user-stories/user-stories.md` is the orchestrator's source of truth for what to do next
+7. **Epic Tracking**: Stories are tagged with parent epic; when all stories of an epic are "Implemented", epic is automatically "Implemented"
 
 ---
 
 ## Handoff Checklist
 
-**Phase 1 → Phase 2 (Orchestrator → Lead Dev)**:
-- [ ] Orchestrator identified user-story <USER-STORY-REF> as "Not Started"
-- [ ] User-story details available in `/docs/prd/user-stories.md`
-- [ ] Message: "User-story <USER-STORY-REF> requires implementation-plan.md and BDD tests. Please prepare."
+**Phase 1 → Phase 2 (PM → Lead Dev)**:
+- [ ] **🔴 CRITICAL: <USER-STORY-REF> is EXACT match from `/docs/prd/user-stories.md`** (e.g., US-001, not S1, FEAT-01, etc.)
+- [ ] Orchestrator identified user-story <USER-STORY-REF> as "Not Started" in `/docs/user-stories/user-stories.md`
+- [ ] User-story details available in `/docs/prd/user-stories.md` with EXACT same reference
+- [ ] GitHub Issue created with title including exact US-REF (e.g., "[US-001] User can login")
+- [ ] Message: "User-story <USER-STORY-REF> (Issue #<ISSUE-NUM>) requires implementation-plan.md and BDD tests. Please prepare."
 
 **Phase 2 → Phase 3 (Lead Dev → Orchestrator)**:
+- [ ] **🔴 CRITICAL: Verify <USER-STORY-REF> matches EXACTLY across all artifacts:**
+  - [ ] `/docs/prd/user-stories.md` (source of truth)
+  - [ ] `/docs/user-stories/user-stories.md` (status tracking)
+  - [ ] `/docs/user-stories/<US-REF>/` folder path
+  - [ ] `/docs/user-stories/<US-REF>/<US-REF>.md` file name
+  - [ ] `/docs/user-stories/<US-REF>/implementation-plan.md` header
+  - [ ] GitHub Issue title (should be "[US-XXX]")
+  - [ ] current-sprint.md reference list
 - [ ] User-story decomposed into 4 clear layers
-- [ ] Implementation-plan.md created with all 4 layers detailed
-- [ ] BDD feature file created with Gherkin scenarios
-- [ ] Step definitions created with failing test code
+- [ ] Implementation-plan.md created with all 4 layers detailed and committed
+- [ ] BDD feature file created with Gherkin scenarios and committed
+- [ ] Step definitions created with failing test code and committed
 - [ ] BDD tests run and confirmed failing
-- [ ] GitHub Issue created and linked to parent epic
-- [ ] `/docs/user-stories/user-stories.md` updated to "In Progress"
-- [ ] Message: "User-story <USER-STORY-REF> ready for TDD execution. implementation-plan.md complete, BDD tests failing."
+- [ ] `/docs/user-stories/user-stories.md` updated to "In Progress" (synchronized with GitHub)
+- [ ] Message: "User-story <USER-STORY-REF> (Issue #<ISSUE-NUM>) ready for TDD execution. Numbering validated against PRD. Implementation-plan.md complete, BDD tests failing."
 
 **Phase 3 → Phase 4 (Orchestrator → TDD-Orchestrator)**:
+- [ ] **🔴 CRITICAL: Validate <USER-STORY-REF> matches EXACTLY in implementation-plan.md path and header**
 - [ ] Orchestrator validated implementation-plan.md is complete
 - [ ] Orchestrator confirmed failing BDD tests exist
 - [ ] User selected TDD execution approach
-- [ ] Message: "Implement per implementation-plan.md using <approach> TDD (RED→GREEN→REFACTOR) per layer."
+- [ ] Message: "Implement per implementation-plan.md using <approach> TDD (RED→GREEN→REFACTOR) per layer. Numbering pre-validated."
 
 **Phase 4 → Phase 1 (TDD-Orchestrator → Orchestrator)**:
 - [ ] All 4 layers implemented following implementation-plan.md
@@ -817,8 +862,9 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
 - [ ] Code follows coding.instructions.md
 - [ ] Test coverage > 80%
 - [ ] Code reviewed and approved
-- [ ] `/docs/user-stories/user-stories.md` updated to "Implemented"
+- [ ] `/docs/user-stories/user-stories.md` updated to "Implemented" using exact <USER-STORY-REF>
 - [ ] GitHub Issue updated with results
+- [ ] Commits reference exact US-REF (e.g., "feat(US-001): Implement database layer #123")
 - [ ] Message: "User-story <USER-STORY-REF> complete. All BDD tests passing. Ready for next story."
 
 ---
@@ -827,13 +873,20 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
 
 | Phase | Agent | Input | Output | Duration |
 |-------|-------|-------|--------|----------|
-| **PHASE 1** | Orchestrator | `/docs/user-stories/user-stories.md` | Validation report, blocker detection or Phase 3 handoff | 15-30 min |
-| **PHASE 2** | Lead Dev | User-story reference, PRD docs, architectural specs | implementation-plan.md, BDD tests, GitHub Issue | 1-2 hours per story |
-| **PHASE 3** | Orchestrator | Handoff from Lead Dev with complete plan | TDD execution launch, selected approach | 15-30 min |
-| **PHASE 4** | TDD-Orchestrator | implementation-plan.md, failing BDD tests, approach | Implemented code, passing BDD tests, >80% coverage | 2-5 days per story |
+| **PHASE 1** | PM | `/docs/prd/user-stories.md` (source of truth for US-REF), `/docs/user-stories/user-stories.md` | Validation: current-sprint.md references MATCH `/docs/prd/user-stories.md` exactly (no typos), GitHub Issues created with exact US-REF | 15-30 min |
+| **PHASE 2** | BA | User-story (exact US-REF from PRD), current-sprint.md (validated references) | `/docs/user-stories/<EXACT-US-REF>/<US-REF>.md` enriched, numbering validated | 1-2 hours per story |
+| **PHASE 3** | Dev-Lead | User-story (exact US-REF), enriched file, PRD/architecture/design docs | implementation-plan.md at `/docs/user-stories/<EXACT-US-REF>/implementation-plan.md`, BDD tests, numbering pre-validated | 1-2 hours per story |
+| **PHASE 4** | TDD-Orchestrator | implementation-plan.md (numbering pre-validated), failing BDD tests, approach | Implemented code, passing BDD tests, >80% coverage, commits reference exact US-REF | 2-5 days per story |
+| **PHASE 5** | Dev-Lead | Handoff from TDD with BDD results, exact US-REF | `/docs/user-stories/user-stories.md` "Implemented" (exact US-REF), GitHub Issue updated, handoff to BA | 15-30 min |
+| **PHASE 6** | BA | User-story (exact US-REF), GitHub Issue, BDD files | `/docs/user-stories/user-stories.md` "Delivered" (exact US-REF), GitHub Issue closed | 1-3 hours per story |
 
-**Iteration**: Repeat Phases 1-4 for each user-story in sprint until all selected stories are "Implemented"
+**🔴 CRITICAL VALIDATION GATE**: Before every phase handoff, verify <USER-STORY-REF> matches EXACTLY with `/docs/prd/user-stories.md`. Any divergence blocks progression.
 
-**Epic Completion**: Automatic when ALL user-stories in an epic are marked "Implemented"
+**Iteration**: Repeat Phases 1-6 for each user-story in sprint until all selected stories are "Delivered"
 
-**Key Constraint**: Phase 4 (TDD execution) CANNOT begin until Phase 2 (implementation-plan.md creation) is complete. Orchestrator blocks at Phase 1 if implementation-plan.md is missing.
+**Epic Completion**: Automatic when ALL user-stories in an epic are marked "Delivered"
+
+**Key Constraints**: 
+- Phase 4 (TDD execution) CANNOT begin until Phase 3 (implementation-plan.md creation) is complete
+- **NUMBERING CONSISTENCY IS CRITICAL**: All <USER-STORY-REF> must match exactly with `/docs/prd/user-stories.md`
+- **Validation Gate**: Before every phase handoff, verify 1:1 match between current-sprint.md, implementation-plan.md paths, GitHub Issue titles, and `/docs/prd/user-stories.md`
