@@ -1,7 +1,7 @@
 - NEVER generate a documentation that i did not be asked for.
 - Never summarize the code base modification in an MD file or a document unless i asked for it.
-- Follow up documentation workflow as described in /.github/workflows/documentation.workflows.md
-- Use documentation task prompt from /.github/tasks/documentation.prompts.md
+- Follow up documentation workflow as described in /.github/workflows/documents.workflows.md
+- Use documentation prompt from /.github/prompts/documentation.prompts.md
 - All PRD documents are stored in docs/prd/ please make sure you read it in case you need to refer to it.
 - All User Story documents are stored in docs/user-stories/ please make sure you read it in case you need to refer to it.
 - All ux/ui Design documents are stored in docs/design/ please make sure you read it in case you need to refer to it.

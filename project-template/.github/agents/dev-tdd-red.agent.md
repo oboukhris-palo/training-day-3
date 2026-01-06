@@ -6,12 +6,12 @@ target: vscode
 model: Claude Sonnet 4.5
 handoffs:
   - label: 🟢 Hand off to GREEN Phase
-    description: Pass failing test to GREEN agent for implementation
-    destination: dev-tdd-green.agent.md
+    agent: TDD GREEN Phase Agent
+    prompt: Pass failing test to GREEN agent for implementation
     send: true
   - label: 🔄 Back to TDD Orchestrator
-    description: Report RED phase completion with failing test
-    destination: dev-tdd.agent.md
+    agent: TDD Orchestrator
+    prompt: Report RED phase completion with failing test
     send: false
 ---
 
@@ -60,11 +60,11 @@ Write one failing test per cycle that maps to BDD assertion. Test must fail for 
 
 ## Process
 1. Read implementation plan layer section
-2. Read handoff file for current context
+2. Read handoff file `/docs/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` for current context
 3. Identify specific BDD assertion to support
 4. Write focused failing test
 5. Run test to confirm it fails
-6. Update handoff file with progress
+6. Update the handoff file `/docs/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` with progress
 7. Hand off to GREEN phase
 ## Learning & Self-Optimization
 

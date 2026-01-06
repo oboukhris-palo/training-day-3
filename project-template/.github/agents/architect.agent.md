@@ -6,27 +6,27 @@ target: vscode
 model: Claude Sonnet 4.5
 handoffs:
   - label: 📋 Hand off to PO for Architecture Approval
-    description: Present architecture decisions for product owner approval
-    destination: po.agent.md
+    agent: Product Owner (Roadmap & Requirements)
+    prompt: Present architecture decisions for product owner approval
     send: true
   - label: ⚙️ Hand off to Dev-Lead for Implementation Planning
-    description: Pass technical architecture to dev lead for detailed planning
-    destination: dev-lead.agent.md
+    agent: Tech Lead (Development Orchestration)
+    prompt: Pass technical architecture to dev lead for detailed planning
     send: true
   - label: 🎯 Hand off to Orchestrator for Decision Gate
-    description: Present architecture options for user decision
-    destination: orchestrator.agent.md
+    agent: Workflow Orchestrator (Master Coordinator)
+    prompt: Present architecture options for user decision
     send: false
-  - label: � Back to Product Owner
-    agent: po
+  - label: 🔙 Back to Product Owner
+    agent: Product Owner (Roadmap & Requirements)
     prompt: Architecture design and tech spec complete. Ready for architecture decision gate and user story creation.
     send: true
   - label: 💻 Hand off to Dev Lead
-    agent: dev-lead
+    agent: Tech Lead (Development Orchestration)
     prompt: Architecture approved. Ready for implementation planning and BDD integration.
     send: true
   - label: 🔄 Back to Orchestrator
-    agent: orchestrator
+    agent: Workflow Orchestrator (Master Coordinator)
     prompt: Architecture/tech stack ready for decision gate. Present options to user.
     send: true
 ---

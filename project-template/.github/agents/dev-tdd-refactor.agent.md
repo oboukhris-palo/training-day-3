@@ -6,18 +6,13 @@ target: vscode
 model: Claude Sonnet 4.5
 handoffs:
   - label: 🔴 Hand off to next RED cycle
-    description: Start next TDD cycle if more tests needed
-    destination: dev-tdd-red.agent.md
+    agent: TDD RED Phase Agent
+    prompt: Start next TDD cycle if more tests needed
     send: true
   - label: 🔄 Back to TDD Orchestrator
-    description: Report REFACTOR phase completion
-    destination: dev-tdd.agent.md
-    send: false
+    agent: TDD Orchestrator
+    prompt: Report REFACTOR phase completion
     send: true
-  - label: 🔄 Review Refactoring
-    agent: code-reviewer
-    prompt: Review refactoring for quality and maintainability
-    send: false
 ---
 
 ## Agent Profile: Morgan (TDD REFACTOR Specialist)
@@ -93,6 +88,7 @@ Gather any missing context via #tool:runSubagent using read-only tools.
 - Run **all** tests immediately to verify safety
 - If any test fails → revert or fix immediately
 - Update `/docs/tdd.execution.md` > `Refactors Queued`: mark completed items, add newly discovered technical debt
+- Update handoff file `/docs/user-stories/<USER-STORY-REF>/<USER-STORY-REF>-HANDOFF.md` with REFACTOR changes and rationale
 - When satisfied → ready for next RED cycle
 
 ---

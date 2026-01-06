@@ -17,12 +17,6 @@
 Generate documentation:
 
 Parameters:
-- Name: {DOCUMENT_NAME}
-- Type: {DOC_TYPE}
-- Scope: {SCOPE}
-- Audience: {AUDIENCE}
-- Context: {PROJECT_CONTEXT}
-- Requirements: {REQUIREMENTS_REFERENCE}
 
 Guidelines:
 
@@ -335,7 +329,7 @@ This prompt is used in:
 
 This prompt aligns with:
 - [tech-doc.template.yml](../templates/tech-doc.template.yml) - Technical documentation structure
-- [fonc-doc.template.yml](../templates/fonc-doc.template.yml) - Functional documentation structure
+- [func-doc.template.yml](../templates/func-doc.template.yml) - Functional documentation structure
 - [user-story.template.yml](../templates/user-story.template.yml) - User story format
 
 ---
