@@ -1,255 +1,250 @@
-# AI-Driven PDLC Orchestration System
+# .github Toolbox - Complete Index
 
-## 🎯 System Overview
+**Your AI-driven PDLC Orchestration System reference hub.** All workflows, agents, instructions, templates, and prompts in one place.
 
-This is an **adaptive, handoff-driven AI orchestration system** that intelligently coordinates specialized agents through collaborative workflows. Agents work **one at a time** on shared workspace files, with **decision gates** for user choices and **chain-of-thought tracking** for TDD implementation.
+---
 
-## 🚀 Quick Start (Always Do This First!)
+## 🚀 Quick Start
 
 ```bash
 @orchestrator Assess project status for [PROJECT_NAME]
 ```
 
-This generates a comprehensive report showing:
-- ✓ What documentation exists
-- ✓ What code is implemented
-- ✓ Code quality and test coverage
-- ✓ Project maturity level (0-5)
-- ✓ Recommended next workflow
+---
 
-Then follow the recommendation.
+## 📂 Directory Structure & Contents
 
-**That's it!** No guessing, no wasted time, no repeated work.
+### 🤖 [agents/](agents/) - AI Agents (11 roles)
 
-## 📚 Documentation Map
+Specialized AI agents that coordinate through handoffs. **Handoff Chain**: PM → PO → BA → UX → Architect → Dev-Lead → TDD Agents
 
-### For Specific Cases
-- **[tasks/assess-project-status.prompts.md](tasks/assess-project-status.prompts.md)** - How assessment works
-- **[tasks/start-pdlc.prompts.md](tasks/start-pdlc.prompts.md)** - PDLC workflow
-- **[tasks/start-implementation.prompts.md](tasks/start-implementation.prompts.md)** - Implementation workflow
-
-### Detailed References
-- **[agents/orchestrator.agent.md](agents/orchestrator.agent.md)** - Orchestrator logic
-- **[workflows/documents.workflows.md](workflows/documents.workflows.md)** - PDLC details
-- **[workflows/implementation.workflows.md](workflows/implementation.workflows.md)** - Implementation details
-
-## 📊 Project Status Types
-
-**Epics** = Organizational containers (NOT work units)
-**User Stories** = Work units (implement ONE at a time through all 4 layers)
-**Epic completion** = Automatic when ALL stories done
-
-Benefits:
-- **🔄 Handoff coordination**: One agent at a time, clear responsibility
-- **🎯 Decision gates**: User controls important architectural choices
-- **📝 Chain of thought**: TDD progress tracked in handoff files
-- **⚡ Incremental delivery**: Complete stories before moving to next
-- **👁️ Transparency**: Real-time progress visibility
+| Agent | File | Role | Stages |
+|-------|------|------|--------|
+| **Orchestrator** | [orchestrator.agent.md](agents/orchestrator.agent.md) | Master coordinator, decision gates, handoff sequencing | All |
+| **Project Manager** | [pm.agent.md](agents/pm.agent.md) | Announces steps, coordinates handoffs, sprint planning | 1, 6, 8 |
+| **Product Owner** | [po.agent.md](agents/po.agent.md) | Requirements, features, stakeholder alignment | All |
+| **Business Analyst** | [ba.agent.md](agents/ba.agent.md) | Analysis, BDD scenarios, implementation validation | 2, 5, 7 |
+| **UX Designer** | [ux.agent.md](agents/ux.agent.md) | Journeys, wireframes, design systems | 3, 4 |
+| **Solution Architect** | [architect.agent.md](agents/architect.agent.md) | System design, tech choices, architecture decisions | 1-4, 6, 8 |
+| **Dev Lead** | [dev-lead.agent.md](agents/dev-lead.agent.md) | Implementation plans, handoff files, code quality | 4, 5, 7 |
+| **TDD Orchestrator** | [dev-tdd.agent.md](agents/dev-tdd.agent.md) | Coordinates RED-GREEN-REFACTOR cycles | 7 |
+| **TDD RED** | [dev-tdd-red.agent.md](agents/dev-tdd-red.agent.md) | Failing test creation (TDD entry point) | 7 |
+| **TDD GREEN** | [dev-tdd-green.agent.md](agents/dev-tdd-green.agent.md) | Minimal code to pass tests | 7 |
+| **TDD REFACTOR** | [dev-tdd-refactor.agent.md](agents/dev-tdd-refactor.agent.md) | Quality improvement, test optimization | 7 |
 
 ---
 
-## Implementation Workflow (6 Phases)
+### 📋 [workflows/](workflows/) - Orchestration Workflows (4 files)
 
-**🔄 Handoff-Driven Process**:
+Define the 3-workflow system for coordinating agents and documents.
 
-0. **Epic Review**: 🔄 PM → PO → BA → Dev-Lead (sequence stories)
-1. **Sprint Planning**: 🎯 ANNOUNCE + 3 options → User chooses approach
-2. **BDD Integration**: Dev-Lead creates implementation plan + handoff file
-3. **TDD Cycle**: 🔄 TDD-Orchestrator → RED → GREEN → REFACTOR (with handoff updates)
-4. **BDD Validation**: BA executes scenarios, hands off results
-5. **Code Quality**: Dev-Lead reviews, updates status, hands off to next story
-6. **Epic Status**: Automatic when all stories "Implemented"
-
-**Layers** (implement ONE story at a time through all layers):
-- Layer 1 (DB): Migrations, models, indexes
-- Layer 2 (Backend): API endpoints, business logic
-- Layer 3 (Config): Routes, DI, feature flags
-- Layer 4 (Frontend): Components, state, styling
-
-**TDD Chain of Thought**: Each cycle tracked in `/docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md`
-
-
-
-
-
-#### Team Responsibilities Across implementation.workflows.md Phases (Epic-Driven)
-
-```mermaid
-graph LR
-    subgraph Phase0 ["Phase 0: Epic Planning"]
-        P0["👥 PM: Review epics<br/>🗂️ Sequence by dependencies<br/>✅ Identify blockers"]
-    end
-    
-    subgraph Phase1 ["Phase 1: Sprint Planning"]
-        P1["📊 PM: Sprint scope<br/>🎯 PO: Select epics<br/>✏️ TL: Estimate effort"]
-    end
-    
-    subgraph Phase2 ["Phase 2: Story Breakdown"]
-        P2["🏗️ TL: Create issues per story<br/>📁 Link stories to epic<br/>⚙️ Layer breakdown"]
-    end
-    
-    subgraph Phase3 ["Phase 3: TDD by Epic"]
-        P3["❌ TDD: Write failing test<br/>✅ Dev: Implement story<br/>🧹 Dev: Refactor code"]
-    end
-    
-    subgraph Phase4 ["Phase 4: BDD Validation"]
-        P4["📋 BA: Execute epic scenarios<br/>✔️ Validate epic completeness<br/>📊 All stories work?"]
-    end
-    
-    subgraph Phase5 ["Phase 5: Quality & Commit"]
-        P5["👀 TL: Code review<br/>📈 Coverage check<br/>✅ Epic approved for merge"]
-    end
-    
-    Phase0 -->|Epic Sequence| Phase1
-    Phase1 -->|Selected Epics| Phase2
-    Phase2 -->|Ready to Code| Phase3
-    Phase3 -->|Implemented| Phase4
-    Phase4 -->|Approved| Phase5
-    Phase5 -->|CI/CD Ready| Deploy["🚀 Deployment<br/>(by epic)"]
-    
-    style Phase0 fill:#E8F4F8,stroke:#333
-    style Phase1 fill:#E8F4F8,stroke:#333
-    style Phase2 fill:#E8F4F8,stroke:#333
-    style Phase3 fill:#90EE90,stroke:#333
-    style Phase4 fill:#FFD700,stroke:#333
-    style Phase5 fill:#FFB6C1,stroke:#333
-    style Deploy fill:#50C878,stroke:#333,color:#fff
-```
-
-## System Architecture
-
-**🔄 Handoff-Coordinated Components**: Templates + AI Agents + Documents + Decision Gates
-- **Templates**: prd, tech-doc, user-story, **handoff tracking**
-- **Agents**: PM, PO, BA, UX, Architect, Dev-Lead, TDD Navigator (coordinated via handoffs)
-- **Documents**: 13 PRD docs + implementation plans + handoff files
-- **Decision Gates**: 🎯 Architecture, Technology, Sprint Scope, Implementation Approach
-- **Progress Tracking**: Real-time via handoff files and status updates
-
-## Components
-
-### Templates ([.github/templates](/.github/templates/))
-- **prd.template.yml**: 13 PRD documents structure
-- **user-story.template.yml**: Story format + acceptance criteria
-- **user-story-handoff.template.md**: 📝 TDD chain-of-thought tracking
-- **tech-doc.template.yml**: API contracts, data models, architecture
-- **func-doc.template.yml**: Business process flows
-
-### 📝 Handoff Tracking Files
-- **Implementation Plan**: `/docs/user-stories/<US-REF>/implementation-plan.md`
-- **Handoff File**: `/docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md`
-- **Progress Tracking**: Real-time TDD cycle progress and chain of thought
-- **Decision Log**: Technical decisions and architecture notes
-
-### AI Agents ([.github/agents](/.github/agents/)) - Handoff Coordinated
-
-**🔄 Handoff Chain**: PM → PO → BA → UX → Architect → Dev-Lead → TDD Agents
-
-**PM** - Project Manager: 🎯 Announces steps, coordinates handoffs (Stages 1, 6, 8)
-**PO** - Product Owner: Requirements, features, hands off to BA/UX (All stages)
-**BA** - Business Analyst: Analysis, BDD scenarios, validates implementations (Stages 2, 5, 7)
-**UX** - Designer: Journeys, blueprints, design systems (Stages 3, 4)
-**Architect** - System design, 🎯 presents tech choices for user decision (Stages 1-4, 6, 8)
-**Dev-Lead** - Creates implementation plans + handoff files (Stages 4, 5, 7)
-**TDD Navigator** - Orchestrates RED-GREEN-REFACTOR with handoff tracking (Stage 7)
-
-### Workflows ([.github/workflows](/.github/workflows/))
-- **documents.workflows.md** (880 lines): 8-stage PDLC with agent invocations
-- **implementation.workflows.md** (239 lines): 6-phase TDD execution
-- **cicd.workflows.md** (775 lines): 3-phase CI/CD evolution
-
-## Document Flow
-
-**Stage 1**: requirements.md (PM + PO + Architect)
-**Stage 2**: personas.md, business-case.md (BA)
-**Stage 3**: journey-maps.md, user-stories.md, architecture-design.md, flow-diagrams.md (UX + Architect + PO)
-**Stage 4**: tech-spec.md, code-generation.md, design-systems.md (Architect + Dev-Lead + UX)
-**Stage 5**: test-strategies.md, BDD scenarios (BA + Dev-Lead)
-**Stage 6**: iteration-planning.md, deployment-plan.md (PO + Architect)
-**Stage 7**: Implementation via TDD (Dev-Lead + TDD Navigator + BA)
-**Stage 8**: Feedback → Update requirements (PO + Architect)
-
-## Usage
-
-**New Project**: Copy prompt from `.github/tasks/start-pdlc.prompts.md`, invoke `@orchestrator`
-**Continue Project**: `@orchestrator Resume [workflow] at Stage/Phase [X]`
-**Implementation**: Use `.github/tasks/start-implementation.prompts.md`
-**CI/CD Setup**: Use `.github/tasks/start-cicd.prompts.md`
-
-**🔄 Handoff Pattern**: Agents coordinate via handoffs, **one at a time** on workspace files
-**🎯 Decision Gates**: System announces steps and presents 3 options for user choice
-**📝 Progress Tracking**: TDD implementation tracked via handoff files
-```
-
-## Traceability
-
-**All documents trace to requirements.md:**
-requirements → personas → business-case → user-stories (epics + stories) → journey-maps → blueprints → architecture → tech-spec → design-systems → test-strategies → iteration-planning → feedback loop
-
-## Quality Gates
-
-**Approval Required Per Stage:**
-Stage 1: PM, PO, Stakeholders | Stage 2: PO, BA, Architect | Stage 3: PO, UX, Architect, Dev-Lead | Stage 4: Architect, Dev-Lead, PO | Stage 5: BA, QA, PO | Stage 6: PM, PO, Architect | Stage 7: TDD Navigator, PO | Stage 8: PO
-
-**Governance**: Git version control, traceability enforced, templates followed, weekly reviews
-
-## Key Anti-Patterns to Avoid
-
-❌ Skipping stages | ❌ Missing approvals | ❌ Unclear ownership | ❌ Traceability gaps | ❌ Ignoring feedback | ❌ Stale documents
-
-## Success Metrics
-
-✅ Traceability complete | ✅ Correct agent invocations | ✅ All gates passed | ✅ Feedback loops active | ✅ Documents sync with code | ✅ Team understands flows | ✅ Quality improving
-
-## Quick Reference
-
-**Workflows**: `.github/workflows/` (documents, implementation, cicd)
-**Agents**: `.github/agents/` (pm, po, ba, ux, architect, dev-lead, dev-tdd)
-**Templates**: `.github/templates/` (prd, user-story, tech-doc, func-doc)
-**Tasks**: `.github/tasks/` (start-pdlc, start-implementation, start-cicd)
-**Instructions**: `.github/instructions/` (coding, documentation)
-**Docs**: `docs/prd/` (13 PRD documents), `docs/user-stories/` (master list + per-story folders)
-| **Templates** | Define document structure | [.github/templates/](.github/templates/) | All agents |
-| **Agents** | Specialized AI roles | [.github/agents/](.github/agents/) | Workflow |
-| **PDLC Workflow** | Stage-by-stage orchestration (8 stages) | [.github/workflows/documents.workflows.md](.github/workflows/documents.workflows.md) | Project leads, all agents |
-| **Implementation Workflow** | Development execution with TDD (6 phases) | [.github/workflows/implementation.workflows.md](.github/workflows/implementation.workflows.md) | Dev-Lead, TDD Navigator, BA Agent |
-| **CI/CD Workflow** | Continuous integration & deployment (3 phases) | [.github/workflows/cicd.workflows.md](.github/workflows/cicd.workflows.md) | All agents, DevOps, development teams |
-| **Documentation Prompt** | Reusable prompt for any documentation | [.github/prompts/documentation.prompt.md](.github/prompts/documentation.prompt.md) | PO Agent, Tech Lead |
-| **Coding Standards** | Language-agnostic best practices | [.github/instructions/coding.instruction.md](.github/instructions/coding.instruction.md) | All developers, code reviewers |
-| **Requirements** | Truth source document | docs/prd/requirements.md | All stages |
-| **Personas** | User understanding document | docs/prd/personas.md | Stage 2+ |
-| **Epics** | Feature groupings (in user-stories.md) | docs/prd/user-stories.md#epics | Stage 3+ |
-| **User Stories** | Story definitions grouped by epic | docs/prd/user-stories.md#stories | Stage 3+ |
-| **Architecture** | Technical design document | docs/prd/architecture-design.md | Stage 3+ |
-| **Tech Spec** | Implementation guide | docs/prd/tech-spec.md | Stage 4+ |
-| **Test Strategy** | Quality assurance plan | docs/prd/test-strategies.md | Stage 5+ |
-
-## Documentation Generation
-
-**Prompt System**: `.github/prompts/documentation.prompts.md`
-- Single parameterized prompt for all documentation types
-- 7 parameters: DOCUMENT_NAME, DOC_TYPE, SCOPE, AUDIENCE, PROJECT_CONTEXT, REQUIREMENTS_REFERENCE, EXISTING_DOCUMENTATION
-- Scopes: application, feature, user-story, installation-guide, developer-guide
-- Audiences: end-user, developer, architect, devops, business-stakeholder
-- 10 quality gates validate output
-
-**Usage**: Copy prompt, fill parameters, invoke AI agent
+| Workflow | File | Description | Phases/Stages |
+|----------|------|-------------|---|
+| **PDLC Workflow** | [documents.workflows.md](workflows/documents.workflows.md) | 8-stage Product Development Lifecycle: Requirements → Analysis → Design → Planning → Testing → Deployment → Development → Improvement | 8 stages |
+| **Implementation Workflow** | [implementation.workflows.md](workflows/implementation.workflows.md) | 6-phase TDD execution: Epic Review → Sprint Planning → BDD Integration → TDD Cycle → BDD Validation → Code Quality | 6 phases |
+| **CI/CD Workflow** | [cicd.workflows.md](workflows/cicd.workflows.md) | 3-phase continuous integration: Bootstrap → Stabilization → Optimization | 3 phases |
+| **GitHub Actions** | [ci.yml](workflows/ci.yml) | Automated CI/CD pipeline configuration | Auto-triggered |
 
 ---
 
-## Coding Standards
+### 📚 [instructions/](instructions/) - Development Standards (2 files)
 
-**File**: `.github/instructions/coding.instructions.md` (~860 lines)
-**Coverage**: Clean code, SOLID principles, YAGNI, design patterns, testing (TDD), documentation, error handling, performance, security, refactoring
-**13-Point Code Review Checklist**: Functionality, design, complexity, testing, naming, comments, error handling, performance, security, documentation, consistency, best practices, dependencies
+Mandatory coding and documentation guidelines for all team members.
 
-Referenced in Stage 7 (implementation) and CI/CD quality gates.
+| Instruction | File | Coverage |
+|-------------|------|----------|
+| **Coding Standards** | [coding.instructions.md](instructions/coding.instructions.md) | SOLID principles, TDD, test coverage >80%, cyclomatic complexity, 13-point code review checklist, naming, error handling, performance, security, refactoring |
+| **Documentation Standards** | [documentation.instructions.md](instructions/documentation.instructions.md) | Documentation scope, templates usage, README.md updates, Mermaid/PlantUML diagrams, when to document |
 
-## Next Steps
+---
 
-1. **🔍 Assess First**: Always run `@orchestrator Assess project status for [PROJECT_NAME]`
-2. **📚 Understand Handoffs**: Read workflows to see agent coordination patterns
-3. **🤖 Study Agent Roles**: Review `.github/agents/` for handoff definitions
-4. **📋 Review Templates**: Check `.github/templates/` including handoff tracking
-5. **🎯 Launch with Decision Gates**: Use task prompts, make choices at decision gates
-6. **📝 Track Progress**: Monitor implementation via handoff files
-7. **🔄 Follow Handoff Chain**: Let agents coordinate through handoffs, one at a time
+### 🎨 [templates/](templates/) - Document Templates (10 files)
+
+Reusable templates for consistent document generation across projects.
+
+| Template | File | Purpose | Used By |
+|----------|------|---------|---------|
+| **PRD Artifact Structure** | [prd.template.yml](templates/prd.template.yml) | 13 PRD documents schema (requirements, personas, architecture, etc.) | PO, BA, Architect |
+| **User Story** | [user-story.template.yml](templates/user-story.template.yml) | Individual user story format with acceptance criteria | Dev-Lead, BA |
+| **Epic** | [epic.template.yml](templates/epic.template.yml) | Epic grouping structure and story linkage | PM, PO |
+| **Tech Doc** | [tech-doc.template.yml](templates/tech-doc.template.yml) | Technical specification document | Architect, Dev-Lead |
+| **Functional Doc** | [func-doc.template.yml](templates/func-doc.template.yml) | Feature/function documentation | PO, BA |
+| **User Stories Status** | [user-stories-status.template.yml](templates/user-stories-status.template.yml) | Status tracking for user stories (Not Started / In Progress / Implemented) | Dev-Lead, PM |
+| **User Stories Tracking** | [user-stories-tracking.template.md](templates/user-stories-tracking.template.md) | Master tracking file for all stories across epics | Dev-Lead, PM |
+| **User Story Handoff** | [user-story-handoff.template.md](templates/user-story-handoff.template.md) | Handoff file for TDD cycle progress tracking | TDD Agents |
+| **Project Status** | [project-status.template.md](templates/project-status.template.md) | PM dashboard with epic/sprint/velocity/quality metrics | PM, PO |
+| **Sprint Planning** | [sprint-planning.template.md](templates/sprint-planning.template.md) | Sprint scope, capacity, and story assignments | PM, Dev-Lead |
+
+---
+
+### 🎯 [tasks/](tasks/) - Workflow Launchers (7 files)
+
+Reusable prompts to start workflows. Copy prompt, fill parameters, invoke agent.
+
+| Task | File | Invocation | When to Use |
+|------|------|-----------|------------|
+| **Assess Project Status** | [assess-project-status.prompts.md](tasks/assess-project-status.prompts.md) | `@orchestrator Assess project status for [PROJECT_NAME]` | Starting ANY work - shows doc completeness, code status, maturity level, next steps |
+| **Start PDLC** | [start-pdlc.prompts.md](tasks/start-pdlc.prompts.md) | `@orchestrator [Copy/fill prompt from file]` | New projects - starts Stage 1 with PM |
+| **Start Implementation** | [start-implementation.prompts.md](tasks/start-implementation.prompts.md) | `@orchestrator [Copy/fill prompt from file]` | After PDLC Stages 1-6 complete - starts Phase 1 with PM |
+| **Start CI/CD** | [start-cicd.prompts.md](tasks/start-cicd.prompts.md) | `@orchestrator [Copy/fill prompt from file]` | After implementation stable - starts CI/CD bootstrap |
+| **Plan User Story** | [plan-us.prompts.md](tasks/plan-us.prompts.md) | `@dev-lead [Copy/fill prompt from file]` | Dev-Lead creating implementation plan for a user story |
+| **Write Tests** | [write-tests.prompts.md](tasks/write-tests.prompts.md) | `@ba [Copy/fill prompt from file]` | BA creating BDD scenarios |
+| **Commit User Story** | [commit-us.prompts.md](tasks/commit-us.prompts.md) | `@dev-lead [Copy/fill prompt from file]` | Dev-Lead finalizing story after all tests pass |
+
+---
+
+### 💡 [prompts/](prompts/) - Reusable Prompt Library (5 files)
+
+General-purpose prompts for common tasks, referenced by agents.
+
+| Prompt | File | Purpose |
+|--------|------|---------|
+| **Agent Prompt Library** | [agent-prompt-library.md](prompts/agent-prompt-library.md) | Collection of agent-specific prompt patterns |
+| **Documentation Prompts** | [documentation.prompts.md](prompts/documentation.prompts.md) | Parameterized prompt for all documentation types (7 parameters) |
+| **Overview Prompts** | [overview.prompts.md](prompts/overview.prompts.md) | System overview and navigation prompts |
+| **TDD Prompts** | [tdd.prompts.md](prompts/tdd.prompts.md) | RED-GREEN-REFACTOR cycle guidance |
+| **Planning Prompts** | [plan-us.prompts.md](prompts/plan-us.prompts.md) | User story planning and layer breakdown |
+
+---
+
+### 📋 [guides/](guides/) - Extended Documentation
+
+Detailed guides and reference materials (check directory for latest).
+
+---
+
+### ⚠️ [quality/](quality/) - Quality & Risk Management
+
+Quality gates, risk assessments, and compliance checks (check directory for latest).
+
+---
+
+### 🔗 [agent-contracts/](agent-contracts/) - Agent Interface Specifications
+
+Formal contracts defining agent responsibilities and handoff formats (check directory for latest).
+
+---
+
+### 🚨 [conflicts/](conflicts/) - Conflict Resolution
+
+Mechanisms for handling conflicting decisions or merge issues (check directory for latest).
+
+---
+
+### 📄 [copilot-instructions.md](copilot-instructions.md)
+
+**Master instructions file** - Complete system architecture, orchestration rules, TDD workflow, folder structure, progress tracking.
+
+**READ THIS FIRST** for full system understanding.
+
+---
+
+## 🎯 How to Use This Toolbox
+
+### 1️⃣ Starting Work
+```bash
+@orchestrator Assess project status for [PROJECT_NAME]
+```
+Shows what exists, what's missing, and recommends next workflow.
+
+### 2️⃣ Starting New PDLC
+Copy prompt from [start-pdlc.prompts.md](tasks/start-pdlc.prompts.md), fill parameters, invoke:
+```bash
+@orchestrator [Your filled prompt]
+```
+
+### 3️⃣ Starting Implementation (after PDLC complete)
+Copy prompt from [start-implementation.prompts.md](tasks/start-implementation.prompts.md), invoke:
+```bash
+@orchestrator [Your filled prompt]
+```
+
+### 4️⃣ Following Handoffs
+- Each agent reads their agent file for responsibilities
+- Agents coordinate through handoff files in `/docs/user-stories/<US-REF>/`
+- One agent at a time works on shared files
+- User makes decisions at **decision gates** (3 options presented)
+
+### 5️⃣ TDD Cycles
+Dev-Lead creates implementation plan → TDD-Orchestrator sequences RED→GREEN→REFACTOR → BA validates with BDD
+
+### 6️⃣ Checking Coding Standards
+Before committing code, review [instructions/coding.instructions.md](instructions/coding.instructions.md) - 13-point checklist included.
+
+### 7️⃣ Generating Documentation
+Use [prompts/documentation.prompts.md](prompts/documentation.prompts.md) with 7 parameters for any doc type.
+
+---
+
+## 📊 Key Concepts
+
+**Epics** = Organizational containers (groups of stories)  
+**User Stories** = Work units (implement ONE at a time, all 4 layers)  
+**Handoffs** = Agent-to-agent coordination via shared files  
+**Decision Gates** = User choices at critical points (3 options each)  
+**BDD-Driven TDD** = Failing BDD tests → RED-GREEN-REFACTOR cycles → Passing tests
+
+---
+
+## 🔑 Critical Files
+
+| Need to... | Read This |
+|-----------|-----------|
+| Understand entire system | [copilot-instructions.md](copilot-instructions.md) |
+| Start work on any project | [tasks/assess-project-status.prompts.md](tasks/assess-project-status.prompts.md) |
+| Start new PDLC project | [tasks/start-pdlc.prompts.md](tasks/start-pdlc.prompts.md) |
+| Start implementation phase | [tasks/start-implementation.prompts.md](tasks/start-implementation.prompts.md) |
+| Understand PDLC stages (1-8) | [workflows/documents.workflows.md](workflows/documents.workflows.md) |
+| Understand implementation phases (1-6) | [workflows/implementation.workflows.md](workflows/implementation.workflows.md) |
+| Learn coding standards | [instructions/coding.instructions.md](instructions/coding.instructions.md) |
+| Plan user story implementation | [templates/user-story.template.yml](templates/user-story.template.yml) + [tasks/plan-us.prompts.md](tasks/plan-us.prompts.md) |
+| Understand agent roles | [agents/](agents/) (choose specific agent) |
+| Get document templates | [templates/](templates/) |
+
+---
+
+## 📈 Workflow at a Glance
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ NEW PROJECT? Run: @orchestrator Assess [PROJECT_NAME]   │
+└──────────────────┬──────────────────────────────────────┘
+                   │
+      ┌────────────┴────────────┐
+      │                         │
+    PDLC?                    IMPLEMENTATION?
+   (Stages 1-8)              (Phases 1-6)
+      │                         │
+      ├─→ Start PDLC         ├─→ Start Implementation
+      │   (tasks/)              (tasks/)
+      │                         │
+      ├─→ Agent Chain:       ├─→ Agent Chain:
+      │   PM→PO→BA→          │   PM→Dev-Lead→TDD
+      │   UX→Architect        │   Orchestrator
+      │                         │
+      ├─→ Approval Gates     ├─→ Decision Gates
+      │   (by stage)           (architecture, scope)
+      │                         │
+      └─→ 13 PRD Docs        └─→ 4 Layers per Story:
+          Ready for            1. Database
+          Implementation       2. Backend
+                              3. Config
+                              4. Frontend
+```
+
+---
+
+## ✅ Success Checklist
+
+- [ ] Read [copilot-instructions.md](copilot-instructions.md) for system overview
+- [ ] Review agent files for your role ([agents/](agents/))
+- [ ] Check templates for document structure ([templates/](templates/))
+- [ ] Follow coding standards before committing ([instructions/](instructions/))
+- [ ] Use task prompts to start workflows ([tasks/](tasks/))
+- [ ] Track progress via handoff files (`/docs/user-stories/<US-REF>/`)
+- [ ] Run `@orchestrator Assess` before any major decision
+
+---
+
+**Last Updated**: January 7, 2026  
+**System**: AI-Driven PDLC Orchestration Framework
