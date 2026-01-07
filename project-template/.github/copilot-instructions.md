@@ -14,7 +14,7 @@ This is an **AI-driven Product Development Lifecycle (PDLC) orchestration framew
 
 **BDD-Driven TDD**: BDD scenarios are **entry points** (not endpoints). Failing BDD tests drive layer-by-layer TDD cycles (RED → GREEN → REFACTOR). Implementation makes BDD tests pass incrementally.
 
-**Orchestrator Pattern**: Use `@orchestrator` agent (`.github/agents/orchestrator.agent.md`) to coordinate all workflows. It invokes specialized agents via `runSubagent` with proper `subagentType` and presents 3 options at decision gates.
+**Orchestrator Pattern**: Use `@orchestrator` agent (`.github/agents/orchestrator.agent.md`) to coordinate all workflows via handoffs and present 3 options at decision gates. Use `runSubagent` only for read‑only research or analysis; never for writing or editing shared project files.
 
 ### Standardized Folder Structure
 
@@ -126,6 +126,13 @@ Only for independent research/analysis tasks:
 - Writing code
 - BDD/TDD cycles
 - Any work requiring shared file state
+
+After each agent completes work on a user story, persist two artifacts in the story folder:
+- `delta_summary.json` (what changed, open questions, next files)
+- `decision_log.md` (assumptions, options, choice, tradeoffs)
+Store both under `/docs/user-stories/<USER-STORY-REF>/` and pass only deltas + relevant files to the next agent to reduce tokens and drift.
+
+For every user story, keep a `story.yaml` in `/docs/user-stories/<USER-STORY-REF>/` capturing: `id, title, epic, type, risk, affected_components, acceptance_criteria[], nfrs[], data_contracts[], feature_flag, rollout_plan, migration, test_matrix, dependencies[]`. This file is validated in CI.
 
 **Agent Registry** (`.github/agents/`):
 - `orchestrator.agent.md` - Master coordinator with handoff definitions

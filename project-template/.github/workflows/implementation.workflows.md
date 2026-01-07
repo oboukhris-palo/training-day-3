@@ -56,9 +56,205 @@ This document defines the **Implementation & Development Execution Workflow** - 
   │   ├── sprint-2.md               # Archived sprint (after closure)
   │   └── <USER-STORY-REF>/         # Per-story folders (e.g., US-001/)
   │       ├── <US-REF>.md           # SINGLE STORY FILE: Definition + enrichment (AC, BDD, UI inputs, API contracts)
-  │       └── implementation-plan.md # Layer-by-layer technical decomposition
+  │       ├── implementation-plan.md # Layer-by-layer technical decomposition
+  │       ├── <US-REF>-HANDOFF.md  # 🔄 TDD agent handoff communication
+  │       └── tdd-execution.md      # 📝 TDD cycle execution tracking
   └── design/                       # UX/UI design documents
 ```
+
+---
+
+## Implementation Checkpoint Documents
+
+### User-Story Level Documents
+
+#### `/docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md` 🔄
+**Purpose**: Enable seamless handoffs between TDD agents (tdd-orchestrator, tdd-red, tdd-green, tdd-refactor) per user-story
+
+**Managed by**: TDD agents (tdd-orchestrator, tdd-red, tdd-green, tdd-refactor)
+
+**Content Structure**:
+- **Current Phase**: RED / GREEN / REFACTOR / COMPLETE
+- **Current Layer**: Database / Backend / Config / Frontend
+- **Progress Summary**: What was completed in last cycle
+- **Next Actions**: What the next agent should focus on
+- **Blockers**: Any issues that need escalation
+- **Context**: Key decisions, assumptions, or constraints
+- **Files Modified**: List of files created/changed in last cycle
+- **Test Status**: Current pass/fail state of tests
+
+**Update Triggers**:
+- **TDD-Orchestrator**: Creates file at start, updates after each layer completion
+- **TDD-RED**: Updates after writing failing tests
+- **TDD-GREEN**: Updates after implementing code to pass tests
+- **TDD-REFACTOR**: Updates after improving code quality
+
+#### `/docs/user-stories/<US-REF>/implementation-plan.md` 📋
+**Purpose**: Lead-dev implementation plan to execute per user-story (layer-by-layer technical decomposition)
+
+**Managed by**: Dev-Lead agent
+
+**Content Structure** (existing - enhanced for agent communication):
+- **Layer 1 (Database)**: Schema, migrations, indexes, files, BDD coverage
+- **Layer 2 (Backend)**: Endpoints, services, business logic, files, BDD coverage
+- **Layer 3 (Config)**: Routes, DI, middleware, feature flags, files, BDD coverage
+- **Layer 4 (Frontend)**: Components, state mgmt, styling, files, BDD coverage
+- **Agent Communication Notes**: Special instructions for TDD agents
+- **Architectural Constraints**: From architecture-design.md
+- **Definition of Done**: All BDD passing, >80% coverage, code review approved
+
+**Update Triggers**:
+- **Dev-Lead**: Creates during Phase 3, updates if requirements change
+- **TDD-Orchestrator**: May add notes about implementation approach
+
+#### `/docs/user-stories/<US-REF>/tdd-execution.md` 📝
+**Purpose**: Document the TDD cycle executions for every user-story (detailed execution log)
+
+**Managed by**: TDD agents (primarily tdd-orchestrator)
+
+**Content Structure**:
+- **Story Overview**: US-REF, title, epic, acceptance criteria
+- **Layer Progress Tracking**:
+  - Layer 1: Status, tests written, code implemented, refactors applied
+  - Layer 2: Status, tests written, code implemented, refactors applied
+  - Layer 3: Status, tests written, code implemented, refactors applied
+  - Layer 4: Status, tests written, code implemented, refactors applied
+- **TDD Cycle Log**: Timestamped entries of RED-GREEN-REFACTOR cycles
+- **Test Results**: Pass/fail counts, coverage metrics per layer
+- **Code Quality Metrics**: Complexity, duplication, SOLID compliance
+- **Blockers & Resolutions**: Issues encountered and how they were resolved
+- **Final Status**: BDD test results, readiness for BA validation
+
+**Update Triggers**:
+- **TDD-Orchestrator**: Creates file, updates after each layer
+- **TDD-RED/GREEN/REFACTOR**: Add entries for each cycle
+- **Dev-Lead**: Reviews and signs off on completion
+
+### Project Level Documents
+
+#### `/docs/user-stories/project-status.md` 📊
+**Purpose**: Project overview dashboard - single source of truth for the PM agent
+
+**Managed by**: PM agent (primary), with contributions from other agents
+
+**Content Structure**:
+- **Project Overview**: Name, description, current phase, overall progress
+- **Epic Progress**: Status of each epic (% completion, story counts)
+- **Sprint Summary**: Current sprint number, start/end dates, capacity utilization
+- **Team Velocity**: Stories per sprint, trend analysis, capacity planning
+- **Active Blockers**: Issues requiring PM attention (>4 hours blocked)
+- **Risk Register**: Identified risks with mitigation plans
+- **Quality Metrics**: Test coverage, bug counts, code quality scores
+- **Resource Allocation**: Team member assignments, workload distribution
+- **Milestones & Deadlines**: Key project dates, dependencies
+- **Stakeholder Communication**: Status for external reporting
+
+**Update Triggers**:
+- **PM**: Updates daily for blockers, weekly for metrics and progress
+- **Dev-Lead**: Updates quality metrics after story completion
+- **BA**: Updates validation metrics and bug counts
+- **TDD-Orchestrator**: Updates velocity and completion metrics
+
+#### `/docs/user-stories/current-sprint.md` 📋
+**Purpose**: The user-stories references to tackle per sprint (active sprint planning & execution)
+
+**Managed by**: PM agent (planning), Dev-Lead agent (execution tracking)
+
+**Content Structure**:
+- **Sprint Header**: Sprint number, dates, capacity, selected approach
+- **Selected Stories**: Table with US-REF, title, story points, status, assignee
+- **Sprint Scope**: Conservative/Balanced/Stretch justification
+- **Daily Progress Tracking**: Burndown chart, daily standup notes
+- **Dependency Map**: Story dependencies and blockers
+- **Definition of Ready/Done**: Sprint-specific acceptance criteria
+- **Risk Management**: Sprint risks and mitigation strategies
+- **Team Assignments**: Who is working on which stories
+- **Sprint Retrospective**: (Added at sprint end before archiving)
+
+**Update Triggers**:
+- **PM**: Creates at sprint start, updates daily for progress tracking
+- **Dev-Lead**: Updates story status as implementation progresses
+- **BA**: Updates validation status after testing
+- **TDD-Orchestrator**: Updates technical progress and blockers
+
+#### `/docs/user-stories/user-stories.md` ⭐
+**Purpose**: Master user stories document with implementation status (already exists - enhanced for agent communication)
+
+**Managed by**: Multiple agents based on their responsibilities
+
+**Content Structure** (enhanced):
+- **Status Tracking**: Not Started / In Progress / Implemented / Delivered
+- **GitHub Integration**: Issue numbers, links, synchronization status
+- **Epic Grouping**: Stories organized by parent epic
+- **Agent Assignment**: Current responsible agent per story
+- **Last Updated**: Timestamp and agent who made the change
+- **Communication Log**: Key updates from agents about story status
+
+**Update Triggers**:
+- **PM**: Updates during sprint planning and closure
+- **Dev-Lead**: Updates when starting implementation and marking complete
+- **BA**: Updates after validation (Implemented → Delivered)
+- **TDD-Orchestrator**: Updates during active development phases
+
+---
+
+## Agent Communication Patterns
+
+### Document-Based Communication Rules
+
+**Agents must communicate their work, research, analysis, and reporting through these checkpoint documents. Agents update these documents when needed as long as it's within their responsibilities.**
+
+#### PM Agent Communication
+- **Primary Documents**: `/docs/user-stories/project-status.md`, `/docs/user-stories/current-sprint.md`
+- **Updates**: Daily for blockers and progress tracking, weekly for metrics and planning
+- **Communication**: Project status reports, sprint planning decisions, resource allocation
+- **Escalation Triggers**: Stories blocked >4 hours, velocity trends, capacity issues
+
+#### Dev-Lead Agent Communication  
+- **Primary Documents**: `/docs/user-stories/<US-REF>/implementation-plan.md`, `/docs/user-stories/user-stories.md`
+- **Updates**: During Phase 3 (plan creation), Phase 5 (status sync), quality gate reviews
+- **Communication**: Technical decomposition, architectural decisions, implementation readiness
+- **Handoff Notes**: Clear technical specifications for TDD agents, dependency resolution
+
+#### TDD Agent Communication (tdd-orchestrator, tdd-red, tdd-green, tdd-refactor)
+- **Primary Documents**: `/docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md`, `/docs/user-stories/<US-REF>/tdd-execution.md`
+- **Updates**: After each TDD cycle (RED-GREEN-REFACTOR), layer completion, issue resolution
+- **Communication**: Current phase status, next actions, blockers, technical decisions, test results
+- **Chain of Thought**: Detailed execution log for transparency and troubleshooting
+
+#### BA Agent Communication
+- **Primary Documents**: `/docs/user-stories/user-stories.md`, GitHub Issue comments
+- **Updates**: After validation testing, bug discovery, story acceptance
+- **Communication**: Validation results, bug reports, acceptance criteria verification
+- **Quality Gates**: Feature readiness, design compliance, user experience validation
+
+### Document Update Triggers
+
+| Agent | Trigger | Document | Content |
+|-------|---------|----------|---------|
+| **PM** | Sprint start | `current-sprint.md` | Selected stories, capacity, team assignments |
+| **PM** | Daily standup | `project-status.md` | Progress metrics, blockers, risk updates |
+| **PM** | Sprint end | Archive to `sprint-N.md` | Retrospective, metrics, lessons learned |
+| **Dev-Lead** | Phase 3 start | `implementation-plan.md` | Layer decomposition, technical approach |
+| **Dev-Lead** | Phase 3 start | `<US-REF>-HANDOFF.md` | TDD communication template initialization |
+| **Dev-Lead** | Phase 3 start | `tdd-execution.md` | Execution tracking template setup |
+| **Dev-Lead** | Phase 5 | `user-stories.md` | Status update (In Progress → Implemented) |
+| **TDD-Orchestrator** | Layer start | `<US-REF>-HANDOFF.md` | Current phase, layer, next actions |
+| **TDD-Orchestrator** | Layer complete | `tdd-execution.md` | Cycle log, test results, metrics |
+| **TDD-RED** | Test written | `<US-REF>-HANDOFF.md` | Test details, expected behavior |
+| **TDD-GREEN** | Code implemented | `<US-REF>-HANDOFF.md` | Implementation notes, files changed |
+| **TDD-REFACTOR** | Code improved | `<US-REF>-HANDOFF.md` | Refactoring summary, quality metrics |
+| **BA** | Validation complete | `user-stories.md` | Status update (Implemented → Delivered or bugs) |
+| **BA** | Bug found | GitHub Issue comments | Bug details, repro steps, screenshots |
+
+### Communication Quality Standards
+
+1. **Timeliness**: Update documents within 1 hour of completing work
+2. **Clarity**: Use clear, actionable language; avoid technical jargon for non-technical stakeholders
+3. **Traceability**: Reference exact US-REF, GitHub issue numbers, commit hashes
+4. **Context**: Provide enough context for the next agent to continue work seamlessly
+5. **Escalation**: Flag blockers immediately; don't wait for daily standup
+6. **Consistency**: Use standardized formats and terminology across all documents
 
 ---
 
@@ -83,7 +279,7 @@ PDLC Complete Documents
 PHASE 0: PM INITIALIZES PROJECT & GITHUB INTEGRATION
 ├─ ✅ Verify GitHub repository exists with write access
 ├─ ✅ Create /docs/user-stories/user-stories.md (mirrors PRD with status tracking)
-├─ ✅ Create /docs/user-stories/project-status.md (dashboard template)
+├─ ✅ Create /docs/user-stories/project-status.md (dashboard template with project overview, epic progress, team setup)
 ├─ For EACH user-story in /docs/prd/user-stories.md:
 │  ├─ Create GitHub Issue (title, acceptance criteria, BDD scenarios)
 │  ├─ Tag with parent epic label
@@ -117,10 +313,11 @@ PHASE 1: PM SPRINT PLANNING (Start of Sprint)
 ├─ **POST-CREATION VALIDATION: Compare user-story references in current-sprint.md with `/docs/prd/user-stories.md`**
 │  └─ Ensure 1:1 match (no typos, no abbreviations, exact format: US-XXX)
 ├─ Update /docs/user-stories/project-status.md with:
-│  ├─ Active sprint section
+│  ├─ Active sprint section (sprint number, dates, approach)
 │  ├─ Selected stories list (use exact US-REF from current-sprint.md)
 │  ├─ Epic progress (auto-calculated from `/docs/prd/user-stories.md`)
-│  └─ Risk register for sprint
+│  ├─ Team assignments and capacity allocation
+│  └─ Risk register for sprint (dependencies, blockers)
 ├─ Update all GitHub Issues: Add "Sprint-[N]" label and milestone
 │  └─ GitHub Issue titles must include exact US-REF (e.g., "[US-001] User can login with email")
 └─ Hand off to BA: "Sprint [N] planned. Stories selected using exact US-REF from PRD. Begin enrichment."
@@ -158,6 +355,8 @@ PHASE 3: DEV-LEAD CREATES IMPLEMENTATION PLANS (During Sprint Planning)
 │  │  ├─ Layer 3 (Config): Routes, DI, middleware, feature flags, files, BDD coverage
 │  │  ├─ Layer 4 (Frontend): Components, state mgmt, styling, files, BDD coverage
 │  │  └─ Definition of Done: All BDD passing, >80% coverage, code review approved, BA validation passed
+│  ├─ Create /docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md (TDD agent communication template)
+│  ├─ Create /docs/user-stories/<US-REF>/tdd-execution.md (execution tracking template)
 │  ├─ Extract BDD/Gherkin scenarios from /docs/user-stories/<US-REF>/<US-REF>.md (bdd_scenarios section)
 │  ├─ Create features/<domain>/<story-ref>.feature (Gherkin)
 │  ├─ Create features/<domain>/<story-ref>.steps.ts (step definitions, failing tests)
@@ -181,10 +380,13 @@ PHASE 3: DEV-LEAD CREATES IMPLEMENTATION PLANS (During Sprint Planning)
 PHASE 4: TDD-ORCHESTRATOR EXECUTES IMPLEMENTATION (During Sprint)
 ├─ 🎯 ANNOUNCE: "Ready to implement Sprint [N] stories via TDD. Executing RED→GREEN→REFACTOR per layer."
 ├─ For EACH story in current-sprint.md (with complete implementation-plan.md):
+│  ├─ Update /docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md: Initialize TDD tracking
+│  ├─ Update /docs/user-stories/<US-REF>/tdd-execution.md: Start execution log
 │  ├─ For each LAYER (L1→L2→L3→L4):
-│  │  ├─ RED Phase: Write failing tests (guided by implementation-plan.md)
-│  │  ├─ GREEN Phase: Implement minimal code to pass tests
-│  │  ├─ REFACTOR Phase: Improve code quality while tests stay green
+│  │  ├─ RED Phase: Write failing tests (update HANDOFF.md with test details)
+│  │  ├─ GREEN Phase: Implement minimal code to pass tests (update HANDOFF.md with implementation notes)
+│  │  ├─ REFACTOR Phase: Improve code quality while tests stay green (update HANDOFF.md with refactoring summary)
+│  │  ├─ Update /docs/user-stories/<US-REF>/tdd-execution.md: Log cycle completion, metrics
 │  │  └─ Verify BDD assertions progress per layer
 │  ├─ After all layers: Run full BDD test suite
 │  ├─ Target: All BDD scenarios passing for story
@@ -260,7 +462,8 @@ PHASE 7: SPRINT CLOSURE & ARCHIVE (End of Sprint)
 │  ├─ Add completed sprint metrics to "Project Timeline & Milestones"
 │  ├─ Update epic progress (auto-calculated from user-stories.md)
 │  ├─ Adjust risk register for upcoming sprint
-│  └─ Reflect capability changes
+│  ├─ Update team velocity and capacity metrics
+│  └─ Reflect capability changes and lessons learned
 ├─ Retrospective notes:
 │  ├─ What went well? Keep doing it.
 │  ├─ What didn't go well? How to improve?
@@ -842,6 +1045,9 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
   - [ ] current-sprint.md reference list
 - [ ] User-story decomposed into 4 clear layers
 - [ ] Implementation-plan.md created with all 4 layers detailed and committed
+- [ ] **Checkpoint documents created**:
+  - [ ] `/docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md` (TDD communication template)
+  - [ ] `/docs/user-stories/<US-REF>/tdd-execution.md` (execution tracking template)
 - [ ] BDD feature file created with Gherkin scenarios and committed
 - [ ] Step definitions created with failing test code and committed
 - [ ] BDD tests run and confirmed failing
@@ -862,25 +1068,31 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
 - [ ] Code follows coding.instructions.md
 - [ ] Test coverage > 80%
 - [ ] Code reviewed and approved
+- [ ] **Checkpoint documents completed**:
+  - [ ] `/docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md` updated with final TDD status
+  - [ ] `/docs/user-stories/<US-REF>/tdd-execution.md` completed with full execution log
 - [ ] `/docs/user-stories/user-stories.md` updated to "Implemented" using exact <USER-STORY-REF>
 - [ ] GitHub Issue updated with results
 - [ ] Commits reference exact US-REF (e.g., "feat(US-001): Implement database layer #123")
-- [ ] Message: "User-story <USER-STORY-REF> complete. All BDD tests passing. Ready for next story."
+- [ ] Message: "User-story <USER-STORY-REF> complete. All BDD tests passing. TDD execution documented. Ready for next story."
 
 ---
 
 ## Summary Table
 
-| Phase | Agent | Input | Output | Duration |
-|-------|-------|-------|--------|----------|
-| **PHASE 1** | PM | `/docs/prd/user-stories.md` (source of truth for US-REF), `/docs/user-stories/user-stories.md` | Validation: current-sprint.md references MATCH `/docs/prd/user-stories.md` exactly (no typos), GitHub Issues created with exact US-REF | 15-30 min |
-| **PHASE 2** | BA | User-story (exact US-REF from PRD), current-sprint.md (validated references) | `/docs/user-stories/<EXACT-US-REF>/<US-REF>.md` enriched, numbering validated | 1-2 hours per story |
-| **PHASE 3** | Dev-Lead | User-story (exact US-REF), enriched file, PRD/architecture/design docs | implementation-plan.md at `/docs/user-stories/<EXACT-US-REF>/implementation-plan.md`, BDD tests, numbering pre-validated | 1-2 hours per story |
-| **PHASE 4** | TDD-Orchestrator | implementation-plan.md (numbering pre-validated), failing BDD tests, approach | Implemented code, passing BDD tests, >80% coverage, commits reference exact US-REF | 2-5 days per story |
-| **PHASE 5** | Dev-Lead | Handoff from TDD with BDD results, exact US-REF | `/docs/user-stories/user-stories.md` "Implemented" (exact US-REF), GitHub Issue updated, handoff to BA | 15-30 min |
-| **PHASE 6** | BA | User-story (exact US-REF), GitHub Issue, BDD files | `/docs/user-stories/user-stories.md` "Delivered" (exact US-REF), GitHub Issue closed | 1-3 hours per story |
+| Phase | Agent | Input | Output | Duration | Checkpoint Documents Updated |
+|-------|-------|-------|--------|----------|------------------------------|
+| **PHASE 0** | PM | `/docs/prd/user-stories.md`, GitHub credentials | GitHub Issues, `/docs/user-stories/user-stories.md`, `/docs/user-stories/project-status.md` | 1-2 hours | `project-status.md` (initial setup) |
+| **PHASE 1** | PM | `/docs/prd/user-stories.md` (source of truth for US-REF), `/docs/user-stories/user-stories.md` | Validation: `current-sprint.md` references MATCH `/docs/prd/user-stories.md` exactly, GitHub Issues created with exact US-REF | 15-30 min | `current-sprint.md` (create), `project-status.md` (sprint planning) |
+| **PHASE 2** | BA | User-story (exact US-REF from PRD), current-sprint.md (validated references) | `/docs/user-stories/<EXACT-US-REF>/<US-REF>.md` enriched, numbering validated | 1-2 hours per story | `<US-REF>.md` (enrichment sections) |
+| **PHASE 3** | Dev-Lead | User-story (exact US-REF), enriched file, PRD/architecture/design docs | `implementation-plan.md`, `<US-REF>-HANDOFF.md`, `tdd-execution.md` templates, BDD tests, numbering pre-validated | 1-2 hours per story | `implementation-plan.md` (create), `<US-REF>-HANDOFF.md` (create), `tdd-execution.md` (create) |
+| **PHASE 4** | TDD-Orchestrator | implementation-plan.md (numbering pre-validated), failing BDD tests, approach | Implemented code, passing BDD tests, >80% coverage, commits reference exact US-REF | 2-5 days per story | `<US-REF>-HANDOFF.md` (TDD cycles), `tdd-execution.md` (execution log), `current-sprint.md` (daily updates) |
+| **PHASE 5** | Dev-Lead | Handoff from TDD with BDD results, exact US-REF | `/docs/user-stories/user-stories.md` "Implemented" (exact US-REF), GitHub Issue updated, handoff to BA | 15-30 min | `user-stories.md` (status update) |
+| **PHASE 6** | BA | User-story (exact US-REF), GitHub Issue, BDD files | `/docs/user-stories/user-stories.md` "Delivered" (exact US-REF), GitHub Issue closed | 1-3 hours per story | `user-stories.md` (validation result) |
 
 **🔴 CRITICAL VALIDATION GATE**: Before every phase handoff, verify <USER-STORY-REF> matches EXACTLY with `/docs/prd/user-stories.md`. Any divergence blocks progression.
+
+**Document Communication**: All agents communicate work, research, analysis, and reporting through these checkpoint documents. Updates are required within their scope of responsibility.
 
 **Iteration**: Repeat Phases 1-6 for each user-story in sprint until all selected stories are "Delivered"
 
