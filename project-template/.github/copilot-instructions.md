@@ -1,3 +1,5 @@
+- Before anything, please read entire /.github/instructions/ai.analysis.guardrails.instructions.md file.
+
 # AI-Driven PDLC Orchestration System
 
 ## 🎯 System Architecture Overview
