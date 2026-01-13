@@ -204,29 +204,41 @@ This document defines the **Implementation & Development Execution Workflow** - 
 
 **Agents must communicate their work, research, analysis, and reporting through these checkpoint documents. Agents update these documents when needed as long as it's within their responsibilities.**
 
+**🤖 AI ACTIVITY LOGGING INTEGRATION**: All agents use `ImplementationWorkflowInterceptor` to track patterns, optimize workflows, and generate insights. Logging is enabled by default and captures:
+- Agent handoffs and decision points
+- TDD cycle efficiency and bottlenecks  
+- Sprint planning decisions and velocity trends
+- Document synchronization and GitHub integration
+- Story lifecycle transitions and validation results
+- Epic progression and cross-dependencies
+
 #### PM Agent Communication
 - **Primary Documents**: `/docs/user-stories/project-status.md`, `/docs/user-stories/current-sprint.md`
 - **Updates**: Daily for blockers and progress tracking, weekly for metrics and planning
 - **Communication**: Project status reports, sprint planning decisions, resource allocation
 - **Escalation Triggers**: Stories blocked >4 hours, velocity trends, capacity issues
+- **🤖 AI Logging**: Sprint scope decisions (Conservative/Balanced/Stretch), capacity utilization, story selection patterns, GitHub issue creation and synchronization
 
 #### Dev-Lead Agent Communication  
 - **Primary Documents**: `/docs/user-stories/<US-REF>/implementation-plan.md`, `/docs/user-stories/user-stories.md`
 - **Updates**: During Phase 3 (plan creation), Phase 5 (status sync), quality gate reviews
 - **Communication**: Technical decomposition, architectural decisions, implementation readiness
 - **Handoff Notes**: Clear technical specifications for TDD agents, dependency resolution
+- **🤖 AI Logging**: Layer decomposition decisions, architecture choices, technical debt identification, implementation plan quality metrics, status synchronization patterns
 
 #### TDD Agent Communication (tdd-orchestrator, tdd-red, tdd-green, tdd-refactor)
 - **Primary Documents**: `/docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md`, `/docs/user-stories/<US-REF>/tdd-execution.md`
 - **Updates**: After each TDD cycle (RED-GREEN-REFACTOR), layer completion, issue resolution
 - **Communication**: Current phase status, next actions, blockers, technical decisions, test results
 - **Chain of Thought**: Detailed execution log for transparency and troubleshooting
+- **🤖 AI Logging**: RED-GREEN-REFACTOR cycle efficiency, test coverage trends, code complexity metrics, refactoring frequency, layer-specific bottlenecks, BDD assertion coverage
 
 #### BA Agent Communication
 - **Primary Documents**: `/docs/user-stories/user-stories.md`, GitHub Issue comments
 - **Updates**: After validation testing, bug discovery, story acceptance
 - **Communication**: Validation results, bug reports, acceptance criteria verification
 - **Quality Gates**: Feature readiness, design compliance, user experience validation
+- **🤖 AI Logging**: Validation pass rates, bug discovery patterns, E2E test results, design system compliance, exploratory testing coverage, acceptance criteria verification
 
 ### Document Update Triggers
 
@@ -255,6 +267,14 @@ This document defines the **Implementation & Development Execution Workflow** - 
 4. **Context**: Provide enough context for the next agent to continue work seamlessly
 5. **Escalation**: Flag blockers immediately; don't wait for daily standup
 6. **Consistency**: Use standardized formats and terminology across all documents
+
+**🤖 AI-POWERED OPTIMIZATION**: Weekly analysis reports identify communication bottlenecks, suggest workflow improvements, and track cost optimization opportunities. Generated reports include:
+- Agent handoff efficiency scores and bottleneck identification
+- TDD cycle optimization recommendations per layer
+- Sprint planning velocity trends and capacity utilization
+- Story lifecycle bottleneck analysis and improvement suggestions
+- Epic progression patterns and cross-dependency optimization
+- Cost impact analysis and ROI calculations for process improvements
 
 ---
 
