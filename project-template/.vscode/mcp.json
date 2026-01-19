@@ -10,11 +10,7 @@
 		"github": {
 			"type": "http",
 			"url": "https://api.githubcopilot.com/mcp/"
-		},
-		"document-generator": {
-      		"command": "/opt/homebrew/bin/python3.11",
-      		"args": ["/Users/oboukhris-palo/Documents/palo-it/mcp-servers/documents/document-mcp-server/run_server.py"]
-    	}
+		}
 	},
 	"inputs": []
 }
