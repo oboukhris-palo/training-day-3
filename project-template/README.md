@@ -51,7 +51,6 @@ npm run trace-report -- --output=PERFORMANCE_REPORT.md
 # View implementation status
 ls .github/ai-logger/          # Core tracing engine
 ls .github/ai-logger/scripts/  # Export utilities
-cat .github/PHASE_3_COMPLETION.md  # Detailed completion report
 ```
 
 ---
