@@ -107,6 +107,46 @@ npm run trace-report                          # Export performance report
 
 ---
 
+## 📂 Project Structure (Optimized)
+
+```
+project-root/
+├── .github/
+│   ├── agents/                    # 11 specialized AI agents
+│   ├── workflows/                 # PDLC, Implementation, CI/CD workflows
+│   ├── tasks/                     # Workflow launcher prompts
+│   ├── templates/                 # Document templates
+│   ├── schemas/                   # JSON schemas for validation
+│   ├── guides/                    # Best practices and strategies
+│   │   ├── HANDOFF-GUIDE.md       # ⭐ Single source of truth for handoffs
+│   │   └── context-optimization-strategy.md
+│   ├── instructions/              # Coding and documentation standards
+│   ├── prompts/                   # Agent system prompts
+│   ├── ai-logger/                 # Distributed tracing system
+│   └── copilot-instructions.md    # Master system guide
+│
+├── docs/
+│   ├── prd/                       # PDLC Documents (13 files)
+│   │   ├── requirements.md
+│   │   ├── user-stories.md        # BDD scenarios (PRD - read-only)
+│   │   ├── architecture-design.md
+│   │   └── ...
+│   │
+│   ├── user-stories/              # Implementation tracking
+│   │   ├── user-stories.md        # ⭐ Status tracking (SSOT)
+│   │   └── <US-REF>/             # Per-story folders
+│   │       ├── implementation-plan.md
+│   │       └── <US-REF>-HO-<LAYER>.json  # Handoff files
+│   │
+│   └── design/                    # UX/UI documents
+│
+├── features/                      # BDD feature files (project source)
+├── src/                          # Application source code
+└── api/openapi.yaml              # API contracts
+```
+
+---
+
 ## 🎯 How to Use This System
 
 ### 1️⃣ **Start ANY Project Work**
@@ -185,27 +225,18 @@ Complete audit trail from requirements → user stories → BDD scenarios → TD
 
 ---
 
-## 🛠️ Essential Files
+## � Essential Files
 
 | Priority | File | Purpose |
 |----------|------|---------|
-| **START HERE** | [`copilot-instructions.md`](copilot-instructions.md) | Complete system understanding |
-| **Quick Launch** | [`tasks/assess-project-status.prompts.md`](tasks/assess-project-status.prompts.md) | Start any work |
-| **Agent Profiles** | [`agents/`](agents/) directory | Specialized AI agent definitions |
-| **Completion Report** | [`PHASE_3_COMPLETION.md`](PHASE_3_COMPLETION.md) | Implementation details & usage |
-| **Tracing System** | [`ai-logger/`](ai-logger/) directory | Performance monitoring |
+| **START HERE** | [copilot-instructions.md](copilot-instructions.md) | Complete system understanding |
+| **Handoff Guide** | [guides/HANDOFF-GUIDE.md](.github/guides/HANDOFF-GUIDE.md) | ⭐ Single source of truth for agent coordination |
+| **Quick Launch** | [tasks/assess-project-status.prompts.md](.github/tasks/assess-project-status.prompts.md) | Start any work |
+| **Agent Profiles** | [agents/](.github/agents/) directory | Specialized AI agent definitions |
+| **Context Optimization** | [guides/context-optimization-strategy.md](.github/guides/context-optimization-strategy.md) | Token efficiency strategies |
+| **Tracing System** | [ai-logger/](.github/ai-logger/) directory | Performance monitoring |
 
-**Everything else builds on these foundations.** Start here, then explore as needed.
-- User makes decisions at **decision gates** (3 options presented)
-
-### 5️⃣ TDD Cycles
-Dev-Lead creates implementation plan → TDD-Orchestrator sequences RED→GREEN→REFACTOR → BA validates with BDD
-
-### 6️⃣ Checking Coding Standards
-Before committing code, review [instructions/coding.instructions.md](instructions/coding.instructions.md) - 13-point checklist included.
-
-### 7️⃣ Generating Documentation
-Use [prompts/documentation.prompts.md](prompts/documentation.prompts.md) with 7 parameters for any doc type.
+**Everything builds on these foundations.** Start here, then explore as needed.
 
 ---
 
@@ -224,15 +255,16 @@ Use [prompts/documentation.prompts.md](prompts/documentation.prompts.md) with 7 
 | Need to... | Read This |
 |-----------|-----------|
 | Understand entire system | [copilot-instructions.md](copilot-instructions.md) |
-| Start work on any project | [tasks/assess-project-status.prompts.md](tasks/assess-project-status.prompts.md) |
-| Start new PDLC project | [tasks/start-pdlc.prompts.md](tasks/start-pdlc.prompts.md) |
-| Start implementation phase | [tasks/start-implementation.prompts.md](tasks/start-implementation.prompts.md) |
-| Understand PDLC stages (1-8) | [workflows/documents.workflows.md](workflows/documents.workflows.md) |
-| Understand implementation phases (1-6) | [workflows/implementation.workflows.md](workflows/implementation.workflows.md) |
-| Learn coding standards | [instructions/coding.instructions.md](instructions/coding.instructions.md) |
-| Plan user story implementation | [templates/user-story.template.yml](templates/user-story.template.yml) + [tasks/plan-us.prompts.md](tasks/plan-us.prompts.md) |
-| Understand agent roles | [agents/](agents/) (choose specific agent) |
-| Get document templates | [templates/](templates/) |
+| Learn handoff patterns | [guides/HANDOFF-GUIDE.md](.github/guides/HANDOFF-GUIDE.md) ⭐ |
+| Start work on any project | [tasks/assess-project-status.prompts.md](.github/tasks/assess-project-status.prompts.md) |
+| Start new PDLC project | [tasks/start-pdlc.prompts.md](.github/tasks/start-pdlc.prompts.md) |
+| Start implementation phase | [tasks/start-implementation.prompts.md](.github/tasks/start-implementation.prompts.md) |
+| Understand PDLC stages (1-8) | [workflows/documents.workflows.md](.github/workflows/documents.workflows.md) |
+| Understand implementation phases (1-6) | [workflows/implementation.workflows.md](.github/workflows/implementation.workflows.md) |
+| Learn coding standards | [instructions/coding.instructions.md](.github/instructions/coding.instructions.md) |
+| Understand agent roles | [agents/](.github/agents/) (choose specific agent) |
+| Get document templates | [templates/](.github/templates/) |
+| Optimize AI context | [guides/context-optimization-strategy.md](.github/guides/context-optimization-strategy.md) |
 
 ---
 
@@ -279,5 +311,6 @@ Use [prompts/documentation.prompts.md](prompts/documentation.prompts.md) with 7 
 
 ---
 
-**Last Updated**: January 7, 2026  
-**System**: AI-Driven PDLC Orchestration Framework
+**Last Updated**: January 20, 2026  
+**System**: AI-Driven PDLC Orchestration Framework  
+**Status**: ✅ Production-ready with optimized structure

@@ -31,7 +31,7 @@ jobs:
           rc=0
           for f in docs/user-stories/**/story.yaml; do
             [ -f "$f" ] || continue
-            yq -o=json "$f" | ajv validate -s .github/agent-contracts/story.schema.json -d /dev/stdin || rc=1
+            yq -o=json "$f" | ajv validate -s .github/schemas/story.schema.json -d /dev/stdin || rc=1
           done
           exit $rc
       - name: Validate delta_summary.json and decision_log.json
@@ -40,11 +40,11 @@ jobs:
           rc=0
           for f in docs/user-stories/**/delta_summary.json; do
             [ -f "$f" ] || continue
-            ajv validate -s .github/agent-contracts/delta_summary.schema.json -d "$f" || rc=1
+            ajv validate -s .github/schemas/delta_summary.schema.json -d "$f" || rc=1
           done
           for f in docs/user-stories/**/decision_log.json; do
             [ -f "$f" ] || continue
-            ajv validate -s .github/agent-contracts/decision_log.schema.json -d "$f" || rc=1
+            ajv validate -s .github/schemas/decision_log.schema.json -d "$f" || rc=1
           done
           exit $rc
       - name: Enforce PR title and story reference consistency

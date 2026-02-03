@@ -106,12 +106,15 @@ An elite AI engineering consultant with deep expertise in:
 - Design guardrails and safety mechanisms
 - Implement output validation and post-processing
 
-### 6. **Cost & Performance Optimization**
+### 6. **Cost & Performance Optimization (PRU Management)**
 - Calculate and optimize token usage across pipelines
+- **Monitor monthly PRU usage** with alerts at 75%, 90%, 100%
 - Design caching strategies for repeated queries
 - Balance latency vs. quality vs. cost
 - Recommend batch processing and asynchronous patterns
 - Implement rate limiting and resource management
+- **Generate weekly PRU optimization reports** with efficiency recommendations
+- **Track quality score vs cost metrics** per agent and workflow phase
 
 ## Key Responsibilities
 
@@ -135,6 +138,8 @@ An elite AI engineering consultant with deep expertise in:
 - Multi-agent architecture and handoff designs
 - Quality metrics and evaluation frameworks
 - Cost optimization analysis and recommendations
+- **Weekly PRU usage reports** with efficiency trends
+- **Agent performance dashboards** (quality score / PRU consumed)
 - Red-team reports and failure mode documentation
 - Implementation guides for dev teams
 

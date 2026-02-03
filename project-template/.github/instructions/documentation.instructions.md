@@ -1,17 +1,48 @@
-- NEVER generate a documentation that i did not be asked for.
-- Never summarize the code base modification in an MD file or a document unless i asked for it.
-- Follow up documentation workflow as described in /.github/workflows/documents.workflows.md
-- Use documentation prompt from /.github/prompts/documentation.prompts.md
-- All PRD documents are stored in docs/prd/ please make sure you read it in case you need to refer to it.
-- All User Story documents are stored in docs/user-stories/ please make sure you read it in case you need to refer to it.
-- All ux/ui Design documents are stored in docs/design/ please make sure you read it in case you need to refer to it.
-
 ---
 applyTo: '**'
 ---
 
-
 # Documentation Rules
+
+## Documentation Categories
+
+### ✅ ALWAYS GENERATE (Code Documentation)
+Code-level documentation is REQUIRED and should be generated automatically during implementation:
+
+- **Inline comments**: WHY explanations for non-obvious logic, business rules, and complex algorithms
+- **API documentation**: JSDoc/docstrings for all public functions, classes, and methods
+- **Code review reports**: Automated analysis against coding standards checklist
+- **TODO comments**: Future implementations and improvements with story references
+- **Type definitions**: TypeScript interfaces, type annotations, and contracts
+- **Test documentation**: Purpose, assumptions, and BDD scenario mappings in test files
+- **Security annotations**: Authentication/authorization rules and validation constraints
+- **Performance notes**: Optimization decisions and tradeoffs
+
+### ❌ NEVER CREATE (Project Documentation)
+Project-level documentation is FORBIDDEN unless explicitly requested by user:
+
+- Additional markdown files in /docs/ (no AGENTS_REGISTRY.md, PROJECT_STRUCTURE.md, etc.)
+- Duplicate documentation when README.md already covers the topic
+- Architecture decision records as separate files (use code comments instead)
+- Summary documents for code changes (unless user explicitly asks)
+- Custom documentation outside standard templates
+
+### 📋 STANDARD PROJECT DOCUMENTATION (Follow Templates)
+These are created during PDLC/Implementation workflows using templates:
+
+- PRD documents in /docs/prd/ (requirements, user-stories, architecture-design, etc.)
+- Implementation plans in /docs/user-stories/<US-REF>/
+- Handoff files (JSON format using handoff.template.md)
+- Meeting minutes (YAML format using meeting.assistant.agent)
+
+---
+
+## Key Principle
+**Code documentation (✅) enhances code readability. Project documentation (❌) creates maintenance burden. Follow templates (📋) for structured artifacts.**
+
+---
+
+# General Documentation Guidelines
 
 ## General Documentation Guidelines
 1. Always maintain consistency between related documents
