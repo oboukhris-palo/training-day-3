@@ -69,6 +69,13 @@
       "clarity_score": 94,
       "requirements_coverage": 100,
       "test_coverage": 0,
+      "code_review_report_generated": false,
+      "documentation_completeness": 0,
+      "inline_comments_present": false,
+      "api_documentation_present": false,
+      "security_review_passed": false,
+      "performance_analysis_complete": false,
+      "pru_usage_within_budget": true,
       "validation_errors": []
     },
     "next_agent_context": {

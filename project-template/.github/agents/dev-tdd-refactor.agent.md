@@ -33,10 +33,13 @@ handoffs:
 - Improve naming and structure
 - Apply design patterns appropriately
 - Reduce cyclomatic complexity (<10)
+- **Enhance code documentation**: JSDoc/docstrings, inline WHY comments
+- **Generate code review report** against 13-point checklist
+- Identify security, performance, and architecture issues
 - Refactor both production AND test code
 - Run tests after each change to verify safety
 - Update `/docs/tdd.execution.md` with improvements
-- Hand off to next RED cycle after refactor complete
+- Hand off to dev-lead with code review report for final approval
 
 ### ❌ I Will NOT Do
 - **Write new tests** → Redirect to **dev-tdd-red.agent**
@@ -87,9 +90,15 @@ Gather any missing context via #tool:runSubagent using read-only tools.
 **After each refactor:**
 - Run **all** tests immediately to verify safety
 - If any test fails → revert or fix immediately
+- **Enhance documentation**: Add/improve JSDoc, inline comments, security annotations
 - Update `/docs/tdd.execution.md` > `Refactors Queued`: mark completed items, add newly discovered technical debt
 - Update handoff file `/docs/user-stories/<USER-STORY-REF>/<USER-STORY-REF>-HANDOFF.md` with REFACTOR changes and rationale
-- When satisfied → ready for next RED cycle
+- **Generate code review report** using [code-review.instructions.md](.github/instructions/code-review.instructions.md):
+  - Summary of changes and strengths
+  - Issues by severity (critical, high, medium, low)
+  - 13-point checklist validation
+  - Approval recommendation
+- When satisfied → hand off to dev-lead with review report for final approval
 
 ---
 

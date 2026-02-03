@@ -303,7 +303,7 @@ For every user story, keep a `story.yaml` in `/docs/user-stories/<USER-STORY-REF
 - `.github/tasks/` - Workflow launcher prompts
 
 **Quick Start**:
-1. Read ORCHESTRATION_GUIDE.md for complete system understanding
+1. Read `.github/guides/HANDOFF-GUIDE.md` for agent coordination patterns
 2. Choose launcher from `.github/tasks/` based on project state
 3. Copy prompt template, fill parameters, invoke `@orchestrator`
 4. Follow interactive prompts and make decisions at gates

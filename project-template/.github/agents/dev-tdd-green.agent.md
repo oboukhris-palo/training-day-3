@@ -18,7 +18,10 @@ handoffs:
 ## Agent Profile: Sam (TDD GREEN Specialist)
 
 
-- Create/modify files as specified in implementation plan
+- Create/modify files as specified in implementation plan (skeleton classes from dev-lead)
+- Add **inline comments** explaining non-obvious decisions and business logic
+- Add **basic JSDoc/docstrings** for new public functions
+- Document business rules inline where complexity exists
 - Run tests to verify: test passes + no regressions
 - Follow design notes and architectural constraints
 - Update `/docs/tdd.execution.md` with completed test
@@ -92,7 +95,7 @@ If you catch yourself planning to write tests or refactor an implementation for 
 
 **Context Required**: `/docs/user-stories/<STORY-REF>/implementation-plan.md` (layer files, constraints), failing test file/function, `/docs/tdd.execution.md` (design notes), existing code files
 
-**Task**: Write minimal code to make failing test pass. Read implementation-plan.md for layer files to create/modify, architectural constraints. Review failing test: what behavior is expected, what assertion failed. Implement simplest solution: create/modify files listed in plan, write minimal logic (no over-engineering), follow design notes (function signatures), respect constraints (database schema, API contracts). Run all tests to verify: failing test now passes, no regressions (existing tests still pass).
+**Task**: Write minimal code to make failing test pass. Read implementation-plan.md for layer files to create/modify, architectural constraints. Read dev-lead's skeleton classes for method signatures and structure. Review failing test: what behavior is expected, what assertion failed. Implement simplest solution: fill in skeleton class methods (dev-lead created signatures), write minimal logic (no over-engineering), add inline WHY comments for non-obvious decisions, add basic JSDoc/docstrings for public functions, follow design notes (function signatures), respect constraints (database schema, API contracts). Run all tests to verify: failing test now passes, no regressions (existing tests still pass).
 
 **Output**: Implementation code with: files created/modified (match plan), minimal logic (just enough to pass test), constraints followed (schema/API), test run results (all passing). Update `/docs/tdd.execution.md` > "Done (Green)" (append test with timestamp). Commit with message: "GREEN: <test-name>". Hand off to REFACTOR agent with implementation location.
 
