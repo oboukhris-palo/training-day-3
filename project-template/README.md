@@ -8,6 +8,34 @@
 
 ---
 
+## ⚡ **CAPITAL RULE: This is a Reusable Framework Template**
+
+**Critical Understanding**: 
+- **This entire `.github/` folder is a reusable framework** designed to be copied into ANY third-party project
+- **User-story identifiers** (AUTH-003, US-001, US-xxx, etc.) are **EXAMPLE IDENTIFIERS ONLY**—they represent hypothetical stories in your future projects
+- **This framework is NOT tied to any specific project**—it's a meta-framework for orchestrating AI agents to:
+  - 🔄 **Retro-document brownfield projects** (reconstruct missing specs, architecture, decisions)
+  - 🗣️ **Facilitate stakeholder meetings** (conduct interviews, gather requirements, surface tradeoffs)
+  - 📋 **Generate PDLC documents** (requirements, personas, architecture, tech specs, user stories with BDD)
+  - 🤖 **Coordinate AI agents** through handoff-driven workflows
+  - ✅ **Execute TDD cycles** with BDD-driven test automation
+
+**How to Use**:
+1. **Copy** the `.github/` folder into any existing or new project
+2. **Initialize** with `@orchestrator Assess project status for [YOUR_PROJECT_NAME]`
+3. **Follow** the handoff chain (PM → PO → BA → UX → Architect → Dev-Lead → TDD)
+4. **All agents adapt** their workflows to YOUR project context
+
+**Example**: If you copy this to a "PaymentProcessor" project, you'd have:
+- `docs/prd/user-stories.md` with stories like `PAYMENT-001`, `PAYMENT-002`, etc.
+- `docs/user-stories/PAYMENT-001/` folder structure (not `US-001/`)
+- Features like `features/payment/subscription-billing.feature` (not `features/auth/`)
+- All framework patterns remain identical; only project-specific names/IDs change
+
+**Key Insight**: The framework is the MEDIUM (handoff orchestration, TDD sequencing, document consolidation); your project context is the MESSAGE (specific identifiers, features, business logic).
+
+---
+
 ## 🚀 Quick Start
 
 ```bash
@@ -105,6 +133,46 @@ cd .github/ai-logger
 ./setup.sh                                   # Install and test integration
 npm run weekly-analysis                       # Generate activity reports
 npm run trace-report                          # Export performance analytics
+```
+
+---
+
+## 📂 Project Structure (Optimized)
+
+```
+project-root/
+├── .github/
+│   ├── agents/                    # 11 specialized AI agents
+│   ├── workflows/                 # PDLC, Implementation, CI/CD workflows
+│   ├── tasks/                     # Workflow launcher prompts
+│   ├── templates/                 # Document templates
+│   ├── schemas/                   # JSON schemas for validation
+│   ├── guides/                    # Best practices and strategies
+│   │   ├── HANDOFF-GUIDE.md       # ⭐ Single source of truth for handoffs
+│   │   └── context-optimization-strategy.md
+│   ├── instructions/              # Coding and documentation standards
+│   ├── prompts/                   # Agent system prompts
+│   ├── ai-logger/                 # Distributed tracing system
+│   └── copilot-instructions.md    # Master system guide
+│
+├── docs/
+│   ├── prd/                       # PDLC Documents (13 files)
+│   │   ├── requirements.md
+│   │   ├── user-stories.md        # BDD scenarios (PRD - read-only)
+│   │   ├── architecture-design.md
+│   │   └── ...
+│   │
+│   ├── user-stories/              # Implementation tracking
+│   │   ├── user-stories.md        # ⭐ Status tracking (SSOT)
+│   │   └── <US-REF>/             # Per-story folders
+│   │       ├── implementation-plan.md
+│   │       └── <US-REF>-HO-<LAYER>.json  # Handoff files
+│   │
+│   └── design/                    # UX/UI documents
+│
+├── features/                      # BDD feature files (project source)
+├── src/                          # Application source code
+└── api/openapi.yaml              # API contracts
 ```
 
 ---

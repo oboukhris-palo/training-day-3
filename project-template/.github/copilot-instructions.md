@@ -2,6 +2,48 @@
 
 # AI-Driven PDLC Orchestration System
 
+## ⚡ **CAPITAL RULE: This is a Reusable Framework Template**
+
+**CRITICAL CLARIFICATION**: 
+- **This entire `.github/` framework is designed to be COPIED into ANY project**—it is NOT tied to a specific project
+- **All example identifiers** (AUTH-003, US-001, US-xxx, PAYMENT-001, etc.) are **JUST EXAMPLES** showing how user-story IDs would look in YOUR future projects
+- **When you use this framework in a real project**, you replace the example IDs with YOUR project's naming convention
+
+### Framework Purpose
+This orchestration system helps you:
+1. **Retro-document brownfield projects** - Reconstruct missing specifications, architecture decisions, and BDD scenarios
+2. **Run stakeholder workshops** - Conduct discovery interviews, gather requirements, surface tradeoffs using agents
+3. **Generate PDLC documents** - Automatically create requirements, personas, architecture, tech specs, user stories
+4. **Orchestrate AI agents** - Coordinate handoff chains: PM → PO → BA → UX → Architect → Dev-Lead → TDD
+5. **Execute TDD workflows** - BDD-driven test cycles with strict sequencing (RED → GREEN → REFACTOR)
+
+### Real-World Example
+If you **copy this framework into a "PaymentProcessor" project**, you would have:
+```
+.github/                          # This framework (copied)
+docs/prd/user-stories.md          # Stories like: PAYMENT-001, PAYMENT-002, BILLING-003
+docs/user-stories/
+├── PAYMENT-001/                  # Folder for your payment story
+│   ├── implementation-plan.md
+│   ├── handoff.md
+│   └── tdd-execution.md
+features/payment/
+├── subscription-billing.feature   # Your domain-specific BDD scenarios
+└── refund-processing.feature
+```
+
+All framework patterns (handoff orchestration, TDD sequencing, document consolidation) remain **identical**. Only the context (business domain, user-story IDs, feature names) changes.
+
+### Bottom Line
+**Medium**: Framework patterns (reusable)  
+**Message**: Your project context (project-specific)
+
+This README and all agent instructions use examples. **Adapt the IDs and context to YOUR project when you use the framework.**
+
+---
+
+# AI-Driven PDLC Orchestration System
+
 ## 🎯 System Architecture Overview
 
 This is an **AI-driven Product Development Lifecycle (PDLC) orchestration framework** that coordinates specialized AI agents through three interconnected workflows:
@@ -51,8 +93,10 @@ project-root/
 │   │   │                                      # Adds: Not Started / In Progress / In Review / Implemented
 │   │   │                                      # Synchronized with issue tracker
 │   │   │                                      # Orchestrator checks this to determine next work
-│   │   ├── <USER-STORY-REF>/                  # Per-story folder (e.g., US-001/)
+│   │   ├── <USER-STORY-REF>/                  # Per-story folder (e.g., US-001/, PAYMENT-001/, AUTH-003/)
 │   │   │   ├── implementation-plan.md         # Detailed layer-by-layer plan
+│   │   │   ├── handoff.md                     # Current TDD cycle status
+│   │   │   ├── tdd-execution.md               # Complete audit log (append-only)
 │   │   │   └── bdd-scenarios/                 # Copy of BDD feature files
 │   │   │       └── login.feature
 │   │   └── <USER-STORY-REF>/
@@ -71,6 +115,12 @@ project-root/
 │
 └── src/                    # Application source code
 ```
+
+**⚠️ NOTE**: The folder structure is a TEMPLATE. When you use this framework in your project:
+- Replace `<USER-STORY-REF>` with YOUR project's story identifiers (PAYMENT-001, AUTH-003, FEATURE-X, etc.)
+- Replace `features/auth/` with YOUR domain-specific feature paths (features/payment/, features/billing/, etc.)
+- The **framework patterns remain identical** (per-story folders, implementation-plan.md, handoff.md, tdd-execution.md)
+- Only the **names and content** adapt to your project context
 
 **Key Principles**:
 - **All PRD documents** → `/docs/prd/`
@@ -310,3 +360,54 @@ For every user story, keep a `story.yaml` in `/docs/user-stories/<USER-STORY-REF
 5. Track progress via todo lists
 
 **Never modify workflows directly** - use orchestrator to execute them
+
+---
+
+## 🔄 Adapting This Framework to Your Project
+
+This framework becomes YOUR project's orchestration system through simple context substitution:
+
+### What Stays the Same (Framework Patterns)
+- ✅ Agent handoff chain (PM → PO → BA → UX → Architect → Dev-Lead → TDD)
+- ✅ PDLC 8-stage workflow
+- ✅ Implementation 6-phase workflow
+- ✅ TDD sequencing (RED → GREEN → REFACTOR)
+- ✅ Document consolidation (1 handoff + 1 execution log per story)
+- ✅ BDD-driven test automation
+- ✅ Quality gates and decision points
+
+### What Changes (Your Project Context)
+- 🔄 User-story identifiers: `AUTH-003` becomes `YOURPREFIX-003`
+- 🔄 Feature domains: `features/auth/` becomes `features/yourmodule/`
+- 🔄 Business logic: Requirements reflect YOUR business domain
+- 🔄 Technology stack: Architecture decisions match YOUR tech choices
+- 🔄 Team structure: Agents adapt to YOUR team composition
+
+### Minimal Setup for New Projects
+1. Copy `.github/` into your project
+2. Run: `@orchestrator Assess project status for [YOUR_PROJECT_NAME]`
+3. Answer questions about project scope, team, technology
+4. Orchestrator configures agents for YOUR context
+5. Begin PDLC Stage 1 or Implementation Phase 1
+
+### Brownfield Project Setup
+1. Copy `.github/` into your project
+2. Run: `@orchestrator Retro-document project [YOUR_PROJECT_NAME]`
+3. Agents scan code, reconstruct missing specs, capture decisions
+4. Validate documentation with stakeholders
+5. Begin implementation of next stories using framework
+
+---
+
+## ⚠️ Framework Is Context-Agnostic by Design
+
+**Key Insight**: Every example in this framework (AUTH-003, US-001,UserTierSync, POST /api/auth/register, features/auth/, etc.) is a PLACEHOLDER for your project's real identifiers and behaviors.
+
+**Your Responsibility**:
+- Replace example IDs with YOUR project's naming convention
+- Replace example features with YOUR domain-specific features  
+- Keep framework patterns and workflows unchanged
+- Use handoff and execution logging as defined (no modifications)
+- Follow TDD sequencing strictly (no skipping phases)
+
+**Result**: Framework scales from 1-person projects to enterprise teams. Same orchestration, different business logic.

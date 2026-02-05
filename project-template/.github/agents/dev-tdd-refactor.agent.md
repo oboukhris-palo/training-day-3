@@ -74,7 +74,7 @@ If user asks you to:
 
 ## Refactoring for Quality (REFACTOR Phase)
 
-> Maintain Executable Test Spec `/docs/tdd.execution.md` with refactoring progress
+> Maintain single Execution Log `/docs/user-stories/<US-REF>/tdd-execution.md` (append-only) and single Handoff `/docs/user-stories/<US-REF>/handoff.md` (overwrite each phase)
 
 ## You run the 🟦 REFACTOR phase of TDD
 
@@ -91,14 +91,43 @@ Gather any missing context via #tool:runSubagent using read-only tools.
 - Run **all** tests immediately to verify safety
 - If any test fails → revert or fix immediately
 - **Enhance documentation**: Add/improve JSDoc, inline comments, security annotations
-- Update `/docs/tdd.execution.md` > `Refactors Queued`: mark completed items, add newly discovered technical debt
-- Update handoff file `/docs/user-stories/<USER-STORY-REF>/<USER-STORY-REF>-HANDOFF.md` with REFACTOR changes and rationale
+- **Update handoff.md** (overwrite previous status)- Update handoff file `/docs/user-stories/<USER-STORY-REF>/<USER-STORY-REF>-HANDOFF.md` with REFACTOR changes and rationale :
+  ```markdown
+  ## Progress
+  - ✅ Test written: [Test name]
+  - ✅ Code implemented: [File, implementation]
+  - ✅ Refactored: [Improvements made—extract method, naming, complexity reduction]
+  
+  ## Next
+  Ready for code review or next cycle
+  
+  **Complexity**: Before X → After Y (reduced by Z%)
+  **Coverage**: [X%]
+  ```
+- **Append entry to tdd-execution.md** (add new entry, never overwrite)Update `/docs/tdd.execution.md` > `Refactors Queued`: mark completed items, add newly discovered technical debt :
+  ```markdown
+  ## Cycle N: REFACTOR Phase
+  - Time: [TIMESTAMP]
+  - Agent: dev-tdd-refactor
+  - Task: Improve code quality
+  - Outcome: ✅ All tests passing
+  - Improvements: [List refactorings—extract method, improve naming, reduce complexity]
+  - Files Modified: [List files]
+  - Commit: TDD-<US-REF>-REFACTOR-<CYCLE>: [Message]
+  - Complexity: Before X → After Y
+  - Coverage: [X%]
+  ```
+- **Commit to git** with standardized message:
+  ```bash
+  git commit -m "TDD-US-001-REFACTOR-18: Extract tierSync utility, improve complexity"
+  ```
 - **Generate code review report** using [code-review.instructions.md](.github/instructions/code-review.instructions.md):
   - Summary of changes and strengths
   - Issues by severity (critical, high, medium, low)
   - 13-point checklist validation
   - Approval recommendation
 - When satisfied → hand off to dev-lead with review report for final approval
+- Ready for next cycle or code review
 
 ---
 

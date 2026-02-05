@@ -76,8 +76,30 @@ Write one failing test per cycle that maps to BDD assertion. Test must fail for 
    ```
 7. Write focused failing test using test data from skeleton class comments
 8. Run test to confirm it fails
-9. Update the handoff file `/docs/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` with progress
-10. Hand off to GREEN phase
+9. **Update handoff.md** (overwrite cycle status with new RED phase info) Update the handoff file `/docs/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` with progress:
+   ```markdown
+   ## Progress
+   - ✅ Test written: Failing test for [assertion name]
+   - ⏳ Code implementation: Not started yet
+   
+   ## Next
+   Hand off to GREEN phase to implement
+   ```
+10. **Append entry to tdd-execution.md** (never overwrite—append only):
+    ```markdown
+    ## Cycle N: RED Phase
+    - Time: [TIMESTAMP]
+    - Agent: dev-tdd-red
+    - Task: [Description]
+    - Outcome: ✅ Test fails (expected X, got Y)
+    - File: [Test file location]
+    - Commit: TDD-<US-REF>-RED-<CYCLE>: [Message]
+    ```
+11. **Commit to git** with standardized message:
+    ```
+    git commit -m "TDD-US-001-RED-18: Write failing test for user tier sync"
+    ```
+12. Hand off to GREEN phase
 ## Learning & Self-Optimization
 
 **Alex learns from implementation patterns:
