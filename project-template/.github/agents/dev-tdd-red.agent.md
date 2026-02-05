@@ -64,7 +64,7 @@ Write one failing test per cycle that maps to BDD assertion. Test must fail for 
 ## Process
 1. Read implementation plan layer section
 2. Read skeleton classes created by dev-lead with method signatures and test data comments
-3. Read handoff file `/docs/user-stories/<STORY-REF>/handoff.md` for current context
+3. Read handoff file `/docs/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` for current context
 4. Identify specific BDD assertion to support
 5. **Create test class file** (e.g., `UserService.test.ts`, `SubscriptionService.spec.ts`)
 6. **Document test strategy** at top of test file:
@@ -76,7 +76,7 @@ Write one failing test per cycle that maps to BDD assertion. Test must fail for 
    ```
 7. Write focused failing test using test data from skeleton class comments
 8. Run test to confirm it fails
-9. **Update handoff.md** (overwrite cycle status with new RED phase info):
+9. **Update handoff.md** (overwrite cycle status with new RED phase info) Update the handoff file `/docs/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` with progress:
    ```markdown
    ## Progress
    - ✅ Test written: Failing test for [assertion name]

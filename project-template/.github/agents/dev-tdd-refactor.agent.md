@@ -91,7 +91,7 @@ Gather any missing context via #tool:runSubagent using read-only tools.
 - Run **all** tests immediately to verify safety
 - If any test fails → revert or fix immediately
 - **Enhance documentation**: Add/improve JSDoc, inline comments, security annotations
-- **Update handoff.md** (overwrite previous status):
+- **Update handoff.md** (overwrite previous status)- Update handoff file `/docs/user-stories/<USER-STORY-REF>/<USER-STORY-REF>-HANDOFF.md` with REFACTOR changes and rationale :
   ```markdown
   ## Progress
   - ✅ Test written: [Test name]
@@ -104,7 +104,7 @@ Gather any missing context via #tool:runSubagent using read-only tools.
   **Complexity**: Before X → After Y (reduced by Z%)
   **Coverage**: [X%]
   ```
-- **Append entry to tdd-execution.md** (add new entry, never overwrite):
+- **Append entry to tdd-execution.md** (add new entry, never overwrite)Update `/docs/tdd.execution.md` > `Refactors Queued`: mark completed items, add newly discovered technical debt :
   ```markdown
   ## Cycle N: REFACTOR Phase
   - Time: [TIMESTAMP]
@@ -121,7 +121,12 @@ Gather any missing context via #tool:runSubagent using read-only tools.
   ```bash
   git commit -m "TDD-US-001-REFACTOR-18: Extract tierSync utility, improve complexity"
   ```
-- **Generate code review report** if layer complete
+- **Generate code review report** using [code-review.instructions.md](.github/instructions/code-review.instructions.md):
+  - Summary of changes and strengths
+  - Issues by severity (critical, high, medium, low)
+  - 13-point checklist validation
+  - Approval recommendation
+- When satisfied → hand off to dev-lead with review report for final approval
 - Ready for next cycle or code review
 
 ---

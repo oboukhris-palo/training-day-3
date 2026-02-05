@@ -117,20 +117,62 @@ ls .github/ai-logger/scripts/  # Export utilities
 - Status tracking and project dashboards
 
 ### 🔧 [ai-logger/](ai-logger/) - **Phase 3: Distributed Tracing** ⭐
-**Production-ready handoff monitoring**
+**Production-ready handoff monitoring with integrated logging**
 
 | Component | File | Purpose | Status |
 |-----------|------|---------|--------|
+| **Activity Logger** | `activity-interceptor.ts` | Core logging engine | ✅ Complete |
+| **Integration API** | `agent-integration.ts` | Easy agent integration | ✅ Complete |
 | **Handoff Tracer** | `handoff-tracer.ts` | Core tracing engine | ✅ Complete |
 | **Export Tools** | `scripts/export-traces.ts` | Analytics export | ✅ Complete |
-| **Integration** | `scripts/create-handoff.ts` | Automatic tracing | ✅ Complete |
-| **Performance** | `package.json` scripts | NPM commands | ✅ Complete |
+| **Manual Integration** | `INTEGRATION_FIX_COMPLETE.md` | **🎯 INTEGRATION READY** | ✅ **FIXED** |
 
 ```bash
-# Use the tracing system
+# FIXED: Setup AI logger integration (Option A - Manual)
 cd .github/ai-logger
-npm run create-handoff -- --template US-001  # Create traced handoff
-npm run trace-report                          # Export performance report
+./setup.sh                                   # Install and test integration
+npm run weekly-analysis                       # Generate activity reports
+npm run trace-report                          # Export performance analytics
+```
+
+---
+
+## 📂 Project Structure (Optimized)
+
+```
+project-root/
+├── .github/
+│   ├── agents/                    # 11 specialized AI agents
+│   ├── workflows/                 # PDLC, Implementation, CI/CD workflows
+│   ├── tasks/                     # Workflow launcher prompts
+│   ├── templates/                 # Document templates
+│   ├── schemas/                   # JSON schemas for validation
+│   ├── guides/                    # Best practices and strategies
+│   │   ├── HANDOFF-GUIDE.md       # ⭐ Single source of truth for handoffs
+│   │   └── context-optimization-strategy.md
+│   ├── instructions/              # Coding and documentation standards
+│   ├── prompts/                   # Agent system prompts
+│   ├── ai-logger/                 # Distributed tracing system
+│   └── copilot-instructions.md    # Master system guide
+│
+├── docs/
+│   ├── prd/                       # PDLC Documents (13 files)
+│   │   ├── requirements.md
+│   │   ├── user-stories.md        # BDD scenarios (PRD - read-only)
+│   │   ├── architecture-design.md
+│   │   └── ...
+│   │
+│   ├── user-stories/              # Implementation tracking
+│   │   ├── user-stories.md        # ⭐ Status tracking (SSOT)
+│   │   └── <US-REF>/             # Per-story folders
+│   │       ├── implementation-plan.md
+│   │       └── <US-REF>-HO-<LAYER>.json  # Handoff files
+│   │
+│   └── design/                    # UX/UI documents
+│
+├── features/                      # BDD feature files (project source)
+├── src/                          # Application source code
+└── api/openapi.yaml              # API contracts
 ```
 
 ---
