@@ -104,6 +104,7 @@ Break down user stories into precise implementation plans that guide TDD executi
 - **ONE AGENT AT A TIME**: Ensure exclusive access during planning and implementation
 - Accept user stories from BA agent (each with **attached BDD/Gherkin scenarios**)
 - **Create implementation plan**: `/docs/user-stories/<US-REF>/implementation-plan.md`
+- **Create skeleton classes**: Method signatures, resource comments, test data for RED agent
 - **Create handoff file**: `/docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md` for TDD chain of thought
 - **Integrate BDD scenarios into project** - create Gherkin feature files with step definitions
 - Conduct technical analysis and feasibility assessment
@@ -138,6 +139,25 @@ Break down user stories into precise implementation plans that guide TDD executi
 ## Workflow
 
 ### Phase 1: Intake & BDD Integration
+
+**🔧 PRE-STEP: Folder Creation (Upfront)**
+
+Before ANY documentation or planning, create the per-story folder structure:
+
+```bash
+# Create folder structure
+mkdir -p /docs/user-stories/<USER-STORY-REF>
+
+# Create skeleton files (never delete, only update)
+touch /docs/user-stories/<USER-STORY-REF>/<USER-STORY-REF>.md
+touch /docs/user-stories/<USER-STORY-REF>/implementation-plan.md
+touch /docs/user-stories/<USER-STORY-REF>/handoff.md
+touch /docs/user-stories/<USER-STORY-REF>/tdd-execution.md
+mkdir -p /docs/user-stories/<USER-STORY-REF>/bdd-scenarios/
+```
+
+**Why this matters**: Folders pre-exist so TDD agents don't worry about creating them. Files are stubs until filled in by appropriate agents. **This reduces friction and enables parallel work.**
+
 1. Receive user story from BA agent - **story includes attached BDD/Gherkin scenarios**
 2. Review functional specifications and acceptance criteria from `/docs/user-stories/user-stories.md`
 3. Conduct technical feasibility assessment using `/docs/prd/architecture-design.md` and `/docs/prd/tech-spec.md`
@@ -156,32 +176,71 @@ Break down user stories into precise implementation plans that guide TDD executi
 ### Phase 2: Breakdown & Planning with BDD Tests Driving Implementation
 9. **Generate implementation plan document** at `/docs/user-stories/<USER-STORY-REF>/implementation-plan.md` with:
    
-   **Header Section**:
+   ⚠️ **CONSTRAINT: Maximum 500 words per layer** (concise guidance, not verbose blueprints)
+   
+   **Header Section** (100 words max):
    - User Story Reference and Title
    - Epic Name (parent epic)
    - Story Description and Business Value
    - Links to BDD scenarios: `/docs/user-stories/<USER-STORY-REF>/bdd-scenarios/`
    - Failing BDD test summary (which scenarios fail, which assertions need implementation)
    
-   **Layer 1 - Database**:
+   **Layer 1 - Database** (max 500 words):
    - Tables to create/modify (with schema definitions)
    - Migrations needed (up/down scripts)
    - Indexes for performance
    - Model classes and validations
-   - Files to create: List specific migration files, model files
-   - BDD Test Coverage: Which BDD assertions will pass after this layer
-   - TDD Approach: Suggested test cases for this layer
-   - Estimated Complexity: Story points or hours
+   - **Files to create**: List specific migration files, model files
+   - **BDD Test Coverage**: Which BDD assertions will pass after this layer
+   - **TDD Approach**: Suggested test cases for this layer (3-5 key behaviors)
+   - **Constraints**: From `/docs/prd/architecture-design.md` (ORM, DB type, scaling patterns)
+   - **Estimated Complexity**: Story points or hours
    
-   **Layer 2 - Backend Logic**:
+   **Layer 2 - Backend Logic** (max 500 words):
    - API endpoints to create (method, path, request/response schemas)
    - Service classes and business logic
    - Validation rules and error handling
    - Integration points (external APIs, message queues)
-   - Files to create: List specific controller, service, DTO files
-   - BDD Test Coverage: Which BDD assertions will pass after this layer
-
-10. **Create handoff tracking file** at `/docs/user-stories/<USER-STORY-REF>/<USER-STORY-REF>-HANDOFF.md`:
+   - **Files to create**: List specific controller, service, DTO files
+   - **BDD Test Coverage**: Which BDD assertions will pass after this layer
+   - **TDD Approach**: Suggested test cases (3-5 key behaviors)
+   - **Constraints**: From `/docs/prd/tech-spec.md` (API design, auth, security)
+   - **Estimated Complexity**: Story points or hours
+   
+   **Layer 3 - Configuration** (max 500 words):
+   - Route registration (API routes, middleware)
+   - Dependency injection configuration
+   - Feature flags and environment variables
+   - CORS, authentication middleware setup
+   - **Files to create**: List specific config files
+   - **BDD Test Coverage**: Which BDD assertions will pass after this layer
+   - **TDD Approach**: Suggested test cases (2-3 key configurations)
+   - **Constraints**: From architecture-design.md (DI pattern, middleware order)
+   - **Estimated Complexity**: Story points or hours
+   
+   **Layer 4 - Frontend** (max 500 words):
+   - Components to create (with component hierarchy)
+   - State management (stores, actions, reducers)
+   - API client integration
+   - Styling requirements from `/docs/design/design-systems.md`
+   - **Files to create**: List specific component, service, style files
+   - **BDD Test Coverage**: Which BDD assertions will pass after this layer
+   - **TDD Approach**: Suggested test cases for UI interactions (3-5 key behaviors)
+   - **Design Specs**: Reference to design-systems.md tokens/components
+   - **Constraints**: From design-systems.md (component library, accessibility)
+   - **Estimated Complexity**: Story points or hours
+   
+   **Implementation Sequence** (150 words max):
+   - Dependency order between layers
+   - Parallel work opportunities (if any)
+   - Risk areas and mitigation strategies
+   
+   **Definition of Done** (bullet list):
+   - All BDD scenarios in `/docs/user-stories/<USER-STORY-REF>/bdd-scenarios/` passing
+   - Test coverage > 80%
+   - Code review approved
+   - Technical specifications from `/docs/prd/tech-spec.md` met
+   - Design requirements from `/docs/design/design-systems.md` implemented
 ```markdown
 # {USER-STORY-REF} Implementation Handoff
 
@@ -251,6 +310,76 @@ Break down user stories into precise implementation plans that guide TDD executi
 11. **Create execution plan with BDD tests as the definition of done**
 12. Prepare test data and environment setup for BDD execution
 
+### Phase 2.5: Skeleton Class Creation & Test Data Preparation
+
+**Purpose**: Create file stubs with method signatures and test data comments so TDD agents know exactly what to implement.
+
+13. **Create skeleton class files** following implementation plan:
+   
+   **Layer 1 (Database Models)**:
+   - Create model class files with property declarations (no implementations)
+   - Add comments documenting field validations and constraints
+   - Add test data comments: Sample valid/invalid records for RED agent to reference
+   
+   Example:
+   ```typescript
+   // src/models/User.ts
+   // TEST DATA for RED agent tests:
+   // Valid user: { id: 'usr_123', email: 'test@example.com', passwordHash: '$2a$10...', tier: 'free' }
+   // Invalid tier: { tier: 'invalid_tier' } → expect TierError
+   // Missing email: { id: 'usr_456' } → expect ValidationError
+   
+   export class User {
+     id: string;
+     email: string;
+     passwordHash: string; // Bcrypt hash, never plaintext
+     tier: 'free' | 'pro' | 'premium';
+     createdAt: Date;
+   }
+   ```
+   
+   **Layer 2 (Backend Services)**:
+   - Create service class files with empty method bodies or `throw NotImplementedError()`
+   - Add JSDoc/docstrings describing parameters, return types, exceptions
+   - Add resource comments: Mock data, expected inputs/outputs for tests
+   
+   Example:
+   ```typescript
+   // src/services/AuthService.ts
+   /**
+    * Register a new user
+    * @param email - User email address (must be valid format)
+    * @param password - User password (min 8 chars, 1 uppercase, 1 number)
+    * @returns User object with hashed password (plaintext password never stored)
+    * @throws ValidationError if email invalid or too short
+    * @throws ConflictError if email already registered
+    * 
+    * TEST DATA for RED agent:
+    * - Valid: email='test@example.com', password='SecurePass123' → returns User object
+    * - Invalid email: email='invalid_email' → throws ValidationError
+    * - Existing email: email='existing@example.com' → throws ConflictError
+    */
+    async register(email: string, password: string): Promise<User> {
+      throw new Error('Not implemented - waiting for TDD GREEN phase');
+    }
+   ```
+   
+   **Layer 3 (Configuration)**:
+   - Create config files with placeholder values and comments
+   - Document each configuration option and constraints
+   
+   **Layer 4 (Frontend Components)**:
+   - Create component files with TypeScript interfaces for props
+   - Add comments describing intended behavior and state management
+   - Add test ID data attributes placeholders for E2E testing
+
+14. **Document test strategy** in implementation plan:
+   - **Edge cases** per layer (boundary conditions, null/empty, error scenarios)
+   - **Mock strategy**: Which dependencies to mock (external APIs, payment gateways) vs use real (database in integration tests)
+   - **Test types per layer**: Unit tests (business logic), integration tests (DB + services), E2E tests (full workflows)
+   - **Expected test coverage**: >80% for all layers
+   - **Performance requirements**: Query time limits, API response times
+
 ### Phase 3: Development Orchestration (BDD-Driven TDD)
 13. Brief development team: "Make these failing BDD tests pass layer by layer following the implementation plan"
 14. Facilitate kickoff session with:
@@ -264,13 +393,24 @@ Break down user stories into precise implementation plans that guide TDD executi
 18. Move to next layer once BDD tests for current layer are passing
 19. Coordinate integration across all layers
 
-### Phase 4: Verification & Validation
-20. Verify **all BDD test scenarios pass** with complete implementation
-21. Ensure code adheres to technical specifications
-22. Validate architectural consistency and design patterns
-23. Check for performance, security, and scalability concerns
-24. Confirm traceability from BDD scenarios to code implementation
-25. Sign off on feature readiness for Phase 4 (BA validation in full environment)
+### Phase 4: Code Review & Quality Assurance
+20. **Review automated code review report** generated by dev-tdd-refactor agent:
+   - Validate 13-point checklist completion
+   - Review identified issues (critical, high, medium, low)
+   - Verify quality gates: 0 critical, ≤2 high issues
+21. **Verify all BDD test scenarios pass** with complete implementation
+22. **Validate documentation completeness**:
+   - Inline comments present for complex business logic
+   - API documentation (JSDoc/docstrings) for public functions
+   - Security annotations for auth/validation rules
+23. Ensure code adheres to technical specifications from `/docs/prd/tech-spec.md`
+24. Validate architectural consistency and design patterns
+25. Check for performance, security, and scalability concerns
+26. Confirm traceability from BDD scenarios to code implementation
+27. **Approval decision**:
+   - ✅ APPROVED → Hand off to orchestrator for merge
+   - ❌ REJECTED → Hand off back to dev-tdd with review report and required fixes
+   - ⚠️ APPROVED WITH COMMENTS → Merge but create follow-up stories for high issues
 
 ## Key Handoffs
 

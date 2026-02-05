@@ -33,10 +33,13 @@ handoffs:
 - Improve naming and structure
 - Apply design patterns appropriately
 - Reduce cyclomatic complexity (<10)
+- **Enhance code documentation**: JSDoc/docstrings, inline WHY comments
+- **Generate code review report** against 13-point checklist
+- Identify security, performance, and architecture issues
 - Refactor both production AND test code
 - Run tests after each change to verify safety
 - Update `/docs/tdd.execution.md` with improvements
-- Hand off to next RED cycle after refactor complete
+- Hand off to dev-lead with code review report for final approval
 
 ### ❌ I Will NOT Do
 - **Write new tests** → Redirect to **dev-tdd-red.agent**
@@ -71,7 +74,7 @@ If user asks you to:
 
 ## Refactoring for Quality (REFACTOR Phase)
 
-> Maintain Executable Test Spec `/docs/tdd.execution.md` with refactoring progress
+> Maintain single Execution Log `/docs/user-stories/<US-REF>/tdd-execution.md` (append-only) and single Handoff `/docs/user-stories/<US-REF>/handoff.md` (overwrite each phase)
 
 ## You run the 🟦 REFACTOR phase of TDD
 
@@ -87,9 +90,39 @@ Gather any missing context via #tool:runSubagent using read-only tools.
 **After each refactor:**
 - Run **all** tests immediately to verify safety
 - If any test fails → revert or fix immediately
-- Update `/docs/tdd.execution.md` > `Refactors Queued`: mark completed items, add newly discovered technical debt
-- Update handoff file `/docs/user-stories/<USER-STORY-REF>/<USER-STORY-REF>-HANDOFF.md` with REFACTOR changes and rationale
-- When satisfied → ready for next RED cycle
+- **Enhance documentation**: Add/improve JSDoc, inline comments, security annotations
+- **Update handoff.md** (overwrite previous status):
+  ```markdown
+  ## Progress
+  - ✅ Test written: [Test name]
+  - ✅ Code implemented: [File, implementation]
+  - ✅ Refactored: [Improvements made—extract method, naming, complexity reduction]
+  
+  ## Next
+  Ready for code review or next cycle
+  
+  **Complexity**: Before X → After Y (reduced by Z%)
+  **Coverage**: [X%]
+  ```
+- **Append entry to tdd-execution.md** (add new entry, never overwrite):
+  ```markdown
+  ## Cycle N: REFACTOR Phase
+  - Time: [TIMESTAMP]
+  - Agent: dev-tdd-refactor
+  - Task: Improve code quality
+  - Outcome: ✅ All tests passing
+  - Improvements: [List refactorings—extract method, improve naming, reduce complexity]
+  - Files Modified: [List files]
+  - Commit: TDD-<US-REF>-REFACTOR-<CYCLE>: [Message]
+  - Complexity: Before X → After Y
+  - Coverage: [X%]
+  ```
+- **Commit to git** with standardized message:
+  ```bash
+  git commit -m "TDD-US-001-REFACTOR-18: Extract tierSync utility, improve complexity"
+  ```
+- **Generate code review report** if layer complete
+- Ready for next cycle or code review
 
 ---
 

@@ -147,6 +147,98 @@ Execute handoffs (NO runSubagent) in strict order:
 
 ---
 
+## 📋 Strict Document Consolidation Rules (Critical)
+
+**ONE Handoff File Per Story** (NOT per cycle):
+- **File**: `/docs/user-stories/<US-REF>/handoff.md` 
+- **Lifecycle**: OVERWRITE after each phase (RED → GREEN → REFACTOR)
+- **Content**: Current cycle status, progress summary, next steps (keep <200 words)
+- **NEVER**: Create cycle-specific files (❌ cycle-18-handoff.md, ❌ red-handoff.md, ❌ green-18-summary.md)
+
+**ONE Execution Log Per Story** (Append-only chronicle):
+- **File**: `/docs/user-stories/<US-REF>/tdd-execution.md`
+- **Lifecycle**: APPEND-only (never delete, never overwrite)
+- **Content**: Complete audit trail—one entry per cycle phase
+- **Benefit**: Stakeholders see full journey; git logs stay clean
+
+**Example Handoff.md After Each Cycle**:
+```markdown
+# Handoff: US-001 TDD Cycle
+
+**Cycle**: 18 | **Status**: GREEN_COMPLETE
+**Previous Cycle**: RED_COMPLETE (task: write failing test for User.tier sync)
+**Current Phase**: REFACTOR
+**Branch**: feature/auth-003-user-tier-sync
+
+## Progress
+- ✅ Test written: UserTierSyncService handles sync in <100ms
+- ✅ Code implemented: Service passes all assertions
+- ⏳ Refactor: Extract utility, improve naming (start next)
+
+## Next Handoff
+- After REFACTOR: Run full BDD suite, confirm 8/8 assertions passing
+- Then: Hand off to Dev-Lead for code review
+
+**Last Updated**: 2026-02-05 11:45 UTC
+```
+
+**Example tdd-execution.md Entry** (Append new entry):
+```markdown
+# TDD Execution Log: US-001 [APPEND-ONLY]
+
+## Cycle 18: RED Phase
+- **Time**: 2026-02-05 10:30 UTC
+- **Agent**: dev-tdd-red
+- **Task**: Write failing test for User.tier sync assertion
+- **Outcome**: ✅ Test fails correctly (expected sync result, got undefined)
+- **File**: src/services/__tests__/UserTierSyncService.test.ts
+- **Commit**: TDD-US-001-RED-18: Write failing test for tier sync
+
+## Cycle 18: GREEN Phase
+- **Time**: 2026-02-05 11:15 UTC
+- **Agent**: dev-tdd-green
+- **Task**: Implement UserTierSyncService.sync() to pass test
+- **Outcome**: ✅ Test passing, no regressions
+- **Files Modified**: src/services/UserTierSyncService.ts (NEW, 42 lines)
+- **Commit**: TDD-US-001-GREEN-18: Implement UserTierSyncService.sync()
+
+## Cycle 18: REFACTOR Phase (In Progress)
+- **Time**: 2026-02-05 11:45 UTC
+- **Agent**: dev-tdd-refactor
+- **Task**: Extract sync logic, improve error handling
+- **Files**: src/utils/tierSync.util.ts (NEW), src/services/UserTierSyncService.ts (refactored)
+- **Commit**: TDD-US-001-REFACTOR-18: Extract sync utility, improve complexity
+
+---
+[Next cycle appends here]
+```
+
+---
+
+## 🔴 Strict Sequencing Rules (Blocking)
+
+**One Active Cycle Per Story**:
+- Only ONE of RED/GREEN/REFACTOR can run at a time for a story
+- Gate between phases: Must wait for previous phase completion
+
+**One Active Story in TDD Phase**:
+- Only ONE story can be in TDD implementation at a time
+- Prevents merge conflicts and context switching
+- Enables full focus on BDD scenarios for current story
+
+**Git Commit Pattern** (Enforced):
+```
+TDD-<US-REF>-<PHASE>-<CYCLE>: [Description]
+
+Examples:
+- TDD-US-001-RED-18: Write failing test for User.tier sync
+- TDD-US-001-GREEN-18: Implement UserTierSyncService.sync()
+- TDD-US-001-REFACTOR-18: Extract tierSync utility, improve error handling
+- TDD-US-001: All BDD scenarios passing, 94% coverage, ready for review
+```
+
+---
+
 ## 🎯 Executable Prompt Templates
 
 ### Prompt 1: TDD Cycle Initiation

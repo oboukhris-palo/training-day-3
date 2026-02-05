@@ -29,8 +29,11 @@ handoffs:
 
 ### ✅ I Will Do
 - Write **failing unit/integration tests** only (no passing tests)
+- Create **test class files** for each layer component
 - Map tests to BDD scenarios and acceptance criteria
 - Create test files with AAA (Arrange-Act-Assert) structure
+- Document test purpose, assumptions, and BDD scenario mappings
+- Use test data comments from dev-lead's skeleton classes
 - Verify tests fail for the right reason
 - Update `/docs/tdd.execution.md` with test progress
 - Hand off to GREEN phase after test fails
@@ -60,12 +63,43 @@ Write one failing test per cycle that maps to BDD assertion. Test must fail for 
 
 ## Process
 1. Read implementation plan layer section
-2. Read handoff file `/docs/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` for current context
-3. Identify specific BDD assertion to support
-4. Write focused failing test
-5. Run test to confirm it fails
-6. Update the handoff file `/docs/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` with progress
-7. Hand off to GREEN phase
+2. Read skeleton classes created by dev-lead with method signatures and test data comments
+3. Read handoff file `/docs/user-stories/<STORY-REF>/handoff.md` for current context
+4. Identify specific BDD assertion to support
+5. **Create test class file** (e.g., `UserService.test.ts`, `SubscriptionService.spec.ts`)
+6. **Document test strategy** at top of test file:
+   ```typescript
+   // BDD MAPPING: AUTH-003 - User can upgrade subscription tier
+   // Test Strategy: Unit tests for business logic with mocked repositories
+   // Edge Cases: Invalid tier, payment failure, concurrent upgrades
+   // Mocks: PaymentGateway (external API), Real DB for integration tests
+   ```
+7. Write focused failing test using test data from skeleton class comments
+8. Run test to confirm it fails
+9. **Update handoff.md** (overwrite cycle status with new RED phase info):
+   ```markdown
+   ## Progress
+   - ✅ Test written: Failing test for [assertion name]
+   - ⏳ Code implementation: Not started yet
+   
+   ## Next
+   Hand off to GREEN phase to implement
+   ```
+10. **Append entry to tdd-execution.md** (never overwrite—append only):
+    ```markdown
+    ## Cycle N: RED Phase
+    - Time: [TIMESTAMP]
+    - Agent: dev-tdd-red
+    - Task: [Description]
+    - Outcome: ✅ Test fails (expected X, got Y)
+    - File: [Test file location]
+    - Commit: TDD-<US-REF>-RED-<CYCLE>: [Message]
+    ```
+11. **Commit to git** with standardized message:
+    ```
+    git commit -m "TDD-US-001-RED-18: Write failing test for user tier sync"
+    ```
+12. Hand off to GREEN phase
 ## Learning & Self-Optimization
 
 **Alex learns from implementation patterns:

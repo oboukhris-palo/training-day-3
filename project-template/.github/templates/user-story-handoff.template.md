@@ -1,68 +1,78 @@
-# {USER-STORY-REF} Implementation Handoff
+# Handoff: {USER-STORY-REF} TDD Cycle
+
+**⚠️ NOTE: This file is OVERWRITTEN after each TDD phase (RED → GREEN → REFACTOR). Use `tdd-execution.md` for complete audit trail.**
+
+---
 
 ## Current Status
-- **Phase**: {Planning/Layer1/Layer2/Layer3/Layer4/Complete}
-- **Current Agent**: {agent-name}
-- **BDD Tests Passing**: X/Y scenarios
-- **Last Update**: {timestamp}
-- **User Story**: {brief description}
+- **Cycle**: {CYCLE_NUMBER}
+- **Phase**: {RED/GREEN/REFACTOR}
+- **Status**: {PHASE_COMPLETE/IN_PROGRESS}
+- **Branch**: feature/{feature-name}
+- **BDD Progress**: {X}/{Y} scenarios passing
+- **Last Updated**: {ISO_8601_TIMESTAMP}
 
-## Chain of Thought
-### Latest Progress
-{What was just completed - specific actions and results}
+## What Just Happened (Previous Cycle)
+{Brief description of what the previous phase completed}
 
-### Current Challenge
-{What we're working on now - specific problem being solved}
+**Example**: 
+- ✅ Failing test written for User.tier sync assertion
+- ✅ Committed: TDD-US-001-RED-18
 
-### Next Steps
-{What needs to happen next - specific actions for next agent}
+---
 
-### Notes for Next Agent
-{Critical context, decisions made, blockers, important findings}
+## What We're Doing Now
+{Current phase task and goal}
 
-## Layer Progress
-- **Layer 1 (Database)**: [Not Started/In Progress/Complete] - X/Y BDD assertions passing
-  - Tables: {list created tables}
-  - Models: {list created models}
-  - Tests passing: {specific test names}
-  
-- **Layer 2 (Backend)**: [Not Started/In Progress/Complete] - X/Y BDD assertions passing  
-  - Endpoints: {list created endpoints}
-  - Services: {list created services}
-  - Tests passing: {specific test names}
-  
-- **Layer 3 (Config)**: [Not Started/In Progress/Complete] - X/Y BDD assertions passing
-  - Routes: {list configured routes}
-  - Middleware: {list configured middleware}
-  - Tests passing: {specific test names}
-  
-- **Layer 4 (Frontend)**: [Not Started/In Progress/Complete] - X/Y BDD assertions passing
-  - Components: {list created components}
-  - State management: {list state updates}
-  - Tests passing: {specific test names}
+**Example**:
+- Implementing UserTierSyncService.sync() minimal code
+- Making all RED assertions pass
+- No refactoring yet (GREEN phase only)
 
-## Implementation Context
-- **Implementation Plan**: `/docs/user-stories/{USER-STORY-REF}/implementation-plan.md`
-- **BDD Scenarios**: `/docs/user-stories/{USER-STORY-REF}/bdd-scenarios/`
-- **Feature Files**: `features/{feature-name}/`
-- **Epic Context**: {parent epic name and goals}
+---
 
-## Decision Log
-### Technical Decisions
-{Important technical choices made during implementation}
+## Next Steps After This Phase
+{What the next phase needs to do}
 
-### Architecture Notes  
-{How this story fits with overall architecture}
+**Example**:
+1. REFACTOR: Extract sync utility, improve naming
+2. Run full BDD suite to confirm assertions passing
+3. Hand off to Dev-Lead for code review
 
-### Blockers Resolved
-{Any blockers encountered and how they were resolved}
+---
 
-## Handoff Instructions
-### For Next Agent
-{Specific instructions for the agent receiving this handoff}
+## Files in Scope (This Cycle)
+```
+src/services/UserTierSyncService.ts
+src/services/__tests__/UserTierSyncService.test.ts
+src/models/User.ts
+```
 
-### Files to Focus On
-{List of files that need attention in next phase}
+---
 
-### Test Priority
-{Which BDD scenarios to focus on next}
+## Notes for Next Agent
+
+### Must Know
+- {Critical information next agent needs}
+- Test assertions focus on [X behavior]
+- Constraint: [Y from implementation-plan.md]
+
+### Nice to Know
+- {Context that's helpful but not critical}
+- Earlier decision: [Z reason]
+
+### Open Questions
+- {If any decision needed from next agent}
+- Clarification: [What needs resolving]
+
+---
+
+## Progress Metrics
+- **Tests Passing**: {X}/{Y}
+- **Complexity**: {Current cyclomatic complexity}
+- **Coverage**: {Code coverage %}
+- **Git Commits**: {Number in this cycle}
+
+---
+
+**See `tdd-execution.md` for complete cycle history and audit trail.**
