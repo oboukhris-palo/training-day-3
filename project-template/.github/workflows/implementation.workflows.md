@@ -126,7 +126,7 @@ This document defines the **Implementation & Development Execution Workflow** - 
 #### `/docs/user-stories/<US-REF>/us-completition-checklist.md` ✅
 **Purpose**: Definition of Done checklist - validation that story meets all requirements
 
-**Managed by**: BA (creation), Dev-Lead + TDD agents (execution)
+**Managed by**: QA (creation and validation), Dev-Lead + TDD agents (execution)
 
 **Content Structure**:
 - **Acceptance Criteria**: All from original story ✅/❌
@@ -141,9 +141,10 @@ This document defines the **Implementation & Development Execution Workflow** - 
 - **Risk Mitigation**: Edge cases handled ✅/❌
 
 **Update Triggers**:
-- **BA**: Creates during Phase 5 (from acceptance criteria)
+- **QA**: Creates during Phase 5 (from acceptance criteria)
 - **TDD-Orchestrator**: Updates as layer completion progresses
 - **Dev-Lead**: Signs off at story completion
+- **QA**: Validates all criteria during Phase 6 (validation testing)
 
 #### `/docs/user-stories/<US-REF>/tdd-execution/` 📝
 **Purpose**: Document TDD cycle executions for the user story (detailed execution log per cycle)
@@ -209,7 +210,7 @@ tdd-execution/
 **Update Triggers**:
 - **PM**: Initial setup from PRD, updates during sprint planning/closure
 - **Dev-Lead**: Updates when starting implementation and marking complete
-- **BA**: Updates after validation (Implemented → Delivered)
+- **QA**: Updates after validation (Implemented → Delivered)
 - **TDD-Orchestrator**: Updates during active development phases with progress
 
 #### `/docs/user-stories/project-status.md` 📊
@@ -232,7 +233,7 @@ tdd-execution/
 **Update Triggers**:
 - **PM**: Updates daily for blockers, weekly for metrics and progress summary
 - **Dev-Lead**: Updates quality metrics after story completion
-- **BA**: Updates validation metrics and bug counts after testing
+- **QA**: Updates validation metrics and bug counts after testing
 - **TDD-Orchestrator**: Updates velocity and completion metrics after layer completion
 
 #### `/docs/user-stories/current-sprint.md` 📋
@@ -255,7 +256,7 @@ tdd-execution/
 **Update Triggers**:
 - **PM**: Creates at sprint start, updates daily for progress tracking, closes + archives at sprint end
 - **Dev-Lead**: Updates story status and layer progress as implementation progresses (usually daily)
-- **BA**: Updates validation status after testing phase
+- **QA**: Updates validation status after testing phase
 - **TDD-Orchestrator**: Updates technical progress, cycle count, and blockers (updates per cycle or daily)
 
 ---
@@ -297,12 +298,12 @@ tdd-execution/
 - **Chain of Thought**: Detailed handoff files for phase-specific context and troubleshooting
 - **🤖 AI Logging**: RED-GREEN-REFACTOR cycle efficiency, test coverage trends, code complexity metrics, refactoring frequency, layer-specific bottlenecks, BDD assertion coverage
 
-#### BA Agent Communication
-- **Primary Documents**: `/docs/user-stories/user-stories.md`, GitHub Issue comments
-- **Updates**: After validation testing, bug discovery, story acceptance
-- **Communication**: Validation results, bug reports, acceptance criteria verification
-- **Quality Gates**: Feature readiness, design compliance, user experience validation
-- **🤖 AI Logging**: Validation pass rates, bug discovery patterns, E2E test results, design system compliance, exploratory testing coverage, acceptance criteria verification
+#### QA Agent Communication
+- **Primary Documents**: `/docs/user-stories/user-stories.md`, `/docs/user-stories/<US-REF>/us-completition-checklist.md`, GitHub Issue comments
+- **Updates**: After validation testing, bug discovery, story acceptance, DoD verification
+- **Communication**: E2E test results, bug reports, quality metrics, acceptance criteria verification
+- **Quality Gates**: Feature readiness, design compliance, accessibility validation, performance SLA, security checks
+- **🤖 AI Logging**: E2E test pass rates, bug discovery patterns, test coverage trends, design system compliance, exploratory testing coverage, acceptance criteria verification, regression test results, accessibility compliance rates
 
 ### Document Update Triggers
 
@@ -319,9 +320,9 @@ tdd-execution/
 | **TDD-REFACTOR** | Code improved | `tdd-execution/<TDD-CYCLE>/<TDD-CYCLE>-HO-REFACTOR.md` | Refactoring summary, quality metrics, test status |
 | **TDD-Orchestrator** | Layer complete | `implementation-plan.md` | Annotate with layer completion status |
 | **Dev-Lead** | Story complete | `user-stories.md` | Status update (In Progress → Implemented) |
-| **BA** | Validation complete | `user-stories.md` | Status update (Implemented → Delivered or bugs) |
-| **BA** | Validation complete | `us-completition-checklist.md` | Mark all criteria as ✅ complete |
-| **BA** | Bug found | GitHub Issue comments | Bug details, repro steps, severity |
+| **QA** | Validation complete | `user-stories.md` | Status update (Implemented → Delivered or bugs) |
+| **QA** | Validation complete | `us-completition-checklist.md` | Mark all criteria as ✅ complete |
+| **QA** | Bug found | GitHub Issue comments | Bug details, repro steps, severity, screenshots, Playwright traces |
 
 ### Communication Quality Standards
 
@@ -345,7 +346,7 @@ tdd-execution/
 ## Workflow Governance
 
 **Scope**: Implementation execution of user stories through disciplined, layer-by-layer TDD cycles  
-**Agents Involved**: PM, PO, BA, Dev-Lead, TDD-Orchestrator, TDD-RED, TDD-GREEN, TDD-REFACTOR  
+**Agents Involved**: PM, PO, BA (story enrichment), QA (testing & validation), Dev-Lead, TDD-Orchestrator, TDD-RED, TDD-GREEN, TDD-REFACTOR  
 **Key Documents**: [documents.workflows.md](.github/workflows/documents.workflows.md), [architecture-design.md](../docs/prd/architecture-design.md), [tech-spec.md](../docs/prd/tech-spec.md), [design-systems.md](../docs/prd/design-systems.md), [coding.instructions.md](../instructions/coding.instructions.md)  
 **Version Control**: Git with feature branches, pull requests, and quality gates  
 **Issue Tracking**: GitHub Issues with user-story tagged to parent epic
@@ -438,7 +439,7 @@ PHASE 3: DEV-LEAD CREATES IMPLEMENTATION PLANS (During Sprint Planning)
 │  │  ├─ Layer 2 (Backend): Endpoints, services, business logic, files, BDD coverage
 │  │  ├─ Layer 3 (Config): Routes, DI, middleware, feature flags, files, BDD coverage
 │  │  ├─ Layer 4 (Frontend): Components, state mgmt, styling, files, BDD coverage
-│  │  └─ Definition of Done: All BDD passing, >80% coverage, code review approved, BA validation passed
+│  │  └─ Definition of Done: All BDD passing, >80% coverage, code review approved, QA validation passed
 │  ├─ Create /docs/user-stories/<US-REF>/api-design.md with API contract details
 │  ├─ Create /docs/user-stories/<US-REF>/us-completition-checklist.md (DoD checklist)
 │  ├─ Create /docs/user-stories/<US-REF>/tdd-execution/ folder (parent for TDD cycles)
@@ -500,12 +501,12 @@ PHASE 5: DEV-LEAD SYNCHRONIZES STATUS TO "IMPLEMENTED" (Sprint Mid-Point/End)
 │  │  ├─ Link to commits
 │  │  ├─ Files created/modified
 │  │  ├─ Test results (coverage, BDD pass rate)
-│  │  └─ Ready for BA validation
+│  │  └─ Ready for QA validation
 │  └─ Commit /docs/user-stories/user-stories.md to Git
 ├─ Update /docs/user-stories/current-sprint.md status column
-└─ Hand off to BA: "Stories implemented. BDD tests passing. Ready for acceptance testing."
+└─ Hand off to QA: "Stories implemented. BDD tests passing. Ready for acceptance testing."
         ↓
-PHASE 6: BA VALIDATES FEATURES (Sprint Mid-Point/End)
+PHASE 6: QA VALIDATES FEATURES (Sprint Mid-Point/End)
 ├─ 🎯 ANNOUNCE: "Ready to validate implemented stories. Running E2E tests via Playwright."
 ├─ For EACH story marked "Implemented":
 │  ├─ Read /docs/user-stories/<US-REF>/<US-REF>.md (acceptance_criteria, bdd_scenarios sections)
@@ -514,19 +515,25 @@ PHASE 6: BA VALIDATES FEATURES (Sprint Mid-Point/End)
 │  ├─ Test form validation, error handling, responsive design
 │  ├─ Verify design system compliance
 │  ├─ Check accessibility (WCAG target level)
+│  ├─ Validate performance against SLA requirements
+│  ├─ Execute security validation (input sanitization, auth checks)
+│  ├─ Run regression test suite
+│  ├─ Update /docs/user-stories/<US-REF>/us-completition-checklist.md with test results
 │  ├─ IF TESTS PASS:
 │  │  ├─ Update /docs/user-stories/user-stories.md: Mark "Delivered"
 │  │  ├─ Update GitHub Issue: status → "Delivered", add ✅ label
-│  │  ├─ Add validation report to issue
+│  │  ├─ Add validation report to issue (test pass rate, coverage, accessibility, performance, security)
+│  │  ├─ Attach Playwright test report and screenshots
 │  │  └─ Mark complete in current-sprint.md
 │  └─ IF TESTS FAIL:
-│     ├─ Document bugs in GitHub Issue comments
-│     ├─ Keep status "Implemented", add ⚠️ "Bug" label
+│     ├─ Document bugs in GitHub Issue comments (with severity, repro steps, screenshots, Playwright traces)
+│     ├─ Keep status "Implemented", add ⚠️ "Bug" label with severity tag
 │     ├─ Hand back to Dev-Lead: "Validation failed. Bugs documented in issue #[N]."
 │     └─ Dev-Lead fixes bugs and re-submits for validation
 ├─ Update /docs/user-stories/current-sprint.md "Daily Progress Tracking"
-├─ Update /docs/user-stories/project-status.md metrics
-└─ Hand off to PM: "Validation complete. Sprint ready for closure."
+├─ Update /docs/user-stories/project-status.md quality metrics (test coverage, bug density, pass rates)
+└─ Hand off to PM: "Validation complete. Sprint ready for closure."  
+**Note**: QA agent executes comprehensive testing including E2E, regression, accessibility, performance, and security validation per qa.agent.md workflows
         ↓
 PHASE 7: SPRINT CLOSURE & ARCHIVE (End of Sprint)
 ├─ 🎯 ANNOUNCE: "Ready to close Sprint [N]. All stories delivered. Archiving sprint."
@@ -591,7 +598,7 @@ PROJECT COMPLETION:
 | **TDD Cycle** | RED (write failing test) → GREEN (implement to pass) → REFACTOR (improve while passing) |
 | **Layer** | Architectural level: Database (L1) → Backend (L2) → Config (L3) → Frontend (L4) |
 | **DOR (Definition of Ready)** | Story ready for dev entry: AC clear, BDD scenarios defined, UX inputs present, no blockers |
-| **DOD (Definition of Done)** | Story complete: BDD passing, >80% coverage, code review approved, BA validation passed |
+| **DOD (Definition of Done)** | Story complete: BDD passing, >80% coverage, code review approved, QA validation passed |
 | **Status Flow** | Not Started → In Progress → Implemented → Delivered (→ Epic closure when all stories done) |
 
 ---0: PM INITIALIZES GITHUB INTEGRATION
@@ -898,7 +905,7 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
 3. **Failing BDD Tests as Entry Point**: BDD tests are not validation at the end—they are the specification that drives implementation
 4. **One Story at a Time**: Complete all phases (Prep → TDD → Sync → Validation) for one story before moving to next
 5. **Synchronization Discipline**: Lead Dev MUST update both `/docs/user-stories/user-stories.md` AND GitHub Issue after each phase (In Progress → Implemented)
-6. **BA Validation Gate**: No story moves to "Delivered" without BA validation. Bugs block progression.
+6. **QA Validation Gate**: No story moves to "Delivered" without QA validation. Bugs block progression.
 7. **Status Tracking**: `/docs/user-stories/user-stories.md` is local source of truth, synchronized with GitHub Issues (remote source of truth)
 8. **PM Monitoring**: PM continuously checks progress counts (Not Started, In Progress, Implemented, Delivered) to track team velocity
 9. **Epic Tracking**: Stories are tagged with parent epic in GitHub; when all stories of an epic are "Delivered", epic is automatically "Delivered"
@@ -952,26 +959,26 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
 | **PHASE 2** | Lead Dev | User-story reference, GitHub Issue #, PRD docs, architectural specs | implementation-plan.md, BDD tests, GitHub Issue updated to "In Progress" | 1-2 hours per story |
 | **PHASE 3** | Orchestrator | Handoff from Lead Dev with complete plan, GitHub Issue # | TDD execution launch, selected approach, GitHub Issue updated | 15-30 min |
 | **PHASE 4** | TDD-Orchestrator | implementation-plan.md, failing BDD tests, approach, GitHub Issue # | Implemented code, passing BDD tests, >80% coverage, commits linked to issue | 2-5 days per story |
-| **PHASE 5** | Lead Dev | Handoff from TDD with BDD results, GitHub Issue # | `/docs/user-stories/user-stories.md` and GitHub Issue both "Implemented", handoff to BA | 15-30 min |
-| **PHASE 6** | BA | User-story reference, GitHub Issue #, BDD feature files, running app | Validation report, `/docs/user-stories/user-stories.md` and GitHub Issue both "Delivered" (or bugs documented) | 1-3 hours per story |
+| **PHASE 5** | Lead Dev | Handoff from TDD with BDD results, GitHub Issue # | `/docs/user-stories/user-stories.md` and GitHub Issue both "Implemented", handoff to QA | 15-30 min |
+| **PHASE 6** | QA | User-story reference, GitHub Issue #, BDD feature files, running app | Validation report, `/docs/user-stories/user-stories.md` and GitHub Issue both "Delivered" (or bugs documented) | 1-3 hours per story |
 
 **Iteration**: Repeat Phases 1-6 for each user-story in sprint until all selected stories are "Delivered"
 
-**Epic Completion**: Automatic when ALL user-stories in an epic are marked "Delivered" (validated by BA)
+**Epic Completion**: Automatic when ALL user-stories in an epic are marked "Delivered" (validated by QA)
 
 **PM Continuous Monitoring**: PM checks `/docs/user-stories/user-stories.md` daily for progress (counts of Not Started, In Progress, Implemented, Delivered)
 
 **Key Constraints**: 
 - Phase 0 MUST complete first - no GitHub Issues = workflow cannot proceed
 - Phase 4 (TDD execution) CANNOT begin until Phase 2 (implementation-plan.md creation) is complete
-- Phase 6 (next story) CANNOT begin until current story is "Delivered" by BA validation
+- Phase 6 (next story) CANNOT begin until current story is "Delivered" by QA validation
 - Bugs found in Phase 6 block progression until fixed and re-validated
 
 **Synchronization Points**:
 - **Local**: `/docs/user-stories/user-stories.md` (committed to repository)
 - **Remote**: GitHub Issues (status: Open → In Progress → Implemented → Delivered → Closed)
 - **Lead Dev Responsibility**: Keep both synchronized after each phase
-**Phase 6 → Phase 1 (BA → Orchestrator)**:
+**Phase 6 → Phase 1 (QA → Orchestrator)**:
 - **If Validation PASSES**:
   - [ ] BDD tests passing in browser (E2E validation complete)
   - [ ] Exploratory testing complete (all workflows validated)
@@ -995,17 +1002,17 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
      - Message: "User-story <USER-STORY-REF> (Issue #<ISSUE-NUM>) implemented. All BDD tests passing. Ready for validation testing."
 
 **Input**: Handoff from TDD-Orchestrator with BDD test results and commits, `/docs/user-stories/user-stories.md`, GitHub Issue number  
-**Output**: `/docs/user-stories/user-stories.md` updated to "Implemented" (committed), GitHub Issue updated with completion details and "Implemented" status, handoff to BA  
-**Outcome**: Complete synchronization between local tracking and GitHub, clear handoff to BA for validation
+**Output**: `/docs/user-stories/user-stories.md` updated to "Implemented" (committed), GitHub Issue updated with completion details and "Implemented" status, handoff to QA  
+**Outcome**: Complete synchronization between local tracking and GitHub, clear handoff to QA for validation
 
 **Lead Dev Responsibilities Summary**:
 - **After each iteration** (Phase 4 completion): Update status to "Implemented"
 - **After each user-story** implemented: Synchronize local and GitHub tracking
-- **Continuous**: Monitor GitHub Issues for comments, blockers, or status changes from BA
+- **Continuous**: Monitor GitHub Issues for comments, blockers, or status changes from QA
 
 ---
 
-### PHASE 6: BA VALIDATES FEATURE (DELIVERED)
+### PHASE 6: QA VALIDATES FEATURE (DELIVERED)
 
 **Goal**: Execute comprehensive validation testing using Playwright E2E tests to confirm feature meets acceptance criteria, then mark as "Delivered"
 
@@ -1066,7 +1073,7 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
 
 9. **If Validation PASSES**:
    - Update `/docs/user-stories/user-stories.md`: Change status from "Implemented" to "Delivered"
-   - Commit user-stories.md with message: "chore: Mark US-<REF> as Delivered after BA validation #<ISSUE-NUM>"
+   - Commit user-stories.md with message: "chore: Mark US-<REF> as Delivered after QA validation #<ISSUE-NUM>"
    - Update GitHub Issue:
      - Change status to "Delivered" (or add "Delivered" label)
      - Add comment: "✅ Validation complete. All tests passing."
@@ -1078,7 +1085,7 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
 **Output**: Validation report, `/docs/user-stories/user-stories.md` updated to "Delivered" (or bugs documented), GitHub Issue updated to "Delivered" (or "Bug" label added)  
 **Outcome**: Feature validated and delivered (or bugs returned to Dev for fixing), clear gate before moving to next user-story
 
-**BA Validation Checklist**:
+**QA Validation Checklist**:
 - [ ] BDD tests passing in browser (E2E validation)
 - [ ] Exploratory testing complete for all workflows
 - [ ] Edge cases and error handling validated
@@ -1180,8 +1187,8 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
 | **PHASE 2** | BA | User-story (exact US-REF from PRD), current-sprint.md (validated references) | `/docs/user-stories/<EXACT-US-REF>/<US-REF>.md` enriched, numbering validated | 1-2 hours per story | `<US-REF>.md` (enrichment sections) |
 | **PHASE 3** | Dev-Lead | User-story (exact US-REF), enriched file, PRD/architecture/design docs | `implementation-plan.md`, `<US-REF>-HANDOFF.md`, `tdd-execution.md` templates, BDD tests, numbering pre-validated | 1-2 hours per story | `implementation-plan.md` (create), `<US-REF>-HANDOFF.md` (create), `tdd-execution.md` (create) |
 | **PHASE 4** | TDD-Orchestrator | implementation-plan.md (numbering pre-validated), failing BDD tests, approach | Implemented code, passing BDD tests, >80% coverage, commits reference exact US-REF | 2-5 days per story | `<US-REF>-HANDOFF.md` (TDD cycles), `tdd-execution.md` (execution log), `current-sprint.md` (daily updates) |
-| **PHASE 5** | Dev-Lead | Handoff from TDD with BDD results, exact US-REF | `/docs/user-stories/user-stories.md` "Implemented" (exact US-REF), GitHub Issue updated, handoff to BA | 15-30 min | `user-stories.md` (status update) |
-| **PHASE 6** | BA | User-story (exact US-REF), GitHub Issue, BDD files | `/docs/user-stories/user-stories.md` "Delivered" (exact US-REF), GitHub Issue closed | 1-3 hours per story | `user-stories.md` (validation result) |
+| **PHASE 5** | Dev-Lead | Handoff from TDD with BDD results, exact US-REF | `/docs/user-stories/user-stories.md` "Implemented" (exact US-REF), GitHub Issue updated, handoff to QA | 15-30 min | `user-stories.md` (status update) |
+| **PHASE 6** | QA | User-story (exact US-REF), GitHub Issue, BDD files | `/docs/user-stories/user-stories.md` "Delivered" (exact US-REF), GitHub Issue closed | 1-3 hours per story | `user-stories.md` (validation result) |
 
 **🔴 CRITICAL VALIDATION GATE**: Before every phase handoff, verify <USER-STORY-REF> matches EXACTLY with `/docs/prd/user-stories.md`. Any divergence blocks progression.
 

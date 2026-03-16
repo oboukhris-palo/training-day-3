@@ -13,10 +13,15 @@
 
 **Agent Roles** (handoff chain):
 - **orchestrator**: Coordinates workflows, presents decision gates (3 options with tradeoffs)
-- **po**: Asks questions, surfaces tradeoffs—NEVER decides unprompted
+- **pm**: Manages project execution, timelines, and coordination across teams
+- **po**: Defines product requirements and prioritizes features—surfaces tradeoffs, NEVER decides unprompted
+- **ba**: Creates functional specifications, BDD scenarios, and acceptance criteria for stories
+- **ux**: Designs user experiences and creates interactive prototypes
+- **architect**: Designs system architecture, selects technology stack, and guides technical strategy
 - **dev-lead**: Pre-creates folder structure, writes concise implementation plans (max 500 words/layer)
 - **dev-tdd**: Orchestrates RED → GREEN → REFACTOR (strict sequencing, no parallel cycles)
 - **dev-tdd-red/green/refactor**: Execute TDD phases following implementation plan
+- **qa**: Executes comprehensive testing (E2E, BDD validation), verifies acceptance criteria, ensures quality gates
 
 ## 📋 Critical Document Patterns
 

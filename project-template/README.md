@@ -47,30 +47,32 @@
 
 ### Three-Workflow Orchestration
 1. **PDLC Workflow** (8 stages): Requirements → Analysis → Design → Planning → Testing → Deployment → Development → Improvement
-2. **Implementation Workflow** (6 phases): Epic Review → Sprint Planning → BDD Integration → TDD Execution → BDD Validation → Code Quality  
+2. **Implementation Workflow** (7 phases): Sprint Planning → Story Enrichment → Implementation Planning → TDD Execution → Status Sync → QA Validation → Sprint Closure
 3. **CI/CD Workflow** (3 phases): Bootstrap → Stabilization → Optimization
 
 ### Agent Handoff Chain
-**Orchestrator** coordinates: PM → PO → BA → UX → Architect → Dev-Lead → TDD Agents
+**Orchestrator** coordinates: PM → PO → BA (enrichment) → UX → Architect → Dev-Lead → TDD Agents → QA (validation)
 
 ---
 
 ## 📂 Core Components
 
-### 🤖 [agents/](agents/) - AI Agents (11 specialized roles)
-**Handoff Chain**: Orchestrator → PM → PO → BA → UX → Architect → Dev-Lead → TDD Agents
+### 🤖 [agents/](agents/) - AI Agents (12 specialized roles)
+**Handoff Chain**: Orchestrator → PM → PO → BA → UX → Architect → Dev-Lead → TDD Agents → QA
 
 | Agent | Role | Responsibility | Key Output |
 |-------|------|---------------|------------|
 | **Orchestrator** | Master coordinator | Decision gates, workflow sequencing | Handoff orchestration |
+| **BA** | Story enrichment | Acceptance criteria, BDD scenarios, UX integration | Enriched user stories |
 | **Dev Lead** | Technical implementation | Layer-by-layer plans, BDD integration | Implementation plans |
 | **TDD Agents** | Test-driven development | RED-GREEN-REFACTOR cycles | Working code |
+| **QA** | Testing & validation | E2E tests, accessibility, performance, security | Quality assurance |
 
 ### 📋 [workflows/](workflows/) - Orchestration Workflows
 | Workflow | Stages/Phases | Purpose |
 |----------|---------------|---------|
 | **PDLC** | 8 stages | Product Development Lifecycle |
-| **Implementation** | 6 phases | TDD execution with BDD validation |
+| **Implementation** | 7 phases | Sprint planning → TDD execution → QA validation |
 | **CI/CD** | 3 phases | Continuous integration pipeline |
 
 ### 🎯 [tasks/](tasks/) - Workflow Launchers
@@ -97,7 +99,7 @@
 ```
 project-root/
 ├── .github/
-│   ├── agents/                    # 11 specialized AI agents
+│   ├── agents/                    # 12 specialized AI agents (PM, PO, BA, QA, UX, Architect, Dev-Lead, TDD agents)
 │   ├── workflows/                 # PDLC, Implementation, CI/CD workflows
 │   ├── tasks/                     # Workflow launcher prompts
 │   ├── templates/                 # Document templates
@@ -132,55 +134,6 @@ project-root/
 │   │               ├── <TDD-CYCLE>-HO-REFACTOR.md   # REFACTOR agent Handoff file for tdd cycle number <TDD-CYCLE>
 │   │               ├── <TDD-CYCLE>-HO-GREEN.json  # GREEN agent Handoff file for tdd cycle number <TDD-CYCLE>
 │   │               └── <TDD-CYCLE>-HO-RED.json  # RED agent Handoff file for tdd cycle number <TDD-CYCLE>
-│
-├── features/                      # BDD feature files (project source)
-├── src/                          # Application source code
-└── api/openapi.yaml              # API contracts
-```
-
----
-
-## 📂 Project Structure (Optimized)
-
-```
-project-root/
-├── .github/
-│   ├── agents/                    # 11 specialized AI agents
-│   ├── workflows/                 # PDLC, Implementation, CI/CD workflows
-│   ├── tasks/                     # Workflow launcher prompts
-│   ├── templates/                 # Document templates
-│   ├── schemas/                   # JSON schemas for validation
-│   ├── guides/                    # Best practices and strategies
-│   │   ├── handoff-guide.md       # ⭐ Single source of truth for handoffs
-│   │   ├── context-optimization-strategy.md  # Token efficiency (~350 lines)
-│   │   └── diagram-usage.guide.md # Diagram standards
-│   ├── instructions/              # Coding and documentation standards
-│   ├── prompts/                   # Agent system prompts
-│   └── copilot-instructions.md    # Master system guide
-│
-├── docs/
-│   ├── prd/                       # PDLC Documents (13 files)
-│   │   ├── requirements.md
-│   │   ├── user-stories.md        # BDD scenarios (PRD - read-only)
-│   │   ├── architecture-design.md
-│   │   └── ...
-│   │
-│   ├── user-stories/              # Implementation tracking
-│   │   ├── user-stories.md        # ⭐ Status tracking (SSOT)
-│   │   ├── current-sprint.md        # ⭐ Status tracking (SSOT)
-│   │   ├── project-status.md        # ⭐ Status tracking (SSOT)
-│   │   └── <US-REF>/             # Per-story folders
-│   │       ├── <US-REF>.md       # the user story content (copy of the original user story from PRD)
-│   │       ├── implementation-plan.md  # Implementation plan for the user story
-│   │       ├── api-design.md      # API design details for the user story
-│   │       ├── us-completition-checklist.md         # Checklist for user story completion
-│   │       ├── features/         # BDD feature files (project source)
-│   │       └── tdd-execution/     # TDD execution details and results
-│   │           └── <TDD-CYCLE>/     # Per TDD cycle folders
-│   │               ├── <TDD-CYCLE>-HO-REFACTOR.md   # REFACTOR agent Handoff file for tdd cycle number <TDD-CYCLE>
-│   │               ├── <TDD-CYCLE>-HO-GREEN.json  # GREEN agent Handoff file for tdd cycle number <TDD-CYCLE>
-│   │               └── <TDD-CYCLE>-HO-RED.json  # RED agent Handoff file for tdd cycle number <TDD-CYCLE>
-│   └── design/                    # UX/UI documents
 │
 ├── features/                      # BDD feature files (project source)
 ├── src/                          # Application source code

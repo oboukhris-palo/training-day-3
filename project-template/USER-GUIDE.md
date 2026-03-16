@@ -60,17 +60,20 @@ The orchestrator will:
 
 ## 📚 Framework Components (All Reusable)
 
-### `.github/agents/` (11 AI Agents)
+### `.github/agents/` (12 AI Agents)
 All agents work with ANY project context:
 - ✅ **orchestrator.agent.md** - Coordinates workflows
 - ✅ **pm.agent.md** - Project management
 - ✅ **po.agent.md** - Product ownership with question-driven decisions
-- ✅ **ba.agent.md** - Business analysis & enrichment
+- ✅ **ba.agent.md** - Business analysis & story enrichment (acceptance criteria, BDD scenarios, UX integration)
+- ✅ **qa.agent.md** - Quality assurance & validation testing (E2E, accessibility, performance, security)
 - ✅ **ux.agent.md** - UX/design
 - ✅ **architect.agent.md** - Architecture + OpenAPI specs
 - ✅ **dev-lead.agent.md** - Technical leadership + folder setup
 - ✅ **dev-tdd.agent.md** - TDD orchestration
 - ✅ **dev-tdd-red/green/refactor.agent.md** - TDD phases
+- ✅ **ai-engineering.agent.md** - AI systems optimization
+- ✅ **meeting.assistant.agent.md** - Meeting facilitation
 
 **These agents adapt to YOUR project automatically—no modifications needed.**
 
@@ -114,7 +117,10 @@ All task prompts use `.prompt.md` suffix:
 4. Generate PDLC docs (requirements, personas, architecture, etc.)
 5. When Stage 1-6 complete, start Implementation Phase 1
 6. Hand off to Dev-Lead for sprint planning
-7. Execute TDD cycles with BDD-driven tests
+7. BA enriches user stories with acceptance criteria and BDD scenarios
+8. Execute TDD cycles with BDD-driven tests
+9. QA validates implementations with E2E, accessibility, performance, security tests
+10. Stories marked "Delivered" after QA validation passes
 ```
 
 ### Pattern 2: Brownfield Project (Retro-Documentation)
@@ -125,7 +131,8 @@ All task prompts use `.prompt.md` suffix:
 4. Reconstruct requirements, architecture, design decisions
 5. Create user stories with BDD scenarios
 6. Validate with stakeholders
-7. Begin Implementation Phase 1 for next features
+7. QA establishes baseline test coverage and quality metrics
+8. Begin Implementation Phase 1 for next features
 ```
 
 ### Pattern 3: Mid-Development Project
@@ -140,7 +147,45 @@ All task prompts use `.prompt.md` suffix:
 
 ---
 
-## 📋 What You Customize (Project-Specific)
+## � Key Agent Roles: BA vs QA
+
+**Business Analyst (BA)** - Story Enrichment & Requirements
+- **Phase**: Sprint Planning (Phase 2)
+- **Responsibilities**:
+  - Enrich user stories with PO-validated acceptance criteria
+  - Extract and validate Gherkin BDD scenarios
+  - Integrate UI inputs from UX agent and design-systems.md
+  - Document API contracts (request/response schemas)
+  - Define form validation rules and error messages
+  - Verify design system component availability
+  - Mark story "Ready for Dev" after enrichment complete
+- **Output**: `/docs/user-stories/<US-REF>/<US-REF>.md` (enriched)
+- **Handoff To**: Dev-Lead for implementation planning
+
+**QA Engineer (QA)** - Testing & Validation
+- **Phase**: Validation (Phase 6)
+- **Responsibilities**:
+  - Execute Playwright E2E test suites
+  - Validate all BDD scenarios pass
+  - Test accessibility (WCAG compliance)
+  - Test performance (SLA requirements)
+  - Test security (OWASP Top 10, input validation, auth checks)
+  - Run regression tests
+  - Document bugs with Playwright traces and screenshots
+  - Update DoD checklists and quality metrics
+  - Mark story "Delivered" only after all tests pass
+- **Output**: Validation reports, bug reports, quality metrics
+- **Handoff To**: PM (if delivered) or Dev-Lead (if bugs found)
+
+**Clear Separation**:
+- ✅ BA defines WHAT to test (acceptance criteria, BDD scenarios)
+- ✅ QA validates HOW it works (E2E tests, accessibility, performance, security)
+- ❌ BA does NOT execute E2E tests or validate implementations
+- ❌ QA does NOT create acceptance criteria or enrich user stories
+
+---
+
+## �📋 What You Customize (Project-Specific)
 
 ### 1. User Story Identifiers
 **Framework uses**: AUTH-003, US-001, PAYMENT-001  
@@ -201,7 +246,7 @@ File: `/api/openapi.yaml`
    - NO cycle-specific files (no cycle-18-handoff.md)
 
 4. **Agent Handoff Chain**
-   - Orchestrator → PM → PO → BA → UX → Architect → Dev-Lead → TDD
+   - Orchestrator → PM → PO → BA (story enrichment) → UX → Architect → Dev-Lead → TDD Agents → QA (validation)
    - No skipping agents
    - No parallel agent work on same story
 
@@ -245,10 +290,12 @@ File: `/api/openapi.yaml`
 5. Follow TDD agents: RED → GREEN → REFACTOR
 
 ### For QA / Testers
-1. Read: `features/*.feature` (BDD scenarios)
-2. Read: `.github/agents/dev-tdd.agent.md` (BDD mapping)
-3. Validation: All BDD scenarios passing = story complete
-4. Reporting: Reference tdd-execution.md for test history
+1. Read: `.github/agents/qa.agent.md` (comprehensive testing strategies)
+2. Read: `features/*.feature` (BDD scenarios)
+3. Read: `.github/workflows/implementation.workflows.md` (Phase 6: QA Validation)
+4. Validation workflow: E2E tests → Accessibility → Performance → Security → Regression
+5. Bug reporting: GitHub Issue comments with severity, repro steps, Playwright traces
+6. Story marked "Delivered" only after all validation tests pass
 
 ---
 
@@ -274,8 +321,8 @@ When all boxes checked:
 **Q: Can I modify the TDD sequencing to run RED and GREEN in parallel?**  
 **A**: No. Strict RED → GREEN → REFACTOR sequencing is non-negotiable. Parallel work creates conflicts and duplicate code.
 
-**Q: Do I have to use all 11 agents?**  
-**A**: For full PDLC, yes. You can skip agents for brownfield projects (no UX agent if redesigning existing UI, no PM if team exists).
+**Q: Do I have to use all 12 agents?**  
+**A**: For full PDLC, yes. You can skip agents for brownfield projects (no UX agent if redesigning existing UI, no PM if team exists). Core workflow agents (Orchestrator, BA, Dev-Lead, TDD, QA) are always required.
 
 **Q: Can I change the handoff format to JSON instead of Markdown?**  
 **A**: No. Handoffs must follow the standard format. Mix of JSON schema validation + Markdown readability is intentional.
