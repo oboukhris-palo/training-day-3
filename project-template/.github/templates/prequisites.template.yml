@@ -1,0 +1,1022 @@
+---
+templateId: ai-readiness-prerequisites-enterprise
+templateVersion: "1.0"
+purpose: "Professional prerequisites request for AI-assisted development tooling across enterprise environments"
+applicableTo:
+  - SaaS platforms
+  - Enterprise monorepos
+  - Microservices architectures
+  - Regulated industries (FinTech, Healthcare, Government)
+outputFormats:
+  - YAML (structured data exchange)
+  - JSON (API/automation integration)
+  - Markdown (human-readable export)
+lastUpdated: "2026-03-16"
+---
+
+# AI Readiness Prerequisites - Enterprise Template
+
+## Assessment Metadata
+
+assessment:
+  projectName: "{{ PROJECT_NAME }}"
+  organizationName: "{{ ORGANIZATION_NAME }}"
+  assessmentId: "{{ ASSESSMENT_ID }}"
+  assessmentDate: "{{ ASSESSMENT_DATE }}"
+  assessmentEndDate: "{{ ASSESSMENT_END_DATE }}"
+  assessmentTeam:
+    - name: "{{ TEAM_MEMBER_1_NAME }}"
+      role: "{{ TEAM_MEMBER_1_ROLE }}"
+      email: "{{ TEAM_MEMBER_1_EMAIL }}"
+    - name: "{{ TEAM_MEMBER_2_NAME }}"
+      role: "{{ TEAM_MEMBER_2_ROLE }}"
+      email: "{{ TEAM_MEMBER_2_EMAIL }}"
+  
+  # Primary stakeholder contact
+  primaryStakeholder:
+    name: "{{ STAKEHOLDER_NAME }}"
+    role: "{{ STAKEHOLDER_ROLE }}"
+    email: "{{ STAKEHOLDER_EMAIL }}"
+    phone: "{{ STAKEHOLDER_PHONE }}"
+    timezone: "{{ STAKEHOLDER_TIMEZONE }}"
+  
+  # Secondary approver (if applicable)
+  approver:
+    name: "{{ APPROVER_NAME }}"
+    role: "{{ APPROVER_ROLE }}"
+    email: "{{ APPROVER_EMAIL }}"
+  
+  # Target completion
+  targetCompletionDate: "{{ TARGET_DATE }}"
+  competencyLevel: "{{ ENTERPRISE | ADVANCED | STANDARD }}"
+
+---
+
+## Executive Summary
+
+summary:
+  # Overall readiness score
+  readinessScore:
+    current: "{{ X }}%"
+    target: "90%"
+    assessment: "{{ ASSESSMENT_TEXT }}"
+  
+  # Strategic recommendation
+  recommendation: "{{ RECOMMENDATION_TEXT }}"
+  
+  # Key blockers (if any)
+  blockers: []
+    # - blockerId: "BLK-001"
+    #   item: "System"
+    #   reason: "Access denied"
+    #   severity: "HIGH"
+    #   owner: "{{ OWNER }}"
+    #   resolutionDate: "{{ DATE }}"
+  
+  # Risk assessment
+  riskAssessment:
+    level: "{{ LOW | MEDIUM | HIGH | CRITICAL }}"
+    description: "{{ RISK_DESCRIPTION }}"
+    mitigationStrategy: "{{ MITIGATION_STRATEGY }}"
+
+---
+
+## Prerequisites Configuration
+
+### 1. Documentation Systems (30% Readiness Weight)
+
+documentation:
+  
+  # Confluence
+  confluence:
+    enabled: {{ true | false }}
+    system: "Confluence"
+    accessLevel: "READ"
+    rationale: "Retrieve Architecture Decision Records (ADRs), API specifications, design documentation"
+    
+    spaces:
+      - spaceKey: "{{ SPACE_KEY_1 }}"
+        spaceName: "{{ SPACE_NAME_1 }}"
+        purpose: "{{ PURPOSE }}"
+        accessLevel: "READ"
+        requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+        grantedDate: "{{ DATE }}"
+        grantedBy: "{{ PERSON }}"
+        notes: "{{ NOTES }}"
+      
+      - spaceKey: "{{ SPACE_KEY_2 }}"
+        spaceName: "{{ SPACE_NAME_2 }}"
+        purpose: "{{ PURPOSE }}"
+        accessLevel: "READ"
+        requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+    
+    documentation:
+      - name: "Architecture Decision Records"
+        location: "{{ CONFLUENCE_SPACE }}/ADRs"
+        criticality: "HIGH"
+      - name: "API Specifications"
+        location: "{{ CONFLUENCE_SPACE }}/API-Specs"
+        criticality: "HIGH"
+      - name: "Design Documentation"
+        location: "{{ CONFLUENCE_SPACE }}/Design"
+        criticality: "MEDIUM"
+  
+  # Alternative documentation systems
+  alternativeDocSystems: []
+    # - system: "GitBook"
+    #   url: "{{ URL }}"
+    #   accessLevel: "READ"
+    #   requestStatus: "REQUESTED"
+    #   purposeDescription: "Technical specifications and design patterns"
+    # - system: "SharePoint"
+    #   url: "{{ URL }}"
+    #   accessLevel: "READ"
+    #   requestStatus: "GRANTED"
+    #   grantedDate: "{{ DATE }}"
+
+---
+
+### 2. Issue Tracking & Requirements (20% Readiness Weight)
+
+issueTracking:
+  
+  # Jira
+  jira:
+    enabled: {{ true | false }}
+    system: "Jira"
+    accessLevel: "READ"
+    rationale: "Track requirements, user stories, acceptance criteria, and implementation progress"
+    
+    projects:
+      - projectKey: "{{ PROJECT_KEY_1 }}"
+        projectName: "{{ PROJECT_NAME_1 }}"
+        accessLevel: "READ"
+        issueTypes:
+          - "Epic"
+          - "Story"
+          - "Task"
+          - "Bug"
+        requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+        grantedDate: "{{ DATE }}"
+        grantedBy: "{{ PERSON }}"
+        notes: "{{ NOTES }}"
+      
+      - projectKey: "{{ PROJECT_KEY_2 }}"
+        projectName: "{{ PROJECT_NAME_2 }}"
+        accessLevel: "READ"
+        requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+    
+    useCase:
+      - "Extract business requirements and acceptance criteria"
+      - "Link code commits to story references"
+      - "Validate implementation against story requirements"
+      - "Track sprint progress and blockers"
+  
+  # Azure DevOps
+  azureDevOps:
+    enabled: {{ true | false }}
+    system: "Azure DevOps"
+    accessLevel: "READ_API"
+    apiType: "PAT"
+    rationale: "Programmatic access to work items, repos, and CI/CD pipelines"
+    
+    projects:
+      - projectName: "{{ ADO_PROJECT_1 }}"
+        projectId: "{{ PROJECT_ID }}"
+        accessLevel: "READ_API"
+        requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+        patCreatedDate: "{{ DATE }}"
+        patExpireDate: "{{ DATE }}"
+    
+    patManagement:
+      rotationSchedule: "90 days"
+      nextRotationDate: "{{ DATE }}"
+      scope: "minimal"
+      allowedOperations:
+        - "read:work_items"
+        - "read:code_repository"
+        - "read:build_pipeline"
+  
+  # GitHub Issues / GitLab Issues
+  alternativeIssueTracking: []
+    # - system: "GitHub Issues"
+    #   project: "{{ REPO_NAME }}"
+    #   accessLevel: "READ"
+    #   requestStatus: "GRANTED"
+    # - system: "GitLab Issues"
+    #   project: "{{ PROJECT_NAME }}"
+    #   accessLevel: "READ"
+    #   requestStatus: "REQUESTED"
+
+---
+
+### 3. Architecture & Design Artifacts (15% Readiness Weight)
+
+architecture:
+  
+  # Miro
+  miro:
+    enabled: {{ true | false }}
+    system: "Miro"
+    accessLevel: "VIEWER"
+    rationale: "Consult visual architecture documentation, C4 models, data flows, and design patterns"
+    
+    team:
+      teamName: "{{ MIRO_TEAM_NAME }}"
+      requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+      accessLevel: "VIEWER"
+      grantedDate: "{{ DATE }}"
+    
+    boards:
+      - boardId: "{{ BOARD_ID_1 }}"
+        boardName: "{{ BOARD_NAME_1 }}"
+        purpose: "System Architecture & C4 Models"
+        criticality: "HIGH"
+        accessLevel: "VIEWER"
+      
+      - boardId: "{{ BOARD_ID_2 }}"
+        boardName: "{{ BOARD_NAME_2 }}"
+        purpose: "Data Flow Diagrams & Integration Patterns"
+        criticality: "MEDIUM"
+        accessLevel: "VIEWER"
+      
+      - boardId: "{{ BOARD_ID_3 }}"
+        boardName: "{{ BOARD_NAME_3 }}"
+        purpose: "Product Roadmap & Release Planning"
+        criticality: "MEDIUM"
+        accessLevel: "VIEWER"
+  
+  # Figma
+  figma:
+    enabled: {{ true | false }}
+    system: "Figma"
+    accessLevel: "VIEW"
+    rationale: "Reference UI/UX designs and design system specifications"
+    
+    team:
+      teamName: "{{ FIGMA_TEAM_NAME }}"
+      requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+      accessLevel: "VIEW"
+      grantedDate: "{{ DATE }}"
+    
+    projects:
+      - projectName: "{{ FIGMA_PROJECT_1 }}"
+        purpose: "Design System & Component Library"
+        criticality: "MEDIUM"
+        accessLevel: "VIEW"
+      
+      - projectName: "{{ FIGMA_PROJECT_2 }}"
+        purpose: "Product UI Mockups & Prototypes"
+        criticality: "MEDIUM"
+        accessLevel: "VIEW"
+  
+  # Lucidchart / PlantUML
+  alternativeArchitecture: []
+    # - system: "Lucidchart"
+    #   team: "{{ TEAM_NAME }}"
+    #   accessLevel: "VIEW"
+    #   requestStatus: "GRANTED"
+
+---
+
+### 4. Code Repository & CI/CD (25% Readiness Weight)
+
+codeRepository:
+  
+  # GitHub
+  github:
+    enabled: {{ true | false }}
+    system: "GitHub"
+    accessLevel: "READ"
+    rationale: "Analyze codebase structure, review commits, validate CI/CD workflows"
+    
+    repositories:
+      - repoName: "{{ REPO_NAME_1 }}"
+        repoUrl: "{{ REPO_URL }}"
+        accessLevel: "READ"
+        requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+        grantedDate: "{{ DATE }}"
+        scope:
+          - "Commits"
+          - "Pull Requests"
+          - "Workflows"
+          - "Release Notes"
+      
+      - repoName: "{{ REPO_NAME_2 }}"
+        repoUrl: "{{ REPO_URL }}"
+        accessLevel: "READ"
+        requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+    
+    cicdPlatform: "GitHub Actions"
+    workflowInspection: "Validate deployment pipelines and test automation"
+  
+  # GitLab
+  gitlab:
+    enabled: {{ true | false }}
+    system: "GitLab"
+    accessLevel: "GUEST"
+    rationale: "Repository access and pipeline analysis"
+    
+    projects:
+      - projectName: "{{ PROJECT_NAME_1 }}"
+        projectId: "{{ PROJECT_ID }}"
+        accessLevel: "GUEST"
+        requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+    
+    cicdPlatform: "GitLab CI/CD"
+  
+  # Azure DevOps Repositories
+  azureDevOpsRepo:
+    enabled: {{ true | false }}
+    system: "Azure DevOps Repository"
+    accessLevel: "READ_API"
+    patRequired: true
+    rationale: "Programmatic code access and CI/CD pipeline analysis"
+    
+    repositories:
+      - repoName: "{{ REPO_NAME }}"
+        projectName: "{{ PROJECT_NAME }}"
+        accessLevel: "READ_API"
+        requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+    
+    cicdPlatform: "Azure Pipelines"
+    patManagement:
+      scope: "Code (read)"
+      rotationSchedule: "90 days"
+
+---
+
+### 5. API & Integration Layer (10% Readiness Weight)
+
+apiLayer:
+  
+  # OpenAPI / Swagger Registry
+  apiRegistry:
+    enabled: {{ true | false }}
+    system: "{{ API_REGISTRY_SYSTEM }}"
+    examples:
+      - "Swagger Hub"
+      - "Internal Registry"
+      - "API Portal"
+      - "Stoplight"
+    
+    location: "{{ REGISTRY_URL }}"
+    accessLevel: "READ"
+    requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+    grantedDate: "{{ DATE }}"
+    
+    purpose:
+      - "Extract API contracts and interface specifications"
+      - "Analyze integration patterns and data models"
+      - "Validate API versioning and deprecation policies"
+    
+    documentation:
+      - apiName: "{{ API_NAME_1 }}"
+        apiVersion: "{{ VERSION }}"
+        format: "OpenAPI 3.0"
+        criticality: "HIGH"
+      
+      - apiName: "{{ API_NAME_2 }}"
+        apiVersion: "{{ VERSION }}"
+        format: "OpenAPI 3.0"
+        criticality: "MEDIUM"
+  
+  # GraphQL Schema Registry
+  graphqlRegistry:
+    enabled: {{ true | false }}
+    system: "GraphQL Schema Registry"
+    location: "{{ REGISTRY_URL }}"
+    accessLevel: "READ"
+    requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+  
+  # gRPC Service Definitions
+  grpcServices:
+    enabled: {{ true | false }}
+    system: "gRPC Service Repository"
+    location: "{{ REPOSITORY_LOCATION }}"
+    accessLevel: "READ"
+    requestStatus: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+
+---
+
+## Security & Compliance Framework
+
+security:
+  
+  # PAT Management
+  personalAccessTokens:
+    rotationPolicy: "Mandatory 90-day rotation"
+    firstRotation: "{{ DATE }}"
+    nextScheduledRotation: "{{ DATE }}"
+    
+    storageSecurity:
+      - "Tokens stored in isolated environment (not shared)"
+      - "Tokens never logged or printed"
+      - "Tokens revoked immediately after project completion"
+    
+    scope: "Minimum necessary privileges"
+    allowedScopes:
+      - read:documentation
+      - read:code_repository
+      - read:issues
+      - read:ci_cd_pipeline
+    
+    prohibitedScopes:
+      - write:code
+      - delete:any
+      - admin:organization
+  
+  # Data Governance
+  dataGovernance:
+    dataClassification: "{{ PUBLIC | INTERNAL | CONFIDENTIAL | RESTRICTED }}"
+    retentionPolicy: "{{ RETENTION_PERIOD }}"
+    
+    complianceFrameworks:
+      - "{{ FRAMEWORK_1 }}"
+      - "{{ FRAMEWORK_2 }}"
+      - "{{ FRAMEWORK_3 }}"
+    
+    certifications:
+      - name: "SOC2 Type II"
+        compliant: {{ true | false }}
+      - name: "GDPR"
+        compliant: {{ true | false }}
+      - name: "HIPAA"
+        compliant: {{ true | false }}
+      - name: "ISO 27001"
+        compliant: {{ true | false }}
+  
+  # Access Control & Audit
+  accessControl:
+    auditingEnabled: true
+    auditFrequency: "Real-time"
+    
+    accessRules:
+      - "All access is READ-ONLY unless otherwise justified"
+      - "API tokens use time-limited credentials"
+      - "Access is role-based and least-privileged"
+      - "Regular access reviews every 90 days"
+    
+    complianceOfficer:
+      name: "{{ COMPLIANCE_OFFICER_NAME }}"
+      email: "{{ COMPLIANCE_OFFICER_EMAIL }}"
+      role: "{{ ROLE }}"
+
+---
+
+## Prerequisites Tracking & Status
+
+tracking:
+  
+  # Summary metrics
+  summary:
+    totalPrerequisites: "{{ TOTAL_COUNT }}"
+    granted: "{{ GRANTED_COUNT }}"
+    granted_percentage: "{{ PERCENTAGE }}%"
+    requested: "{{ REQUESTED_COUNT }}"
+    denied: "{{ DENIED_COUNT }}"
+    notApplicable: "{{ NOT_APPLICABLE_COUNT }}"
+    
+    overallStatus: "{{ GREEN | YELLOW | RED }}"
+    statusDescription: "{{ STATUS_TEXT }}"
+  
+  # Prerequisites by category
+  categoryScore:
+    documentation: "{{ X }}/10"
+    issueTracking: "{{ X }}/10"
+    architecture: "{{ X }}/10"
+    codeRepository: "{{ X }}/10"
+    apiLayer: "{{ X }}/10"
+    security: "{{ X }}/10"
+    overallReadiness: "{{ X }}/10"
+  
+  # Individual prerequisites status
+  prerequisites:
+    
+    - prerequisiteId: "PRE-001"
+      system: "Confluence"
+      item: "Merchant Architecture Space"
+      requestedDate: "{{ DATE }}"
+      requestedBy: "{{ PERSON }}"
+      targetDate: "{{ DATE }}"
+      status: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+      grantedDate: "{{ DATE }}"
+      grantedBy: "{{ PERSON }}"
+      approvalPath: "{{ APPROVAL_STEPS }}"
+      notes: "{{ NOTES }}"
+      escalationNeeded: false
+    
+    - prerequisiteId: "PRE-002"
+      system: "Jira"
+      item: "MERCHANT project access"
+      requestedDate: "{{ DATE }}"
+      requestedBy: "{{ PERSON }}"
+      targetDate: "{{ DATE }}"
+      status: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+      grantedDate: "{{ DATE }}"
+      grantedBy: "{{ PERSON }}"
+      notes: "{{ NOTES }}"
+      escalationNeeded: false
+    
+    - prerequisiteId: "PRE-003"
+      system: "GitHub"
+      item: "merchant-api repository"
+      requestedDate: "{{ DATE }}"
+      requestedBy: "{{ PERSON }}"
+      targetDate: "{{ DATE }}"
+      status: "{{ REQUESTED | GRANTED | DENIED | NOT_APPLICABLE }}"
+      grantedDate: "{{ DATE }}"
+      grantedBy: "{{ PERSON }}"
+      notes: "{{ NOTES }}"
+      escalationNeeded: false
+
+---
+
+## Blockers & Escalation Management
+
+escalation:
+  
+  # Active blockers
+  blockers:
+    - blockerId: "BLK-001"
+      prerequisiteId: "PRE-003"
+      system: "GitHub"
+      item: "Private repository access"
+      blockReason: "Security authorization pending"
+      blockSeverity: "HIGH"
+      currentOwner:
+        name: "{{ OWNER_NAME }}"
+        role: "{{ OWNER_ROLE }}"
+        email: "{{ OWNER_EMAIL }}"
+      createdDate: "{{ DATE }}"
+      targetResolutionDate: "{{ DATE }}"
+      escalationPath:
+        - level: "1"
+          contact: "{{ MANAGER_NAME }}"
+          escalationDate: "{{ DATE }}"
+        - level: "2"
+          contact: "{{ DIRECTOR_NAME }}"
+          escalationDate: "{{ DATE }}"
+      resolutionNotes: "{{ NOTES }}"
+      status: "{{ OPEN | RESOLVED }}"
+  
+  # Escalation contacts
+  escalationContacts:
+    - level: "1"
+      roleName: "Engineering Manager"
+      name: "{{ NAME }}"
+      email: "{{ EMAIL }}"
+      phone: "{{ PHONE }}"
+      timezone: "{{ TIMEZONE }}"
+    
+    - level: "2"
+      roleName: "Engineering Director"
+      name: "{{ NAME }}"
+      email: "{{ EMAIL }}"
+      phone: "{{ PHONE }}"
+      timezone: "{{ TIMEZONE }}"
+    
+    - level: "3"
+      roleName: "VP Engineering"
+      name: "{{ NAME }}"
+      email: "{{ EMAIL }}"
+      phone: "{{ PHONE }}"
+      timezone: "{{ TIMEZONE }}"
+
+---
+
+## Next Steps & Timeline
+
+timeline:
+  
+  # Phase-based rollout
+  phases:
+    
+    - phaseNumber: 1
+      phaseName: "Requirements Confirmation"
+      startDate: "{{ DATE }}"
+      endDate: "{{ DATE }}"
+      duration: "3-5 business days"
+      description: "Stakeholder confirms applicable systems and access levels"
+      deliverables:
+        - "Confirmed prerequisites checklist"
+        - "Identified systems and scopes"
+      owner: "{{ STAKEHOLDER_NAME }}"
+    
+    - phaseNumber: 2
+      phaseName: "Access Request & Provisioning"
+      startDate: "{{ DATE }}"
+      endDate: "{{ DATE }}"
+      duration: "5-10 business days"
+      description: "Submit formal requests and track provisioning status"
+      deliverables:
+        - "Access requests submitted to system admins"
+        - "Provisional status tracking table"
+      owner: "{{ IT_ADMIN_NAME }}"
+    
+    - phaseNumber: 3
+      phaseName: "Access Verification & Onboarding"
+      startDate: "{{ DATE }}"
+      endDate: "{{ DATE }}"
+      duration: "2-3 business days"
+      description: "Validate access and configure MCP servers"
+      deliverables:
+        - "Access verification report"
+        - "MCP server configuration"
+      owner: "{{ AI_ENGINEER_NAME }}"
+    
+    - phaseNumber: 4
+      phaseName: "Analysis & Intelligence Activation"
+      startDate: "{{ DATE }}"
+      endDate: "{{ DATE }}"
+      duration: "3-5 business days"
+      description: "Begin code intelligence analysis and recommendations"
+      deliverables:
+        - "Initial assessment report"
+        - "Recommendations & action plan"
+      owner: "{{ AI_ENGINEER_NAME }}"
+  
+  # Critical milestones
+  milestones:
+    - milestoneId: "M-001"
+      milestoneName: "Prerequisites Confirmed"
+      targetDate: "{{ DATE }}"
+      status: "{{ ON_TRACK | AT_RISK | BLOCKED }}"
+      owner: "{{ OWNER }}"
+    
+    - milestoneId: "M-002"
+      milestoneName: "All Access Granted"
+      targetDate: "{{ DATE }}"
+      status: "{{ ON_TRACK | AT_RISK | BLOCKED }}"
+      owner: "{{ OWNER }}"
+    
+    - milestoneId: "M-003"
+      milestoneName: "MCP Servers Activated"
+      targetDate: "{{ DATE }}"
+      status: "{{ ON_TRACK | AT_RISK | BLOCKED }}"
+      owner: "{{ OWNER }}"
+
+---
+
+## Sign-Off & Approval
+
+approvals:
+  
+  # AI Engineering Consultant
+  aiEngineer:
+    name: "{{ NAME }}"
+    title: "AI Engineering Consultant"
+    organization: "{{ ORGANIZATION }}"
+    date: "{{ DATE }}"
+    signature: "Digital Signature"
+    notes: "{{ NOTES }}"
+  
+  # Primary Stakeholder
+  stakeholder:
+    name: "{{ STAKEHOLDER_NAME }}"
+    title: "{{ STAKEHOLDER_TITLE }}"
+    organization: "{{ ORGANIZATION }}"
+    date: "{{ DATE }}"
+    signature: "Digital Signature"
+    acknowledges:
+      - "I confirm the listed prerequisites are applicable to our environment"
+      - "I understand the security and compliance commitments"
+      - "I commit to enabling access within the target timeline"
+    notes: "{{ NOTES }}"
+  
+  # Compliance Officer (if required)
+  complianceOfficer:
+    name: "{{ NAME }}"
+    title: "Compliance Officer"
+    organization: "{{ ORGANIZATION }}"
+    date: "{{ DATE }}"
+    signature: "Digital Signature"
+    complianceApproval: "{{ APPROVED | CONDITIONAL | DENIED }}"
+    complianceNotes: "{{ NOTES }}"
+
+---
+
+## Appendices
+
+appendices:
+  
+  # Appendix A: System Contact Directory
+  systemContacts:
+    - system: "Confluence"
+      adminName: "{{ NAME }}"
+      adminEmail: "{{ EMAIL }}"
+      adminPhone: "{{ PHONE }}"
+      provisioningProcess: "{{ LINK_TO_PROCESS }}"
+      estimatedTimeframe: "2-3 business days"
+    
+    - system: "Jira"
+      adminName: "{{ NAME }}"
+      adminEmail: "{{ EMAIL }}"
+      adminPhone: "{{ PHONE }}"
+      provisioningProcess: "{{ LINK_TO_PROCESS }}"
+      estimatedTimeframe: "1-2 business days"
+    
+    - system: "GitHub"
+      adminName: "{{ NAME }}"
+      adminEmail: "{{ EMAIL }}"
+      adminPhone: "{{ PHONE }}"
+      provisioningProcess: "{{ LINK_TO_PROCESS }}"
+      estimatedTimeframe: "2-3 business days"
+  
+  # Appendix B: Compliance Frameworks
+  complianceMatrix:
+    frameworks:
+      - frameworkName: "SOC2 Type II"
+        applicableSystems:
+          - "GitHub"
+          - "Azure DevOps"
+        requirements:
+          - "Encryption in transit (TLS 1.2+)"
+          - "Access logging and audit trails"
+          - "30-day access reviews"
+      
+      - frameworkName: "GDPR"
+        applicableSystems:
+          - "Confluence"
+          - "Jira"
+        requirements:
+          - "Data processing agreements signed"
+          - "Right to erasure implemented"
+          - "Data retention policy defined"
+      
+      - frameworkName: "ISO 27001"
+        applicableSystems:
+          - "All systems"
+        requirements:
+          - "Information security policy"
+          - "Access control procedures"
+          - "Incident response plan"
+  
+  # Appendix C: Reference Documentation
+  references:
+    - title: "AI Readiness Prerequisites - Email Template"
+      location: ".github/templates/prequisites.template.email.md"
+      purpose: "Human-readable email format for stakeholder communication"
+    
+    - title: "Security & PAT Management Guide"
+      location: "docs/security/pat-management.md"
+      purpose: "Detailed PAT rotation and storage procedures"
+    
+    - title: "System Access Approval Process"
+      location: "docs/compliance/access-approval-process.md"
+      purpose: "Official company process for system access"
+    
+    - title: "Data Governance Policy"
+      location: "docs/compliance/data-governance.md"
+      purpose: "Corporate data classification and handling standards"
+
+---
+
+## Best Practices & Guidance
+
+bestPractices:
+  
+  # Assessment discovery checklist
+  discoveryChecklist:
+    step1_DiscoverSystems:
+      description: "Identify which systems exist in the organization"
+      checklist:
+        - "[ ] Team uses Confluence or equivalent? → YES/NO → {{SYSTEM_NAME}}"
+        - "[ ] Team uses Jira or equivalent? → YES/NO → {{SYSTEM_NAME}}"
+        - "[ ] Team uses Miro/Figma for architecture? → YES/NO → {{SYSTEM_NAME}}"
+        - "[ ] Repository is GitHub/GitLab/ADO? → YES/NO → {{SYSTEM_NAME}}"
+        - "[ ] OpenAPI specs documented? → YES/NO → {{LOCATION}}"
+        - "[ ] Compliance requirements exist? → YES/NO → {{FRAMEWORKS}}"
+    
+    step2_BuildSystemTable:
+      description: "Map each discovered system with requirements"
+      template:
+        - system: "Confluence"
+          exists: "YES"
+          alreadyUsing: "YES"
+          accessNeeded: "READ"
+          priority: "HIGH"
+        - system: "Jira"
+          exists: "YES"
+          alreadyUsing: "YES"
+          accessNeeded: "READ"
+          priority: "HIGH"
+        - system: "GitHub"
+          exists: "YES"
+          alreadyUsing: "YES"
+          accessNeeded: "READ"
+          priority: "HIGH"
+    
+    step3_WriteRequest:
+      guidance:
+        - "Include only systems that exist"
+        - "Adjust access levels based on sensitivity"
+        - "Reference specific spaces/projects (not vague)"
+        - "Emphasize read-only and minimum scope"
+    
+    step4_TrackAndClose:
+      guidance:
+        - "Update checklist as access is granted"
+        - "Update team when fully ready"
+        - "Don't assume approval; follow up consistently"
+
+  # Pro tips
+  proTips:
+    - tip: "Always lead with security"
+      guidance: "Emphasize 'Read-only,' 'minimum scope,' '90-day rotation' in every request"
+    
+    - tip: "Be specific with scope"
+      guidance: "List exact projects/spaces/teams (e.g., 'MERCHANT space', 'merchant-api repo'), not vague 'project access'"
+    
+    - tip: "Explain the 'why'"
+      guidance: "Connect each access request to concrete benefits (e.g., 'Retrieve ADRs' not just 'Confluence access')"
+    
+    - tip: "Separate concerns"
+      guidance: "Don't lump together: Documentation access ≠ Code repo access ≠ CI/CD access; each needs justification"
+    
+    - tip: "Document compliance early"
+      guidance: "Show respect for data governance policies; builds trust with security teams"
+    
+    - tip: "Follow up systematically"
+      guidance: "Don't assume approval; track each prerequisite and follow up regularly"
+
+  # Common gotchas to avoid
+  commonGotchas:
+    - gotcha: "Requesting write access"
+      avoid: "Always justify in writing; default should be read-only"
+      example: "❌ 'I need write access to GitHub' → ✅ 'I need read access for code analysis'"
+    
+    - gotcha: "Vague scope without specificity"
+      avoid: "'Jira access' is ambiguous; specify exact projects and issue types"
+      example: "❌ 'Jira access' → ✅ 'MERCHANT project, read access to Epics/Stories/Acceptance Criteria'"
+    
+    - gotcha: "Missing PAT (Personal Access Token) details"
+      avoid: "Always explain rotation schedule, scope, and secure storage procedures"
+      example: "❌ 'Need GitHub PAT' → ✅ 'GitHub PAT (read:code + read:workflows), 90-day rotation, stored in secure vault'"
+    
+    - gotcha: "Forgetting API access for code repositories"
+      avoid: "If you need programmatic repo access, always mention PAT requirements"
+      example: "Code analysis requires: both UI access AND API token for automated scanning"
+    
+    - gotcha: "Skipping compliance mentions"
+      avoid: "Always reference applicable compliance frameworks (GDPR, SOC2, etc.)"
+      example: "All tokens use minimum necessary scope per {{COMPLIANCE_FRAMEWORK}} requirements"
+
+  # Usage scenarios by project type
+  examplesByProjectType:
+    
+    - projectType: "SaaS API Project"
+      description: "Cloud-hosted API service with web UI, typical startup/scale-up structure"
+      prerequisites:
+        - "OpenAPI / Swagger Hub"
+        - "GitHub repository"
+        - "Jira (feature tracking)"
+        - "Confluence (API design docs)"
+        - "GitHub Actions (CI/CD)"
+      timelineEstimate: "5-7 business days"
+      complexityLevel: "MEDIUM"
+    
+    - projectType: "Enterprise Monorepo"
+      description: "Large organization with centralized codebase, enterprise tools"
+      prerequisites:
+        - "Azure DevOps (repo + issue tracking + CI/CD) OR"
+        - "Confluence or SharePoint (tech specs)"
+        - "Miro (architecture C4 models)"
+        - "Jira or ADO Work Items"
+      timelineEstimate: "10-15 business days"
+      complexityLevel: "HIGH"
+      specialConsiderations:
+        - "Multiple approval layers likely"
+        - "Compliance review required"
+        - "Security assessment needed"
+    
+    - projectType: "Microservices Architecture"
+      description: "Distributed system with multiple repositories and services"
+      prerequisites:
+        - "Multiple GitHub/GitLab repos"
+        - "API registry (OpenAPI, gRPC specs)"
+        - "Architecture documentation (Miro, Lucidchart)"
+        - "Jira + Confluence (requirements + design)"
+        - "CI/CD platform (GitHub Actions / GitLab CI / Azure Pipelines)"
+      timelineEstimate: "7-10 business days"
+      complexityLevel: "HIGH"
+      specialConsiderations:
+        - "Cross-team coordination needed"
+        - "Service ownership mapping required"
+    
+    - projectType: "Regulated Industry (FinTech, Healthcare, Government)"
+      description: "Compliance-heavy environment with strict data governance"
+      prerequisites:
+        - "All prerequisites from other project types"
+        - "Security & compliance documentation access"
+        - "Data governance policies review"
+        - "Audit trail requirements verification"
+        - "PAT rotation & secret management policy"
+      timelineEstimate: "15-20 business days"
+      complexityLevel: "CRITICAL"
+      specialConsiderations:
+        - "Compliance officer sign-off mandatory"
+        - "Data classification review"
+        - "Regular access audits (quarterly minimum)"
+        - "Incident response procedures"
+
+  # Format selection guide
+  formatSelectionGuide:
+    
+    - format: "Format A (Email)"
+      when:
+        - "Formal stakeholder engagement required"
+        - "Multiple systems spanning multiple teams"
+        - "Compliance-sensitive environment"
+        - "First-time request to organization"
+      benefits:
+        - "Professional tone and structure"
+        - "Comprehensive documentation"
+        - "Suitable for formal approval chains"
+      timeToComplete: "1-2 hours"
+    
+    - format: "Format B (Checklist)"
+      when:
+        - "Internal tracking and follow-up needed"
+        - "Multi-phased rollout planned"
+        - "Status history documentation required"
+        - "Blocker reporting to management"
+      benefits:
+        - "Easy status updates"
+        - "Clear progress visibility"
+        - "Suitable for project management"
+      timeToComplete: "30-45 minutes"
+    
+    - format: "Format C (Minimal)"
+      when:
+        - "Quick feedback needed"
+        - "Smaller project scope"
+        - "Existing relationship with stakeholder"
+        - "Team already familiar with AI tooling"
+      benefits:
+        - "Fast to compose"
+        - "Informal, agile-friendly"
+        - "Good for follow-up requests"
+      timeToComplete: "10-15 minutes"
+    
+    - format: "Format D (YAML - This Template)"
+      when:
+        - "Structured data exchange needed"
+        - "CI/CD pipeline integration required"
+        - "Programmatic processing of prerequisites"
+        - "Enterprise automation workflows"
+      benefits:
+        - "Machine-readable format"
+        - "API-friendly structure"
+        - "Suitable for workflow automation"
+        - "Supports version control"
+      timeToComplete: "1-2 hours"
+
+---
+
+## Notes & Comments
+
+notes:
+  generalNotes: "{{ GENERAL_NOTES }}"
+  
+  assessmentContext: |
+    {{
+      Assessment Context Notes:
+      - This template is designed for professional enterprise environments
+      - All fields marked with {{ }} are template variables to be customized
+      - YAML structure allows for automated parsing and CI/CD integration
+      - Compliance section should be tailored to organization's frameworks
+      - Timeline assumptions: enterprise approval typically 10-15 business days
+      - Use discovery checklist early in assessment to scope requirements
+      - Reference project type examples to set realistic timelines
+    }}
+  
+  customizationGuidance: |
+    {{
+      To customize this template:
+      1. Replace all {{ FIELD_NAME }} variables with actual values
+      2. Remove sections that don't apply to your environment
+      3. Add additional systems/projects as needed
+      4. Adjust timeline and phases for your organization
+      5. Export to JSON or Markdown for stakeholder distribution
+      6. Follow pro tips and avoid common gotchas
+      7. Use project type examples to benchmark timeline expectations
+    }}
+  
+  exportOptions: |
+    {{
+      This YAML template can be exported to:
+      - JSON: For CI/CD pipeline integration and webhook automation
+      - Markdown: For human-readable email distribution and stakeholder communication
+      - CSV: For spreadsheet tracking and reporting
+      - JIRA: For direct import into issue tracking systems
+      
+      Recommended tools:
+      - yq: Tool for YAML-to-JSON/CSV conversion
+      - pandoc: Tool for YAML-to-Markdown conversion
+      - Postman: Can import YAML prerequisites as collection metadata
+    }}
+
+---
+
+# End of Template

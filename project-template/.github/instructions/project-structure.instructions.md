@@ -15,39 +15,42 @@ All Gen-e2 projects follow a consistent structure that supports:
 
 Use this structure when starting a **new project from scratch**:
 
+## 📂 Project Structure (Optimized)
+
 ```
-.
-├── README.md                        # Project overview and goals
-├── scripts/                         # Project management scripts
-│   ├── manage.sh                    # Manages servers and services (start, stop, status)
-│   ├── setup.sh                     # Installs project dependencies
-│   └── init_db.sh                   # Initializes the database (if required)
-├── apps/                            # frontend applications
-│   ├── mobile/                      # Mobile application
-│   └── web/                         # Web application
-├── docs/                            # Project documentation
-│   ├── features/                    # Feature documentation (one file per feature)
-│   ├── project-overview/            # Project overview documentation
-│   ├── meeting-transcripts/         # Meeting & Mob Programming session transcripts
-│   ├── index.md                     # Main documentation index
-│   └── CONTRIBUTE.md                # Contribution guidelines and best practices
-├── backend/                        # backend application
-│   ├── api/                         # API code
-│   ├── services/                    # Business logic services
-│   ├── data/                        # Data access layer (ORM, database, SQL)
-│   └── docs/                        # backend documentation
-├── infra/                           # Infrastructure as Code
-│   ├── modules/                     # Terraform modules
-│   ├── tf-components/               # Terraform components
-│   └── docs/                        # Infrastructure documentation
-│       └── feature/
-│           └── authentication/
-├── DevOps/                          # DevOps automation
-│   ├── pipeline/                    # CI/CD pipeline definitions
-│   └── docs/                        # DevOps documentation
-└── services/                        # Serverless functions
-    └── functions/                   # Function implementations
+project-root/
+├── .github/
+├── docs/
+│   ├── prd/                       # PDLC Documents (13 files)
+│   │   ├── requirements.md
+│   │   ├── user-stories.md        # BDD scenarios (PRD - read-only)
+│   │   ├── architecture-design.md
+│   │   └── ...
+│   │
+│   ├── user-stories/              # Implementation tracking
+│   │   ├── user-stories.md        # ⭐ Status tracking (SSOT)
+│   │   ├── current-sprint.md        # ⭐ Status tracking (SSOT)
+│   │   ├── project-status.md        # ⭐ Status tracking (SSOT)
+│   │   └── <US-REF>/             # Per-story folders
+│   │       ├── <US-REF>.md       # the user story content (copy of the original user story from PRD)
+│   │       ├── implementation-plan.md  # Implementation plan for the user story
+│   │       ├── api-design.md      # API design details for the user story
+│   │       ├── us-completition-checklist.md         # Checklist for user story completion
+│   │       ├── features/         # BDD feature files (project source)
+│   │       └── tdd-execution/     # TDD execution details and results
+│   │           └── <TDD-CYCLE>/     # Per TDD cycle folders
+│   │               ├── <TDD-CYCLE>-HO-REFACTOR.md   # REFACTOR agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   │               ├── <TDD-CYCLE>-HO-GREEN.json  # GREEN agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   │               └── <TDD-CYCLE>-HO-RED.json  # RED agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   │
+│   └── design/                    # UX/UI documents
+│
+├── src/                          # Application source code
+└── README.md                        # Project overview and setup instructions
 ```
+
+---
+
 
 ## Legacy Replatforming Structure (Brownfield)
 
@@ -56,56 +59,47 @@ Use this structure when **replatforming an existing legacy application**:
 ```
 .
 ├── README.md                        # Project overview and replatforming goals
-├── LegacyApps/                      # ⭐ Legacy application archive
-│   ├── legacy-app/                  # Original legacy app code
-│   └── docs/                        # Legacy app documentation
-├── scripts/                         # Project management scripts
-│   ├── manage.sh                    # Manages servers and services (start, stop, status)
-│   ├── setup.sh                     # Installs project dependencies
-│   └── init_db.sh                   # Initializes the database (if required)
-├── apps/                            # frontend applications (new)
-│   ├── mobile/                      # Mobile application
-│   └── web/                         # Web application
-├── backend/                        # backend application (new)
-│   ├── api/                         # API code
-│   ├── services/                    # Business logic services
-│   ├── data/                        # Data access layer (ORM, database, SQL)
-│   └── docs/                        # backend documentation
 ├── docs/                            # Project documentation
-│   ├── features/                    # Feature documentation (one file per feature)
-│   ├── legacy-app/                  # ⭐ Legacy app analysis and documentation
-│   ├── CriticalFeatures.md          # ⭐ Prioritized critical features for migration
-│   ├── infrastructure.md            # Infrastructure architecture documentation
-│   ├── api.md                       # API architecture documentation
-│   ├── backend.md                  # backend architecture documentation
+│   ├── prd/                       # PDLC Documents (13 files)
+│   │   ├── requirements.md
+│   │   ├── user-stories.md        # BDD scenarios (PRD - read-only)
+│   │   ├── architecture-design.md
+│   │   └── ...
+│   │
+│   ├── user-stories/              # Implementation tracking
+│   │   ├── user-stories.md        # ⭐ Status tracking (SSOT)
+│   │   ├── current-sprint.md        # ⭐ Status tracking (SSOT)
+│   │   ├── project-status.md        # ⭐ Status tracking (SSOT)
+│   │   └── <US-REF>/             # Per-story folders
+│   │       ├── <US-REF>.md       # the user story content (copy of the original user story from PRD)
+│   │       ├── implementation-plan.md  # Implementation plan for the user story
+│   │       ├── api-design.md      # API design details for the user story
+│   │       ├── us-completition-checklist.md         # Checklist for user story completion
+│   │       ├── features/         # BDD feature files (project source)
+│   │       └── tdd-execution/     # TDD execution details and results
+│   │           └── <TDD-CYCLE>/     # Per TDD cycle folders
+│   │               ├── <TDD-CYCLE>-HO-REFACTOR.md   # REFACTOR agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   │               ├── <TDD-CYCLE>-HO-GREEN.json  # GREEN agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   │               └── <TDD-CYCLE>-HO-RED.json  # RED agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   │
+│   ├──design/                    # UX/UI documents
 │   ├── frontend/                   # frontend architecture documentation
 │   ├── testing/                     # Testing strategy documentation
-│   ├── testing.md                   # Testing strategy overview
 │   ├── deployment/                  # Deployment strategy documentation
-│   ├── deployment.md                # Deployment strategy overview
-│   ├── deployment-pipeline/         # Deployment pipeline details
-│   ├── deployment-pipeline.md       # Deployment pipeline overview
 │   ├── monitoring/                  # Monitoring and logging strategy
-│   ├── monitoring.md                # Monitoring and logging overview
 │   ├── security/                    # Security strategy documentation
-│   ├── security.md                  # Security strategy overview
-│   ├── migration/                   # Migration plan and data migration
-│   ├── migration.md                 # Migration plan overview
-│   ├── rollback/                    # Rollback plan documentation
-│   ├── rollback.md                  # Rollback plan overview
 │   ├── development-environment/     # Development environment setup
-│   ├── development-environment.md   # Dev environment setup overview
 │   ├── project-overview/            # Project overview documentation
 │   ├── meeting-transcripts/         # Meeting & Mob Programming session transcripts
 │   ├── index.md                     # Main documentation index
-│   ├── issue-tracker.md             # Issue tracker for clarifications
-│   └── CONTRIBUTE.md                # Contribution guidelines and best practices
-├── infra/                           # Infrastructure as Code
-│   ├── modules/                     # Terraform/CloudFormation modules
-│   └── docs/                        # Infrastructure documentation with diagrams
-├── services/                        # Serverless functions
-│   └── functions/                   # Function implementations
-└── TODO.md                          # Project task breakdown
+│   ├── CONTRIBUTE.md                # Contribution guidelines and best practices
+├── TODO.md                          # Project task breakdown
+└── project-modules/                  # ⭐ Legacy app analysis and documentation
+    └── module/                   # Per-module folders
+        ├── module.md            # Module overview and analysis
+        ├── features.md          # Module features and functionality
+        ├── data-structures.md   # Module data structures and relationships
+        └── api.md               # API architecture documentation (if applicable)
 ```
 
 ## Directory Descriptions

@@ -10,7 +10,11 @@
 		"github": {
 			"type": "http",
 			"url": "https://api.githubcopilot.com/mcp/"
-		}
+		},
+		"gene2": {
+            "url": "https://gene2.mcp.paloitcloud.com.sg",
+            "type": "http"
+        }
 	},
 	"inputs": [
 		{
