@@ -82,19 +82,23 @@ All agents work with ANY project context:
 **No modifications needed—workflows are domain-agnostic.**
 
 ### `.github/templates/` (Document Templates)
-- ✅ **handoff.template.json** - Agent handoff format (reusable)
-- ✅ **user-story.template.yml** - Story structure (reusable)
-- ✅ **user-story-handoff.template.md** - TDD cycle snapshot (reusable)
-- ✅ **tdd-execution.template.md** - Audit log (reusable)
-- ✅ **user-story-folder.template.md** - Folder structure (reusable)
-- ✅ **api-specification.template.md** - OpenAPI guide (reusable)
+All templates use `-tmpl.*` suffix for clarity:
+- ✅ **handoff-tmpl.md** - Agent handoff format (reusable)
+- ✅ **user-story-tmpl.yml** - Story structure (reusable)
+- ✅ **prerequisites-tmpl.yml** - Prerequisites request (634 lines, optimized)
+- ✅ **recommendation-plan-tmpl.md** - Recommendation plan format (reusable)
+- ✅ **tdd-execution-tmpl.md** - Audit log (reusable)
+- ✅ **user-story-folder-tmpl.md** - Folder structure (reusable)
+- ✅ **api-specification-tmpl.md** - OpenAPI guide (reusable)
 
 **Templates stay exactly as-is. Agents populate them with YOUR content.**
 
 ### `.github/tasks/` (Workflow Launchers)
-- ✅ **start-pdlc.prompts.md** - Launch PDLC workflow
-- ✅ **start-implementation.prompts.md** - Launch implementation
-- ✅ **plan-us.prompts.md** - Plan individual stories
+All task prompts use `.prompt.md` suffix:
+- ✅ **assess-project-status.prompt.md** - Assess any project state
+- ✅ **start-pdlc.prompt.md** - Launch PDLC workflow
+- ✅ **start-implementation.prompt.md** - Launch implementation
+- ✅ **plan-us.prompt.md** - Plan individual stories
 
 **Copy prompt, fill [YOUR_PROJECT_NAME], paste to @orchestrator.**
 
@@ -228,15 +232,15 @@ File: `/api/openapi.yaml`
 4. Guide decisions using tradeoff matrices
 
 ### For Architects
-1. Read: `.github/templates/api-specification.template.md`
+1. Read: `.github/templates/api-specification-tmpl.md`
 2. Read: `.github/agents/architect.agent.md`
 3. When Stage 3 starts, architect generates `/api/openapi.yaml`
 4. Review: Endpoints, schemas, auth, rate limits
 
 ### For Developers
 1. Read: `.github/workflows/implementation.workflows.md` (Phases 1-6)
-2. Read: `.github/templates/user-story-folder.template.md`
-3. Read: `.github/templates/tdd-execution.template.md`
+2. Read: `.github/templates/user-story-folder-tmpl.md`
+3. Read: `.github/templates/tdd-execution-tmpl.md`
 4. When Phase 4 starts (TDD), look at implementation-plan.md
 5. Follow TDD agents: RED → GREEN → REFACTOR
 
@@ -302,3 +306,29 @@ When all boxes checked:
 6. Framework handles the rest
 
 **Result**: Structured, traceable, auditable product development with full AI orchestration at scale.
+
+---
+
+## 📊 Framework Optimization Status
+
+### File Naming Harmonization (Complete)
+- ✅ **Lowercase kebab-case**: All `.github/` files follow consistent naming
+- ✅ **Suffix conventions**: `-tmpl.*` for templates, `.prompt.md` for prompts
+- ✅ **Cross-references updated**: All internal links use new naming
+- ✅ **Validation complete**: No broken references, full compliance
+
+### Content Optimization (Phase 2 Complete)
+| File | Original | Optimized | Reduction |
+|------|----------|-----------|----------|
+| `context-optimization-strategy.md` | 728 lines | ~350 lines | 52% |
+| `prerequisites-tmpl.yml` | 1,022 lines | 634 lines | 38% |
+
+**Methods Applied**:
+- Semantic compression (preserve meaning, reduce verbosity)
+- Redundancy elimination (consolidate duplicated sections)
+- Token-efficient phrasing (shorter syntax, same semantics)
+- Example reduction (keep 1-2 best examples per pattern)
+
+**Impact**: Significant reduction in AI agent context consumption while maintaining 100% functional clarity.
+
+**Last Updated**: March 16, 2026

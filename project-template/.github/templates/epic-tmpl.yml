@@ -158,6 +158,24 @@ environment:
     - development
     - staging
     - production
+
+related_documents:
+  references:
+    - doc_type: "user_stories"
+      link: "docs/prd/user-stories.md"
+      rationale: "Child user stories for this epic"
+    - doc_type: "functional_spec"
+      link: "docs/prd/requirements.md"
+      rationale: "Non-functional requirements affecting this epic"
+    - doc_type: "architecture"
+      link: "docs/prd/architecture-design.md"
+      rationale: "System design affecting deliverables"
+    - doc_type: "project_status"
+      link: "docs/assessment/project-status.md"
+      rationale: "Current project health and timeline"
+    - doc_type: "system_status_definitions"
+      link: ".github/templates/SYSTEM-STATUS-DEFINITIONS.md"
+      rationale: "Status terminology standards"
   
   # Deployment target
   deploymentTarget: ""

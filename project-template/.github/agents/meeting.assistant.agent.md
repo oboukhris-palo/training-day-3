@@ -109,7 +109,7 @@ agents:
 outputs:
   - type: meeting_minutes
     format: yaml
-    template: meeting.minutes.template.yml
+    template: meeting.minutes-tmpl.yml
     naming_convention: "YYYY-MM-DD-[meeting-type]-[project-name].yml"
     deliver_to:
       - github:issues
@@ -225,7 +225,7 @@ agent_config:
   suggest_deadlines: true     # Infer deadlines from context
   flag_missing_info: true     # Highlight incomplete items
   bilingual_output: true      # Include EN/FR labels
-  template_version: "1.0"     # meeting.minutes.template.yml version
+  template_version: "1.0"     # meeting.minutes-tmpl.yml version
 ```
 
 ## Workflows
@@ -263,7 +263,7 @@ agent_config:
 - MS Teams, Zoom, Google Meet (transcripts)
 
 **Template Reference**:
-- Primary: [meeting.minutes.template.yml](../templates/meeting.minutes.template.yml)
+- Primary: [meeting.minutes-tmpl.yml](../templates/meeting.minutes-tmpl.yml)
 
 ## Quality Standards
 

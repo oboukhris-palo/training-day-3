@@ -101,7 +101,7 @@ Define crystal-clear requirements and user stories. Create PRD documents that dr
 - **ONE AGENT AT A TIME**: Ensure exclusive file access during work
 - **Conduct stakeholder discovery** with specific, pertinent inquiry (not assumption-based)
 - Translate raw stakeholder inputs into structured, actionable requirements
-- Orchestrate the creation and evolution of all 13 PRD documents following the workflow in **#file:prd.template.yml**
+- Orchestrate the creation and evolution of all 13 PRD documents following the workflow in **#file:prd-tmpl.yml**
 - Manage the information processing pipeline: Requirements → Analysis → Design → Development → Testing → Deployment → Monitoring
 - Ensure document traceability and coherence across all PDLC stages
 - Create and maintain detailed user stories with acceptance criteria

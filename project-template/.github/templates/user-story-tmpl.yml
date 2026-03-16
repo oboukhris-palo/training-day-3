@@ -467,6 +467,25 @@ timeline:
       timestamp: ""
       text: ""
   
+  # Related documents for navigation
+  related_documents:
+    references:
+      - doc_type: "epic"
+        link: "docs/prd/user-stories.md"
+        rationale: "Parent epic for context"
+      - doc_type: "implementation_plan"
+        link: "docs/user-stories/{US_REF}/implementation-plan.md"
+        rationale: "Technical implementation details"
+      - doc_type: "bdd_scenarios"
+        link: "docs/user-stories/{US_REF}/bdd-scenarios/"
+        rationale: "Executable acceptance tests"
+      - doc_type: "dependencies"
+        link: "docs/user-stories/dependencies.md"
+        rationale: "Blocking or blocked user stories"
+      - doc_type: "system_status_definitions"
+        link: ".github/templates/SYSTEM-STATUS-DEFINITIONS.md"
+        rationale: "Status terminology standards"
+  
   # Changelog entries
   changelog: []
   # Example:

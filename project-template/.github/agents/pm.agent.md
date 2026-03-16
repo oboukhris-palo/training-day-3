@@ -196,7 +196,7 @@ Charter, Project Status Dashboard, Sprint Planning Documents, Schedule, Budget, 
      - Recommended for: mature teams, strong velocity history
 
 4. **Create Sprint File**: `/docs/user-stories/current-sprint.md`
-   - Use template from `.github/templates/sprint-planning.template.md`
+   - Use template from `.github/templates/sprint-planning-tmpl.md`
    - **🔴 CRITICAL VALIDATION: Copy each story reference DIRECTLY from `/docs/prd/user-stories.md`**
    - List selected stories in **Sprint Scope** table with EXACT US-REF (no typos, abbreviations)
    - Calculate **Total Story Points** vs capacity
@@ -367,7 +367,7 @@ Charter, Project Status Dashboard, Sprint Planning Documents, Schedule, Budget, 
 - **Feedback**: PM provides schedule and resource constraints
 
 ### From PO Agent (Jira Sync NEW)
-- **Input**: Completed epic.template.yml and user-story.template.yml files
+- **Input**: Completed epic-tmpl.yml and user-story-tmpl.yml files
 - **Trigger**: "Ready for Jira synchronization"
 - **Process**: PM validates and syncs to Jira
 - **Output**: Jira epics and stories with keys (e.g., PROJ-123)
@@ -422,7 +422,7 @@ Charter, Project Status Dashboard, Sprint Planning Documents, Schedule, Budget, 
 ## Tools & Stack
 - **Atlassian Jira MCP (Model Context Protocol)** with capabilities:
   - **Epic Management**:
-    - `create_epic`: Create new epics from epic.template.yml
+    - `create_epic`: Create new epics from epic-tmpl.yml
     - `update_epic`: Modify epic properties (name, description, status, dates, priority)
     - `delete_epic`: Remove epics and reassign child stories
     - `link_epic`: Create relationships between epics (parent-child, related)
@@ -430,7 +430,7 @@ Charter, Project Status Dashboard, Sprint Planning Documents, Schedule, Budget, 
     - `list_epics`: Query all epics with filtering and search
   
   - **User Story Management**:
-    - `create_story`: Create stories from user-story.template.yml
+    - `create_story`: Create stories from user-story-tmpl.yml
     - `update_story`: Modify story attributes (status, assignee, estimate, acceptance criteria)
     - `delete_story`: Remove stories with proper parent handling
     - `link_story`: Link stories to epics, create dependencies, and inter-story relationships
@@ -466,7 +466,7 @@ Charter, Project Status Dashboard, Sprint Planning Documents, Schedule, Budget, 
 
 - Jira Cloud/Data Center (API access configured)
 - Template validation framework
-- Local template files (epic.template.yml, user-story.template.yml)
+- Local template files (epic-tmpl.yml, user-story-tmpl.yml)
 - GitHub (version control for templates)
 - Confluence (documentation hub)
 - Miro (workflow visualization)

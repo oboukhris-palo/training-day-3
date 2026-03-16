@@ -7,6 +7,20 @@
 
 ---
 
+## Related Documents
+
+| Document | Type | Purpose |
+|----------|------|---------|
+| [User Story](../../../prd/user-stories.md) | PRD | Full acceptance criteria and acceptance tests |
+| [BDD Scenarios](./bdd-scenarios/) | Tests | Executable specifications driving implementation |
+| [Handoff](./handoff.md) | Control | Current cycle state and context |
+| [TDD Execution](./tdd-execution.md) | Audit | Complete implementation audit trail |
+| [Tech Spec](../../../prd/tech-spec.md) | PRD | Technical design and architecture |
+| [Test Strategy](../../../prd/test-strategies.md) | PRD | Testing approach and coverage goals |
+| [SYSTEM-STATUS-DEFINITIONS](../SYSTEM-STATUS-DEFINITIONS.md) | Reference | Status terminology standards |
+
+---
+
 ## Story Overview
 
 ### Description

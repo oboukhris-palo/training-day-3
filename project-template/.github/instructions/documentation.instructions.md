@@ -32,7 +32,7 @@ These are created during PDLC/Implementation workflows using templates:
 
 - PRD documents in /docs/prd/ (requirements, user-stories, architecture-design, etc.)
 - Implementation plans in /docs/user-stories/<US-REF>/
-- Handoff files (JSON format using handoff.template.md)
+- Handoff files (JSON format using handoff-tmpl.md)
 - Meeting minutes (YAML format using meeting.assistant.agent)
 
 ---

@@ -6,7 +6,7 @@
 **Scope:** Universal discovery phase for greenfield and brownfield projects  
 **Assessment Framework:** Multi-dimensional AI readiness evaluation  
 **Output Documents:** Prerequisites report (YAML), AI Readiness report (Markdown), Handoff package  
-**Templates:** `prequisites.template.yml`, `recommendation-plan.template.md`  
+**Templates:** `prerequisites-tmpl.yml`, `recommendation-plan-tmpl.md`  
 **Handoff Target:** `documents.workflows.md` → `implementation.workflows.md`
 
 ---
@@ -230,7 +230,7 @@ Based on available inputs, conduct quick assessment:
 **Objective:** Identify missing access and generate formal prerequisites request
 
 **Duration:** 1 business day  
-**Template:** `prequisites.template.yml`
+**Template:** `prerequisites-tmpl.yml`
 
 ### 2.1 Gap Analysis
 
@@ -274,7 +274,7 @@ Compare available inputs against ideal assessment requirements:
 
 **Create:** `/docs/assessment/PREREQUISITES-REQUEST.yml`
 
-**Using:** `prequisites.template.yml`
+**Using:** `prerequisites-tmpl.yml`
 
 **Required Sections:**
 1. **Assessment Metadata** - Project name, org, assessment team, stakeholders
@@ -742,13 +742,13 @@ Evaluate client maturity across **8 core dimensions**:
 **Objective:** Generate comprehensive AI readiness report and prepare handoff to documentation phase
 
 **Duration:** 3-5 business days  
-**Template:** `recommendation-plan.template.md`
+**Template:** `recommendation-plan-tmpl.md`
 
 ### 6.1 Generate AI Readiness Report
 
 **Create:** `/docs/assessment/AI-READINESS-REPORT.md`
 
-**Using:** `recommendation-plan.template.md` structure
+**Using:** `recommendation-plan-tmpl.md` structure
 
 **Required Sections:**
 
@@ -1020,10 +1020,10 @@ Evaluate client maturity across **8 core dimensions**:
 
 | Output | Template | Location | Purpose |
 |--------|----------|----------|---------|
-| **Prerequisites Request** | `prequisites.template.yml` | `/docs/assessment/PREREQUISITES-REQUEST.yml` | Formal access request to client |
+| **Prerequisites Request** | `prerequisites-tmpl.yml` | `/docs/assessment/PREREQUISITES-REQUEST.yml` | Formal access request to client |
 | **Baseline Assessment** | Custom | `/docs/assessment/BASELINE-ASSESSMENT.md` | Initial findings from available inputs |
 | **Multi-Dimensional Assessment** | Custom | `/docs/assessment/MULTI-DIMENSIONAL-ASSESSMENT.md` | 8-dimension maturity scores |
-| **AI Readiness Report** | `recommendation-plan.template.md` | `/docs/assessment/AI-READINESS-REPORT.md` | Comprehensive transformation strategy |
+| **AI Readiness Report** | `recommendation-plan-tmpl.md` | `/docs/assessment/AI-READINESS-REPORT.md` | Comprehensive transformation strategy |
 | **Handoff Package** | Custom | `/docs/assessment/HANDOFF-PACKAGE/` | Complete context for documentation phase |
 | **Stakeholder Validation** | Custom | `/docs/assessment/interviews/` | Validation notes and workshop summaries |
 

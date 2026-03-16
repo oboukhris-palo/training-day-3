@@ -2,8 +2,7 @@
 
 **Production-Ready AI Agent Coordination Platform** with distributed tracing, quality monitoring, and automated workflow orchestration.
 
-> **🎉 IMPLEMENTATION COMPLETE** - All 3 phases deployed and production-ready  
-> **⭐ Latest**: Phase 3 Handoff Tracer with full observability and performance analytics  
+> **🎉 FRAMEWORK READY** - Reusable PDLC orchestration system  
 > **🚀 Start Using**: Copy workflow prompts from [`tasks/`](tasks/) directory
 
 ---
@@ -42,20 +41,6 @@
 @orchestrator Assess project status for [PROJECT_NAME]
 ```
 
-### ✨ Latest: Phase 3 Complete - Handoff Tracer Implementation
-- **Distributed Tracing**: Full visibility into agent handoff chains  
-- **Quality Monitoring**: Automatic escalation of low-quality work
-- **Performance Analytics**: Export traces in JSON/CSV/Markdown formats
-- **Production Ready**: Zero manual tracing, schema-validated handoffs
-
-```bash
-# Start traced handoffs
-cd .github/ai-logger && npm run create-handoff -- --template US-001
-
-# Export performance analytics
-npm run trace-report -- --output=PERFORMANCE_REPORT.md
-```
-
 ---
 
 ## 🏗️ System Architecture
@@ -68,22 +53,7 @@ npm run trace-report -- --output=PERFORMANCE_REPORT.md
 ### Agent Handoff Chain
 **Orchestrator** coordinates: PM → PO → BA → UX → Architect → Dev-Lead → TDD Agents
 
-### 🎯 Phase 3 Implementation Complete
-- ✅ **Handoff Tracer**: TypeScript distributed tracing engine
-- ✅ **Quality Monitoring**: Automatic escalation on quality degradation
-- ✅ **Performance Analytics**: JSON/CSV/Markdown export with agent metrics
-- ✅ **Schema Integration**: Validated handoffs with automatic trace capture
-- ✅ **Production Ready**: Zero-configuration tracing for all workflows
-
-```bash
-# View implementation status
-ls .github/ai-logger/          # Core tracing engine
-ls .github/ai-logger/scripts/  # Export utilities
-```
-
 ---
-
-## 📂 Core Components
 
 ## 📂 Core Components
 
@@ -104,36 +74,21 @@ ls .github/ai-logger/scripts/  # Export utilities
 | **CI/CD** | 3 phases | Continuous integration pipeline |
 
 ### 🎯 [tasks/](tasks/) - Workflow Launchers
-**Copy prompt, fill parameters, invoke agent**
-- `assess-project-status.prompts.md` - Start here for any project
-- `start-pdlc.prompts.md` - New projects  
-- `start-implementation.prompts.md` - After PDLC complete
-- `plan-us.prompts.md` - User story planning
+**Copy prompt, fill parameters, invoke agent** (all files use `.prompt.md` suffix)
+- `assess-project-status.prompt.md` - Start here for any project
+- `start-pdlc.prompt.md` - New projects  
+- `start-implementation.prompt.md` - After PDLC complete
+- `plan-us.prompt.md` - User story planning
 
 ### 🎨 [templates/](templates/) - Document Templates
-**Ensures consistent outputs across agents**
-- User stories, epics, handoff files
-- Technical and functional specifications
-- Status tracking and project dashboards
+**Ensures consistent outputs across agents** (all files use `-tmpl.*` suffix)
+- `user-story-tmpl.yml` - User story structure
+- `prerequisites-tmpl.yml` - Prerequisites request template (634 lines, optimized)
+- `recommendation-plan-tmpl.md` - Recommendation plan format
+- `handoff-tmpl.md` - Agent handoff format
+- `tdd-execution-tmpl.md` - Audit log template
 
-### 🔧 [ai-logger/](ai-logger/) - **Phase 3: Distributed Tracing** ⭐
-**Production-ready handoff monitoring with integrated logging**
 
-| Component | File | Purpose | Status |
-|-----------|------|---------|--------|
-| **Activity Logger** | `activity-interceptor.ts` | Core logging engine | ✅ Complete |
-| **Integration API** | `agent-integration.ts` | Easy agent integration | ✅ Complete |
-| **Handoff Tracer** | `handoff-tracer.ts` | Core tracing engine | ✅ Complete |
-| **Export Tools** | `scripts/export-traces.ts` | Analytics export | ✅ Complete |
-| **Manual Integration** | `INTEGRATION_FIX_COMPLETE.md` | **🎯 INTEGRATION READY** | ✅ **FIXED** |
-
-```bash
-# FIXED: Setup AI logger integration (Option A - Manual)
-cd .github/ai-logger
-./setup.sh                                   # Install and test integration
-npm run weekly-analysis                       # Generate activity reports
-npm run trace-report                          # Export performance analytics
-```
 
 ---
 
@@ -148,11 +103,11 @@ project-root/
 │   ├── templates/                 # Document templates
 │   ├── schemas/                   # JSON schemas for validation
 │   ├── guides/                    # Best practices and strategies
-│   │   ├── HANDOFF-GUIDE.md       # ⭐ Single source of truth for handoffs
-│   │   └── context-optimization-strategy.md
+│   │   ├── handoff-guide.md       # ⭐ Single source of truth for handoffs
+│   │   ├── context-optimization-strategy.md  # Token efficiency (~350 lines)
+│   │   └── diagram-usage.guide.md # Diagram standards
 │   ├── instructions/              # Coding and documentation standards
 │   ├── prompts/                   # Agent system prompts
-│   ├── ai-logger/                 # Distributed tracing system
 │   └── copilot-instructions.md    # Master system guide
 │
 ├── docs/
@@ -164,11 +119,19 @@ project-root/
 │   │
 │   ├── user-stories/              # Implementation tracking
 │   │   ├── user-stories.md        # ⭐ Status tracking (SSOT)
+│   │   ├── current-sprint.md        # ⭐ Status tracking (SSOT)
+│   │   ├── project-status.md        # ⭐ Status tracking (SSOT)
 │   │   └── <US-REF>/             # Per-story folders
-│   │       ├── implementation-plan.md
-│   │       └── <US-REF>-HO-<LAYER>.json  # Handoff files
-│   │
-│   └── design/                    # UX/UI documents
+│   │       ├── <US-REF>.md       # the user story content (copy of the original user story from PRD)
+│   │       ├── implementation-plan.md  # Implementation plan for the user story
+│   │       ├── api-design.md      # API design details for the user story
+│   │       ├── us-completition-checklist.md         # Checklist for user story completion
+│   │       ├── features/         # BDD feature files (project source)
+│   │       └── tdd-execution/     # TDD execution details and results
+│   │           └── <TDD-CYCLE>/     # Per TDD cycle folders
+│   │               ├── <TDD-CYCLE>-HO-REFACTOR.md   # REFACTOR agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   │               ├── <TDD-CYCLE>-HO-GREEN.json  # GREEN agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   │               └── <TDD-CYCLE>-HO-RED.json  # RED agent Handoff file for tdd cycle number <TDD-CYCLE>
 │
 ├── features/                      # BDD feature files (project source)
 ├── src/                          # Application source code
@@ -188,11 +151,11 @@ project-root/
 │   ├── templates/                 # Document templates
 │   ├── schemas/                   # JSON schemas for validation
 │   ├── guides/                    # Best practices and strategies
-│   │   ├── HANDOFF-GUIDE.md       # ⭐ Single source of truth for handoffs
-│   │   └── context-optimization-strategy.md
+│   │   ├── handoff-guide.md       # ⭐ Single source of truth for handoffs
+│   │   ├── context-optimization-strategy.md  # Token efficiency (~350 lines)
+│   │   └── diagram-usage.guide.md # Diagram standards
 │   ├── instructions/              # Coding and documentation standards
 │   ├── prompts/                   # Agent system prompts
-│   ├── ai-logger/                 # Distributed tracing system
 │   └── copilot-instructions.md    # Master system guide
 │
 ├── docs/
@@ -204,10 +167,19 @@ project-root/
 │   │
 │   ├── user-stories/              # Implementation tracking
 │   │   ├── user-stories.md        # ⭐ Status tracking (SSOT)
+│   │   ├── current-sprint.md        # ⭐ Status tracking (SSOT)
+│   │   ├── project-status.md        # ⭐ Status tracking (SSOT)
 │   │   └── <US-REF>/             # Per-story folders
-│   │       ├── implementation-plan.md
-│   │       └── <US-REF>-HO-<LAYER>.json  # Handoff files
-│   │
+│   │       ├── <US-REF>.md       # the user story content (copy of the original user story from PRD)
+│   │       ├── implementation-plan.md  # Implementation plan for the user story
+│   │       ├── api-design.md      # API design details for the user story
+│   │       ├── us-completition-checklist.md         # Checklist for user story completion
+│   │       ├── features/         # BDD feature files (project source)
+│   │       └── tdd-execution/     # TDD execution details and results
+│   │           └── <TDD-CYCLE>/     # Per TDD cycle folders
+│   │               ├── <TDD-CYCLE>-HO-REFACTOR.md   # REFACTOR agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   │               ├── <TDD-CYCLE>-HO-GREEN.json  # GREEN agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   │               └── <TDD-CYCLE>-HO-RED.json  # RED agent Handoff file for tdd cycle number <TDD-CYCLE>
 │   └── design/                    # UX/UI documents
 │
 ├── features/                      # BDD feature files (project source)
@@ -226,22 +198,15 @@ project-root/
 **Output**: Shows what exists, what's missing, recommends next workflow
 
 ### 2️⃣ **Start New PDLC** (new projects)
-Copy prompt from [`tasks/start-pdlc.prompts.md`](tasks/start-pdlc.prompts.md):
+Copy prompt from [`tasks/start-pdlc.prompt.md`](tasks/start-pdlc.prompt.md):
 ```bash
 @orchestrator [Your filled prompt]
 ```
 
 ### 3️⃣ **Start Implementation** (after PDLC Stages 1-6 complete)
-Copy prompt from [`tasks/start-implementation.prompts.md`](tasks/start-implementation.prompts.md):
+Copy prompt from [`tasks/start-implementation.prompt.md`](tasks/start-implementation.prompt.md):
 ```bash
 @orchestrator [Your filled prompt]
-```
-
-### 4️⃣ **Monitor Performance** (Phase 3 feature)
-```bash
-cd .github/ai-logger
-npm run create-handoff -- --template US-001    # Create traced handoff
-npm run trace-report -- --output=report.md     # Export performance analytics
 ```
 
 ### 🔄 **Agent Handoff Pattern**
@@ -264,16 +229,12 @@ npm run trace-report -- --output=report.md     # Export performance analytics
 - Prompt variant management system
 - A/B testing capabilities
 
-### ✅ **Phase 3**: Distributed Tracing (Complete) ⭐
-- **Handoff Tracer**: TypeScript distributed tracing engine
-- **Performance Analytics**: JSON/CSV/Markdown export
-- **Quality Monitoring**: Automatic escalation system
-- **Production Ready**: Zero-config tracing for all workflows
-
-### 🎯 **Next: Production Deployment**
-The system is production-ready with full observability:
-- Start using traced handoffs immediately
-- Export performance reports for optimization  
+### 🎯 **Production Ready**
+The framework is production-ready with full multi-agent coordination:
+- Handoff-driven agent workflows with schema validation
+- PDLC documentation automation (Phases 0-7)  
+- BDD-driven TDD orchestration (Phase 8)
+- Start using immediately with `@orchestrator` commands  
 - Monitor agent efficiency and quality trends
 - Scale with confidence using quality gates
 
@@ -300,11 +261,11 @@ Complete audit trail from requirements → user stories → BDD scenarios → TD
 | Priority | File | Purpose |
 |----------|------|---------|
 | **START HERE** | [copilot-instructions.md](copilot-instructions.md) | Complete system understanding |
-| **Handoff Guide** | [guides/HANDOFF-GUIDE.md](.github/guides/HANDOFF-GUIDE.md) | ⭐ Single source of truth for agent coordination |
-| **Quick Launch** | [tasks/assess-project-status.prompts.md](.github/tasks/assess-project-status.prompts.md) | Start any work |
+| **User Contract** | [instructions/ai.analysis.guardrails.instructions.md](.github/instructions/ai.analysis.guardrails.instructions.md) | AI analysis and guardrails instructions |
+| **Handoff Guide** | [guides/handoff-guide.md](.github/guides/handoff-guide.md) | ⭐ Single source of truth for agent coordination |
+| **Quick Launch** | [tasks/assess-project-status.prompt.md](.github/tasks/assess-project-status.prompt.md) | Start any work |
 | **Agent Profiles** | [agents/](.github/agents/) directory | Specialized AI agent definitions |
 | **Context Optimization** | [guides/context-optimization-strategy.md](.github/guides/context-optimization-strategy.md) | Token efficiency strategies |
-| **Tracing System** | [ai-logger/](.github/ai-logger/) directory | Performance monitoring |
 
 **Everything builds on these foundations.** Start here, then explore as needed.
 
@@ -325,10 +286,11 @@ Complete audit trail from requirements → user stories → BDD scenarios → TD
 | Need to... | Read This |
 |-----------|-----------|
 | Understand entire system | [copilot-instructions.md](copilot-instructions.md) |
-| Learn handoff patterns | [guides/HANDOFF-GUIDE.md](.github/guides/HANDOFF-GUIDE.md) ⭐ |
-| Start work on any project | [tasks/assess-project-status.prompts.md](.github/tasks/assess-project-status.prompts.md) |
-| Start new PDLC project | [tasks/start-pdlc.prompts.md](.github/tasks/start-pdlc.prompts.md) |
-| Start implementation phase | [tasks/start-implementation.prompts.md](.github/tasks/start-implementation.prompts.md) |
+| Understand AI analysis and guardrails | [instructions/ai.analysis.guardrails.instructions.md](.github/instructions/ai.analysis.guardrails.instructions.md) |
+| Learn handoff patterns | [guides/handoff-guide.md](.github/guides/handoff-guide.md) ⭐ |
+| Start work on any project | [tasks/assess-project-status.prompt.md](.github/tasks/assess-project-status.prompt.md) |
+| Start new PDLC project | [tasks/start-pdlc.prompt.md](.github/tasks/start-pdlc.prompt.md) |
+| Start implementation phase | [tasks/start-implementation.prompt.md](.github/tasks/start-implementation.prompt.md) |
 | Understand PDLC stages (1-8) | [workflows/documents.workflows.md](.github/workflows/documents.workflows.md) |
 | Understand implementation phases (1-6) | [workflows/implementation.workflows.md](.github/workflows/implementation.workflows.md) |
 | Learn coding standards | [instructions/coding.instructions.md](.github/instructions/coding.instructions.md) |
@@ -381,6 +343,24 @@ Complete audit trail from requirements → user stories → BDD scenarios → TD
 
 ---
 
-**Last Updated**: January 20, 2026  
+**Last Updated**: March 16, 2026  
 **System**: AI-Driven PDLC Orchestration Framework  
-**Status**: ✅ Production-ready with optimized structure
+**Status**: ✅ Production-ready with harmonized naming and optimized context
+
+---
+
+## 📝 Recent Improvements
+
+### Phase 1: File Naming Harmonization (Complete)
+- ✅ All `.github/` files use lowercase kebab-case
+- ✅ Templates adopt `-tmpl.*` suffix (e.g., `user-story-tmpl.yml`)
+- ✅ Prompts adopt `.prompt.md` suffix (e.g., `start-pdlc.prompt.md`)
+- ✅ Cross-references updated across all documents
+
+### Phase 2: Content Optimization (Complete)
+- ✅ `context-optimization-strategy.md`: 728 → 350 lines (52% reduction)
+- ✅ `prerequisites-tmpl.yml`: 1,022 → 634 lines (38% reduction)
+- ✅ Aggressive semantic compression while preserving all critical information
+- ✅ Optimization report: [`PHASE-2-OPTIMIZATION-REPORT.md`](PHASE-2-OPTIMIZATION-REPORT.md)
+
+**Impact**: Significantly reduced token consumption for AI agents while maintaining full functionality.

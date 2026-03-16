@@ -1,6 +1,6 @@
 ## Document Generation Launcher
 
-Use `.github/prompts/documentation.prompts.md` with parameters:
+Use `.github/prompts/documentation.prompt.md` with parameters:
 
 - DOCUMENT_NAME: <title>
 - DOC_TYPE: technical|functional

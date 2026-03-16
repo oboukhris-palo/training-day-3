@@ -354,6 +354,6 @@ This enables true **project adaptability** instead of forcing every project thro
 
 ## See Also
 
-- [Start PDLC Workflow](start-pdlc.prompts.md)
-- [Start Implementation Workflow](start-implementation.prompts.md)
+- [Start PDLC Workflow](start-pdlc.prompt.md)
+- [Start Implementation Workflow](start-implementation.prompt.md)
 - [ORCHESTRATION_GUIDE.md](../ORCHESTRATION_GUIDE.md)

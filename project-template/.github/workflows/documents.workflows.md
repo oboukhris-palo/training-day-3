@@ -7,7 +7,7 @@
 
 **Agents**: PM (coordination) | PO (product definition) | BA (requirements/BDD) | UX (design) | Architect (architecture) | Dev-Lead (implementation) | TDD Navigator (development)
 
-**Templates**: prd.template.yml (13 docs) | user-story.template.yml | func-doc.template.yml | tech-doc.template.yml
+**Templates**: prd-tmpl.yml (13 docs) | user-story-tmpl.yml | func-doc-tmpl.yml | tech-doc-tmpl.yml
 
 **Supported Input Scenarios**: Perfect docs | Jira/ADO epics | Architecture diagrams | Sparse documentation | Mixed legacy sources | Interview-based discovery
 
