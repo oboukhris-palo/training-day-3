@@ -159,14 +159,25 @@ mkdir -p /docs/user-stories/<USER-STORY-REF>/bdd-scenarios/
 **Why this matters**: Folders pre-exist so TDD agents don't worry about creating them. Files are stubs until filled in by appropriate agents. **This reduces friction and enables parallel work.**
 
 1. Receive user story from BA agent - **story includes attached BDD/Gherkin scenarios**
-2. Review functional specifications and acceptance criteria from `/docs/user-stories/user-stories.md`
-3. Conduct technical feasibility assessment using `/docs/prd/architecture-design.md` and `/docs/prd/tech-spec.md`
-4. **Create story folder structure**: `/docs/user-stories/<USER-STORY-REF>/`
-5. **Create feature file in project** (e.g., `features/auth/login.feature`)
+2. **Update story status**: Change status in `/docs/user-stories/user-stories.md` from "Not Started" → "In Progress"
+   - Record assignee (dev-lead), timestamp, and progress tracker (Layer 0/4, Cycle 0/0)
+   - Update GitHub Issue status to "In Progress"
+3. Review functional specifications and acceptance criteria from `/docs/user-stories/user-stories.md`
+4. Conduct technical feasibility assessment using `/docs/prd/architecture-design.md` and `/docs/prd/tech-spec.md`
+5. **Create story folder structure**: `/docs/user-stories/<USER-STORY-REF>/`
+   - Create folder: `mkdir -p /docs/user-stories/<USER-STORY-REF>`
+   - Create subfolders: `bdd-scenarios/`, `tdd-execution/`
+6. **Create story definition file**: `/docs/user-stories/<USER-STORY-REF>/<USER-STORY-REF>.md`
+   - Copy exact content from `/docs/prd/user-stories.md` for matching US-REF
+   - Add GitHub Issue link: `GitHub Issue: [#123](https://github.com/org/repo/issues/123)`
+   - Add technical constraints from `/docs/prd/architecture-design.md`
+   - Add dependencies from `/docs/user-stories/user-stories.md`
+   - Mark as read-only reference after creation
+7. **Create feature file in project** (e.g., `features/auth/login.feature`)
    - Copy Gherkin scenarios from user story
    - Add feature file to project source control
    - Store copy in `/docs/user-stories/<USER-STORY-REF>/bdd-scenarios/`
-6. **Create step definition file** with stubs for all scenario steps (Given, When, Then)
+8. **Create step definition file** with stubs for all scenario steps (Given, When, Then)
    - Step definitions call actual API endpoints/services (not mocks)
    - Step definitions include assertions matching scenario expected results
 7. **Run BDD tests** - verify they fail (tests will fail because endpoints/components don't exist)
@@ -408,9 +419,20 @@ mkdir -p /docs/user-stories/<USER-STORY-REF>/bdd-scenarios/
 25. Check for performance, security, and scalability concerns
 26. Confirm traceability from BDD scenarios to code implementation
 27. **Approval decision**:
-   - ✅ APPROVED → Hand off to orchestrator for merge
+   - ✅ APPROVED → Proceed to Phase 5 (Story Completion)
    - ❌ REJECTED → Hand off back to dev-tdd with review report and required fixes
-   - ⚠️ APPROVED WITH COMMENTS → Merge but create follow-up stories for high issues
+   - ⚠️ APPROVED WITH COMMENTS → Proceed but create follow-up stories for high issues
+
+### Phase 5: Story Completion & Handoff to QA
+28. **Update story status**: Change status in `/docs/user-stories/user-stories.md` from "In Progress" → "Implemented"
+   - Record completion timestamp, final layer (4/4), total cycle count
+   - Update GitHub Issue status to "In Review"
+   - Add comment to GitHub Issue: "All layers complete. All tests passing. Ready for QA validation."
+29. **Update project-status.md**: Update quality metrics (test coverage, code review score, BDD pass rate)
+30. **Hand off to QA**: Notify QA agent with story ready for E2E validation
+   - Provide `/docs/user-stories/<US-REF>/us-completition-checklist.md` for DoD verification
+   - Provide GitHub Issue link for tracking
+31. **Monitor QA validation**: If bugs found, return to dev-tdd for fixes, then re-submit
 
 ## Key Handoffs
 

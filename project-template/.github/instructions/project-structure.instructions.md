@@ -50,6 +50,7 @@ project-root/
 │   │       ├── implementation-plan.md           # Dev-Lead's layer-by-layer technical plan (Layer 1-4)
 │   │       ├── api-design.md                    # API endpoints, schemas, authentication, error codes (if applicable)
 │   │       ├── us-completition-checklist.md    # Definition of Done checklist (acceptance criteria, code quality, validation)
+│   │       ├── tdd-execution.md                # 📋 APPEND-ONLY audit log (cycle summary table)
 │   │       ├── features/                       # BDD feature files (Gherkin scenarios driving TDD)
 │   │       │   ├── <domain>-<story-ref>.feature  # Gherkin feature file with Given-When-Then scenarios
 │   │       │   └── <domain>-<story-ref>.steps.ts # Step definitions and failing tests
@@ -348,14 +349,20 @@ docs/user-stories/
     ├── implementation-plan.md         # ⭐ FROZEN architecture (ref only)
     ├── api-design.md                 # API endpoint specifications (if applicable)
     ├── us-completion-checklist.md    # Story completion criteria
+    ├── tdd-execution.md              # 📋 APPEND-ONLY audit log (cycle summary table)
     ├── features/                     # BDD feature files (driver for TDD)
     │   └── auth-tier-sync.feature    # Example: feature file
     │
     └── tdd-execution/                # ⭐ TDD CYCLE TRACKING (ACTIVE)
-        ├── <CYCLE>-RED.md            # RED phase summary
-        ├── <CYCLE>-GREEN.md          # GREEN phase summary
-        ├── <CYCLE>-REFACTOR.md       # REFACTOR phase summary
-        └── <CYCLE>-HANDOFF.md        # Cycle completion handoff
+        ├── 001/                      # First TDD cycle
+        │   ├── 001-HO-RED.json       # RED phase handoff (test written, failing)
+        │   ├── 001-HO-GREEN.json     # GREEN phase handoff (code implemented, test passing)
+        │   └── 001-HO-REFACTOR.md    # REFACTOR phase handoff (code quality improved)
+        ├── 002/                      # Second TDD cycle (if needed)
+        │   ├── 002-HO-RED.json
+        │   ├── 002-HO-GREEN.json
+        │   └── 002-HO-REFACTOR.md
+        └── [... additional cycles ...]
 ```
 
 ### Key File Purposes & Update Patterns

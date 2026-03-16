@@ -75,7 +75,7 @@ This document defines the **Implementation & Development Execution Workflow** - 
 #### `/docs/user-stories/<US-REF>/<US-REF>.md` 📖
 **Purpose**: Story definition document (copy of the original user story from `/docs/prd/user-stories.md`)
 
-**Managed by**: PO/BA (source of truth in PRD), copied to US folder for reference during implementation
+**Managed by**: Dev-Lead (creates during story folder setup at Phase 1: Intake & BDD Integration)
 
 **Content Structure**:
 - **User Story**: As a [user], I want to [action], so that [benefit]
@@ -83,10 +83,18 @@ This document defines the **Implementation & Development Execution Workflow** - 
 - **Related BDD Scenarios**: References to feature files in `features/` folder
 - **Dependencies**: Other stories or technical prerequisites
 - **Technical Constraints**: From architecture-design.md
+- **GitHub Issue Link**: Link to corresponding GitHub Issue
+
+**Creation Process**:
+1. **When**: Dev-Lead accepts story for implementation (status transition: Not Started → In Progress)
+2. **How**: Copy exact content from `/docs/prd/user-stories.md` for matching US-REF
+3. **Enrichment**: Add GitHub Issue link, technical constraints from architecture-design.md
+4. **Location**: Save to `/docs/user-stories/<US-REF>/<US-REF>.md`
+5. **Status**: Read-only after creation (reference for implementation)
 
 **Update Triggers**:
-- **Created once** during Phase 5 (copied from PRD)
-- **Read-only reference** during implementation
+- **Created once** by Dev-Lead when story folder is created (Phase 1)
+- **Read-only reference** during implementation (no further edits)
 
 #### `/docs/user-stories/<US-REF>/implementation-plan.md` 📋
 **Purpose**: Lead-dev implementation plan to execute per user-story (layer-by-layer technical decomposition)
@@ -146,22 +154,59 @@ This document defines the **Implementation & Development Execution Workflow** - 
 - **Dev-Lead**: Signs off at story completion
 - **QA**: Validates all criteria during Phase 6 (validation testing)
 
-#### `/docs/user-stories/<US-REF>/tdd-execution/` 📝
-**Purpose**: Document TDD cycle executions for the user story (detailed execution log per cycle)
+#### `/docs/user-stories/<US-REF>/tdd-execution.md` 📝
+**Purpose**: Chronological audit log summarizing all TDD cycles for the user story (append-only)
 
-**Managed by**: TDD agents (orchestrator, red, green, refactor)
+**Managed by**: TDD-Orchestrator (appends after each cycle completion)
+
+**Content Structure**:
+- **Cycle Number**: Sequential cycle identifier (001, 002, etc.)
+- **Date Range**: Start and end timestamps for the cycle
+- **Layer**: Database / Backend / Config / Frontend
+- **Tests Written**: Count of unit/integration tests created
+- **Tests Passing**: Count of tests in passing state
+- **Files Modified**: List of source files created or changed
+- **BDD Progress**: Which BDD scenarios now pass after this cycle
+- **Blockers Encountered**: Any issues that required escalation
+- **Cycle Duration**: Time taken for RED → GREEN → REFACTOR
+- **Link to Detailed Handoffs**: Reference to cycle folder for detailed phase handoffs
+
+**Update Pattern**: Append-only (never delete or modify existing entries)
+
+**Example Entry**:
+```markdown
+### Cycle 001 (2026-03-15 10:00 - 2026-03-15 14:30)
+- **Layer**: Database (Layer 1)
+- **Tests Written**: 5 (schema validation, migration up/down, index performance)
+- **Tests Passing**: 5/5 ✅
+- **Files Modified**: `migrations/001_create_users.sql`, `models/User.cs`
+- **BDD Progress**: Scenario "User can register" - database assertions passing
+- **Blockers**: None
+- **Cycle Duration**: 4.5 hours
+- **Detailed Handoffs**: See `tdd-execution/001/` for RED/GREEN/REFACTOR phase details
+```
+
+**Update Triggers**:
+- **TDD-Orchestrator**: Appends new entry after each cycle's REFACTOR phase completes
+- **Never modified**: Historical entries are immutable (audit trail)
+
+#### `/docs/user-stories/<US-REF>/tdd-execution/` 📁
+**Purpose**: Detailed handoff files for each TDD cycle (RED → GREEN → REFACTOR phase context)
+
+**Managed by**: TDD agents (orchestrator creates folder, red/green/refactor create phase handoffs)
 
 **Folder Structure**:
 ```
 tdd-execution/
-├── <TDD-CYCLE-001>/           # First RED→GREEN→REFACTOR cycle
-│   ├── <TDD-CYCLE-001>-HO-RED.json       # RED phase: Test written, failing
-│   ├── <TDD-CYCLE-001>-HO-GREEN.json     # GREEN phase: Code implemented, test passing
-│   └── <TDD-CYCLE-001>-HO-REFACTOR.md    # REFACTOR phase: Code quality improved
-├── <TDD-CYCLE-002>/           # Second cycle (if needed)
-│   ├── <TDD-CYCLE-002>-HO-RED.json
-│   ├── <TDD-CYCLE-002>-HO-GREEN.json
-│   └── <TDD-CYCLE-002>-HO-REFACTOR.md
+├── tdd-execution.md           # SUMMARY: Append-only audit log (see above)
+├── 001/                       # First RED→GREEN→REFACTOR cycle
+│   ├── 001-HO-RED.json        # RED phase: Test written, failing
+│   ├── 001-HO-GREEN.json      # GREEN phase: Code implemented, test passing
+│   └── 001-HO-REFACTOR.md     # REFACTOR phase: Code quality improved
+├── 002/                       # Second cycle (if needed)
+│   ├── 002-HO-RED.json
+│   ├── 002-HO-GREEN.json
+│   └── 002-HO-REFACTOR.md
 └── [... additional cycles ...]
 ```
 
@@ -188,10 +233,12 @@ tdd-execution/
 #### `/docs/user-stories/user-stories.md` ⭐
 **Purpose**: Master user stories document with implementation status tracking (SINGLE SOURCE OF TRUTH for local status)
 
-**Managed by**: Multiple agents based on their responsibilities
+**Managed by**: Multiple agents with exclusive ownership per status transition (see below)
 
 **Content Structure**:
 - **Epics**: Organizational groupings from PRD
+  - **Status**: Not Started / In Progress / Implemented / Delivered (auto-calculated from stories)
+  - **Progress**: % completion, story counts per status
 - **User Stories**: Work units with:
   - **Status**: Not Started / In Progress / Implemented / Delivered
   - **Story Reference**: US-XXX (linked to `/docs/user-stories/US-XXX/`)
@@ -207,11 +254,23 @@ tdd-execution/
 - **Synced to** GitHub Issues (remote tracking)
 - **Bidirectional**: Changes in local file → GitHub Issues → PM dashboard
 
-**Update Triggers**:
-- **PM**: Initial setup from PRD, updates during sprint planning/closure
-- **Dev-Lead**: Updates when starting implementation and marking complete
-- **QA**: Updates after validation (Implemented → Delivered)
-- **TDD-Orchestrator**: Updates during active development phases with progress
+**Status Transition Ownership** (Exclusive - Only One Agent Per Transition):
+- **Not Started → In Progress**: Dev-Lead (when accepting story for implementation)
+- **In Progress → Implemented**: Dev-Lead (when all layers complete + all tests pass + code reviewed)
+- **Implemented → Delivered**: QA (after E2E validation + DoD checklist complete + all bugs resolved)
+- **Delivered → Closed**: PM (after stakeholder acceptance and sprint closure)
+
+**Progress Updates Within Status** (Non-exclusive - During In Progress):
+- **Layer completion**: TDD-Orchestrator (after each layer's RED-GREEN-REFACTOR cycles complete)
+- **Blocker flags**: Dev-Lead or TDD-Orchestrator (immediate when blocking issue detected)
+- **Sprint assignment**: PM (during sprint planning)
+- **Cycle count updates**: TDD-Orchestrator (after each TDD cycle completion)
+
+**Epic Status Management** (Automated by PM):
+- **Epic status = "In Progress"**: When first story in epic starts (Not Started → In Progress)
+- **Epic status = "Implemented"**: When ALL stories in epic reach "Implemented" status
+- **Epic status = "Delivered"**: When ALL stories in epic reach "Delivered" status
+- **PM updates epic status daily** during project-status.md updates (automated calculation)
 
 #### `/docs/user-stories/project-status.md` 📊
 **Purpose**: Project overview dashboard - single source of truth for the PM agent

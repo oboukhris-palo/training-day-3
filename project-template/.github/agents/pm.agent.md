@@ -138,10 +138,292 @@ Charter, Project Status Dashboard, Sprint Planning Documents, Schedule, Budget, 
 1. Track KPIs and epic completion percentages
 2. Manage risks/budget (review in project-status.md)
 3. Coordinate teams (via handoffs)
-4. Sync GitHub (validate, update, reconcile, report)
-5. Stakeholder communication and expectation management
+4. Sync GitHub Issues (validate, update, reconcile, report)
+5. Update epic status based on story completion (automated calculation)
+6. Stakeholder communication and expectation management
 
 ---
+
+## GitHub Issues Synchronization Workflow
+
+### Overview
+PM is responsible for **bidirectional synchronization** between local `/docs/user-stories/user-stories.md` (SSOT) and **GitHub Issues** (remote tracking).
+
+**Sync Frequency**: Daily during daily progress tracking updates
+
+**Status Mapping**:
+```yaml
+Local Status → GitHub Issue Status:
+  Not Started → Open
+  In Progress → In Progress (use project board or label)
+  Implemented → In Review (ready for QA validation)
+  Delivered → Done (passed QA, ready for stakeholder acceptance)
+  Closed → Closed (stakeholder accepted, sprint archived)
+```
+
+### Phase 0: GitHub Repository Setup (One-Time)
+
+**Prerequisites**:
+- ✅ GitHub repository created with write access
+- ✅ `/docs/prd/user-stories.md` complete (all epics and stories defined)
+- ✅ `/docs/user-stories/user-stories.md` created (status tracking initialized)
+
+**Setup Process**:
+
+1. **Configure GitHub Project Board** (Optional but Recommended):
+   - Create GitHub Project (Projects → New Project)
+   - Add columns: Not Started, In Progress, In Review, Done
+   - Enable automation for issue status updates
+
+2. **Configure Issue Labels**:
+   ```bash
+   # Story Points
+   - story-1-point (green)
+   - story-2-points (green)
+   - story-3-points (yellow)
+   - story-5-points (yellow)
+   - story-8-points (orange)
+   - story-13-points (red)
+   
+   # Component/Domain
+   - component:auth
+   - component:payment
+   - component:dashboard
+   
+   # Priority
+   - priority:critical (red)
+   - priority:high (orange)
+   - priority:medium (yellow)
+   - priority:low (green)
+   
+   # Epic Tracking
+   - epic (purple)
+   
+   # Sprint Assignment
+   - sprint-1, sprint-2, sprint-3, etc.
+   ```
+
+3. **Configure Issue Templates** (Optional):
+   - Create `.github/ISSUE_TEMPLATE/user-story.yml` with story template
+   - Include fields: Acceptance Criteria, BDD Scenarios, Dependencies, Technical Constraints
+
+### Phase 1: Initial GitHub Issues Creation
+
+**Trigger**: After PRD user-stories.md is approved and `/docs/user-stories/user-stories.md` is created
+
+**Process**:
+
+1. **Create Epic Issues**:
+   - For each Epic in `/docs/prd/user-stories.md`:
+     - Create GitHub Issue with type "Epic" (if supported) or label "epic"
+     - **Title Format**: `[EPIC] <Epic Name>` (e.g., `[EPIC] Authentication & Authorization`)
+     - **Description**: Epic description, business value, and goals
+     - **Labels**: `epic`, priority label, domain label
+     - **Milestone**: Link to project milestone (if applicable)
+   - Record GitHub Issue number in `/docs/user-stories/user-stories.md` (Epic section)
+
+2. **Create User Story Issues**:
+   - For each User Story in `/docs/prd/user-stories.md`:
+     - Create GitHub Issue
+     - **Title Format**: `[<US-REF>] <Story Title>` (e.g., `[US-001] User can login with email and password`)
+     - **Description**:
+       ```markdown
+       ## User Story
+       As a [user], I want to [action], so that [benefit]
+       
+       ## Acceptance Criteria
+       - [ ] Criterion 1
+       - [ ] Criterion 2
+       - [ ] Criterion 3
+       
+       ## BDD Scenarios
+       - Link to feature files in `/docs/user-stories/<US-REF>/bdd-scenarios/`
+       
+       ## Dependencies
+       - Depends on: #<ISSUE-NUM> (other stories)
+       - Technical Prerequisites: [list]
+       
+       ## Technical Constraints
+       - [From architecture-design.md]
+       
+       ## Implementation Plan
+       - See: `/docs/user-stories/<US-REF>/implementation-plan.md`
+       ```
+     - **Labels**: story-point estimate, component, priority
+     - **Assignee**: Assign to dev-lead or TDD agent (if known)
+     - **Link to Parent Epic**: Use GitHub "Linked Issues" or project board hierarchy
+   - Record GitHub Issue number in `/docs/user-stories/user-stories.md` (User Story row)
+
+3. **Update `/docs/user-stories/user-stories.md` with GitHub Links**:
+   - Add column: `GitHub Issue` with link to issue (e.g., `#123`)
+   - Format: `[#123](https://github.com/org/repo/issues/123)`
+
+### Phase 2: Daily Bidirectional Sync
+
+**Frequency**: Daily (during current-sprint.md updates and project-status.md maintenance)
+
+**Sync Direction 1: Local → GitHub** (Status changes from agents)
+
+1. **Check for Local Changes**:
+   - Read `/docs/user-stories/user-stories.md`
+   - Identify stories with status changes since last sync
+   - Note: Status transitions happen via exclusive agent ownership (Dev-Lead, QA, PM)
+
+2. **Update GitHub Issues**:
+   - **Not Started → In Progress**: Update GitHub Issue status to "In Progress"
+   - **In Progress → Implemented**: Update GitHub Issue status to "In Review", add comment: "All layers complete. Ready for QA validation."
+   - **Implemented → Delivered**: Update GitHub Issue status to "Done", add comment: "QA validation complete. All acceptance criteria met."
+   - **Delivered → Closed**: Close GitHub Issue, add comment: "Story delivered and accepted by stakeholder."
+
+3. **Update Progress Comments**:
+   - Add comment to GitHub Issue with progress updates:
+     ```markdown
+     **Progress Update** (2026-03-16)
+     - Current Layer: Backend (Layer 2)
+     - TDD Cycle: 5/8 complete
+     - BDD Scenarios Passing: 3/5
+     - Blockers: None
+     ```
+
+**Sync Direction 2: GitHub → Local** (Manual updates from GitHub UI)
+
+1. **Check for GitHub Changes**:
+   - List all GitHub Issues for the project
+   - Identify issues with status changes made outside of agent workflow (manual updates)
+
+2. **Update `/docs/user-stories/user-stories.md`**:
+   - If GitHub Issue status changed manually, update local status to match
+   - Add note: "Last Updated: [timestamp] (synced from GitHub)"
+   - Log warning if status transition violated agent ownership rules
+
+3. **Reconcile Conflicts**:
+   - If local and GitHub status diverge, PM investigates:
+     - Was status updated manually in GitHub? → Sync to local
+     - Was status updated by agent? → GitHub has stale data → Sync to GitHub
+     - Log discrepancy in project-status.md "Active Blockers" section
+
+### Phase 3: Epic Status Management (Automated Calculation)
+
+**Trigger**: Daily during project-status.md updates
+
+**Process**:
+
+1. **Calculate Epic Status**:
+   - For each Epic in `/docs/user-stories/user-stories.md`:
+     - Count stories by status: Not Started, In Progress, Implemented, Delivered
+     - Calculate Epic Status:
+       ```yaml
+       Epic Status Logic:
+         All stories "Not Started" → Epic: "Not Started"
+         Any story "In Progress" or "Implemented" or "Delivered" → Epic: "In Progress"
+         All stories "Implemented" or "Delivered" → Epic: "Implemented"
+         All stories "Delivered" → Epic: "Delivered"
+       ```
+     - Update Epic status in `/docs/user-stories/user-stories.md`
+
+2. **Update GitHub Epic Issue**:
+   - Update Epic GitHub Issue status to match calculated status
+   - Add comment with epic progress:
+     ```markdown
+     **Epic Progress** (2026-03-16)
+     - Total Stories: 12
+     - Not Started: 2
+     - In Progress: 4
+     - Implemented: 3
+     - Delivered: 3
+     - Epic Status: In Progress (50% complete)
+     ```
+
+3. **Update `/docs/user-stories/project-status.md`**:
+   - Update "Epic Progress" section with latest status and percentages
+   - Update epic completion chart/table
+
+### Phase 4: Blocker & Risk Sync
+
+**Trigger**: When blockers are flagged by Dev-Lead or TDD-Orchestrator
+
+**Process**:
+
+1. **Create Blocker Comment in GitHub Issue**:
+   - When blocker flagged in `/docs/user-stories/user-stories.md`, add comment to GitHub Issue:
+     ```markdown
+     🚨 **BLOCKER DETECTED**
+     - **Issue**: [Description of blocker]
+     - **Impact**: Story cannot progress until resolved
+     - **Root Cause**: [Analysis]
+     - **Resolution Plan**: [Action items]
+     - **ETA**: [Estimated resolution time]
+     - **Owner**: [@github-username]
+     ```
+   - Add label: `blocked`
+
+2. **Update Project Status**:
+   - Add blocker to `/docs/user-stories/project-status.md` → "Active Blockers" section
+   - Track blocker resolution time
+
+3. **Remove Blocker**:
+   - When blocker resolved, remove `blocked` label from GitHub Issue
+   - Add comment: "Blocker resolved. Story can continue."
+   - Remove from "Active Blockers" section in project-status.md
+
+### GitHub Sync Automation (Optional - GitHub Actions)
+
+**Recommended**: Create GitHub Action workflow to automate bidirectional sync
+
+**Workflow File**: `.github/workflows/sync-user-stories.yml`
+
+```yaml
+name: Sync User Stories
+on:
+  push:
+    paths:
+      - 'docs/user-stories/user-stories.md'
+  schedule:
+    - cron: '0 9 * * *'  # Daily at 9 AM
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Parse user-stories.md
+        run: |
+          # Parse markdown table to extract status changes
+          # Update GitHub Issues via GitHub API
+          # Detect status transitions and update accordingly
+      - name: Update local file with GitHub changes
+        run: |
+          # Query GitHub Issues API for manual updates
+          # Update docs/user-stories/user-stories.md if divergence detected
+          # Commit changes back to repo
+```
+
+### GitHub Sync Quality Gates
+
+**Pre-Sync Validation**:
+- ✅ Verify all US-REF in user-stories.md have corresponding GitHub Issues
+- ✅ Verify GitHub Issue titles include exact US-REF (e.g., `[US-001]`)
+- ✅ Verify status transitions follow agent ownership rules
+- ✅ Verify GitHub labels match story metadata (points, component, priority)
+
+**Post-Sync Verification**:
+- ✅ Reconcile: Compare local user-stories.md with GitHub Issues
+- ✅ Report discrepancies in project-status.md
+- ✅ Alert if manual GitHub updates bypassed agent workflow
+- ✅ Generate sync report with success/failure counts
+
+### Troubleshooting Common Sync Issues
+
+| Issue | Root Cause | Resolution |
+|-------|-----------|------------|
+| GitHub Issue missing for US-REF | Story added to user-stories.md but issue not created | Create GitHub Issue manually or via sync script |
+| Status mismatch | Manual update in GitHub bypassed agent workflow | Sync GitHub status to local, log warning |
+| Epic not updating | Story status changed but epic calculation not run | Run epic status calculation manually |
+| Blocker not visible in GitHub | Blocker flagged but comment not added | Add blocker comment and `blocked` label manually |
+| Duplicate GitHub Issues | Story synced multiple times | Search for duplicates, close extras, update user-stories.md |
+
+
 
 ## Sprint Planning & Execution Framework
 

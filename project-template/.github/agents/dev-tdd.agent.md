@@ -130,6 +130,26 @@ Execute handoffs (NO runSubagent) in strict order:
    - Request: "Refactor this code to improve quality while keeping tests passing, adhering to implementation plan constraints"
    - Verify all tests pass, run code quality checks, commit to source control
 
+5. **After REFACTOR Phase Complete**:
+   - **Create cycle folder**: `/docs/user-stories/<US-REF>/tdd-execution/<CYCLE>/`
+   - **Create handoff files** in cycle folder:
+     - `<CYCLE>-HO-RED.json` (RED phase: test details, assertions)
+     - `<CYCLE>-HO-GREEN.json` (GREEN phase: implementation notes, files changed)
+     - `<CYCLE>-HO-REFACTOR.md` (REFACTOR phase: quality improvements, metrics)
+   - **Append to tdd-execution.md** with cycle summary:
+     ```markdown
+     ### Cycle <NUM> (YYYY-MM-DD HH:MM - YYYY-MM-DD HH:MM)
+     - **Layer**: Database / Backend / Config / Frontend
+     - **Tests Written**: X (description)
+     - **Tests Passing**: X/X ✅
+     - **Files Modified**: [list of files]
+     - **BDD Progress**: Scenario "..." - database assertions passing
+     - **Blockers**: None / [description]
+     - **Cycle Duration**: X hours
+     - **Detailed Handoffs**: See `tdd-execution/<CYCLE>/`
+     ```
+   - **Commit** with message: `TDD-<US-REF>-REFACTOR-<CYCLE>: [description]`
+
 **Phase 3: Validation**
 - Run BDD tests after each cycle
 - Check which BDD assertions now pass

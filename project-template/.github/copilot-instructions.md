@@ -8,7 +8,7 @@
 
 **Before taking action**, always:
 1. **Check which agent you are**: Read `.github/agents/<agent-name>.agent.md` for your responsibilities
-2. **Verify handoff context**: Read `docs/user-stories/<STORY-REF>/handoff.md` for current cycle state
+2. **Verify handoff context**: Read latest cycle handoff in `docs/user-stories/<STORY-REF>/tdd-execution/<CYCLE>/` for current TDD phase state
 3. **Follow the plan**: Reference `docs/user-stories/<STORY-REF>/implementation-plan.md` for guidance
 
 **Agent Roles** (handoff chain):
@@ -55,10 +55,21 @@ docs/prd/
 **Phase 8 Implementation Outputs** (ONE entry per user story):
 ```
 docs/user-stories/US-001/
+├── US-001.md                  # Story definition (copied from PRD)
 ├── implementation-plan.md     # Frozen after creation (reference only)
-├── handoff.md                 # OVERWRITE after each TDD phase
-├── tdd-execution.md           # APPEND-ONLY audit log
-└── bdd-scenarios/             # BDD feature files (entry point for TDD)
+├── api-design.md              # API contracts (if applicable)
+├── us-completition-checklist.md # DoD checklist (QA validation)
+├── tdd-execution.md           # APPEND-ONLY cycle summary (TDD-Orchestrator)
+├── bdd-scenarios/             # BDD feature files (entry point for TDD)
+└── tdd-execution/             # Per-cycle handoff folders
+    ├── 001/                   # Cycle 1: RED → GREEN → REFACTOR
+    │   ├── 001-HO-RED.json
+    │   ├── 001-HO-GREEN.json
+    │   └── 001-HO-REFACTOR.md
+    └── 002/                   # Cycle 2 (if needed)
+        ├── 002-HO-RED.json
+        ├── 002-HO-GREEN.json
+        └── 002-HO-REFACTOR.md
 ```
 
 **Git commits**: 
@@ -71,9 +82,9 @@ docs/user-stories/US-001/
 
 ## 🔄 TDD Workflow (Non-Negotiable Sequencing)
 
-**RED Phase** → Write failing test, update handoff.md (overwrite), append to tdd-execution.md, commit  
-**GREEN Phase** → Implement minimal code, update handoff.md (overwrite), append to tdd-execution.md, commit  
-**REFACTOR Phase** → Improve quality, update handoff.md (overwrite), append to tdd-execution.md, commit
+**RED Phase** → Write failing test, create `<CYCLE>-HO-RED.json`, commit  
+**GREEN Phase** → Implement minimal code, create `<CYCLE>-HO-GREEN.json`, commit  
+**REFACTOR Phase** → Improve quality, create `<CYCLE>-HO-REFACTOR.md`, append to `tdd-execution.md` summary, commit
 
 **Rules**:
 - One active cycle per story (no parallel RED/GREEN/REFACTOR)
@@ -97,8 +108,8 @@ docs/user-stories/US-001/
 | `docs/prd/user-stories.md` | PRD user stories catalog | Generated during documentation phase |
 | `docs/user-stories/user-stories.md` | ⭐ Implementation status tracking (SSOT) | Update as stories progress |
 | `docs/user-stories/<US-REF>/implementation-plan.md` | Layer-by-layer architecture | Frozen after dev-lead creates |
-| `docs/user-stories/<US-REF>/handoff.md` | Current cycle snapshot | Overwrite each phase |
-| `docs/user-stories/<US-REF>/tdd-execution.md` | Complete audit trail | Append-only, never delete |
+| `docs/user-stories/<US-REF>/tdd-execution.md` | Cycle summary audit trail | Append-only after each cycle |
+| `docs/user-stories/<US-REF>/tdd-execution/<CYCLE>/*-HO-*.json` | Phase-specific handoffs | Create once per phase |
 
 ## 🚀 PDLC Workflow Sequence
 
@@ -139,7 +150,6 @@ docs/user-stories/US-001/
 ❌ Skip Phase 0 assessment - wrong routing leads to rework  
 ❌ Force Traditional (Route A) when documentation is poor  
 ❌ Mix multiple routes without clear strategy  
-❌ Create cycle-specific files (cycle-18-handoff.md, red-summary.md)  
 ❌ Run multiple TDD cycles in parallel  
 ❌ Work on multiple stories simultaneously  
 ❌ Skip quality gates or bypass BDD validation  
@@ -151,6 +161,6 @@ docs/user-stories/US-001/
 
 When context is tight:
 - Read only the current layer section from implementation-plan.md
-- Reference handoff.md for immediate context (last cycle summary)
+- Reference tdd-execution.md for cycle history and latest cycle folder for detailed handoff context
 - Use `grep_search` to find specific patterns instead of reading full files
 - Delegate read-only research to `runSubagent` (never for writing/editing)

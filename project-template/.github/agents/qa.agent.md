@@ -148,6 +148,48 @@ Execute comprehensive testing strategies to validate implemented features agains
    - **Option C - Comprehensive (Full Quality Audit)**: All scenarios + exploratory + security + accessibility, ~2 hours
 
 3. **Execute E2E Tests**:
+   - Run Playwright test suite for the implemented story
+   - Execute all BDD scenarios from `/docs/user-stories/<US-REF>/bdd-scenarios/`
+   - Test cross-browser compatibility (Chrome, Firefox, Safari, Edge)
+   - Test responsive design (desktop, tablet, mobile viewports)
+   - Validate API contracts against `/docs/user-stories/<US-REF>/api-design.md`
+   - Run accessibility tests (axe-core, keyboard navigation, screen reader)
+   - Performance testing: Response time validation, load testing (if applicable)
+   - Security testing: Input validation, auth/authz, injection prevention
+
+4. **Verify Acceptance Criteria**:
+   - Read acceptance criteria from `/docs/user-stories/<US-REF>/<US-REF>.md`
+   - Check each criterion against actual implementation
+   - Document pass/fail status in test report
+
+5. **Update DoD Checklist**:
+   - Open `/docs/user-stories/<US-REF>/us-completition-checklist.md`
+   - Mark each item as ✅ (complete) or ❌ (failed)
+   - Document any deviations or concerns
+
+6. **Execute Validation Decision**:
+   - **Option A - PASS**: All tests pass, all acceptance criteria met, DoD complete
+     - **Update story status**: Change status in `/docs/user-stories/user-stories.md` from "Implemented" → "Delivered"
+     - **Update GitHub Issue**: Change status to "Done", add comment: "QA validation complete. All acceptance criteria met. All E2E tests passing. Ready for stakeholder acceptance."
+     - **Update project-status.md**: Update quality metrics (test pass rate, bug count)
+     - **Notify PM**: Story delivered and ready for sprint closure
+   
+   - **Option B - FAIL**: Tests fail, acceptance criteria not met, or DoD incomplete
+     - **Document bugs**: Create detailed bug reports in GitHub Issue comments
+       - Reproduction steps (command/URL)
+       - Expected vs actual results
+       - Screenshots/videos (Playwright trace files)
+       - Severity classification (Critical/High/Medium/Low)
+       - Environment details (browser, OS, viewport)
+     - **DO NOT update story status** (remains "Implemented")
+     - **Add `bug` label** to GitHub Issue
+     - **Hand back to Dev-Lead**: Notify dev-lead via GitHub Issue comment with bug list
+     - **Wait for fix**: Monitor GitHub Issue for dev-lead resubmission
+   
+   - **Option C - PARTIAL PASS**: Core functionality works but minor issues found
+     - **Update story status**: "Implemented" → "Delivered" (story functional)
+     - **Create follow-up stories**: Document minor issues as new user stories in backlog
+     - **Update GitHub Issue**: Add comment with partial pass explanation and follow-up story links
    - Run Playwright test suite for story BDD scenarios
    - Test across browsers: Chrome, Firefox, Safari (if applicable)
    - Test responsive design: Desktop, tablet, mobile viewports
