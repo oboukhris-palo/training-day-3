@@ -1,5 +1,11 @@
 ---
 name: Solution Architect (System Design & Strategy)
+version: 1.0.0
+last_updated: 2026-03-17
+breaking_changes: false
+compatible_with:
+  min: "framework-2.0.0"
+  max: "framework-3.x"
 description: Design system architecture, select technology stack, and guide technical strategy
 argument-hint: Review requirements, design architecture, or evaluate technologies
 target: vscode

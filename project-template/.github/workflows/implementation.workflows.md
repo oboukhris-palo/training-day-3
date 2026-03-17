@@ -889,7 +889,121 @@ GitHub Issue & Hand Off**:
 
 ---
 
-PHASE 4: TDD-ORCHESTRATOR EXECUTION (DRIVEN BY IMPLEMENTATION PLAN)
+### PHASE 3.5: PLAN APPROVAL GATE (HUMAN VALIDATION)
+
+**Goal**: Require human approval of implementation plan before TDD execution begins
+
+**Prerequisites**: Phase 2 completed (implementation-plan.md exists and complete)
+
+**Activities**:
+
+1. **Check for Plan Approval**:
+   - Look for `/docs/user-stories/<US-REF>/plan-approval.yaml`
+   - Validate approval status:
+     - ✅ `status: approved` → Proceed to Phase 4
+     - ❌ `status: changes-requested` → BLOCK execution, notify Dev-Lead
+     - ❌ `status: revoked` → BLOCK execution (plan was modified after approval)
+     - ❌ **File missing** → Create approval file, request Dev-Lead review
+
+2. **If Approval File Missing**:
+   - Create `/docs/user-stories/<US-REF>/plan-approval.yaml` from template
+   - Pre-fill with:
+     - `story: <US-REF>`
+     - `plan_version: v1`
+     - `scope: [Layer1, Layer2, Layer3, Layer4]` or specific layers
+     - `risk: low|medium|high` (assess based on story complexity)
+     - `status: changes-requested` (requires review)
+   - **Present to Dev-Lead**:
+     - "Implementation plan created for <US-REF>. Review required before TDD execution."
+     - "Complete validation checklist in plan-approval.yaml"
+     - "Set status to 'approved' when ready for execution"
+
+3. **If Status is `changes-requested`**:
+   - **BLOCK TDD execution**
+   - Present feedback to Dev-Lead:
+     - Review notes from `plan-approval.yaml`
+     - Specific checklist items marked `verified: false`
+   - Wait for Dev-Lead to:
+     - Address feedback
+     - Update implementation-plan.md if needed
+     - Set `status: approved` in plan-approval.yaml
+
+4. **If Status is `revoked`**:
+   - **BLOCK TDD execution**
+   - **Reason**: Implementation plan was modified after approval
+   - **Auto-revocation triggered by**:
+     - Any edit to `implementation-plan.md`
+     - Plan version mismatch (`plan_version` != current version)
+   - **Required Actions**:
+     - Create snapshot: `implementation-plan-v{N}.md` (IMMUTABLE historical copy)
+     - Update `implementation-plan.md` version in header
+     - Update `plan-approval.yaml`:
+       - Set `plan_version: v{N+1}`
+       - Set `status: changes-requested`
+       - Add note explaining what changed
+     - Request Dev-Lead re-approval
+
+5. **If Status is `approved`**:
+   - ✅ **Proceed to Phase 4 (TDD Execution)**
+   - Freeze implementation-plan.md (read-only reference)
+   - Log approval event:
+     - Approver role and name (from approval file)
+     - Approval date
+     - Plan version approved
+     - Scope (layers covered)
+
+6. **YOLO Mode Override** (Advanced Users Only):
+   - **Purpose**: Skip approval gate for rapid prototyping or low-risk stories
+   - **Activation**: User explicitly requests YOLO mode with acknowledged risks
+   - **Pre-flight Checks** (Auto-executed before YOLO):
+     - ✅ All BDD tests written and failing
+     - ✅ Git working tree clean (all changes committed)
+     - ✅ Implementation plan exists and is complete
+     - ✅ No open blockers in story checklist
+   - **Safety Rails**:
+     - **Single-cycle lock**: Only ONE TDD cycle can run in YOLO mode
+     - **Auto-abort on regression**: If ANY existing test fails, abort immediately
+     - **Mandatory review after cycle**: Human review required before next cycle
+   - **Activation Command**:
+     - User: `@orchestrator YOLO mode for <US-REF> (I acknowledge the risks)`
+   - **Orchestrator Response**:
+     - Present pre-flight check results
+     - List risks (no architect review, potential rework, etc.)
+     - Ask for explicit confirmation: "Type 'CONFIRMED' to proceed"
+   - **After YOLO Cycle Completes**:
+     - Create `plan-approval.yaml` with `status: changes-requested`
+     - Add note: "YOLO cycle completed. Review recommended before continuing."
+     - Require normal approval for subsequent cycles
+
+**Input**: implementation-plan.md (complete), plan-approval.yaml (if exists)  
+**Output**: Approval validation result, approval file creation (if needed), YOLO mode activation (if requested)  
+**Outcome**: Human validation completed before TDD execution, or YOLO mode activated with risk acknowledgment
+
+**Approval Checklist** (Validated in `plan-approval.yaml`):
+- [ ] Implementation plan follows layer architecture (DB → Service → API → UI)
+- [ ] BDD scenarios map to implementation layers
+- [ ] All external dependencies documented and available
+- [ ] Database migration order is correct
+- [ ] Critical business logic requirements addressed (e.g., tier synchronization)
+- [ ] Error handling strategy defined
+- [ ] Performance considerations documented
+- [ ] Security requirements addressed
+
+**Orchestrator Behavior Matrix**:
+
+| Scenario | Status | Action |
+|----------|--------|--------|
+| Approval file missing | N/A | Create file, request Dev-Lead review |
+| Status: `approved` | ✅ | Proceed to Phase 4 (TDD execution) |
+| Status: `changes-requested` | ❌ | BLOCK execution, present feedback to Dev-Lead |
+| Status: `revoked` | ❌ | BLOCK execution, explain auto-revocation reason |
+| Plan modified after approval | Auto-revoke | Create snapshot, update version, request re-approval |
+| YOLO mode requested | Override | Run pre-flight checks, get confirmation, proceed with single cycle |
+| YOLO cycle completed | Mandatory review | Auto-create approval file, require review before next cycle |
+
+---
+
+### PHASE 4: TDD-ORCHESTRATOR EXECUTION (DRIVEN BY IMPLEMENTATION PLAN)
 
 **Goal**: Implement all 4 layers using disciplined TDD cycles, guided by implementation-plan and driven by failing BDD tests. **Implementation IS simply applying TDD to the implementation-plan specification.**
 

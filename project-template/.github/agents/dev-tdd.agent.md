@@ -1,5 +1,11 @@
 ---
 name: TDD Orchestrator
+version: 1.0.0
+last_updated: 2026-03-17
+breaking_changes: false
+compatible_with:
+  min: "framework-2.0.0"
+  max: "framework-3.x"
 description: Orchestrate RED → GREEN → REFACTOR TDD cycle for executable specifications
 argument-hint: Pick a test to implement or just "next"
 target: vscode
@@ -45,6 +51,7 @@ handoffs:
 - Track BDD test progress and layer completion
 - Read implementation plans and guide phase agents
 - Update handoff files with progress
+- **Log orchestration actions to daily log**: `/docs/user-stories/<US-REF>/logs/agent-dev-tdd-YYYYMMDD.md`
 - Verify BDD scenarios pass after cycles
 - Report completion status to dev-lead
 

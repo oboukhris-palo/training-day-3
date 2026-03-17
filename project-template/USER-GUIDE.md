@@ -2,6 +2,8 @@
 
 **⚡ CRITICAL**: This `.github/` folder is a **reusable, template-based framework**—not tied to any specific project. Use it as the foundation for ANY project.
 
+> **🆕 Framework 2.0.0** (March 2026) now includes: Agent versioning, action tracing with daily logs, implementation plan approval gates, plan versioning with auto-revocation, and YOLO mode for rapid prototyping.
+
 ---
 
 ## 🎯 What This Framework Does
@@ -60,20 +62,17 @@ The orchestrator will:
 
 ## 📚 Framework Components (All Reusable)
 
-### `.github/agents/` (12 AI Agents)
+### `.github/agents/` (11 AI Agents)
 All agents work with ANY project context:
 - ✅ **orchestrator.agent.md** - Coordinates workflows
 - ✅ **pm.agent.md** - Project management
 - ✅ **po.agent.md** - Product ownership with question-driven decisions
-- ✅ **ba.agent.md** - Business analysis & story enrichment (acceptance criteria, BDD scenarios, UX integration)
-- ✅ **qa.agent.md** - Quality assurance & validation testing (E2E, accessibility, performance, security)
+- ✅ **ba.agent.md** - Business analysis & enrichment
 - ✅ **ux.agent.md** - UX/design
 - ✅ **architect.agent.md** - Architecture + OpenAPI specs
 - ✅ **dev-lead.agent.md** - Technical leadership + folder setup
 - ✅ **dev-tdd.agent.md** - TDD orchestration
 - ✅ **dev-tdd-red/green/refactor.agent.md** - TDD phases
-- ✅ **ai-engineering.agent.md** - AI systems optimization
-- ✅ **meeting.assistant.agent.md** - Meeting facilitation
 
 **These agents adapt to YOUR project automatically—no modifications needed.**
 
@@ -117,10 +116,7 @@ All task prompts use `.prompt.md` suffix:
 4. Generate PDLC docs (requirements, personas, architecture, etc.)
 5. When Stage 1-6 complete, start Implementation Phase 1
 6. Hand off to Dev-Lead for sprint planning
-7. BA enriches user stories with acceptance criteria and BDD scenarios
-8. Execute TDD cycles with BDD-driven tests
-9. QA validates implementations with E2E, accessibility, performance, security tests
-10. Stories marked "Delivered" after QA validation passes
+7. Execute TDD cycles with BDD-driven tests
 ```
 
 ### Pattern 2: Brownfield Project (Retro-Documentation)
@@ -131,8 +127,7 @@ All task prompts use `.prompt.md` suffix:
 4. Reconstruct requirements, architecture, design decisions
 5. Create user stories with BDD scenarios
 6. Validate with stakeholders
-7. QA establishes baseline test coverage and quality metrics
-8. Begin Implementation Phase 1 for next features
+7. Begin Implementation Phase 1 for next features
 ```
 
 ### Pattern 3: Mid-Development Project
@@ -145,47 +140,24 @@ All task prompts use `.prompt.md` suffix:
 6. Continue orchestrated workflow
 ```
 
----
-
-## � Key Agent Roles: BA vs QA
-
-**Business Analyst (BA)** - Story Enrichment & Requirements
-- **Phase**: Sprint Planning (Phase 2)
-- **Responsibilities**:
-  - Enrich user stories with PO-validated acceptance criteria
-  - Extract and validate Gherkin BDD scenarios
-  - Integrate UI inputs from UX agent and design-systems.md
-  - Document API contracts (request/response schemas)
-  - Define form validation rules and error messages
-  - Verify design system component availability
-  - Mark story "Ready for Dev" after enrichment complete
-- **Output**: `/docs/user-stories/<US-REF>/<US-REF>.md` (enriched)
-- **Handoff To**: Dev-Lead for implementation planning
-
-**QA Engineer (QA)** - Testing & Validation
-- **Phase**: Validation (Phase 6)
-- **Responsibilities**:
-  - Execute Playwright E2E test suites
-  - Validate all BDD scenarios pass
-  - Test accessibility (WCAG compliance)
-  - Test performance (SLA requirements)
-  - Test security (OWASP Top 10, input validation, auth checks)
-  - Run regression tests
-  - Document bugs with Playwright traces and screenshots
-  - Update DoD checklists and quality metrics
-  - Mark story "Delivered" only after all tests pass
-- **Output**: Validation reports, bug reports, quality metrics
-- **Handoff To**: PM (if delivered) or Dev-Lead (if bugs found)
-
-**Clear Separation**:
-- ✅ BA defines WHAT to test (acceptance criteria, BDD scenarios)
-- ✅ QA validates HOW it works (E2E tests, accessibility, performance, security)
-- ❌ BA does NOT execute E2E tests or validate implementations
-- ❌ QA does NOT create acceptance criteria or enrich user stories
+### Pattern 4: Rapid Prototyping with YOLO Mode ⭐ *NEW (Framework 2.0.0)*
+```
+1. User story has complete BDD tests (failing) and implementation plan
+2. Run: @orchestrator YOLO mode for [US-REF] (I acknowledge the risks)
+3. Orchestrator runs pre-flight checks:
+   ✅ All BDD tests written and failing
+   ✅ Git working tree clean
+   ✅ Implementation plan exists and complete
+   ✅ No open blockers
+4. Execute single TDD cycle (RED → GREEN → REFACTOR)
+5. Auto-abort if ANY existing test fails (safety rail)
+6. After cycle, mandatory human review required
+7. Normal approval workflow for subsequent cycles
+```
 
 ---
 
-## �📋 What You Customize (Project-Specific)
+## 📋 What You Customize (Project-Specific)
 
 ### 1. User Story Identifiers
 **Framework uses**: AUTH-003, US-001, PAYMENT-001  
@@ -225,6 +197,26 @@ File: `/api/openapi.yaml`
 - Frontend team uses for SDK generation
 - Becomes source of truth for API contracts
 
+### 5. Implementation Plan Approval Gate ⭐ *NEW (Framework 2.0.0)*
+**Framework provides**: `plan-approval-tmpl.yaml` template  
+**You populate**: Approval status, validation checklist results, approver role/name
+
+File: `/docs/user-stories/<US-REF>/plan-approval.yaml`
+- Dev-Lead creates during Phase 2 (preparation)
+- Orchestrator validates before TDD execution begins
+- Status: `approved | changes-requested | revoked`
+- Plan modifications auto-revoke approval (requires snapshot & re-review)
+
+### 6. Action Tracing Logs ⭐ *NEW (Framework 2.0.0)*
+**Framework provides**: Immutable daily log pattern  
+**You populate**: Agent actions, files touched, rationale, next steps
+
+Locations:
+- Root-level agents: `/docs/logs/agent-{agent_name}-YYYYMMDD.md`
+- TDD agents: `/docs/user-stories/<US-REF>/logs/agent-{agent_name}-YYYYMMDD.md`
+- Append-only with ISO8601 timestamps
+- Audit trails for debugging, compliance, and process improvement
+
 ---
 
 ## ✅ What Never Changes (Framework Rules)
@@ -240,22 +232,35 @@ File: `/api/openapi.yaml`
    - No parallel cycles
    - No skipping phases
 
-3. **Document Consolidation**
+3. **Implementation Plan Approval Gate** ⭐ *NEW (Framework 2.0.0)*
+   - Dev-Lead creates `plan-approval.yaml` before TDD execution
+   - Orchestrator validates approval before launching TDD
+   - Plan modifications auto-revoke approval (create snapshot, reset status)
+   - No TDD execution without `status: approved`
+
+4. **Action Logging** ⭐ *NEW (Framework 2.0.0)*
+   - All agents log actions to immutable daily logs
+   - TDD agents log to per-story folders
+   - Other agents log to root-level logs folder
+   - Append-only pattern (never edit existing entries)
+
+5. **Document Consolidation**
    - 1 handoff.md per story (overwrite each phase)
    - 1 tdd-execution.md per story (append-only)
    - NO cycle-specific files (no cycle-18-handoff.md)
+   - Plan versioning: snapshots preserve history (`implementation-plan-v1.md`, `v2.md`)
 
-4. **Agent Handoff Chain**
-   - Orchestrator → PM → PO → BA (story enrichment) → UX → Architect → Dev-Lead → TDD Agents → QA (validation)
+6. **Agent Handoff Chain**
+   - Orchestrator → PM → PO → BA → UX → Architect → Dev-Lead → TDD
    - No skipping agents
    - No parallel agent work on same story
 
-5. **BDD-Driven TDD**
+7. **BDD-Driven TDD**
    - BDD scenarios are entry point (failing tests)
    - TDD cycles make BDD pass
    - Not unit tests; not acceptance tests; both together
 
-6. **Quality Gates**
+8. **Quality Gates**
    - Decision gates at critical points
    - Always 3 options presented
    - User chooses (agent doesn't decide)
@@ -290,12 +295,10 @@ File: `/api/openapi.yaml`
 5. Follow TDD agents: RED → GREEN → REFACTOR
 
 ### For QA / Testers
-1. Read: `.github/agents/qa.agent.md` (comprehensive testing strategies)
-2. Read: `features/*.feature` (BDD scenarios)
-3. Read: `.github/workflows/implementation.workflows.md` (Phase 6: QA Validation)
-4. Validation workflow: E2E tests → Accessibility → Performance → Security → Regression
-5. Bug reporting: GitHub Issue comments with severity, repro steps, Playwright traces
-6. Story marked "Delivered" only after all validation tests pass
+1. Read: `features/*.feature` (BDD scenarios)
+2. Read: `.github/agents/dev-tdd.agent.md` (BDD mapping)
+3. Validation: All BDD scenarios passing = story complete
+4. Reporting: Reference tdd-execution.md for test history
 
 ---
 
@@ -321,8 +324,8 @@ When all boxes checked:
 **Q: Can I modify the TDD sequencing to run RED and GREEN in parallel?**  
 **A**: No. Strict RED → GREEN → REFACTOR sequencing is non-negotiable. Parallel work creates conflicts and duplicate code.
 
-**Q: Do I have to use all 12 agents?**  
-**A**: For full PDLC, yes. You can skip agents for brownfield projects (no UX agent if redesigning existing UI, no PM if team exists). Core workflow agents (Orchestrator, BA, Dev-Lead, TDD, QA) are always required.
+**Q: Do I have to use all 11 agents?**  
+**A**: For full PDLC, yes. You can skip agents for brownfield projects (no UX agent if redesigning existing UI, no PM if team exists).
 
 **Q: Can I change the handoff format to JSON instead of Markdown?**  
 **A**: No. Handoffs must follow the standard format. Mix of JSON schema validation + Markdown readability is intentional.

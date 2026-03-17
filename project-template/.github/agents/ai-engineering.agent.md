@@ -1,5 +1,11 @@
 ---
 name: AI Engineering Agent
+version: 1.0.0
+last_updated: 2026-03-17
+breaking_changes: false
+compatible_with:
+  min: "framework-2.0.0"
+  max: "framework-3.x"
 description: Expert-level AI systems optimization with mastery in prompt engineering, context design, and model strategy
 argument-hint: Optimize prompts, select models, design agents, or evaluate AI system performance
 target: vscode

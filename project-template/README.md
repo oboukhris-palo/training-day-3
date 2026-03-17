@@ -43,36 +43,53 @@
 
 ---
 
+## 🚀 Key Features
+
+### 🔒 **Workflow Enforcement System** ⭐ *NEW*
+- **Auto-activation** when template copied to new projects
+- **Smart validation** of workflow sequences (Assessment → Documents → Implementation)  
+- **Expert overrides** with justification and risk assessment
+- **Quality gates** enforce BDD coverage, testing standards, and code review
+- **Flexible modes**: Guidance-only, Balanced (recommended), or Strict compliance
+
+### 🏷️ **Framework 2.0.0: Enhanced Orchestration** ⭐ *NEW (March 2026)*
+- **Agent Versioning System**: All agents track versions with `.github/agents/CHANGELOG.md` for migration tracking
+- **Action Tracing**: Immutable daily logs per agent (`/docs/logs/` and `/docs/user-stories/<US-REF>/logs/`) for audit trails
+- **Implementation Plan Approval Gate**: Human validation required (`plan-approval.yaml`) before TDD execution with auto-revocation on changes
+- **Plan Versioning**: Snapshots (`implementation-plan-v1.md`, `v2.md`) preserve history when plans evolve
+- **YOLO Mode**: Rapid prototyping with pre-flight checks, single-cycle lock, and mandatory review
+- **Auto-logging Responsibilities**: All agents log decisions, files touched, and rationale to daily logs
+
+---
+
 ## 🏗️ System Architecture
 
 ### Three-Workflow Orchestration
 1. **PDLC Workflow** (8 stages): Requirements → Analysis → Design → Planning → Testing → Deployment → Development → Improvement
-2. **Implementation Workflow** (7 phases): Sprint Planning → Story Enrichment → Implementation Planning → TDD Execution → Status Sync → QA Validation → Sprint Closure
+2. **Implementation Workflow** (6 phases): Epic Review → Sprint Planning → BDD Integration → TDD Execution → BDD Validation → Code Quality  
 3. **CI/CD Workflow** (3 phases): Bootstrap → Stabilization → Optimization
 
 ### Agent Handoff Chain
-**Orchestrator** coordinates: PM → PO → BA (enrichment) → UX → Architect → Dev-Lead → TDD Agents → QA (validation)
+**Orchestrator** coordinates: PM → PO → BA → UX → Architect → Dev-Lead → TDD Agents
 
 ---
 
 ## 📂 Core Components
 
-### 🤖 [agents/](agents/) - AI Agents (12 specialized roles)
-**Handoff Chain**: Orchestrator → PM → PO → BA → UX → Architect → Dev-Lead → TDD Agents → QA
+### 🤖 [agents/](agents/) - AI Agents (11 specialized roles)
+**Handoff Chain**: Orchestrator → PM → PO → BA → UX → Architect → Dev-Lead → TDD Agents
 
 | Agent | Role | Responsibility | Key Output |
 |-------|------|---------------|------------|
 | **Orchestrator** | Master coordinator | Decision gates, workflow sequencing | Handoff orchestration |
-| **BA** | Story enrichment | Acceptance criteria, BDD scenarios, UX integration | Enriched user stories |
 | **Dev Lead** | Technical implementation | Layer-by-layer plans, BDD integration | Implementation plans |
 | **TDD Agents** | Test-driven development | RED-GREEN-REFACTOR cycles | Working code |
-| **QA** | Testing & validation | E2E tests, accessibility, performance, security | Quality assurance |
 
 ### 📋 [workflows/](workflows/) - Orchestration Workflows
 | Workflow | Stages/Phases | Purpose |
 |----------|---------------|---------|
 | **PDLC** | 8 stages | Product Development Lifecycle |
-| **Implementation** | 7 phases | Sprint planning → TDD execution → QA validation |
+| **Implementation** | 6 phases | TDD execution with BDD validation |
 | **CI/CD** | 3 phases | Continuous integration pipeline |
 
 ### 🎯 [tasks/](tasks/) - Workflow Launchers
@@ -80,6 +97,14 @@
 - `assess-project-status.prompt.md` - Start here for any project
 - `start-pdlc.prompt.md` - New projects  
 - `start-implementation.prompt.md` - After PDLC complete
+
+### 🔒 [validation/](validation/) - Workflow Enforcement
+| File | Purpose | When to Use |
+|------|---------|-------------|
+| **workflow-enforcer.md** | Core enforcement system and rules | Understanding how validation works |
+| **workflow-compliance.yml** | Configuration and settings | Customizing enforcement per project |
+| **override-mechanisms.md** | Expert bypass procedures | When you need to deviate from workflows |
+| **enforcement-guide.md** | User guide and troubleshooting | Learning to work with the system |
 - `plan-us.prompt.md` - User story planning
 
 ### 🎨 [templates/](templates/) - Document Templates
@@ -88,8 +113,7 @@
 - `prerequisites-tmpl.yml` - Prerequisites request template (634 lines, optimized)
 - `recommendation-plan-tmpl.md` - Recommendation plan format
 - `handoff-tmpl.md` - Agent handoff format
-- `tdd-execution-tmpl.md` - Audit log template
-
+- `tdd-execution-tmpl.md` - Audit log template- `plan-approval-tmpl.yaml` - Human validation gate for implementation plans ⭐ *NEW*
 
 
 ---
@@ -99,7 +123,7 @@
 ```
 project-root/
 ├── .github/
-│   ├── agents/                    # 12 specialized AI agents (PM, PO, BA, QA, UX, Architect, Dev-Lead, TDD agents)
+│   ├── agents/                    # 11 specialized AI agents
 │   ├── workflows/                 # PDLC, Implementation, CI/CD workflows
 │   ├── tasks/                     # Workflow launcher prompts
 │   ├── templates/                 # Document templates
@@ -134,6 +158,55 @@ project-root/
 │   │               ├── <TDD-CYCLE>-HO-REFACTOR.md   # REFACTOR agent Handoff file for tdd cycle number <TDD-CYCLE>
 │   │               ├── <TDD-CYCLE>-HO-GREEN.json  # GREEN agent Handoff file for tdd cycle number <TDD-CYCLE>
 │   │               └── <TDD-CYCLE>-HO-RED.json  # RED agent Handoff file for tdd cycle number <TDD-CYCLE>
+│
+├── features/                      # BDD feature files (project source)
+├── src/                          # Application source code
+└── api/openapi.yaml              # API contracts
+```
+
+---
+
+## 📂 Project Structure (Optimized)
+
+```
+project-root/
+├── .github/
+│   ├── agents/                    # 11 specialized AI agents
+│   ├── workflows/                 # PDLC, Implementation, CI/CD workflows
+│   ├── tasks/                     # Workflow launcher prompts
+│   ├── templates/                 # Document templates
+│   ├── schemas/                   # JSON schemas for validation
+│   ├── guides/                    # Best practices and strategies
+│   │   ├── handoff-guide.md       # ⭐ Single source of truth for handoffs
+│   │   ├── context-optimization-strategy.md  # Token efficiency (~350 lines)
+│   │   └── diagram-usage.guide.md # Diagram standards
+│   ├── instructions/              # Coding and documentation standards
+│   ├── prompts/                   # Agent system prompts
+│   └── copilot-instructions.md    # Master system guide
+│
+├── docs/
+│   ├── prd/                       # PDLC Documents (13 files)
+│   │   ├── requirements.md
+│   │   ├── user-stories.md        # BDD scenarios (PRD - read-only)
+│   │   ├── architecture-design.md
+│   │   └── ...
+│   │
+│   ├── user-stories/              # Implementation tracking
+│   │   ├── user-stories.md        # ⭐ Status tracking (SSOT)
+│   │   ├── current-sprint.md        # ⭐ Status tracking (SSOT)
+│   │   ├── project-status.md        # ⭐ Status tracking (SSOT)
+│   │   └── <US-REF>/             # Per-story folders
+│   │       ├── <US-REF>.md       # the user story content (copy of the original user story from PRD)
+│   │       ├── implementation-plan.md  # Implementation plan for the user story
+│   │       ├── api-design.md      # API design details for the user story
+│   │       ├── us-completition-checklist.md         # Checklist for user story completion
+│   │       ├── features/         # BDD feature files (project source)
+│   │       └── tdd-execution/     # TDD execution details and results
+│   │           └── <TDD-CYCLE>/     # Per TDD cycle folders
+│   │               ├── <TDD-CYCLE>-HO-REFACTOR.md   # REFACTOR agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   │               ├── <TDD-CYCLE>-HO-GREEN.json  # GREEN agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   │               └── <TDD-CYCLE>-HO-RED.json  # RED agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   └── design/                    # UX/UI documents
 │
 ├── features/                      # BDD feature files (project source)
 ├── src/                          # Application source code
@@ -238,18 +311,21 @@ Complete audit trail from requirements → user stories → BDD scenarios → TD
 
 | Need to... | Read This |
 |-----------|-----------|
-| Understand entire system | [copilot-instructions.md](copilot-instructions.md) |
-| Understand AI analysis and guardrails | [instructions/ai.analysis.guardrails.instructions.md](.github/instructions/ai.analysis.guardrails.instructions.md) |
-| Learn handoff patterns | [guides/handoff-guide.md](.github/guides/handoff-guide.md) ⭐ |
-| Start work on any project | [tasks/assess-project-status.prompt.md](.github/tasks/assess-project-status.prompt.md) |
-| Start new PDLC project | [tasks/start-pdlc.prompt.md](.github/tasks/start-pdlc.prompt.md) |
-| Start implementation phase | [tasks/start-implementation.prompt.md](.github/tasks/start-implementation.prompt.md) |
-| Understand PDLC stages (1-8) | [workflows/documents.workflows.md](.github/workflows/documents.workflows.md) |
-| Understand implementation phases (1-6) | [workflows/implementation.workflows.md](.github/workflows/implementation.workflows.md) |
-| Learn coding standards | [instructions/coding.instructions.md](.github/instructions/coding.instructions.md) |
+| **🚀 START HERE (new to enforcement)** | [enforcement-guide.md](.github/validation/enforcement-guide.md) + [examples](.github/validation/enforcement-examples.md) ⭐ |
+| Configure workflow enforcement | [workflow-compliance.yml](.github/validation/workflow-compliance.yml) |
+| Override workflows when needed | [override-mechanisms.md](.github/validation/override-mechanisms.md) |
+| Understand the system architecture | [copilot-instructions.md](.github/copilot-instructions.md) |
+| Understand AI analysis guardrails | [ai.analysis.guardrails.instructions.md](.github/instructions/ai.analysis.guardrails.instructions.md) |
+| Learn handoff patterns | [handoff-guide.md](.github/guides/handoff-guide.md) ⭐ |
+| Start work on any project | [assess-project-status.prompt.md](.github/tasks/assess-project-status.prompt.md) |
+| Start new PDLC project | [start-pdlc.prompt.md](.github/tasks/start-pdlc.prompt.md) |
+| Start implementation phase | [start-implementation.prompt.md](.github/tasks/start-implementation.prompt.md) |
+| Understand PDLC stages (1-8) | [documents.workflows.md](.github/workflows/documents.workflows.md) |
+| Understand implementation phases (1-6) | [implementation.workflows.md](.github/workflows/implementation.workflows.md) |
+| Learn coding standards | [coding.instructions.md](.github/instructions/coding.instructions.md) |
 | Understand agent roles | [agents/](.github/agents/) (choose specific agent) |
 | Get document templates | [templates/](.github/templates/) |
-| Optimize AI context | [guides/context-optimization-strategy.md](.github/guides/context-optimization-strategy.md) |
+| Optimize AI context | [context-optimization-strategy.md](.github/guides/context-optimization-strategy.md) |
 
 ---
 

@@ -1,3 +1,16 @@
+---
+name: Meeting Assistant Agent
+version: 1.0.0
+last_updated: 2026-03-17
+breaking_changes: false
+compatible_with:
+  min: "framework-2.0.0"
+  max: "framework-3.x"
+description: Transforms meeting transcripts, recordings, and notes into professional, structured meeting minutes (Comptes Rendus) that drive action and maintain project accountability
+target: vscode
+model: Claude Sonnet 4.5
+---
+
 # Meeting Assistant Agent
 
 ## Agent Configuration
@@ -5,7 +18,7 @@
 ```yaml
 id: meeting-assistant
 name: Meeting Assistant Agent
-version: 1.0
+version: 1.0.0
 description: |
   Transforms meeting transcripts, recordings, and notes into professional,
   structured meeting minutes (Comptes Rendus) that drive action and maintain

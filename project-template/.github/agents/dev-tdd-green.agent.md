@@ -1,5 +1,11 @@
 ---
 name: TDD GREEN Phase Agent
+version: 1.0.0
+last_updated: 2026-03-17
+breaking_changes: false
+compatible_with:
+  min: "framework-2.0.0"
+  max: "framework-3.x"
 description: Implement minimal code to make tests pass
 argument-hint: Implement code to pass the failing test
 target: vscode
@@ -34,6 +40,7 @@ Write minimal code that makes failing tests pass. Hand off to REFACTOR phase imm
 - Document business rules inline where complexity exists
 - Run tests to verify: test passes + no regressions
 - Follow design notes and architectural constraints
+- **Log action to daily log**: `/docs/user-stories/<US-REF>/logs/agent-dev-tdd-green-YYYYMMDD.md`
 - **Update handoff.md** (overwrite with GREEN phase progress)
 - **Append to tdd-execution.md** (add entry for this phase)
 - **Commit to git** with standardized message

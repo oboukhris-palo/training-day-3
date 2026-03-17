@@ -39,6 +39,16 @@ project-root/
 │   │   ├── test-strategies.md     # Testing approach & BDD scenarios
 │   │   └── ...                    # Other PRD documents
 │   │
+│   ├── logs/                      # 📋 Root-level agent action logs (non-TDD agents)
+│   │   ├── agent-orchestrator-YYYYMMDD.md    # Orchestrator daily action log
+│   │   ├── agent-pm-YYYYMMDD.md              # PM daily action log
+│   │   ├── agent-po-YYYYMMDD.md              # PO daily action log
+│   │   ├── agent-ba-YYYYMMDD.md              # BA daily action log
+│   │   ├── agent-architect-YYYYMMDD.md       # Architect daily action log
+│   │   ├── agent-ux-YYYYMMDD.md              # UX daily action log
+│   │   ├── agent-dev-lead-YYYYMMDD.md        # Dev-Lead daily action log
+│   │   └── agent-qa-YYYYMMDD.md              # QA daily action log
+│   │
 │   ├── user-stories/              # ⭐ Phase 8 Implementation Tracking (ACTIVE during sprints)
 │   │   ├── user-stories.md        # ⭐ MASTER STATUS TRACKING (SSOT) - Not Started | In Progress | Implemented | Delivered
 │   │   ├── project-status.md      # 📊 Project dashboard (epic progress, velocity, blockers, metrics)
@@ -47,13 +57,22 @@ project-root/
 │   │   ├── sprint-2.md            # 📦 ARCHIVED Sprint 2 (closed, with retrospective)
 │   │   └── <US-REF>/              # ✨ Per-story implementation folders
 │   │       ├── <US-REF>.md                      # Story definition (copy of PRD story with enrichment: AC, BDD, UX inputs, API contracts)
-│   │       ├── implementation-plan.md           # Dev-Lead's layer-by-layer technical plan (Layer 1-4)
+│   │       ├── implementation-plan.md           # Dev-Lead's layer-by-layer technical plan (Layer 1-4) - CURRENT version
+│   │       ├── implementation-plan-v1.md        # IMMUTABLE snapshot v1 (historical)
+│   │       ├── implementation-plan-v2.md        # IMMUTABLE snapshot v2 (historical)
+│   │       ├── plan-approval.yaml               # Human validation gate (required before TDD execution)
 │   │       ├── api-design.md                    # API endpoints, schemas, authentication, error codes (if applicable)
 │   │       ├── us-completition-checklist.md    # Definition of Done checklist (acceptance criteria, code quality, validation)
-│   │       ├── tdd-execution.md                # 📋 APPEND-ONLY audit log (cycle summary table)
+│   │       ├── tdd-execution.md                # 📋 APPEND-ONLY audit log (cycle summary table with links to handoffs)
 │   │       ├── features/                       # BDD feature files (Gherkin scenarios driving TDD)
 │   │       │   ├── <domain>-<story-ref>.feature  # Gherkin feature file with Given-When-Then scenarios
 │   │       │   └── <domain>-<story-ref>.steps.ts # Step definitions and failing tests
+│   │       │
+│   │       ├── logs/                           # 📋 Per-story TDD agent action logs
+│   │       │   ├── agent-dev-tdd-YYYYMMDD.md         # TDD Orchestrator daily log
+│   │       │   ├── agent-dev-tdd-red-YYYYMMDD.md     # TDD RED agent daily log
+│   │       │   ├── agent-dev-tdd-green-YYYYMMDD.md   # TDD GREEN agent daily log
+│   │       │   └── agent-dev-tdd-refactor-YYYYMMDD.md # TDD REFACTOR agent daily log
 │   │       │
 │   │       └── tdd-execution/                  # 🔄 TDD Cycle Execution Tracking (per cycle)
 │   │           ├── 001/                        # First TDD cycle
@@ -104,6 +123,16 @@ project-root/
 │   │   ├── user-stories.md        # PRD user stories (source of truth)
 │   │   └── ...
 │   │
+│   ├── logs/                      # 📋 Root-level agent action logs (non-TDD agents)
+│   │   ├── agent-orchestrator-YYYYMMDD.md
+│   │   ├── agent-pm-YYYYMMDD.md
+│   │   ├── agent-po-YYYYMMDD.md
+│   │   ├── agent-ba-YYYYMMDD.md
+│   │   ├── agent-architect-YYYYMMDD.md
+│   │   ├── agent-ux-YYYYMMDD.md
+│   │   ├── agent-dev-lead-YYYYMMDD.md
+│   │   └── agent-qa-YYYYMMDD.md
+│   │
 │   ├── user-stories/              # ⭐ Phase 8 Implementation Tracking (ACTIVE)
 │   │   ├── user-stories.md        # ⭐ MASTER STATUS TRACKING (SSOT)
 │   │   ├── project-status.md      # 📊 Project dashboard
@@ -111,10 +140,18 @@ project-root/
 │   │   ├── sprint-1.md            # 📦 Archived sprints
 │   │   └── <US-REF>/              # Per-story folders (same as greenfield)
 │   │       ├── <US-REF>.md
-│   │       ├── implementation-plan.md
+│   │       ├── implementation-plan.md           # CURRENT version
+│   │       ├── implementation-plan-v1.md        # IMMUTABLE snapshot v1
+│   │       ├── implementation-plan-v2.md        # IMMUTABLE snapshot v2
+│   │       ├── plan-approval.yaml               # Human validation gate
 │   │       ├── api-design.md
 │   │       ├── us-completition-checklist.md
 │   │       ├── features/
+│   │       ├── logs/                            # Per-story TDD agent logs
+│   │       │   ├── agent-dev-tdd-YYYYMMDD.md
+│   │       │   ├── agent-dev-tdd-red-YYYYMMDD.md
+│   │       │   ├── agent-dev-tdd-green-YYYYMMDD.md
+│   │       │   └── agent-dev-tdd-refactor-YYYYMMDD.md
 │   │       └── tdd-execution/
 │   │           └── <TDD-CYCLE>/
 │   │
@@ -490,6 +527,136 @@ Phase 8: Implementation (TDD)
    ├─ Commit: TDD-<US>-REFACTOR-<CYCLE>
    └─ Next: dev-tdd.agent (new cycle or story)
 ```
+
+---
+
+---
+
+## Action Tracing & Agent Logs
+
+### Overview
+
+Starting with Framework 2.0.0, all agent actions are logged to immutable daily files for audit trails, debugging, and process improvement. Logs are scoped by agent type:
+
+- **TDD Agents** (dev-tdd, dev-tdd-red, dev-tdd-green, dev-tdd-refactor): Per-story logs in `/docs/user-stories/<US-REF>/logs/`
+- **Other Agents** (orchestrator, pm, po, ba, architect, ux, dev-lead, qa): Root-level logs in `/docs/logs/`
+
+### Log File Structure
+
+#### TDD Agent Logs (Per-Story)
+
+**Location**: `/docs/user-stories/<US-REF>/logs/agent-{agent_name}-YYYYMMDD.md`
+
+**Examples**:
+- `/docs/user-stories/US-001/logs/agent-dev-tdd-20260317.md`
+- `/docs/user-stories/US-001/logs/agent-dev-tdd-red-20260317.md`
+- `/docs/user-stories/US-001/logs/agent-dev-tdd-green-20260317.md`
+- `/docs/user-stories/US-001/logs/agent-dev-tdd-refactor-20260317.md`
+
+#### Other Agent Logs (Root-Level)
+
+**Location**: `/docs/logs/agent-{agent_name}-YYYYMMDD.md`
+
+**Examples**:
+- `/docs/logs/agent-orchestrator-20260317.md`
+- `/docs/logs/agent-dev-lead-20260317.md`
+- `/docs/logs/agent-pm-20260317.md`
+- `/docs/logs/agent-po-20260317.md`
+- `/docs/logs/agent-ba-20260317.md`
+- `/docs/logs/agent-architect-20260317.md`
+- `/docs/logs/agent-ux-20260317.md`
+- `/docs/logs/agent-qa-20260317.md`
+
+### Log Entry Format
+
+Each agent action is appended to the daily log file with ISO8601 timestamp and structured metadata:
+
+```markdown
+## {TIMESTAMP} | Phase: {RED|GREEN|REFACTOR|...} | Cycle: {cycle_number}
+
+- **Status**: {success|needs-review|blocked}
+- **Layer**: {Layer 1|Layer 2|...} or "N/A"
+- **Files touched**: [path1, path2, ...]
+- **Handoff artifact**: #file:tdd-execution/{cycle}/{cycle}-HO-{PHASE}.{json|md}
+- **Rationale**: {short bullets explaining decisions}
+- **Next step**: {awaiting → to_agent|ready_for_review}
+```
+
+**Example TDD Agent Entry**:
+```markdown
+## 2026-03-17T09:45:33Z | Phase: RED | Cycle: 001
+
+- **Status**: success
+- **Layer**: Layer 1 (Database & Domain Model)
+- **Files touched**: src/tests/BDD/features/auth-003.feature, src/Application/Interfaces/IUserTierService.cs
+- **Handoff artifact**: #file:tdd-execution/001/001-HO-RED.json
+- **Rationale**: Created failing test for user.tier sync with subscription.tier. BDD scenario validates tier consistency.
+- **Next step**: awaiting → dev-tdd-green
+```
+
+**Example Non-TDD Agent Entry**:
+```markdown
+## 2026-03-17T08:30:15Z | Story: US-042 | Action: Plan Created
+
+- **Status**: success
+- **Scope**: Layer 1-4 (Full Implementation)
+- **Files touched**: docs/user-stories/US-042/implementation-plan.md, docs/user-stories/US-042/plan-approval.yaml
+- **Rationale**: Initial plan created; awaiting architect review before approval
+- **Next step**: awaiting → architect
+```
+
+### Log File Conventions
+
+1. **One file per agent per day**: Prevents file bloat, maintains chronological order
+2. **Append-only**: Never edit existing entries; only append new events
+3. **ISO8601 timestamps**: Use UTC timezone (`YYYY-MM-DDTHH:MM:SSZ`)
+4. **Immutable records**: Once written, log entries are never modified
+5. **Daily rotation**: New file created each day (YYYYMMDD format)
+
+### TDD Execution Index vs Action Logs
+
+**Distinction**:
+- **`tdd-execution.md`**: High-level cycle summary table (links to handoffs, status, brief summary)
+- **Action logs (`logs/agent-*.md`)**: Detailed agent actions, rationale, and decisions
+
+**Example tdd-execution.md**:
+```markdown
+| Cycle | Phase | Started | Handoff | Status | Summary |
+|-------|-------|---------|---------|--------|---------|
+| 001 | RED | 2026-03-17T09:45 | [001-HO-RED.json](tdd-execution/001/001-HO-RED.json) | ✅ Passing | User tier validation test (Layer 1) |
+| 001 | GREEN | 2026-03-17T10:12 | [001-HO-GREEN.json](tdd-execution/001/001-HO-GREEN.json) | ✅ Passing | Service layer implements tier sync |
+| 001 | REFACTOR | 2026-03-17T10:45 | [001-HO-REFACTOR.md](tdd-execution/001/001-HO-REFACTOR.md) | ✅ Merged | Extract repository pattern, error handling |
+```
+
+**Corresponding action log** (`logs/agent-dev-tdd-red-20260317.md`):
+```markdown
+## 2026-03-17T09:45:33Z | Phase: RED | Cycle: 001
+
+- **Status**: success
+- **Layer**: Layer 1 (Database & Domain Model)
+- **Files touched**: src/tests/BDD/features/auth-003.feature, src/Application/Interfaces/IUserTierService.cs
+- **Handoff artifact**: #file:tdd-execution/001/001-HO-RED.json
+- **Rationale**: 
+  - Created failing test for user.tier sync with subscription.tier
+  - BDD scenario validates tier consistency across domain models
+  - Test expects UserTierService to throw exception when tiers mismatch
+- **Next step**: awaiting → dev-tdd-green
+```
+
+### Use Cases
+
+1. **Debugging**: Trace exact agent decisions and file changes during TDD cycles
+2. **Audit**: Verify compliance with workflow sequencing and handoff patterns
+3. **Process Improvement**: Identify bottlenecks, repeated failures, or agent inefficiencies
+4. **Knowledge Transfer**: Onboard new team members by reviewing historical decisions
+5. **Rollback**: Recreate state by replaying agent actions from logs
+
+### Maintenance
+
+- **Retention**: Archive logs older than 90 days to prevent context bloat
+- **Review**: Weekly review of action logs for process improvements
+- **Validation**: Ensure agents append logs after every significant action
+- **Cleanup**: Delete logs when user stories are archived or deprecated
 
 ---
 

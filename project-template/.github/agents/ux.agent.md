@@ -1,5 +1,11 @@
 ---
 name: UX/UI Designer (Design & Prototyping)
+version: 1.0.0
+last_updated: 2026-03-17
+breaking_changes: false
+compatible_with:
+  min: "framework-2.0.0"
+  max: "framework-3.x"
 description: Design user experiences and create interactive prototypes with Figma
 argument-hint: Design wireframes, create prototypes, or build design systems
 target: vscode

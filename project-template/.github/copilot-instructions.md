@@ -92,22 +92,146 @@ docs/user-stories/US-001/
 - BDD scenarios from `features/` drive implementation
 - All tests must pass before moving to next phase
 
+---
+
+## 🆕 Framework 2.0.0: Enhanced Features (March 2026)
+
+### 🏷️ Agent Versioning System
+
+**All agents now track versions** with metadata in YAML frontmatter:
+
+```yaml
+---
+name: Agent Name
+version: 1.0.0
+last_updated: 2026-03-17
+breaking_changes: false
+compatible_with:
+  min: "framework-2.0.0"
+  max: "framework-3.x"
+---
+```
+
+**Version Changelog**: `.github/agents/CHANGELOG.md` tracks all agent updates with migration notes
+
+**Git Tags**: `agent/{agent_name}@{version}` (e.g., `agent/dev-tdd-green@1.2.0`)
+
+**Breaking Changes**:
+- Orchestrator prompts for confirmation with diff summary
+- Migration notes required in CHANGELOG
+
+### 📋 Action Tracing & Agent Logs
+
+**Agent actions are logged to immutable daily files** for audit trails and debugging:
+
+**TDD Agents** (per-story):
+- Location: `/docs/user-stories/<US-REF>/logs/agent-{agent_name}-YYYYMMDD.md`
+- Examples: `agent-dev-tdd-red-20260317.md`, `agent-dev-tdd-green-20260317.md`
+
+**Other Agents** (root-level):
+- Location: `/docs/logs/agent-{agent_name}-YYYYMMDD.md`
+- Examples: `agent-orchestrator-20260317.md`, `agent-dev-lead-20260317.md`
+
+**Log Entry Format** (ISO8601 timestamps, append-only):
+```markdown
+## 2026-03-17T09:45:33Z | Phase: RED | Cycle: 001
+
+- **Status**: success
+- **Layer**: Layer 1 (Database & Domain Model)
+- **Files touched**: [file1.cs, file2.sql]
+- **Handoff artifact**: #file:tdd-execution/001/001-HO-RED.json
+- **Rationale**: Created failing test for tier sync validation
+- **Next step**: awaiting → dev-tdd-green
+```
+
+**Use Cases**:
+- Debugging TDD failures
+- Audit trail for compliance
+- Process improvement analysis
+- Knowledge transfer for onboarding
+
+### ✅ Implementation Plan Approval Gate
+
+**Human validation required before TDD execution** via `plan-approval.yaml`:
+
+**Location**: `/docs/user-stories/<US-REF>/plan-approval.yaml`
+
+**Workflow**:
+1. **Dev-Lead creates plan** → Creates `plan-approval.yaml` with `status: changes-requested`
+2. **Dev-Lead reviews checklist** → Validates architecture, dependencies, BDD mapping
+3. **Dev-Lead approves** → Sets `status: approved`
+4. **Orchestrator validates** → Checks approval before launching TDD execution
+5. **Plan modified** → Auto-revokes approval, requires re-review
+
+**Status Values**:
+- `approved`: TDD execution can proceed
+- `changes-requested`: TDD BLOCKED, plan needs revision
+- `revoked`: Auto-set when plan modified after approval
+
+**Approval Checklist** (validated in `plan-approval.yaml`):
+- [ ] Implementation plan follows layer architecture (DB → Service → API → UI)
+- [ ] BDD scenarios map to implementation layers
+- [ ] All external dependencies documented
+- [ ] Database migration order correct
+- [ ] Critical business logic addressed
+- [ ] Error handling strategy defined
+
+**Plan Versioning**:
+- `implementation-plan.md` = CURRENT version (always latest)
+- `implementation-plan-v1.md`, `v2.md` = IMMUTABLE snapshots (historical)
+- When plan modified: Create snapshot, update current, auto-revoke approval
+
+### ⚡ YOLO Mode (Rapid Prototyping)
+
+**Skip approval gate for low-risk stories** with explicit risk acknowledgment:
+
+**Activation**: `@orchestrator YOLO mode for <US-REF> (I acknowledge the risks)`
+
+**Pre-flight Checks** (Auto-executed):
+- ✅ All BDD tests written and failing
+- ✅ Git working tree clean
+- ✅ Implementation plan exists and complete
+- ✅ No open blockers
+
+**Safety Rails**:
+- **Single-cycle lock**: Only ONE TDD cycle allowed
+- **Auto-abort on regression**: Stops if ANY existing test fails
+- **Mandatory review after cycle**: Human review required before continuing
+
+**After YOLO Cycle**:
+- Auto-create `plan-approval.yaml` with `status: changes-requested`
+- Require normal approval for subsequent cycles
+
+**Use Cases**:
+- Rapid prototyping
+- Low-risk bug fixes
+- Experimental features with isolated scope
+- Learning/training scenarios
+
+---
+
 ## 🗂️ Key Files & Their Purpose
 
 | File | Purpose | Update Pattern |
 |------|---------|----------------|
-| `.github/agents/*.agent.md` | Agent system prompts | Read-only (defines your behavior) |
+| `.github/agents/*.agent.md` | Agent system prompts with version metadata | Read-only (defines your behavior) |
+| `.github/agents/CHANGELOG.md` | Agent version history and migration notes | Updated when agents change |
 | `.github/templates/*.template.md` | Document templates | Reference for structure |
+| `.github/templates/plan-approval-tmpl.yaml` | Human validation gate template | Reference for approval files |
 | `.github/workflows/*.workflows.md` | PDLC/Implementation/CI-CD flows | Read-only (workflow definitions) |
 | `.github/workflows/assessment.workflows.md` | **Phase 0**: Client assessment, prerequisites, AI readiness | Reference for discovery phase |
 | `.github/workflows/documents.workflows.md` | **Phases 1-7**: Adaptive PRD generation (Routes A/B/C/D) | Reference for documentation strategy |
-| `.github/workflows/implementation.workflows.md` | **Phase 8**: TDD-driven development execution | Reference for implementation phase |
+| `.github/workflows/implementation.workflows.md` | **Phase 8**: TDD-driven development with approval gates | Reference for implementation phase |
 | `docs/assessment/` | Assessment phase outputs (prerequisites, AI readiness report) | Generated during Phase 0 |
 | `docs/inputs/` | Client-provided materials (epics, docs, interviews, code) | Input source for Phase 0 assessment |
+| `docs/logs/agent-{agent}-YYYYMMDD.md` | Root-level agent action logs (non-TDD agents) | Append-only daily logs |
 | `docs/prd/` | PRD documents (requirements, user-stories, architecture, tech-spec) | Generated during Phases 1-7 |
 | `docs/prd/user-stories.md` | PRD user stories catalog | Generated during documentation phase |
 | `docs/user-stories/user-stories.md` | ⭐ Implementation status tracking (SSOT) | Update as stories progress |
-| `docs/user-stories/<US-REF>/implementation-plan.md` | Layer-by-layer architecture | Frozen after dev-lead creates |
+| `docs/user-stories/<US-REF>/implementation-plan.md` | Layer-by-layer architecture (CURRENT version) | Frozen after approval |
+| `docs/user-stories/<US-REF>/implementation-plan-v{N}.md` | IMMUTABLE plan snapshots (historical) | Created when plan modified |
+| `docs/user-stories/<US-REF>/plan-approval.yaml` | Human validation gate for TDD execution | Created by dev-lead, updated on changes |
+| `docs/user-stories/<US-REF>/logs/agent-{agent}-YYYYMMDD.md` | Per-story TDD agent action logs | Append-only daily logs |
 | `docs/user-stories/<US-REF>/tdd-execution.md` | Cycle summary audit trail | Append-only after each cycle |
 | `docs/user-stories/<US-REF>/tdd-execution/<CYCLE>/*-HO-*.json` | Phase-specific handoffs | Create once per phase |
 
@@ -157,7 +281,43 @@ docs/user-stories/US-001/
 ❌ Modify workflows directly (use orchestrator)  
 ❌ Create new project documentation (only follow templates)
 
-## 📊 Context Optimization
+## � Workflow Enforcement
+
+**CRITICAL: Auto-activated validation system ensures proper workflow usage** 
+
+### Before Any Action
+1. **Check enforcement status**: System validates workflow sequences automatically
+2. **Follow guidance**: Error messages provide clear remediation steps  
+3. **Use overrides when needed**: Expert bypass available with justification
+
+### Enforcement Levels
+- **GUIDANCE_ONLY**: Suggestions only, never blocks (learning/prototype mode)
+- **BALANCED**: Blocks violations, allows justified overrides (recommended default)
+- **STRICT**: Minimal overrides, requires approvals (high-compliance mode)
+
+### Key Validation Points
+- **Workflow Sequencing**: Assessment → Documents → Implementation  
+- **Agent Handoffs**: Proper artifacts required between agent transitions
+- **Quality Gates**: BDD coverage, test coverage, code review standards
+- **Template Compliance**: Use provided templates for structured outputs
+
+### Override System
+```yaml
+# Create when justified deviation needed: docs/.workflow-override.yml
+override_request:
+  rule_violated: "policy_name"
+  justification: "Business reason for deviation" 
+  risk_assessment: "LOW|MEDIUM|HIGH"
+  monitoring_requirements: ["enhanced_testing"]
+```
+
+### Integration Files
+- **Configuration**: `.github/validation/workflow-compliance.yml`
+- **Enforcement Logic**: `.github/validation/workflow-enforcer.md`
+- **Override Guide**: `.github/validation/override-mechanisms.md`
+- **User Guide**: `.github/validation/enforcement-guide.md`
+
+## �📊 Context Optimization
 
 When context is tight:
 - Read only the current layer section from implementation-plan.md

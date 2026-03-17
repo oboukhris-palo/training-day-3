@@ -1,5 +1,11 @@
 ---
 name: Business Analyst (Specifications & Testing)
+version: 1.0.0
+last_updated: 2026-03-17
+breaking_changes: false
+compatible_with:
+  min: "framework-2.0.0"
+  max: "framework-3.x"
 description: Create functional specs, BDD scenarios, and validate feature maturity
 argument-hint: Specify functional requirements, create BDD tests, or validate features
 target: vscode

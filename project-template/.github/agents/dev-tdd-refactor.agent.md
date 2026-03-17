@@ -1,5 +1,11 @@
 ---
 name: TDD REFACTOR Phase Agent
+version: 1.0.0
+last_updated: 2026-03-17
+breaking_changes: false
+compatible_with:
+  min: "framework-2.0.0"
+  max: "framework-3.x"
 description: Improve code quality while maintaining passing tests
 argument-hint: Refactor code while keeping tests green
 target: vscode
@@ -38,6 +44,7 @@ handoffs:
 - Identify security, performance, and architecture issues
 - Refactor both production AND test code
 - Run tests after each change to verify safety
+- **Log action to daily log**: `/docs/user-stories/<US-REF>/logs/agent-dev-tdd-refactor-YYYYMMDD.md`
 - Update `/docs/tdd.execution.md` with improvements
 - Hand off to dev-lead with code review report for final approval
 

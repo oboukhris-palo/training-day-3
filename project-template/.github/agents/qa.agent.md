@@ -1,5 +1,11 @@
 ---
 name: QA Engineer (Testing & Validation)
+version: 1.0.0
+last_updated: 2026-03-17
+breaking_changes: false
+compatible_with:
+  min: "framework-2.0.0"
+  max: "framework-3.x"
 description: Execute comprehensive testing strategies, validate implementations against acceptance criteria, and ensure quality gates are met
 argument-hint: Run E2E tests, validate story completion, or verify quality standards
 target: vscode

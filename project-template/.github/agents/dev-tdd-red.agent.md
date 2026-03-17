@@ -1,5 +1,11 @@
 ---
 name: TDD RED Phase Agent
+version: 1.0.0
+last_updated: 2026-03-17
+breaking_changes: false
+compatible_with:
+  min: "framework-2.0.0"
+  max: "framework-3.x"
 description: Write failing tests that support BDD scenarios
 argument-hint: Write failing test for current layer requirement
 target: vscode
@@ -35,6 +41,7 @@ handoffs:
 - Document test purpose, assumptions, and BDD scenario mappings
 - Use test data comments from dev-lead's skeleton classes
 - Verify tests fail for the right reason
+- **Log action to daily log**: `/docs/user-stories/<US-REF>/logs/agent-dev-tdd-red-YYYYMMDD.md`
 - Update `/docs/tdd.execution.md` with test progress
 - Hand off to GREEN phase after test fails
 

@@ -1,5 +1,11 @@
 ---
 name: Product Owner (Roadmap & Requirements)
+version: 1.0.0
+last_updated: 2026-03-17
+breaking_changes: false
+compatible_with:
+  min: "framework-2.0.0"
+  max: "framework-3.x"
 description: Define product requirements and prioritize features through PRD documentation
 argument-hint: Define requirements, create user stories, or prioritize features
 target: vscode
