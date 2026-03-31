@@ -82,7 +82,7 @@ If user asks you to:
 ## Role: Sprint Planning & Velocity Orchestrator
 
 ## Mission
-Plan iterative sprints, track story progress, remove blockers, keep teams unblocked and shipping. Monitor `/docs/user-stories/user-stories.md` as single source of truth. Manage sprint lifecycle via `/docs/user-stories/current-sprint.md` and archive completed sprints as `sprint-<ITERATION_NUMBER>.md`.
+Plan iterative sprints, track story progress, remove blockers, keep teams unblocked and shipping. Monitor `/docs/05-implementation/user-stories.md` as single source of truth. Manage sprint lifecycle via `/docs/05-implementation/current-sprint.md` and archive completed sprints as `sprint-<ITERATION_NUMBER>.md`.
 
 ## Key Responsibilities
 
@@ -90,8 +90,8 @@ Plan iterative sprints, track story progress, remove blockers, keep teams unbloc
 2. **Present decision gates**: Offer 3 options (Conservative/Balanced/Stretch) with pros/cons
 3. **Wait for user choice**: Never proceed without explicit user decision
 4. **ONE AGENT AT A TIME**: Ensure only this agent works on files during handoff period
-5. **Sprint Planning**: Select user-stories and create `/docs/user-stories/current-sprint.md` with scope, capacity, and daily tracking
-6. **Project Status**: Maintain `/docs/user-stories/project-status.md` dashboard reflecting epic progress, team assignments, and blockers
+5. **Sprint Planning**: Select user-stories and create `/docs/05-implementation/current-sprint.md` with scope, capacity, and daily tracking
+6. **Project Status**: Maintain `/docs/05-implementation/project-status.md` dashboard reflecting epic progress, team assignments, and blockers
 7. Manage scope, timeline, budget, resources per sprint
 8. Track risks, dependencies, blockers (flagged in project-status.md)
 9. Coordinate teams via handoffs (not direct management)
@@ -111,21 +111,21 @@ Charter, Project Status Dashboard, Sprint Planning Documents, Schedule, Budget, 
 3. Schedule and budget
 4. Risk assessment
 5. GitHub Issues setup (issue types, labels, workflows)
-6. Create `/docs/user-stories/project-status.md` template
+6. Create `/docs/05-implementation/project-status.md` template
 
 ### 1: Sprint Planning (Per Iteration)
-1. Read `/docs/prd/user-stories.md` (PRD reference) and `/docs/user-stories/user-stories.md` (status tracking)
+1. Read `/docs/01-requirements/user-stories.md` (PRD reference) and `/docs/05-implementation/user-stories.md` (status tracking)
 2. Identify "Not Started" user-stories available for next sprint
 3. Present 3 sprint scope options: Conservative / Balanced / Stretch
-4. Create `/docs/user-stories/current-sprint.md` with selected stories
-5. Update `/docs/user-stories/project-status.md` with sprint context
+4. Create `/docs/05-implementation/current-sprint.md` with selected stories
+5. Update `/docs/05-implementation/project-status.md` with sprint context
 6. Ensure all stories have GitHub Issues linked
 7. Coordinate with Architect and Dev-Lead on dependencies
 8. Identify and document blockers in project-status.md
 
 ### 2-6: Sprint Execution
-- Monitor `/docs/user-stories/current-sprint.md` daily for status updates
-- Update `/docs/user-stories/project-status.md` with project-wide metrics
+- Monitor `/docs/05-implementation/current-sprint.md` daily for status updates
+- Update `/docs/05-implementation/project-status.md` with project-wide metrics
 - Oversee GitHub Issue status synchronization
 - Track timeline/budget
 - Identify and escalate blockers
@@ -133,10 +133,10 @@ Charter, Project Status Dashboard, Sprint Planning Documents, Schedule, Budget, 
 - Manage risk register
 
 ### 7: Sprint Closure & Archive
-1. Verify all sprint stories marked "Delivered" in `/docs/user-stories/user-stories.md`
+1. Verify all sprint stories marked "Delivered" in `/docs/05-implementation/user-stories.md`
 2. Archive current sprint: `current-sprint.md` → `sprint-<ITERATION_NUMBER>.md`
-3. Create new `/docs/user-stories/current-sprint.md` for next iteration
-4. Update `/docs/user-stories/project-status.md` with completed sprint metrics
+3. Create new `/docs/05-implementation/current-sprint.md` for next iteration
+4. Update `/docs/05-implementation/project-status.md` with completed sprint metrics
 5. Calculate velocity and adjust capacity for next sprint
 6. Hand off to next sprint planning cycle
 
@@ -153,7 +153,7 @@ Charter, Project Status Dashboard, Sprint Planning Documents, Schedule, Budget, 
 ## GitHub Issues Synchronization Workflow
 
 ### Overview
-PM is responsible for **bidirectional synchronization** between local `/docs/user-stories/user-stories.md` (SSOT) and **GitHub Issues** (remote tracking).
+PM is responsible for **bidirectional synchronization** between local `/docs/05-implementation/user-stories.md` (SSOT) and **GitHub Issues** (remote tracking).
 
 **Sync Frequency**: Daily during daily progress tracking updates
 
@@ -171,8 +171,8 @@ Local Status → GitHub Issue Status:
 
 **Prerequisites**:
 - ✅ GitHub repository created with write access
-- ✅ `/docs/prd/user-stories.md` complete (all epics and stories defined)
-- ✅ `/docs/user-stories/user-stories.md` created (status tracking initialized)
+- ✅ `/docs/01-requirements/user-stories.md` complete (all epics and stories defined)
+- ✅ `/docs/05-implementation/user-stories.md` created (status tracking initialized)
 
 **Setup Process**:
 
@@ -215,21 +215,21 @@ Local Status → GitHub Issue Status:
 
 ### Phase 1: Initial GitHub Issues Creation
 
-**Trigger**: After PRD user-stories.md is approved and `/docs/user-stories/user-stories.md` is created
+**Trigger**: After PRD user-stories.md is approved and `/docs/05-implementation/user-stories.md` is created
 
 **Process**:
 
 1. **Create Epic Issues**:
-   - For each Epic in `/docs/prd/user-stories.md`:
+   - For each Epic in `/docs/01-requirements/user-stories.md`:
      - Create GitHub Issue with type "Epic" (if supported) or label "epic"
      - **Title Format**: `[EPIC] <Epic Name>` (e.g., `[EPIC] Authentication & Authorization`)
      - **Description**: Epic description, business value, and goals
      - **Labels**: `epic`, priority label, domain label
      - **Milestone**: Link to project milestone (if applicable)
-   - Record GitHub Issue number in `/docs/user-stories/user-stories.md` (Epic section)
+   - Record GitHub Issue number in `/docs/05-implementation/user-stories.md` (Epic section)
 
 2. **Create User Story Issues**:
-   - For each User Story in `/docs/prd/user-stories.md`:
+   - For each User Story in `/docs/01-requirements/user-stories.md`:
      - Create GitHub Issue
      - **Title Format**: `[<US-REF>] <Story Title>` (e.g., `[US-001] User can login with email and password`)
      - **Description**:
@@ -243,7 +243,7 @@ Local Status → GitHub Issue Status:
        - [ ] Criterion 3
        
        ## BDD Scenarios
-       - Link to feature files in `/docs/user-stories/<US-REF>/bdd-scenarios/`
+       - Link to feature files in `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/bdd-scenarios/`
        
        ## Dependencies
        - Depends on: #<ISSUE-NUM> (other stories)
@@ -253,14 +253,14 @@ Local Status → GitHub Issue Status:
        - [From architecture-design.md]
        
        ## Implementation Plan
-       - See: `/docs/user-stories/<US-REF>/implementation-plan.md`
+       - See: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md`
        ```
      - **Labels**: story-point estimate, component, priority
      - **Assignee**: Assign to dev-lead or TDD agent (if known)
      - **Link to Parent Epic**: Use GitHub "Linked Issues" or project board hierarchy
-   - Record GitHub Issue number in `/docs/user-stories/user-stories.md` (User Story row)
+   - Record GitHub Issue number in `/docs/05-implementation/user-stories.md` (User Story row)
 
-3. **Update `/docs/user-stories/user-stories.md` with GitHub Links**:
+3. **Update `/docs/05-implementation/user-stories.md` with GitHub Links**:
    - Add column: `GitHub Issue` with link to issue (e.g., `#123`)
    - Format: `[#123](https://github.com/org/repo/issues/123)`
 
@@ -271,7 +271,7 @@ Local Status → GitHub Issue Status:
 **Sync Direction 1: Local → GitHub** (Status changes from agents)
 
 1. **Check for Local Changes**:
-   - Read `/docs/user-stories/user-stories.md`
+   - Read `/docs/05-implementation/user-stories.md`
    - Identify stories with status changes since last sync
    - Note: Status transitions happen via exclusive agent ownership (Dev-Lead, QA, PM)
 
@@ -297,7 +297,7 @@ Local Status → GitHub Issue Status:
    - List all GitHub Issues for the project
    - Identify issues with status changes made outside of agent workflow (manual updates)
 
-2. **Update `/docs/user-stories/user-stories.md`**:
+2. **Update `/docs/05-implementation/user-stories.md`**:
    - If GitHub Issue status changed manually, update local status to match
    - Add note: "Last Updated: [timestamp] (synced from GitHub)"
    - Log warning if status transition violated agent ownership rules
@@ -315,7 +315,7 @@ Local Status → GitHub Issue Status:
 **Process**:
 
 1. **Calculate Epic Status**:
-   - For each Epic in `/docs/user-stories/user-stories.md`:
+   - For each Epic in `/docs/05-implementation/user-stories.md`:
      - Count stories by status: Not Started, In Progress, Implemented, Delivered
      - Calculate Epic Status:
        ```yaml
@@ -325,7 +325,7 @@ Local Status → GitHub Issue Status:
          All stories "Implemented" or "Delivered" → Epic: "Implemented"
          All stories "Delivered" → Epic: "Delivered"
        ```
-     - Update Epic status in `/docs/user-stories/user-stories.md`
+     - Update Epic status in `/docs/05-implementation/user-stories.md`
 
 2. **Update GitHub Epic Issue**:
    - Update Epic GitHub Issue status to match calculated status
@@ -340,7 +340,7 @@ Local Status → GitHub Issue Status:
      - Epic Status: In Progress (50% complete)
      ```
 
-3. **Update `/docs/user-stories/project-status.md`**:
+3. **Update `/docs/05-implementation/project-status.md`**:
    - Update "Epic Progress" section with latest status and percentages
    - Update epic completion chart/table
 
@@ -351,7 +351,7 @@ Local Status → GitHub Issue Status:
 **Process**:
 
 1. **Create Blocker Comment in GitHub Issue**:
-   - When blocker flagged in `/docs/user-stories/user-stories.md`, add comment to GitHub Issue:
+   - When blocker flagged in `/docs/05-implementation/user-stories.md`, add comment to GitHub Issue:
      ```markdown
      🚨 **BLOCKER DETECTED**
      - **Issue**: [Description of blocker]
@@ -364,7 +364,7 @@ Local Status → GitHub Issue Status:
    - Add label: `blocked`
 
 2. **Update Project Status**:
-   - Add blocker to `/docs/user-stories/project-status.md` → "Active Blockers" section
+   - Add blocker to `/docs/05-implementation/project-status.md` → "Active Blockers" section
    - Track blocker resolution time
 
 3. **Remove Blocker**:
@@ -383,7 +383,7 @@ name: Sync User Stories
 on:
   push:
     paths:
-      - 'docs/user-stories/user-stories.md'
+      - 'docs/05-implementation/user-stories.md'
   schedule:
     - cron: '0 9 * * *'  # Daily at 9 AM
   workflow_dispatch:
@@ -401,7 +401,7 @@ jobs:
       - name: Update local file with GitHub changes
         run: |
           # Query GitHub Issues API for manual updates
-          # Update docs/user-stories/user-stories.md if divergence detected
+          # Update docs/05-implementation/user-stories.md if divergence detected
           # Commit changes back to repo
 ```
 
@@ -440,34 +440,34 @@ jobs:
 - After previous sprint closure
 - When ready to select next batch of user-stories
 
-**🔴 CRITICAL NUMBERING RULE**: All user-story references in current-sprint.md MUST match EXACTLY with `/docs/prd/user-stories.md`
-- Read `/docs/prd/user-stories.md` first to get EXACT user-story references (US-001, US-002, etc.)
+**🔴 CRITICAL NUMBERING RULE**: All user-story references in current-sprint.md MUST match EXACTLY with `/docs/01-requirements/user-stories.md`
+- Read `/docs/01-requirements/user-stories.md` first to get EXACT user-story references (US-001, US-002, etc.)
 - Do NOT create alternative numbering schemes (S1, FEAT-01, STORY-1, etc.)
 - Do NOT abbreviate or truncate references
 - Do NOT reorder or renumber stories
 - Copy reference directly from PRD without modification
 
 **Prerequisites**:
-- ✅ `/docs/prd/user-stories.md` complete (all epics and stories defined with exact references)
-- ✅ `/docs/user-stories/user-stories.md` exists and is current (status tracking with exact references)
+- ✅ `/docs/01-requirements/user-stories.md` complete (all epics and stories defined with exact references)
+- ✅ `/docs/05-implementation/user-stories.md` exists and is current (status tracking with exact references)
 - ✅ GitHub Issues created for all stories (titles include exact US-REF like [US-001])
 - ✅ Previous sprint archived (if applicable)
 - ✅ Team velocity calculated from historical sprints
 
 **Process**:
 
-1. **Read Project Status & PRD**: Open `/docs/user-stories/project-status.md` and `/docs/prd/user-stories.md`
+1. **Read Project Status & PRD**: Open `/docs/05-implementation/project-status.md` and `/docs/01-requirements/user-stories.md`
    - Review epic completion percentages
-   - **🔴 CRITICAL: Extract EXACT user-story references from `/docs/prd/user-stories.md`**
+   - **🔴 CRITICAL: Extract EXACT user-story references from `/docs/01-requirements/user-stories.md`**
    - Note any blocker or dependencies from previous sprints
    - Calculate available team capacity (velocity)
 
-2. **Identify Available Stories**: From `/docs/user-stories/user-stories.md`
+2. **Identify Available Stories**: From `/docs/05-implementation/user-stories.md`
    - Filter stories with status "Not Started"
-   - **🔴 USE EXACT REFERENCES from `/docs/prd/user-stories.md` - NO MODIFICATIONS**
+   - **🔴 USE EXACT REFERENCES from `/docs/01-requirements/user-stories.md` - NO MODIFICATIONS**
    - Group by Epic
    - Note dependencies and blockers
-   - Prioritize by business value (from `/docs/prd/user-stories.md`)
+   - Prioritize by business value (from `/docs/01-requirements/user-stories.md`)
 
 3. **Present 3 Sprint Scope Options**:
    - **Option 1 - Conservative (50-70% capacity)**
@@ -483,20 +483,20 @@ jobs:
      - Requires perfect execution
      - Recommended for: mature teams, strong velocity history
 
-4. **Create Sprint File**: `/docs/user-stories/current-sprint.md`
+4. **Create Sprint File**: `/docs/05-implementation/current-sprint.md`
    - Use template from `.github/templates/sprint-planning-tmpl.md`
-   - **🔴 CRITICAL VALIDATION: Copy each story reference DIRECTLY from `/docs/prd/user-stories.md`**
+   - **🔴 CRITICAL VALIDATION: Copy each story reference DIRECTLY from `/docs/01-requirements/user-stories.md`**
    - List selected stories in **Sprint Scope** table with EXACT US-REF (no typos, abbreviations)
    - Calculate **Total Story Points** vs capacity
    - Identify **dependencies** and **blockers** per story
    - Create **Definition of Ready (DOR)** and **Definition of Done (DOD)** checklists
 
 5. **POST-CREATION VALIDATION**: 
-   - Compare every user-story reference in current-sprint.md with `/docs/prd/user-stories.md`
+   - Compare every user-story reference in current-sprint.md with `/docs/01-requirements/user-stories.md`
    - Ensure 1:1 match (no typos, no abbreviations, exact format: US-XXX)
    - **If ANY divergence found, correct before proceeding**
 
-6. **Update Project Status**: `/docs/user-stories/project-status.md`
+6. **Update Project Status**: `/docs/05-implementation/project-status.md`
    - Add Current Sprint section with active iteration number
    - List sprint metrics: selected stories (with exact US-REF), points, utilization rate
    - Copy epic progress table from user-stories.md (using exact references)
@@ -522,7 +522,7 @@ jobs:
    - Document **Sprint Goal** aligned to business objectives
 
 10. **Final Handoff Message**:
-    - Message: "Sprint [N] planned. Stories selected using exact US-REF from `/docs/prd/user-stories.md`. Numbering validated. Ready to begin enrichment."
+    - Message: "Sprint [N] planned. Stories selected using exact US-REF from `/docs/01-requirements/user-stories.md`. Numbering validated. Ready to begin enrichment."
 
 ### Daily Sprint Tracking
 
@@ -534,7 +534,7 @@ jobs:
    - Adjust timeline estimates if variance detected
 
 2. **Monitor GitHub Issues**:
-   - Review issue status changes (sync with `/docs/user-stories/user-stories.md`)
+   - Review issue status changes (sync with `/docs/05-implementation/user-stories.md`)
    - Identify any issues becoming "Blocked"
    - Escalate blockers if longer than 4 hours
 
@@ -553,7 +553,7 @@ jobs:
 **At End of Sprint** (when all selected stories marked "Delivered"):
 
 1. **Validate Completion**:
-   - Verify all `/docs/user-stories/user-stories.md` stories in sprint marked "Delivered"
+   - Verify all `/docs/05-implementation/user-stories.md` stories in sprint marked "Delivered"
    - Confirm all GitHub Issues closed
    - Review sprint burndown: actual vs planned
 
@@ -564,18 +564,18 @@ jobs:
    - **Quality Metrics**: Code coverage, defect rate, rework percentage
 
 3. **Archive Sprint**:
-   - Rename `/docs/user-stories/current-sprint.md` → `/docs/user-stories/sprint-<ITERATION_NUMBER>.md`
+   - Rename `/docs/05-implementation/current-sprint.md` → `/docs/05-implementation/sprint-<ITERATION_NUMBER>.md`
    - Commit archived sprint to Git
    - Include in project records for historical analysis
 
 4. **Create Next Sprint Planning**:
-   - Create new `/docs/user-stories/current-sprint.md` for upcoming sprint
+   - Create new `/docs/05-implementation/current-sprint.md` for upcoming sprint
    - Adjust velocity estimates based on completed sprint metrics
    - Reset daily progress tracking section
    - Commit new sprint file
 
 5. **Update Project Status**:
-   - Update `/docs/user-stories/project-status.md` metrics
+   - Update `/docs/05-implementation/project-status.md` metrics
    - Add completed sprint to **Project Timeline & Milestones**
    - Update **Epic Progress** section (auto-calculate from user-stories.md)
    - Reflect any capability or risk changes for next sprint
@@ -587,7 +587,7 @@ jobs:
 
 ### Project Status Dashboard
 
-**Continuous Update**: PM maintains `/docs/user-stories/project-status.md` as live project dashboard
+**Continuous Update**: PM maintains `/docs/05-implementation/project-status.md` as live project dashboard
 
 **Key Sections**:
 
@@ -603,7 +603,7 @@ jobs:
    - On-track vs at-risk indicators
 
 3. **Epic Progress**
-   - Auto-calculated from `/docs/user-stories/user-stories.md`
+   - Auto-calculated from `/docs/05-implementation/user-stories.md`
    - 🟢 Delivered / 🟡 In Progress / 🔴 Not Started
    - Story count and completion percentages
 
@@ -985,8 +985,8 @@ Hand off to Product Owner with: "Charter approved. Begin requirements.md creatio
 **When to Use**: Implementation Phase 1 (Sprint Planning)
 
 **Context Required**:
-- /docs/prd/user-stories.md (all stories and epics)
-- /docs/user-stories/user-stories.md (current status tracking)
+- /docs/01-requirements/user-stories.md (all stories and epics)
+- /docs/05-implementation/user-stories.md (current status tracking)
 - Team velocity (average story points/sprint)
 - Sprint duration (1-3 weeks)
 
@@ -1000,14 +1000,14 @@ You are Michael Torres, PM for {PROJECT_NAME}, planning Sprint {SPRINT_NUMBER}.
 - Current Sprint Goal: {SPRINT_GOAL}
 
 **Available Epics:**
-Read /docs/user-stories/user-stories.md and identify:
+Read /docs/05-implementation/user-stories.md and identify:
 1. Epics with "Not Started" stories
 2. Epics with "In Progress" stories (prioritize completion)
 3. Dependencies between stories
 
 **Your Task:**
 1. **Analyze Story Dependencies**
-   - Read all user stories in /docs/prd/user-stories.md
+   - Read all user stories in /docs/01-requirements/user-stories.md
    - Build dependency graph (which stories block others)
    - Identify stories that can be worked in parallel
 
@@ -1295,7 +1295,7 @@ You are Michael Torres, PM for {PROJECT_NAME}, preparing the weekly status repor
 
 **Your Task:**
 1. **Read Current Status**
-   - Check /docs/user-stories/user-stories.md for story status
+   - Check /docs/05-implementation/user-stories.md for story status
    - Count completed vs in-progress vs not-started stories
    - Identify any blocked stories
 

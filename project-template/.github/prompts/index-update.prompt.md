@@ -1,41 +1,66 @@
----
-agent: agent
----
-# **Update Repository Index **
+## Objective
+Maintain accurate repository documentation by updating the comprehensive index file with current repository structure, file counts, and navigation links.
 
+## Context
+You are maintaining AI-first delivery assessment repository documentation. The INDEX.md serves as the master navigation guide for all stakeholders and must reflect the current state of the repository accurately.
 
-## Prompt Content
+## Requirements
 
-Update the repository documentation to reflect the current state of the Gen-e2 assessment project, ensuring accurate navigation for continuity across assessment activities.
+### Repository Analysis
+1. **Comprehensive Directory Scan**: Analyze all repository sections and subsections
+2. **File Inventory**: Count all files by type and category
+3. **Structure Validation**: Verify all directory paths and file references
+4. **Content Integration**: Add newly created files and directories to appropriate sections
+5. **Statistical Updates**: Recalculate all counts, template numbers, and project metrics
 
-### Objective
-Maintain accurate and current repository documentation by updating the comprehensive index file with the latest repository structure and file counts.
+### Index Maintenance
+- Update file counts and statistics to reflect current state
+- Add new content and remove obsolete references
+- Validate all file path links for accessibility
+- Maintain alphabetical ordering and consistent formatting
+- Update "Last Updated" timestamp to current date
+- Ensure cross-references between related sections
 
-### Context
-You are maintaining the Assessment repository documentation. The INDEX.md serves as the comprehensive navigation guide for all stakeholders.
+## Deliverables
 
-### Requirements
+### 1. Updated INDEX.md
+Comprehensive repository navigation with:
+- **Current Structure**: Accurate directory tree and organization
+- **File Statistics**: Updated counts for all file types and categories
+- **Navigation Links**: Valid paths to all major documents and templates
+- **Project Metrics**: Current assessment progress and completion status
+- **Template Inventory**: Count and categorization of available templates
+- **Workflow References**: Links to process definitions and guidelines
 
-#### For INDEX.md Updates
-1. **Repository Structure Scan**: Perform comprehensive directory and file analysis across all repository sections
-2. **Statistical Updates**: Recalculate and update all file counts, template numbers, and project statistics
-3. **New Content Integration**: Add any newly created files, directories, or assessment materials to appropriate sections
-4. **Link Validation**: Ensure all file path references are accurate and accessible
-5. **Date Synchronization**: Update "Last Updated" timestamp to current date
-6. **Consistency Verification**: Maintain alphabetical ordering and consistent formatting throughout
+### 2. Verification Summary
+Brief confirmation report including:
+- Number of files added/removed since last update
+- New directories or structural changes
+- Statistics updates performed
+- Any broken links identified and fixed
+- Date and scope of updates completed
 
-### Deliverables
-1. **Updated INDEX.md**: Complete repository index with current structure, accurate file counts, and proper navigation links
-2. **Verification Summary**: Brief confirmation of updates made and statistics refreshed
+## Quality Standards
 
-### Quality Standards
-- ✅ All file counts and statistics accurately reflect current repository state
-- ✅ INDEX.md maintains comprehensive navigation structure per repository conventions
+- ✅ All file counts accurately reflect current repository state
+- ✅ INDEX.md maintains comprehensive navigation per repository conventions
 - ✅ All file paths are valid and accessible
-- ✅ Professional formatting per Gen-e2 documentation standards
+- ✅ Professional formatting follows AI-first delivery documentation standards
+- ✅ Consistent structure and alphabetical organization maintained
+- ✅ Cross-references between sections are accurate
+- ✅ Timestamp updated to reflect current maintenance date
 
-### File Management
-- **Primary Files**: `/INDEX.md`
-- **Source Analysis**: Scan entire repository structure for comprehensive inventory
-- **Backup Consideration**: Preserve existing content structure while updating statistics and references
-- **Cross-Reference Validation**: Ensure consistency between INDEX.md references and actual file locations
+## File Management
+
+### Primary Target
+- **Main File**: `/INDEX.md` (or `docs/INDEX.md` if applicable)
+- **Backup Consideration**: Preserve existing structure while updating content
+- **Source Analysis**: Scan entire repository for comprehensive coverage
+
+### Update Process
+1. Perform full repository structure analysis
+2. Calculate current file statistics and counts
+3. Identify new content requiring index entries
+4. Validate all existing file path references
+5. Update index content with new structure and statistics
+6. Verify cross-references and navigation consistency

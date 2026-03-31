@@ -1,13 +1,13 @@
 # User Story Folder Template
 
-**Purpose**: This template defines the REQUIRED files for every user story folder under `/docs/user-stories/<US-REF>/`. Tech Lead creates these files upfront (skeleton stubs); agents populate them as they work.
+**Purpose**: This template defines the REQUIRED files for every user story folder under `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/`. Tech Lead creates these files upfront (skeleton stubs); agents populate them as they work.
 
 ---
 
 ## Folder Structure (Create Upfront)
 
 ```
-/docs/user-stories/<US-REF>/
+/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/
 ├── <US-REF>.md                          # Story definition + acceptance criteria (link to PRD version)
 ├── implementation-plan.md                # Concise layer-by-layer architecture (max 500 words/layer)
 ├── api-design.md                        # API endpoints, schemas, authentication (if applicable)
@@ -38,7 +38,7 @@
 **Created by**: Tech Lead (skeleton, links to PRD)  
 **Updated by**: No one (read-only reference to PRD version)  
 **Purpose**: Single source of truth for story definition  
-**Content**: Link to `/docs/prd/user-stories/{US-REF}.md` + acceptance criteria
+**Content**: Link to `/docs/01-requirements/user-stories.md#{US-REF}` + acceptance criteria
 
 **Life Cycle**:
 - Tech Lead creates stub with link
@@ -49,7 +49,7 @@
 ```markdown
 # US-001: User Registration
 
-**Source**: [/docs/prd/user-stories.md#US-001](/docs/prd/user-stories.md#US-001)
+**Source**: [/docs/01-requirements/user-stories.md#US-001](/docs/01-requirements/user-stories.md#US-001)
 
 **Acceptance Criteria**:
 1. User can register with email + password
@@ -377,7 +377,7 @@ None
 Before handing off to TDD agents, Dev-Lead ensures:
 
 ```
-✅ Created folder: /docs/user-stories/<US-REF>/
+✅ Created folder: /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/
 ✅ Created <US-REF>.md (link to PRD, acceptance criteria)
 ✅ Created implementation-plan.md (500 words/layer max)
 ✅ Created api-design.md (if applicable)
@@ -428,7 +428,7 @@ Examples:
 ### T=0 (Dev-Lead - Phase 3, Implementation Planning)
 ```
 Dev-Lead creates:
-/docs/user-stories/US-001/
+/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/
 ├── US-001.md (stub: link to PRD)
 ├── implementation-plan.md (500 words per layer)
 ├── api-design.md (if applicable)
@@ -482,7 +482,7 @@ Dev-TDD RED starts new cycle:
 
 ### T=∞ (After All Cycles Complete)
 ```
-/docs/user-stories/US-001/
+/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/
 ├── US-001.md (unchanged reference)
 ├── implementation-plan.md (frozen reference)
 ├── api-design.md (if created)
@@ -529,7 +529,7 @@ tdd-execution.md contains:
 ## Summary
 
 **Create Upfront (Tech Lead)**:
-- ✅ Folder `/docs/user-stories/<US-REF>/`
+- ✅ Folder `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/`
 - ✅ 5 files: {US-REF}.md, implementation-plan.md, handoff.md, tdd-execution.md, bdd-scenarios/
 
 **Agents Populate During TDD**:

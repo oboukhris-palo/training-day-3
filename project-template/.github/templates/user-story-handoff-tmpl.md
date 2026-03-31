@@ -1,6 +1,6 @@
 # TDD Cycle Handoff: {USER-STORY-REF} - Cycle {CYCLE_NUMBER}
 
-**⚠️ FILE LOCATION: `docs/user-stories/{US-REF}/tdd-execution/{CYCLE_NUMBER}/{CYCLE_NUMBER}-HO-{PHASE}.{json|md}`**  
+**⚠️ FILE LOCATION: `docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/tdd-execution/{CYCLE_NUMBER}/{CYCLE_NUMBER}-HO-{PHASE}.{json|md}`**  
 **⚠️ NOTE: This file is created ONCE per phase and becomes permanent historical record. Summary goes to append-only `tdd-execution.md`.**
 
 ---

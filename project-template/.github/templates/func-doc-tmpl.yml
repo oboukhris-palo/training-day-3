@@ -166,22 +166,22 @@ future_enhancements:
 
 references:
   - "[Related documents, RFCs, standards]"
-  - "user_stories: docs/prd/user-stories.md"
-  - "architecture: docs/prd/architecture-design.md"
+  - "user_stories: docs/01-requirements/user-stories.md"
+  - "architecture: docs/02-architecture/architecture-design.md"
 
 related_documents:
   references:
     - doc_type: "user_stories"
-      link: "docs/prd/user-stories.md"
+      link: "docs/01-requirements/user-stories.md"
       rationale: "User stories implementing this feature"
     - doc_type: "tech_spec"
-      link: "docs/prd/tech-spec.md"
+      link: "docs/02-architecture/tech-spec.md"
       rationale: "Technical specifications and constraints"
     - doc_type: "code_review_checklist"
       link: ".github/templates/code-review-checklist.template.md"
       rationale: "Quality standards for implementation"
     - doc_type: "design_system"
-      link: "docs/prd/design-systems.md"
+      link: "docs/02-architecture/design-systems.md"
       rationale: "Design guidelines and components"
     - doc_type: "system_status_definitions"
       link: ".github/templates/SYSTEM-STATUS-DEFINITIONS.md"

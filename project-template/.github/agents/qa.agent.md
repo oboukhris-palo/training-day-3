@@ -137,14 +137,14 @@ Execute comprehensive testing strategies to validate implemented features agains
 
 ### Phase 6: Story Validation (Implementation Complete)
 
-**Trigger**: Dev-Lead marks story status "Implemented" in `/docs/user-stories/user-stories.md` and GitHub Issue
+**Trigger**: Dev-Lead marks story status "Implemented" in `/docs/05-implementation/user-stories.md` and GitHub Issue
 
 **Activities**:
 
 1. **Preparation**:
    - 🎯 ANNOUNCE: "Ready to validate story <US-REF>. Running comprehensive test suite."
-   - Read `/docs/user-stories/<US-REF>/<US-REF>.md` for acceptance criteria and BDD scenarios
-   - Read `/docs/user-stories/<US-REF>/us-completition-checklist.md` for DoD items
+   - Read `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md` for acceptance criteria and BDD scenarios
+   - Read `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/us-completition-checklist.md` for DoD items
    - Verify GitHub Issue status is "Implemented"
    - Review implementation artifacts: test coverage reports, code review results
 
@@ -155,27 +155,27 @@ Execute comprehensive testing strategies to validate implemented features agains
 
 3. **Execute E2E Tests**:
    - Run Playwright test suite for the implemented story
-   - Execute all BDD scenarios from `/docs/user-stories/<US-REF>/bdd-scenarios/`
+   - Execute all BDD scenarios from `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/bdd-scenarios/`
    - Test cross-browser compatibility (Chrome, Firefox, Safari, Edge)
    - Test responsive design (desktop, tablet, mobile viewports)
-   - Validate API contracts against `/docs/user-stories/<US-REF>/api-design.md`
+   - Validate API contracts against `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/api-design.md`
    - Run accessibility tests (axe-core, keyboard navigation, screen reader)
    - Performance testing: Response time validation, load testing (if applicable)
    - Security testing: Input validation, auth/authz, injection prevention
 
 4. **Verify Acceptance Criteria**:
-   - Read acceptance criteria from `/docs/user-stories/<US-REF>/<US-REF>.md`
+   - Read acceptance criteria from `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md`
    - Check each criterion against actual implementation
    - Document pass/fail status in test report
 
 5. **Update DoD Checklist**:
-   - Open `/docs/user-stories/<US-REF>/us-completition-checklist.md`
+   - Open `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/us-completition-checklist.md`
    - Mark each item as ✅ (complete) or ❌ (failed)
    - Document any deviations or concerns
 
 6. **Execute Validation Decision**:
    - **Option A - PASS**: All tests pass, all acceptance criteria met, DoD complete
-     - **Update story status**: Change status in `/docs/user-stories/user-stories.md` from "Implemented" → "Delivered"
+     - **Update story status**: Change status in `/docs/05-implementation/user-stories.md` from "Implemented" → "Delivered"
      - **Update GitHub Issue**: Change status to "Done", add comment: "QA validation complete. All acceptance criteria met. All E2E tests passing. Ready for stakeholder acceptance."
      - **Update project-status.md**: Update quality metrics (test pass rate, bug count)
      - **Notify PM**: Story delivered and ready for sprint closure
@@ -205,7 +205,7 @@ Execute comprehensive testing strategies to validate implemented features agains
 4. **Validate Acceptance Criteria**:
    - For each criterion in `<US-REF>.md`, manually verify or automated test coverage
    - Document validation status: ✅ Pass / ❌ Fail / ⚠️ Partial
-   - Update `/docs/user-stories/<US-REF>/us-completition-checklist.md`
+   - Update `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/us-completition-checklist.md`
 
 5. **BDD Scenario Validation**:
    - Verify all Gherkin scenarios from `features/<domain>/<story-ref>.feature` pass
@@ -265,8 +265,8 @@ Execute comprehensive testing strategies to validate implemented features agains
     - Hand off to Dev-Lead: "Validation failed for <US-REF> (Issue #<ISSUE-NUM>). [N] bugs found. See issue comments for details."
 
 13. **Success Path** (all tests pass):
-    - Update `/docs/user-stories/<US-REF>/us-completition-checklist.md`: Mark all items ✅
-    - Update `/docs/user-stories/user-stories.md`: Mark status "Delivered"
+    - Update `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/us-completition-checklist.md`: Mark all items ✅
+    - Update `/docs/05-implementation/user-stories.md`: Mark status "Delivered"
     - Update GitHub Issue:
       - Change status "Implemented" → "Delivered"
       - Add ✅ "Delivered" label
@@ -278,8 +278,8 @@ Execute comprehensive testing strategies to validate implemented features agains
         - Security: ✅ No vulnerabilities found
         - Screenshots of key flows
         - Link to Playwright test report
-    - Update `/docs/user-stories/current-sprint.md`: Mark story complete
-    - Update `/docs/user-stories/project-status.md`:
+    - Update `/docs/05-implementation/current-sprint.md`: Mark story complete
+    - Update `/docs/05-implementation/project-status.md`:
       - Increment "Delivered" count
       - Update quality metrics (test coverage, bug density, pass rates)
       - Note any lessons learned or test improvements
@@ -296,7 +296,7 @@ Execute comprehensive testing strategies to validate implemented features agains
 
 ## Quality Metrics Tracking
 
-**Tracked in `/docs/user-stories/project-status.md`**:
+**Tracked in `/docs/05-implementation/project-status.md`**:
 
 ### Test Metrics
 - **Test Coverage**: Overall code coverage percentage (target: >80%)

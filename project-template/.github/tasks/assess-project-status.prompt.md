@@ -10,8 +10,8 @@ Determine project maturity level and recommend starting workflow based on existi
 @orchestrator Assess project status for [PROJECT_NAME]
 
 **CRITICAL**: This command will:
-1. **Check documentation status** - scan /docs/prd/ for PDLC documents
-2. **Read /docs/user-stories/user-stories.md** - SINGLE SOURCE OF TRUTH for implementation status
+1. **Check documentation status** - scan /docs/01-requirements/, /docs/02-architecture/, /docs/03-testing/, /docs/04-planning/ for PDLC documents
+2. **Read /docs/05-implementation/user-stories.md** - SINGLE SOURCE OF TRUTH for implementation status
 3. **Analyze code completion** - estimate % implementation by layer
 4. **Generate recommendations** - exact next workflow to execute
 5. **Present 3 options** - conservative/balanced/stretch approach
@@ -24,9 +24,9 @@ Determine project maturity level and recommend starting workflow based on existi
 The orchestrator will:
 
 1. **Check Documentation Status**
-   - Look for `/docs/prd/` folder
+   - Look for `/docs/01-requirements/` folder
    - Look for `/docs/design/` folder
-   - Look for `/docs/user-stories/` folder
+   - Look for `/docs/05-implementation/` folder
    - Check which PDLC stage documents exist:
      - Stage 1: requirements.md ✓/✗
      - Stage 2: personas.md ✓/✗, business-case.md ✓/✗

@@ -1,11 +1,24 @@
 # Project Structure Instructions
 
-This document defines the standardized project structure for Gen-e2 projects, covering both **greenfield** (new projects) and **brownfield** (legacy replatforming) scenarios.
+## Overview
+
+This document provides systematic instructions for project structure organization and directory conventions using the AI-first delivery methodology. These instructions follow established project organization principles and transform structural requirements into consistent directory layouts, file organization patterns, and architectural boundaries that enhance navigation, maintain separation of concerns, and facilitate team collaboration.
+
+## Process Overview
+
+**Project Structure Implementation** transforms organizational requirements into systematic directory structures that deliver consistent project layouts, clear architectural boundaries, enhanced developer navigation, and maintainable file organization through established patterns for source code, tests, documentation, and configuration across all project types and technology stacks.
+
+## Implementation Process
+
+This document defines the standardized project structure for AI-first delivery projects, covering both **greenfield** (new projects) and **brownfield** (legacy replatforming) scenarios.
+
+**Epic-Based Organization**: For projects with **5+ user stories or 2+ development teams**, organize implementation by Epic under `docs/05-implementation/epics/`. For smaller projects (<5 stories, single team), direct user story folders are acceptable, but epic organization is recommended for future scalability.
 
 ## Overview
 
-All Gen-e2 projects follow a consistent structure that supports:
+All AI-first delivery projects follow a consistent structure that supports:
 - Clear separation of concerns
+- Scalable epic-based organization (for multi-team or enterprise projects)
 - Scalable architecture
 - Infrastructure as Code
 - Comprehensive documentation
@@ -29,17 +42,30 @@ project-root/
 │   └── guides/                    # Deep-dive guides (context-optimization, TDD-enforcement, handoffs, etc.)
 │
 ├── docs/
-│   ├── prd/                       # ✅ Phase 1-7 PDLC Documentation (FROZEN - read-only during implementation)
-│   │   ├── requirements.md        # Business requirements
-│   │   ├── personas.md            # User archetypes
-│   │   ├── user-stories.md        # PRD user stories catalog with BDD scenarios (source of truth for story definitions)
-│   │   ├── architecture-design.md # System architecture & constraints
-│   │   ├── tech-spec.md           # Technical specifications
-│   │   ├── design-systems.md      # UI components & design tokens
-│   │   ├── test-strategies.md     # Testing approach & BDD scenarios
-│   │   └── ...                    # Other PRD documents
+│   ├── 00-assessment/             # Phase 0 assessment outputs (prerequisites, AI-readiness report)
 │   │
-│   ├── logs/                      # 📋 Root-level agent action logs (non-TDD agents)
+│   ├── 01-requirements/           # ✅ Phase 1-2 PDLC Documentation (FROZEN - read-only during implementation)
+│   │   ├── requirements.md        # Business requirements & user needs
+│   │   ├── personas.md            # User archetypes
+│   │   ├── user-stories.md        # ⭐ Master user stories catalog (SSOT for story definitions)
+│   │   └── business-case.md       # Business case & ROI analysis
+│   │
+│   ├── 02-architecture/           # ✅ Phase 3-4 Architecture & Design (FROZEN)
+│   │   ├── architecture-design.md # System architecture & constraints
+│   │   ├── tech-spec.md           # Technical specifications (API, database, etc.)
+│   │   ├── design-systems.md      # UI/UX components & design tokens
+│   │   ├── flow-diagrams.md       # Process & workflow diagrams
+│   │   └── journey-maps.md        # User journey visualizations
+│   │
+│   ├── 03-testing/                # ✅ Phase 5 Testing Strategy (FROZEN)
+│   │   └── test-strategies.md     # Testing approach & BDD scenarios
+│   │
+│   ├── 04-planning/               # ✅ Phase 6 Planning (FROZEN)
+│   │   ├── iteration-planning.md  # Sprint & iteration planning
+│   │   ├── code-generation.md     # Code generation strategy
+│   │   └── deployment-plan.md     # Deployment approach
+│   │
+│   ├── 99-operations/             # 📋 Agent action logs & operations
 │   │   ├── agent-orchestrator-YYYYMMDD.md    # Orchestrator daily action log
 │   │   ├── agent-pm-YYYYMMDD.md              # PM daily action log
 │   │   ├── agent-po-YYYYMMDD.md              # PO daily action log
@@ -49,53 +75,63 @@ project-root/
 │   │   ├── agent-dev-lead-YYYYMMDD.md        # Dev-Lead daily action log
 │   │   └── agent-qa-YYYYMMDD.md              # QA daily action log
 │   │
-│   ├── user-stories/              # ⭐ Phase 8 Implementation Tracking (ACTIVE during sprints)
-│   │   ├── user-stories.md        # ⭐ MASTER STATUS TRACKING (SSOT) - Not Started | In Progress | Implemented | Delivered
-│   │   ├── project-status.md      # 📊 Project dashboard (epic progress, velocity, blockers, metrics)
-│   │   ├── current-sprint.md      # 📋 ACTIVE sprint planning & daily tracking (renamed to sprint-N.md after closure)
-│   │   ├── sprint-1.md            # 📦 ARCHIVED Sprint 1 (closed, with retrospective)
-│   │   ├── sprint-2.md            # 📦 ARCHIVED Sprint 2 (closed, with retrospective)
-│   │   └── <US-REF>/              # ✨ Per-story implementation folders
-│   │       ├── <US-REF>.md                      # Story definition (copy of PRD story with enrichment: AC, BDD, UX inputs, API contracts)
-│   │       ├── implementation-plan.md           # Dev-Lead's layer-by-layer technical plan (Layer 1-4) - CURRENT version
-│   │       ├── implementation-plan-v1.md        # IMMUTABLE snapshot v1 (historical)
-│   │       ├── implementation-plan-v2.md        # IMMUTABLE snapshot v2 (historical)
-│   │       ├── plan-approval.yaml               # Human validation gate (required before TDD execution)
-│   │       ├── api-design.md                    # API endpoints, schemas, authentication, error codes (if applicable)
-│   │       ├── us-completition-checklist.md    # Definition of Done checklist (acceptance criteria, code quality, validation)
-│   │       ├── tdd-execution.md                # 📋 APPEND-ONLY audit log (cycle summary table with links to handoffs)
-│   │       ├── features/                       # BDD feature files (Gherkin scenarios driving TDD)
-│   │       │   ├── <domain>-<story-ref>.feature  # Gherkin feature file with Given-When-Then scenarios
-│   │       │   └── <domain>-<story-ref>.steps.ts # Step definitions and failing tests
-│   │       │
-│   │       ├── logs/                           # 📋 Per-story TDD agent action logs
-│   │       │   ├── agent-dev-tdd-YYYYMMDD.md         # TDD Orchestrator daily log
-│   │       │   ├── agent-dev-tdd-red-YYYYMMDD.md     # TDD RED agent daily log
-│   │       │   ├── agent-dev-tdd-green-YYYYMMDD.md   # TDD GREEN agent daily log
-│   │       │   └── agent-dev-tdd-refactor-YYYYMMDD.md # TDD REFACTOR agent daily log
-│   │       │
-│   │       └── tdd-execution/                  # 🔄 TDD Cycle Execution Tracking (per cycle)
-│   │           ├── 001/                        # First TDD cycle
-│   │           │   ├── 001-HO-RED.json         # RED phase handoff (test written, failing)
-│   │           │   ├── 001-HO-GREEN.json       # GREEN phase handoff (code implemented, test passing)
-│   │           │   └── 001-HO-REFACTOR.md      # REFACTOR phase handoff (code quality improved)
-│   │           ├── 002/                        # Second TDD cycle (if needed)
-│   │           │   ├── 002-HO-RED.json
-│   │           │   ├── 002-HO-GREEN.json
-│   │           │   └── 002-HO-REFACTOR.md
-│   │           └── [... additional cycles ...]
+│   ├── 05-implementation/         # ✅ Phase 8 Implementation Tracking (ACTIVE during sprints)
+│   │   ├── epics/                 # Epic-based organization (Enterprise or Large Projects)
+│   │   │   ├── epic-01/           # Epic 1: [Domain]
+│   │   │   │   ├── readme.md      # Epic overview and scope
+│   │   │   │   └── user-stories/  # User stories belonging to this epic
+│   │   │   │       ├── us-001/    # ✨ Per-story implementation folder
+│   │   │   │       │   ├── description.md              # Story definition (from 01-requirements)
+│   │   │   │       │   ├── implementation-plan.md      # Dev-Lead's layer architecture (CURRENT)
+│   │   │   │       │   ├── implementation-plan-v1.md   # IMMUTABLE snapshot v1
+│   │   │   │       │   ├── implementation-plan-v2.md   # IMMUTABLE snapshot v2 (if evolved)
+│   │   │   │       │   ├── plan-approval.yaml          # Human validation gate (Framework 2.0.0)
+│   │   │   │       │   ├── api-design.md               # API endpoints, schemas, auth, errors
+│   │   │   │       │   ├── us-completion-checklist.md  # Definition of Done criteria
+│   │   │   │       │   ├── tdd-execution.md            # 📋 APPEND-ONLY audit log (cycle summary)
+│   │   │   │       │   ├── bdd-scenarios/              # BDD feature files (Gherkin scenarios)
+│   │   │   │       │   │   ├── <domain>-<story-ref>.feature  # Feature file with scenarios
+│   │   │   │       │   │   └── <domain>-<story-ref>.steps.ts  # Step definitions & tests
+│   │   │   │       │   │
+│   │   │   │       │   ├── logs/                       # 📋 Per-story TDD agent action logs
+│   │   │   │       │   │   ├── agent-dev-tdd-YYYYMMDD.md      # TDD Orchestrator daily log
+│   │   │   │       │   │   ├── agent-dev-tdd-red-YYYYMMDD.md  # RED agent daily log
+│   │   │   │       │   │   ├── agent-dev-tdd-green-YYYYMMDD.md # GREEN agent daily log
+│   │   │   │       │   │   └── agent-dev-tdd-refactor-YYYYMMDD.md # REFACTOR agent daily log
+│   │   │   │       │   │
+│   │   │   │       │   └── tdd-execution/              # 🔄 TDD Cycle Tracking (per cycle)
+│   │   │   │       │       ├── 001/                    # First TDD cycle
+│   │   │   │       │       │   ├── 001-HO-RED.json     # RED phase handoff
+│   │   │   │       │       │   ├── 001-HO-GREEN.json   # GREEN phase handoff
+│   │   │   │       │       │   └── 001-HO-REFACTOR.md  # REFACTOR phase handoff
+│   │   │   │       │       ├── 002/                    # Additional cycles (as needed)
+│   │   │   │       │       │   ├── 002-HO-RED.json
+│   │   │   │       │       │   ├── 002-HO-GREEN.json
+│   │   │   │       │       │   └── 002-HO-REFACTOR.md
+│   │   │   │       │       └── [... cycles ...]
+│   │   │   │       └── us-002/    # Additional stories in this epic
+│   │   │   │
+│   │   │   ├── epic-02/           # Epic 2: [Domain]
+│   │   │   │   ├── readme.md
+│   │   │   │   └── user-stories/
+│   │   │   │       ├── us-003/
+│   │   │   │       └── [... additional stories ...]
+│   │   │   │
+│   │   │   └── epic-NN/           # Epic N: [Last Epic]
+│   │   │       ├── readme.md
+│   │   │       └── user-stories/
+│   │   │
+│   │   ├── user-stories.md        # ⭐ MASTER STATUS TRACKING (SSOT) - story progress across all epics
+│   │   ├── project-status.md      # 📊 Project dashboard (epic progress, velocity, blockers)
+│   │   ├── current-sprint.md      # 📋 ACTIVE sprint planning & daily tracking
+│   │   ├── sprint-1.md            # 📦 ARCHIVED Sprint 1 (retrospective)
+│   │   ├── sprint-2.md            # 📦 ARCHIVED Sprint 2 (retrospective)
+│   │   └── [... archived sprints ...]
 │   │
 │   ├── design/                    # UX/UI design documents & design systems
 │   ├── assessment/                # Phase 0 assessment outputs (if applicable)
 │   └── [other documentation]/     # Architecture, deployment, etc.
 │
-├── features/                      # BDD feature files (Gherkin scenarios - project-wide source)
-│   ├── feature/                   # Organized by feature domain
-│   └── [domain]/                  # Feature files grouped by domain
-│
-├── src/                           # Application source code (implementation from TDD cycles)
-├── tests/                         # Unit, integration, E2E tests
-├── infra/                         # Infrastructure as Code (Terraform, CloudFormation, etc.)
 ├── README.md                      # Project overview and setup
 └── TODO.md                        # Project task breakdown (by domain)
 ```
@@ -117,43 +153,42 @@ project-root/
 │   └── ...
 │
 ├── docs/                          # Project documentation (enhanced for brownfield)
-│   ├── prd/                       # ✅ Phase 1-7 PDLC Documentation (FROZEN)
+│   ├── 01-requirements/           # ✅ Phase 1-2 PDLC Documentation (FROZEN)
 │   │   ├── requirements.md
 │   │   ├── personas.md
-│   │   ├── user-stories.md        # PRD user stories (source of truth)
+│   │   ├── user-stories.md        # ⭐ Master user stories (SSOT)
+│   │   └── business-case.md
+│   │
+│   ├── 02-architecture/           # ✅ Phase 3-4 Architecture & Design (FROZEN)
+│   │   ├── architecture-design.md
+│   │   ├── tech-spec.md
+│   │   ├── design-systems.md
 │   │   └── ...
 │   │
-│   ├── logs/                      # 📋 Root-level agent action logs (non-TDD agents)
-│   │   ├── agent-orchestrator-YYYYMMDD.md
-│   │   ├── agent-pm-YYYYMMDD.md
-│   │   ├── agent-po-YYYYMMDD.md
-│   │   ├── agent-ba-YYYYMMDD.md
-│   │   ├── agent-architect-YYYYMMDD.md
-│   │   ├── agent-ux-YYYYMMDD.md
-│   │   ├── agent-dev-lead-YYYYMMDD.md
-│   │   └── agent-qa-YYYYMMDD.md
+│   ├── 03-testing/                # ✅ Phase 5 Testing (FROZEN)
+│   │   └── test-strategies.md
 │   │
-│   ├── user-stories/              # ⭐ Phase 8 Implementation Tracking (ACTIVE)
+│   ├── 04-planning/               # ✅ Phase 6 Planning (FROZEN)
+│   │   ├── iteration-planning.md
+│   │   └── deployment-plan.md
+│   │
+│   ├── 99-operations/             # 📋 Agent action logs
+│   │   └── logs/
+│   │
+│   ├── 05-implementation/         # ✅ Phase 8 Implementation Tracking (ACTIVE, same as greenfield)
+│   │   ├── epics/                 # Epic-based organization (Legacy replatforming always uses epic grouping)
+│   │   │   ├── epic-01/
+│   │   │   │   ├── readme.md
+│   │   │   │   └── user-stories/
+│   │   │   │       └── us-001/ to us-NNN/  # Per-story folders (same structure as greenfield)
+│   │   │   └── epic-NN/
+│   │   │       ├── readme.md
+│   │   │       └── user-stories/
+│   │   │
 │   │   ├── user-stories.md        # ⭐ MASTER STATUS TRACKING (SSOT)
 │   │   ├── project-status.md      # 📊 Project dashboard
 │   │   ├── current-sprint.md      # 📋 Active sprint
-│   │   ├── sprint-1.md            # 📦 Archived sprints
-│   │   └── <US-REF>/              # Per-story folders (same as greenfield)
-│   │       ├── <US-REF>.md
-│   │       ├── implementation-plan.md           # CURRENT version
-│   │       ├── implementation-plan-v1.md        # IMMUTABLE snapshot v1
-│   │       ├── implementation-plan-v2.md        # IMMUTABLE snapshot v2
-│   │       ├── plan-approval.yaml               # Human validation gate
-│   │       ├── api-design.md
-│   │       ├── us-completition-checklist.md
-│   │       ├── features/
-│   │       ├── logs/                            # Per-story TDD agent logs
-│   │       │   ├── agent-dev-tdd-YYYYMMDD.md
-│   │       │   ├── agent-dev-tdd-red-YYYYMMDD.md
-│   │       │   ├── agent-dev-tdd-green-YYYYMMDD.md
-│   │       │   └── agent-dev-tdd-refactor-YYYYMMDD.md
-│   │       └── tdd-execution/
-│   │           └── <TDD-CYCLE>/
+│   │   └── sprint-N.md            # 📦 Archived sprints
 │   │
 │   ├── design/                    # UX/UI documents
 │   ├── assessment/                # Phase 0 assessment (if applicable)
@@ -181,11 +216,6 @@ project-root/
 │
 ├── LegacyApps/                    # 🔴 BROWNFIELD: Legacy application archive
 │   └── [legacy-app-name]/         # Original legacy codebase (reference only)
-│
-├── features/                      # BDD feature files (same as greenfield)
-├── src/                           # New application source code
-├── tests/                         # Unit, integration, E2E tests
-├── infra/                         # Infrastructure as Code
 ├── TODO.md                        # Project task breakdown
 └── project-modules/               # 🔴 BROWNFIELD: Legacy app analysis by module
     └── [module-name]/             # Per-module documentation (optional)
@@ -348,58 +378,111 @@ This section documents the `.github/` directory structure and workflow-related f
 
 #### Phase 0: Assessment (Outputs Only)
 ```
-docs/assessment/
-├── PREREQUISITES-REQUEST.yml           # Formal access request to client
-├── AI-READINESS-REPORT.md             # Comprehensive maturity assessment
-├── MULTI-DIMENSIONAL-ASSESSMENT.md    # 8-dimension scores & confidence
-├── HANDOFF-PACKAGE/                   # Handoff to documentation phase
-│   ├── ROADMAP.md                     # Roadmap and success metrics
-│   └── ...                            # Other handoff artifacts
-└── interviews/                        # Stakeholder validation notes
-    └── [stakeholder-name].md          # Interview transcripts
+docs/00-assessment/
+├── inventory-technical.md             # Technical stack audit and environmental baseline
+├── prerequisites-request.yml          # Formal infrastructure and access requirements
+│
+├── archive/                           # Historical assessment outputs (reference only)
+│   ├── README.md                      # Archive index and assessment summary
+│   ├── ai-readiness-report.md         # AI/LLM capability maturity assessment
+│   ├── multi-dimensional-assessment.md # 8+ dimension capability scores & confidence
+│   ├── design-guidance.md             # Architecture patterns and design recommendations
+│   ├── project-constraints.md         # Known technical and business constraints
+│   └── [other-assessment-outputs]/    # Additional assessment artifacts as needed
+│
+└── inputs/                            # Client-provided reference materials
+    ├── [project-brief].md             # Project overview and strategic goals
+    ├── [tech-brief].md                # Current technology landscape and architecture
+    ├── [compliance-requirements].md   # Regulatory/compliance frameworks (if applicable)
+    └── [other-inputs]/                # Additional reference and context materials
 ```
 
-#### Phases 1-7: Documentation (PRD Suite)
+#### Phases 1-6: PDLC Documentation (Frozen)
 ```
-docs/prd/                              # ✅ FROZEN after documentation complete
-├── requirements.md                    # Master PRD (consolidated from routes)
-├── personas.md                        # User personas (if interview-driven)
-├── user-stories.md                    # ⭐ User stories catalog (SSOT for PRD)
-├── epics.md                           # Epic definitions (Route B alternative)
+docs/01-requirements/                  # ✅ FROZEN after Phase 2
+├── requirements.md                    # Master requirements
+├── personas.md                        # User personas
+├── user-stories.md                    # ⭐ Master user stories (SSOT from 01-requirements)
+└── business-case.md                   # Business case & ROI
+
+docs/02-architecture/                  # ✅ FROZEN after Phase 4
 ├── architecture-design.md             # System architecture
 ├── tech-spec.md                       # Technical specifications
 ├── design-systems.md                  # UI/UX design system
+├── flow-diagrams.md                   # Process diagrams
+└── journey-maps.md                    # User journeys
+
+docs/03-testing/                       # ✅ FROZEN after Phase 5
 └── test-strategies.md                 # Testing approach & BDD scenarios
+
+docs/04-planning/                      # ✅ FROZEN after Phase 6
+├── iteration-planning.md              # Sprint planning
+├── code-generation.md                 # Code generation strategy
+└── deployment-plan.md                 # Deployment strategy
 ```
 
-#### Phase 8: Implementation (ACTIVE, Per-Story)
+#### Phase 8: Implementation (ACTIVE, Epic-Based Organization)
 ```
-docs/user-stories/
-├── user-stories.md                    # ⭐ MASTER STATUS TRACKING (SSOT)
-│                                      # Updates after each story completion
-├── project-status.md                  # 📊 Project dashboard
-├── current-sprint.md                  # 📋 Active sprint tracking
-├── sprint-1.md, sprint-2.md          # 📦 Archived sprints
+docs/05-implementation/
+├── epics/                               # Epic-based organization (scalable for large projects)
+│   ├── epic-01/                         # Epic 1: [Domain/Feature Area]
+│   │   ├── readme.md                    # Epic overview, scope, and goals
+│   │   └── user-stories/                # Stories grouped under this epic
+│   │       ├── us-001/                  # ✨ First story in epic
+│   │       │   ├── description.md       # Story definition (from 01-requirements)
+│   │       │   ├── implementation-plan.md       # ⭐ FROZEN architecture (ref only)
+│   │       │   ├── implementation-plan-v1.md   # IMMUTABLE snapshot v1
+│   │       │   ├── implementation-plan-v2.md   # IMMUTABLE snapshot v2 (if evolved)
+│   │       │   ├── plan-approval.yaml          # Approval gate (Framework 2.0.0)
+│   │       │   ├── api-design.md               # API specs (if applicable)
+│   │       │   ├── us-completion-checklist.md  # Definition of Done
+│   │       │   ├── tdd-execution.md            # 📋 APPEND-ONLY audit log
+│   │       │   ├── bdd-scenarios/              # BDD feature files (TDD driver)
+│   │       │   │   ├── domain-us-001.feature   # Feature file with Given-When-Then
+│   │       │   │   └── domain-us-001.steps.ts  # Step definitions & tests
+│   │       │   │
+│   │       │   ├── logs/                       # 📋 Per-story TDD agent logs
+│   │       │   │   ├── agent-dev-tdd-YYYYMMDD.md
+│   │       │   │   ├── agent-dev-tdd-red-YYYYMMDD.md
+│   │       │   │   ├── agent-dev-tdd-green-YYYYMMDD.md
+│   │       │   │   └── agent-dev-tdd-refactor-YYYYMMDD.md
+│   │       │   │
+│   │       │   └── tdd-execution/              # 🔄 TDD Cycle Tracking
+│   │       │       ├── 001/                    # First TDD cycle
+│   │       │       │   ├── 001-HO-RED.json
+│   │       │       │   ├── 001-HO-GREEN.json
+│   │       │       │   └── 001-HO-REFACTOR.md
+│   │       │       ├── 002/                    # Additional cycles
+│   │       │       │   ├── 002-HO-RED.json
+│   │       │       │   ├── 002-HO-GREEN.json
+│   │       │       │   └── 002-HO-REFACTOR.md
+│   │       │       └── [... additional cycles ...]
+│   │       │
+│   │       ├── us-002/                  # Additional stories in epic
+│   │       │   ├── description.md
+│   │       │   ├── implementation-plan.md
+│   │       │   ├── [... same structure ...]
+│   │       │   └── tdd-execution/
+│   │       │
+│   │       └── us-NNN/
+│   │
+│   ├── epic-02/                         # Epic 2: [Domain/Feature Area]
+│   │   ├── readme.md
+│   │   └── user-stories/
+│   │       ├── us-003/
+│   │       ├── us-004/
+│   │       └── [... more stories ...]
+│   │
+│   └── epic-NN/                         # Epic N
+│       ├── readme.md
+│       └── user-stories/
 │
-└── <US-REF>/                          # Per-story folder (e.g., AUTH-003/)
-    ├── <US-REF>.md                   # Story content (copy from PRD)
-    ├── implementation-plan.md         # ⭐ FROZEN architecture (ref only)
-    ├── api-design.md                 # API endpoint specifications (if applicable)
-    ├── us-completion-checklist.md    # Story completion criteria
-    ├── tdd-execution.md              # 📋 APPEND-ONLY audit log (cycle summary table)
-    ├── features/                     # BDD feature files (driver for TDD)
-    │   └── auth-tier-sync.feature    # Example: feature file
-    │
-    └── tdd-execution/                # ⭐ TDD CYCLE TRACKING (ACTIVE)
-        ├── 001/                      # First TDD cycle
-        │   ├── 001-HO-RED.json       # RED phase handoff (test written, failing)
-        │   ├── 001-HO-GREEN.json     # GREEN phase handoff (code implemented, test passing)
-        │   └── 001-HO-REFACTOR.md    # REFACTOR phase handoff (code quality improved)
-        ├── 002/                      # Second TDD cycle (if needed)
-        │   ├── 002-HO-RED.json
-        │   ├── 002-HO-GREEN.json
-        │   └── 002-HO-REFACTOR.md
-        └── [... additional cycles ...]
+├── user-stories.md                      # ⭐ MASTER STATUS TRACKING (SSOT across all epics)
+├── project-status.md                    # 📊 Project dashboard
+├── current-sprint.md                    # 📋 Active sprint
+├── sprint-1.md                          # 📦 Archived Sprint 1
+├── sprint-2.md                          # 📦 Archived Sprint 2
+└── [... archived sprints ...]
 ```
 
 ### Key File Purposes & Update Patterns
@@ -434,45 +517,46 @@ docs/user-stories/
 - **Used By**: Developers (copy when creating new user story/plan/handoff)
 - **Example**: `handoff-tmpl.md` ensures consistent cycle-to-cycle transitions
 
-#### `docs/prd/` (PRD Suite - FROZEN)
-- **Purpose**: Complete requirements, user stories, architecture, tech specs
-- **Update Pattern**: Frozen after Phase 7; only updated through formal change request
-- **Contents**: user-stories.md is SSOT for story definitions, test strategies
+#### `docs/01-requirements/`, `docs/02-architecture/`, `docs/03-testing/`, `docs/04-planning/` (PDLC Documentation - FROZEN)
+- **Purpose**: Complete requirements, architecture, testing strategy, and planning
+- **Update Pattern**: Frozen after respective phases; only updated through formal change request
+- **Contents**: user-stories.md in 01-requirements is SSOT for story definitions and acceptance criteria
 - **Used By**: dev-lead (creates implementation plans), dev-tdd (reads stories for BDD)
-- **Status**: ✅ Read-only after documentation phase
+- **Status**: ✅ Read-only after each phase completes
 
-#### `docs/user-stories/user-stories.md` (Master Status - ACTIVE)
-- **Purpose**: Single source of truth for implementation progress
-- **Update Pattern**: Update row after story completion, preserve commit history
-- **Columns**: US-REF, Title, Status (Open/In-Progress/Complete), Owner, Branch
-- **Used By**: PM (tracking), orchestrator (routing decisions), developers (current work)
-- **Status**: ⭐ ACTIVE; update after each user story completes
+#### `docs/05-implementation/user-stories.md` (Master Status - ACTIVE)
+- **Purpose**: Single source of truth for implementation progress across ALL epics and stories
+- **Update Pattern**: Update row after story completion; preserve commit history for tracking
+- **Columns**: US-REF, Epic, Title, Status (Not-Started/In-Progress/Implemented/Delivered), Owner, Branch, Points
+- **Used By**: PM (tracking velocity), orchestrator (routing decisions), developers (visibility)
+- **Status**: ⭐ ACTIVE cross-epic; update after each user story completes
 
-#### `docs/user-stories/<US-REF>/implementation-plan.md` (Per-Story Plan)
-- **Purpose**: Layer-by-layer architecture (Database → API → Service → Controller → UI)
+#### `docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/implementation-plan.md` (Per-Story Plan)
+- **Purpose**: Layer-by-layer architecture (Database → Service → API → Frontend)
 - **Update Pattern**: Frozen after dev-lead creates; serves as reference throughout TDD
-- **Content**: 1-2 paragraphs per layer, decision rationale, tech choices
+- **Content**: 1-2 paragraphs per layer, decision rationale, tech choices, BDD mapping
 - **Used By**: dev-tdd (reference during RED phase), dev-tdd-red (guiding test design)
 - **Status**: 🔒 Frozen (reference only during development)
 
-#### `docs/user-stories/<US-REF>/handoff.md` (Cycle Handoff - ACTIVE)
-- **Purpose**: Current cycle snapshot (what's done, what's next, blockers)
-- **Update Pattern**: Overwrite after each TDD phase (RED → GREEN → REFACTOR)
-- **Content**: Current cycle summary, test status, implementation notes, next steps
-- **Used By**: dev-tdd (transition between RED/GREEN/REFACTOR), orchestrator (sprint planning)
-- **Status**: ⭐ Overwritten each phase; preserve in git history
+#### `docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/tdd-execution.md` (APPEND-ONLY Audit Log)
+- **Purpose**: Complete audit trail of all TDD cycles (single source of truth during development)
+- **Update Pattern**: Append-only after each cycle; never modify existing entries
+- **Content**: Per-cycle summary: timestamp, phase, test count, coverage %, refactor notes, links to handoffs
+- **Used By**: PM (progress tracking), dev-tdd (cycle reference), retrospectives (learnings)
+- **Status**: 📋 Append-only; git history preserves all entries
 
-#### `docs/user-stories/<US-REF>/tdd-execution.md` (Audit Log - APPEND-ONLY)
-- **Purpose**: Complete audit trail of all TDD cycles (immutable history)
-- **Update Pattern**: Append-only; never delete or rewrite entries
-- **Content**: Per-cycle: timestamp, phase, test count, coverage %, refactor notes
-- **Used By**: PM (progress tracking), retrospectives (what worked, learnings)
-- **Status**: 📋 Append-only (git history shows all entries)
+#### `docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/plan-approval.yaml` (Human Validation Gate)
+- **Purpose**: Framework 2.0.0 approval gate preventing TDD execution until plan validated
+- **Update Pattern**: Auto-revoked when plan modified; requires re-approval after changes
+- **Content**: Status (approved/changes-requested/revoked), checklist, reviewer, date
+- **Used By**: orchestrator (blocking TDD until approved), dev-lead (reviewing layers)
+- **Status**: 🔐 Blocks TDD execution until status = approved
 
-#### `docs/user-stories/<US-REF>/features/` (BDD Feature Files)
-- **Purpose**: Executable specifications (Gherkin/BDD syntax)
-- **Update Pattern**: Add new scenarios as RED phase reveals missing features
-- **Used By**: dev-tdd-red (driver for test design), dev-tdd-green (validation)
+#### `docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/bdd-scenarios/` (BDD Feature Files)
+- **Purpose**: Executable specifications (Gherkin/BDD syntax) driving TDD implementation
+- **Update Pattern**: Add new scenarios as RED phase reveals missing feature needs
+- **Contents**: Feature files (e.g., `domain-us-XXX.feature`) + step definitions (e.g., `domain-us-XXX.steps.ts`)
+- **Used By**: dev-tdd-red (driver for test design), dev-tdd-green (validation against scenarios)
 - **Status**: ⭐ Grows during implementation (new scenarios per cycle)
 
 ### Commit Message Conventions
@@ -493,9 +577,9 @@ Example: DOC-PHASE-5-API: Design REST endpoints for auth service
 #### Implementation Phase (Phase 8 - TDD)
 ```
 TDD-<US-REF>-<PHASE>-<CYCLE>: [description]
-Example: TDD-AUTH-003-RED-1: Write failing test for user tier sync
-Example: TDD-AUTH-003-GREEN-1: Implement user tier sync in service layer
-Example: TDD-AUTH-003-REFACTOR-1: Extract tier sync logic to separate method
+Example: TDD-US-xxx-RED-1: Write failing test for user tier sync
+Example: TDD-US-xxx-GREEN-1: Implement user tier sync in service layer
+Example: TDD-US-xxx-REFACTOR-1: Extract tier sync logic to separate method
 ```
 
 **Rules**:
@@ -509,7 +593,7 @@ Example: TDD-AUTH-003-REFACTOR-1: Extract tier sync logic to separate method
 Phase 0: Assessment
 ↓ (outputs: prerequisites, AI-readiness report)
 Phase 1-7: Documentation  
-↓ (outputs: docs/prd/ suite)
+↓ (outputs: docs/01-requirements/, docs/02-architecture/, docs/03-testing/, docs/04-planning/)
 Phase 8: Implementation (TDD)
 ├─ RED phase
 │  ├─ Input: Feature files + implementation-plan.md
@@ -538,34 +622,34 @@ Phase 8: Implementation (TDD)
 
 Starting with Framework 2.0.0, all agent actions are logged to immutable daily files for audit trails, debugging, and process improvement. Logs are scoped by agent type:
 
-- **TDD Agents** (dev-tdd, dev-tdd-red, dev-tdd-green, dev-tdd-refactor): Per-story logs in `/docs/user-stories/<US-REF>/logs/`
-- **Other Agents** (orchestrator, pm, po, ba, architect, ux, dev-lead, qa): Root-level logs in `/docs/logs/`
+- **TDD Agents** (dev-tdd, dev-tdd-red, dev-tdd-green, dev-tdd-refactor): Per-story logs in `/docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/logs/`
+- **Other Agents** (orchestrator, pm, po, ba, architect, ux, dev-lead, qa): Root-level logs in `/docs/99-operations/logs/`
 
 ### Log File Structure
 
-#### TDD Agent Logs (Per-Story)
+#### TDD Agent Logs (Per-Story, Epic-Based)
 
-**Location**: `/docs/user-stories/<US-REF>/logs/agent-{agent_name}-YYYYMMDD.md`
+**Location**: `/docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/logs/agent-{agent_name}-YYYYMMDD.md`
 
 **Examples**:
-- `/docs/user-stories/US-001/logs/agent-dev-tdd-20260317.md`
-- `/docs/user-stories/US-001/logs/agent-dev-tdd-red-20260317.md`
-- `/docs/user-stories/US-001/logs/agent-dev-tdd-green-20260317.md`
-- `/docs/user-stories/US-001/logs/agent-dev-tdd-refactor-20260317.md`
+- `/docs/05-implementation/epics/epic-01/user-stories/us-001/logs/agent-dev-tdd-20260317.md`
+- `/docs/05-implementation/epics/epic-01/user-stories/us-001/logs/agent-dev-tdd-red-20260317.md`
+- `/docs/05-implementation/epics/epic-01/user-stories/us-001/logs/agent-dev-tdd-green-20260317.md`
+- `/docs/05-implementation/epics/epic-01/user-stories/us-001/logs/agent-dev-tdd-refactor-20260317.md`
 
 #### Other Agent Logs (Root-Level)
 
-**Location**: `/docs/logs/agent-{agent_name}-YYYYMMDD.md`
+**Location**: `/docs/99-operations/logs/agent-{agent_name}-YYYYMMDD.md`
 
 **Examples**:
-- `/docs/logs/agent-orchestrator-20260317.md`
-- `/docs/logs/agent-dev-lead-20260317.md`
-- `/docs/logs/agent-pm-20260317.md`
-- `/docs/logs/agent-po-20260317.md`
-- `/docs/logs/agent-ba-20260317.md`
-- `/docs/logs/agent-architect-20260317.md`
-- `/docs/logs/agent-ux-20260317.md`
-- `/docs/logs/agent-qa-20260317.md`
+- `/docs/99-operations/logs/agent-orchestrator-20260317.md`
+- `/docs/99-operations/logs/agent-dev-lead-20260317.md`
+- `/docs/99-operations/logs/agent-pm-20260317.md`
+- `/docs/99-operations/logs/agent-po-20260317.md`
+- `/docs/99-operations/logs/agent-ba-20260317.md`
+- `/docs/99-operations/logs/agent-architect-20260317.md`
+- `/docs/99-operations/logs/agent-ux-20260317.md`
+- `/docs/99-operations/logs/agent-qa-20260317.md`
 
 ### Log Entry Format
 
@@ -588,7 +672,7 @@ Each agent action is appended to the daily log file with ISO8601 timestamp and s
 
 - **Status**: success
 - **Layer**: Layer 1 (Database & Domain Model)
-- **Files touched**: src/tests/BDD/features/auth-003.feature, src/Application/Interfaces/IUserTierService.cs
+- **Files touched**: src/tests/BDD/features/US-xxx.feature, src/Application/Interfaces/IUserTierService.cs
 - **Handoff artifact**: #file:tdd-execution/001/001-HO-RED.json
 - **Rationale**: Created failing test for user.tier sync with subscription.tier. BDD scenario validates tier consistency.
 - **Next step**: awaiting → dev-tdd-green
@@ -600,7 +684,7 @@ Each agent action is appended to the daily log file with ISO8601 timestamp and s
 
 - **Status**: success
 - **Scope**: Layer 1-4 (Full Implementation)
-- **Files touched**: docs/user-stories/US-042/implementation-plan.md, docs/user-stories/US-042/plan-approval.yaml
+- **Files touched**: docs/05-implementation/epics/EPIC-001/user-stories/US-042/implementation-plan.md, docs/05-implementation/epics/EPIC-001/user-stories/US-042/plan-approval.yaml
 - **Rationale**: Initial plan created; awaiting architect review before approval
 - **Next step**: awaiting → architect
 ```
@@ -634,7 +718,7 @@ Each agent action is appended to the daily log file with ISO8601 timestamp and s
 
 - **Status**: success
 - **Layer**: Layer 1 (Database & Domain Model)
-- **Files touched**: src/tests/BDD/features/auth-003.feature, src/Application/Interfaces/IUserTierService.cs
+- **Files touched**: src/tests/BDD/features/US-xxx.feature, src/Application/Interfaces/IUserTierService.cs
 - **Handoff artifact**: #file:tdd-execution/001/001-HO-RED.json
 - **Rationale**: 
   - Created failing test for user.tier sync with subscription.tier

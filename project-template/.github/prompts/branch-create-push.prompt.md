@@ -1,53 +1,76 @@
----
-description: Create a new Git branch and push it to GitHub remote repository
-agent: agent
----
-
-# Create and Push New Branch to GitHub
-
 ## Objective
-Create a new Git branch with a user-provided name and push it to the GitHub remote repository, establishing tracking between the local and remote branches.
+Create a new Git branch with user-provided name and push it to GitHub remote repository, establishing tracking between local and remote branches for collaborative development.
 
 ## Context
-You are working with a Git repository that is connected to a GitHub remote. The user needs to create a new branch for feature development, bug fixes, or experimentation, and wants to immediately establish the branch on GitHub for collaboration and backup purposes.
+You are working with a Git repository connected to GitHub remote. The user needs to create a new branch for feature development, bug fixes, or experimentation and wants to immediately establish the branch on GitHub for collaboration and backup purposes.
 
 ## Requirements
 
-### Prerequisites
-- Git repository must be initialized and have a remote named 'origin'
-- User must have push permissions to the GitHub repository
+### Prerequisites Verification
+- Git repository must be initialized with remote named 'origin'
+- User must have push permissions to GitHub repository
 - Working directory should be clean (no uncommitted changes recommended)
+- Current branch status should be checked before proceeding
 
 ### Branch Creation Process
-1. **Accept Branch Name**: Receive the branch name from the user (e.g., "first-init", "feature/new-dashboard", "bugfix/login-issue")
-2. **Create Local Branch**: Use `git checkout -b <branch-name>` to create and switch to the new branch
-3. **Push to Remote**: Use `git push -u origin <branch-name>` to push the branch to GitHub and set up tracking
+1. **Branch Name Acceptance**: Receive branch name from user (examples: "feature/new-dashboard", "bugfix/login-issue", "experiment/ai-integration")
+2. **Local Branch Creation**: Create and switch to new branch using `git checkout -b <branch-name>`
+3. **Remote Push Setup**: Push branch to GitHub and establish tracking with `git push -u origin <branch-name>`
+4. **Confirmation**: Verify successful creation and tracking setup
 
-### Command Structure
+### Command Execution
+Execute combined command for efficiency:
 ```bash
 git checkout -b <branch-name> && git push -u origin <branch-name>
 ```
 
-Where:
-- `git checkout -b <branch-name>`: Creates a new branch and switches to it
-- `&&`: Ensures the push only happens if branch creation succeeds
-- `git push -u origin <branch-name>`: Pushes the branch and sets upstream tracking
-- `-u` flag: Sets up tracking relationship between local and remote branch
+Command breakdown:
+- `git checkout -b <branch-name>`: Creates new branch and switches to it
+- `&&`: Ensures push only executes if branch creation succeeds
+- `git push -u origin <branch-name>`: Pushes branch and sets upstream tracking
+- `-u` flag: Establishes tracking relationship for future push/pull operations
 
 ## Deliverables
 
-### Success Outputs
-- Confirmation message: "Switched to a new branch '<branch-name>'"
-- Remote push confirmation with GitHub URL for creating a pull request
-- Branch tracking status: "branch '<branch-name>' set up to track 'origin/<branch-name>'"
+### 1. Local Branch Creation
+- New branch created from current HEAD
+- Automatic switch to newly created branch
+- Branch ready for development work
 
-### User Feedback
+### 2. Remote Branch Establishment
+- Branch pushed to GitHub origin remote
+- Upstream tracking configured for seamless future operations
+- Branch visible in GitHub interface for collaboration
+
+### 3. Success Confirmation
 Provide clear confirmation including:
-- The name of the created branch
-- Confirmation that the branch has been pushed to GitHub
+- Name of created branch
+- Confirmation of GitHub push success
 - Current working branch status
+- GitHub URL reference for pull request creation (when ready)
 
 ## Quality Standards
+
+- ✅ Branch name follows project naming conventions
+- ✅ Local branch successfully created and checked out
+- ✅ Remote branch successfully pushed to GitHub
+- ✅ Upstream tracking properly configured
+- ✅ Working directory status clean after operations
+- ✅ User receives clear confirmation of all operations
+- ✅ Branch ready for collaborative development
+
+## File Management
+
+### Git Operations
+- Verify git repository status before branch creation
+- Ensure no uncommitted changes that might complicate branch creation
+- Check existing branch names to avoid conflicts
+- Validate remote connection before attempting push
+
+### Post-Creation Status
+- Confirm current branch is the newly created one
+- Verify upstream tracking is properly configured
+- Provide guidance on next steps for development work
 
 ### Validation Criteria
 - ✅ Branch name follows project naming conventions (if applicable)

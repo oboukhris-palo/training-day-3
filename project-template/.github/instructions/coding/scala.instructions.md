@@ -3,7 +3,17 @@ description: Scala programming language best practices, patterns, and convention
 applyTo: "**/*.scala"
 ---
 
-# Scala Best Practices & Development Guidelines
+# Scala Development Instructions
+
+## Overview
+
+This document provides systematic instructions for Scala programming language best practices and conventions using the AI-first delivery methodology. These instructions follow established Scala development patterns and transform functional programming requirements into comprehensive coding standards that leverage Scala's functional and object-oriented features for scalable JVM applications.
+
+## Process Overview
+
+**Scala Development Implementation** transforms functional programming requirements into structured Scala implementations that deliver scalable applications, effective functional programming patterns, comprehensive testing strategies, and maintainable codebases through proper Scala idioms, pattern matching, and established conventions for robust Scala development.
+
+## Implementation Process & Development Guidelines
 
 This document establishes coding standards and best practices for Scala development. All team members must follow these guidelines to maintain consistency, quality, and maintainability across Scala projects.
 

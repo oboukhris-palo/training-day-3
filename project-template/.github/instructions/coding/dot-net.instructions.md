@@ -3,16 +3,17 @@ description: .NET Framework and C# best practices, patterns, and conventions for
 applyTo: backend/**/*.cs
 ---
 
-# .NET Framework & C# Best Practices
+# .NET Development Instructions
 
-## STATUS: ALWAYS APPLY
+## Overview
 
-These conventions must be enforced in every .NET/C# file without exception.
+This document provides systematic instructions for .NET Framework and C# development best practices using the AI-first delivery methodology. These instructions follow established .NET development patterns and transform enterprise application requirements into comprehensive coding standards that leverage .NET capabilities, maintain clean architecture, and ensure scalable backend development for API applications.
 
-## Core Principles
+## Process Overview
 
-1. **SOLID Principles**: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion
-2. **Clean Code**: Self-documenting, testable, maintainable, performant
+**.NET Development Implementation** transforms enterprise backend requirements into structured .NET implementations that deliver scalable APIs, effective dependency injection, comprehensive testing strategies, and maintainable applications through proper layered architecture, .NET features, and established patterns for robust enterprise applications.
+
+## Implementation Process
 3. **Security First**: Validate inputs, hash sensitive data, use parameterized queries, follow OWASP guidelines
 4. **Fail-Fast**: Validate early, throw appropriate exceptions, log failures clearly
 5. **Async-First**: Use async/await for I/O-bound operations, never `Task.Result` or `Wait()`

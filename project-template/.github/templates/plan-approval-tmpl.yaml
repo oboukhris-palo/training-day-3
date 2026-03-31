@@ -1,6 +1,6 @@
 ---
 # Human Validation Gate for Implementation Plan
-# Location: /docs/user-stories/<US-REF>/plan-approval.yaml
+# Location: /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-approval.yaml
 # Purpose: Require human approval before TDD execution begins or resumes after plan changes
 # Status: approved | changes-requested | revoked
 ---

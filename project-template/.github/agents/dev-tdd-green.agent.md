@@ -40,7 +40,7 @@ Write minimal code that makes failing tests pass. Hand off to REFACTOR phase imm
 - Document business rules inline where complexity exists
 - Run tests to verify: test passes + no regressions
 - Follow design notes and architectural constraints
-- **Log action to daily log**: `/docs/user-stories/<US-REF>/logs/agent-dev-tdd-green-YYYYMMDD.md`
+- **Log action to daily log**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-dev-tdd-green-YYYYMMDD.md`
 - **Update handoff.md** (overwrite with GREEN phase progress)
 - **Append to tdd-execution.md** (add entry for this phase)
 - **Commit to git** with standardized message
@@ -78,7 +78,7 @@ If user asks you to:
 
 ## Implementing to Pass Tests (GREEN Phase)
 
-> Maintain single Execution Log `/docs/user-stories/<US-REF>/tdd-execution.md` (append-only) and single Handoff `/docs/user-stories/<US-REF>/handoff.md` (overwrite each phase)
+> Maintain single Execution Log `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution.md` (append-only) and single Handoff `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/handoff.md` (overwrite each phase)
 
 ## You run the 🟩 GREEN phase of TDD
 
@@ -133,7 +133,7 @@ If you catch yourself planning to write tests or refactor an implementation for 
 
 **When to Use**: Receive handoff from RED agent with failing test location
 
-**Context Required**: `/docs/user-stories/<STORY-REF>/implementation-plan.md` (layer files, constraints), failing test file/function, `/docs/tdd.execution.md` (design notes), existing code files
+**Context Required**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/implementation-plan.md` (layer files, constraints), failing test file/function, `/docs/tdd.execution.md` (design notes), existing code files
 
 **Task**: Write minimal code to make failing test pass. Read implementation-plan.md for layer files to create/modify, architectural constraints. Read dev-lead's skeleton classes for method signatures and structure. Review failing test: what behavior is expected, what assertion failed. Implement simplest solution: fill in skeleton class methods (dev-lead created signatures), write minimal logic (no over-engineering), add inline WHY comments for non-obvious decisions, add basic JSDoc/docstrings for public functions, follow design notes (function signatures), respect constraints (database schema, API contracts). Run all tests to verify: failing test now passes, no regressions (existing tests still pass).
 
@@ -159,7 +159,7 @@ If you catch yourself planning to write tests or refactor an implementation for 
 
 ```typescript
 // File: src/services/auth.service.ts
-// Implementation Plan: /docs/user-stories/US-001/implementation-plan.md Layer 2
+// Implementation Plan: /docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md Layer 2
 // Constraint: Use bcrypt for hashing (tech-spec.md security requirements)
 
 import * as bcrypt from 'bcrypt';

@@ -1,11 +1,11 @@
 ````yaml
 # User Stories Status Template
 # This creates the SINGLE SOURCE OF TRUTH for implementation tracking
-# Location: /docs/user-stories/user-stories.md
+# Location: /docs/05-implementation/user-stories.md
 
 template_name: "User Stories Implementation Status"
 description: "Master status tracking document for all user stories and epics"
-location: "/docs/user-stories/user-stories.md"
+location: "/docs/05-implementation/user-stories.md"
 purpose: "SINGLE SOURCE OF TRUTH - track implementation progress"
 
 sections:
@@ -13,7 +13,7 @@ sections:
     title: "# User Stories Implementation Status"
     subtitle: "📊 SINGLE SOURCE OF TRUTH for Implementation Progress"
     note: |
-      This document mirrors the structure of `/docs/prd/user-stories.md` (PRD reference)
+ This document mirrors the structure of `/docs/01-requirements/user-stories.md` (PRD reference)
       but adds implementation status tracking for each user story.
       
       **Status Definitions**:
@@ -85,8 +85,8 @@ sections:
     - [ ] [CRITERION_3]
     
     **Implementation Notes**:
-    - Implementation Plan: `/docs/user-stories/[USER_STORY_ID]/implementation-plan.md`
-    - BDD Scenarios: `/docs/user-stories/[USER_STORY_ID]/bdd-scenarios/`
+    - Implementation Plan: `/docs/05-implementation/epics/[EPIC_ID]/user-stories/[USER_STORY_ID]/implementation-plan.md`
+    - BDD Scenarios: `/docs/05-implementation/epics/[EPIC_ID]/user-stories/[USER_STORY_ID]/bdd-scenarios/`
     - Last Updated: [DATE]
     - Updated By: [AGENT/USER]
     
@@ -173,5 +173,5 @@ maintenance: |
   - **Update Frequency**: After each story status change, at minimum daily
   - **Owner**: Dev-Lead agent (primary), Orchestrator (coordination)
   - **Review Cycle**: Weekly review of metrics and next sprint planning
-  - **Validation**: Cross-check with `/docs/prd/user-stories.md` for consistency
+  - **Validation**: Cross-check with `/docs/01-requirements/user-stories.md` for consistency
 ````

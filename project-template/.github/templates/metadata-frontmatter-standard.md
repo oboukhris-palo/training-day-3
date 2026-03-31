@@ -120,9 +120,9 @@ metadata:
   epic_ref: null                          # Epics don't have parent epics
   related_documents:
     - type: "child_stories"
-      reference: "docs/prd/user-stories.md"
+      reference: "docs/01-requirements/user-stories.md"
     - type: "architecture"
-      reference: "docs/prd/architecture-design.md"
+      reference: "docs/02-architecture/architecture-design.md"
   
   compliance_frameworks: []
   security_level: "internal"
@@ -150,9 +150,9 @@ metadata:
   epic_ref: ""
   related_documents:
     - type: "implements_stories"
-      reference: "docs/prd/user-stories.md"
+      reference: "docs/01-requirements/user-stories.md"
     - type: "tech_spec"
-      reference: "docs/prd/tech-spec.md"
+      reference: "docs/02-architecture/tech-spec.md"
   
   compliance_frameworks: []
   security_level: "internal"
@@ -180,7 +180,7 @@ metadata:
   user_story_ref: ""                      # e.g., "US-001" - links to implementation
   related_documents:
     - type: "implementation_plan"
-      reference: "docs/user-stories/{US-REF}/implementation-plan.md"
+      reference: "docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/implementation-plan.md"
     - type: "approval_gate"
       reference: "docs/approvals/{GATE-ID}.md"
   
@@ -293,7 +293,7 @@ related_documents:
   - type: "parent_epic"
     reference: "AUTH-EPIC-001"
   - type: "implementation"
-    reference: "docs/user-stories/US-001/implementation-plan.md"
+    reference: "docs/05-implementation/epics/EPIC-001/user-stories/US-001/implementation-plan.md"
 
 compliance_frameworks: ["PCI-DSS", "GDPR"]
 security_level: "internal"
@@ -318,9 +318,9 @@ status: "draft"
 user_story_ref: "US-001"
 related_documents:
   - type: "implementation_plan"
-    reference: "docs/user-stories/US-001/implementation-plan.md"
+    reference: "docs/05-implementation/epics/EPIC-001/user-stories/US-001/implementation-plan.md"
   - type: "incident_response"
-    reference: "docs/user-stories/US-001/incident-response.md"
+    reference: "docs/05-implementation/epics/EPIC-001/user-stories/US-001/incident-response.md"
 
 compliance_frameworks: ["SOC2"]
 security_level: "confidential"

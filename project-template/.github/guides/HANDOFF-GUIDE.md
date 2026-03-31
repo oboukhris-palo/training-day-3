@@ -162,9 +162,9 @@
 
   "delta": {
     "what_changed": [
-      "Created: /docs/user-stories/US-001/implementation-plan.md",
+      "Created: /docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md",
       "Updated: /api/openapi.yaml (schema definitions)",
-      "Created: /docs/user-stories/US-001/bdd-scenarios/ (copied from PRD)"
+      "Created: /docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/bdd-scenarios/ (copied from PRD)"
     ],
     "estimated_effort": {
       "layer_1_database": "2-3 hours",
@@ -177,9 +177,9 @@
 
   "critical_context": {
     "canonical_sources": {
-      "story_yaml": "/docs/user-stories/US-001/story.yaml",
-      "implementation_plan": "/docs/user-stories/US-001/implementation-plan.md",
-      "bdd_scenarios": "/docs/prd/user-stories.md#US-001"
+      "story_yaml": "/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/story.yaml",
+      "implementation_plan": "/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md",
+      "bdd_scenarios": "/docs/01-requirements/user-stories.md#US-001"
     },
     "critical_constraints": [
       {
@@ -229,7 +229,7 @@
     "agent_role": "dev-tdd-red",
     "task": "Write failing test for Layer 1 database",
     "files_to_review": [
-      "/docs/user-stories/US-001/implementation-plan.md (Layer 1 section)"
+      "/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md (Layer 1 section)"
     ],
     "specific_instructions": [
       "Read Layer 1 section of implementation-plan.md",
@@ -252,7 +252,7 @@
     "validation_checklist": [
       {
         "check": "All canonical sources valid and linked",
-        "method": "Verify /docs/user-stories/US-001/ paths exist"
+        "method": "Verify /docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/ paths exist"
       },
       {
         "check": "OpenAPI spec syntactically valid",
@@ -298,8 +298,8 @@ After Layer 1 is complete, use this shorter format:
   },
 
   "canonical_references": {
-    "full_plan": "/docs/user-stories/US-001/implementation-plan.md",
-    "layer_2_section": "/docs/user-stories/US-001/implementation-plan.md#L85"
+    "full_plan": "/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md",
+    "layer_2_section": "/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md#L85"
   },
 
   "critical_reminders": [
@@ -324,7 +324,7 @@ After Layer 1 is complete, use this shorter format:
 5. **Flag constraints**: What must NOT be violated (from user preferences + architecture)
 6. **Describe next task**: What does receiver do, where are the instructions
 7. **Validate quality gates**: Does this handoff meet all checks (PASS/BLOCK)
-8. **Create handoff file**: Save as `/docs/user-stories/<US-REF>/<US-REF>-HO-<LAYER>.json`
+8. **Create handoff file**: Save as `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>-HO-<LAYER>.json`
 9. **Commit**: Git commit with message "Handoff: US-001 Layer 2 ready for TDD"
 
 ### When Receiving a Handoff (Receiver)
@@ -404,7 +404,7 @@ If any of these conditions occur, escalate immediately:
 
 ```bash
 # Create handoff artifact
-/docs/user-stories/<US-REF>/<US-REF>-HO-<LAYER>.json
+/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>-HO-<LAYER>.json
 
 # Commit with clear message
 git commit -m "Handoff: US-001 Layer 2 backend ready for TDD
@@ -443,7 +443,7 @@ Blocker: None
 
 **You are a Dev-Lead?**
 → Read: [Handoff Format](#handoff-format) (Layer 1 example)  
-→ Create: `/docs/user-stories/<US-REF>/<US-REF>-HO-01.json` per story
+→ Create: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>-HO-01.json` per story
 
 **You are a TDD Agent (RED/GREEN/REFACTOR)?**
 → Read: [Handoff Execution](#handoff-execution-pattern) (When Receiving)  

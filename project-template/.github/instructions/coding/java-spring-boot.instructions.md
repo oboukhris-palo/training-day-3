@@ -2,11 +2,17 @@
 applyTo: '*.java'
 ---
 
-# Java Spring Boot Development Rules
+# Java Spring Boot Development Instructions
 
-## Purpose
+## Overview
 
-These rules define standards for developing Java applications using Spring Boot framework to ensure consistency, maintainability, and adherence to best practices. They cover Spring Boot application structure, coding conventions, testing strategies, and architectural patterns.
+This document provides systematic instructions for Java Spring Boot development best practices and patterns using the AI-first delivery methodology. These instructions follow established Spring Boot conventions and transform enterprise Java requirements into comprehensive development standards that leverage Spring Boot's capabilities, maintain clean architecture, and ensure scalable application development.
+
+## Process Overview
+
+**Java Spring Boot Development Implementation** transforms enterprise application requirements into structured Spring Boot implementations that deliver scalable microservices, effective dependency injection, comprehensive testing strategies, and maintainable applications through proper layered architecture, Spring Boot features, and established patterns for robust Java applications.
+
+## Implementation Process
 
 ## Framework and Technology Stack
 

@@ -146,7 +146,7 @@ node .github/scripts/parse-bdd-results.js US-003
 
 ### Integration Points
 - **Feature Files**: `features/**/*.feature` (Gherkin scenarios)
-- **Implementation Plan**: `/docs/user-stories/<US-REF>/implementation-plan.md` (layer mapping)
+- **Implementation Plan**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` (layer mapping)
 - **Test Results**: Parse JSON output from test runner
 - **Quality Metrics**: Integration with validation-rules.yml thresholds
 
@@ -162,10 +162,10 @@ Create `.github/scripts/run-bdd-tests.js`:
 
 ## Context Sources
 - `features/` directory (BDD feature files)
-- `/docs/user-stories/<US-REF>/implementation-plan.md` (layer assertion mapping)
-- `/docs/user-stories/current-sprint.md` (sprint context)
+- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` (layer assertion mapping)
+- `/docs/05-implementation/current-sprint.md` (sprint context)
 - BDD test runner output (JSON results)
-- `/docs/user-stories/user-stories.md` (story status tracking)
+- `/docs/05-implementation/user-stories.md` (story status tracking)
 
 ## Quality Gates
 - **No false positives**: All passing assertions should be expected to pass

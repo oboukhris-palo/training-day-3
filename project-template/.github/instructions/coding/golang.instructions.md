@@ -3,11 +3,17 @@ description: Go (Golang) programming language best practices, patterns, and conv
 applyTo: "**/*.go"
 ---
 
-# Go Best Practices & Development Guidelines
+# Go Development Instructions
 
-This document establishes coding standards and best practices for Go development. All team members must follow these guidelines to maintain consistency, quality, and maintainability across Go projects.
+## Overview
 
----
+This document provides systematic instructions for Go (Golang) programming language best practices and conventions using the AI-first delivery methodology. These instructions follow established Go development patterns and transform concurrent programming requirements into comprehensive coding standards that leverage Go's strengths in performance, simplicity, and concurrency for scalable applications.
+
+## Process Overview
+
+**Go Development Implementation** transforms concurrent programming requirements into structured Go implementations that deliver high-performance applications, effective goroutine usage, comprehensive error handling, and maintainable codebases through proper package organization, Go idioms, and established patterns for scalable concurrent systems.
+
+## Implementation Process
 
 ## 1. Project Setup & Configuration
 

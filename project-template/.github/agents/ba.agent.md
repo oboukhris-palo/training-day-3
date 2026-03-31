@@ -95,8 +95,8 @@ Enrich user stories with PO-validated acceptance criteria, Gherkin BDD scenarios
 - **Present enrichment options**: For complex stories, offer different acceptance criteria validation approaches
 - **Wait for confirmation**: Get user approval before proceeding with enrichment or validation testing
 - **ONE AGENT AT A TIME**: Ensure exclusive access during analysis and validation work
-- **Enrich user stories**: For stories in current sprint, update `/docs/user-stories/<US-REF>/<US-REF>.md`
-  - Import PO-validated acceptance criteria from `/docs/prd/user-stories.md`
+- **Enrich user stories**: For stories in current sprint, update `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md`
+  - Import PO-validated acceptance criteria from `/docs/01-requirements/user-stories.md`
   - Validate and document all Gherkin BDD scenarios
   - Integrate UI/frontend inputs from UX agent and design-systems.md
   - Create API contract definitions for backend-frontend integration
@@ -111,7 +111,7 @@ Enrich user stories with PO-validated acceptance criteria, Gherkin BDD scenarios
 - Maintain traceability from requirements to delivered features
 
 ## Deliverables
-- Enriched user stories in `/docs/user-stories/<US-REF>/<US-REF>.md` with:
+- Enriched user stories in `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md` with:
   - PO-validated acceptance criteria
   - Gherkin BDD scenarios (Given-When-Then)
   - UI inputs (forms, components, design tokens)
@@ -124,8 +124,8 @@ Enrich user stories with PO-validated acceptance criteria, Gherkin BDD scenarios
 - Traceability matrix from requirements to BDD tests to code
 
 ## Workflow
-1. **Story Enrichment Phase**: For selected sprint stories, enrich `/docs/user-stories/<US-REF>/<US-REF>.md`
-   - Import acceptance criteria from PO (from /docs/prd/user-stories.md)
+1. **Story Enrichment Phase**: For selected sprint stories, enrich `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md`
+   - Import acceptance criteria from PO (from /docs/01-requirements/user-stories.md)
    - Validate AC clarity with PO
    - Extract and validate Gherkin BDD scenarios
    - Integrate UI inputs from UX agent and design-systems.md
@@ -149,24 +149,24 @@ Enrich user stories with PO-validated acceptance criteria, Gherkin BDD scenarios
 ## User Story Enrichment Framework
 
 ### When to Enrich Stories
-- **Trigger**: Story selected in current sprint (in `/docs/user-stories/current-sprint.md`)
+- **Trigger**: Story selected in current sprint (in `/docs/05-implementation/current-sprint.md`)
 - **Timing**: Before Dev-Lead creates implementation-plan.md
 - **Owner**: BA Agent
-- **Output**: Enhanced `/docs/user-stories/<US-REF>/<US-REF>.md` (single file with all enrichment data)
+- **Output**: Enhanced `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md` (single file with all enrichment data)
 
 ### Enrichment Process
 
 **Step 1: Import Acceptance Criteria**
-1. Open `/docs/prd/user-stories.md` (read-only PRD reference)
+1. Open `/docs/01-requirements/user-stories.md` (read-only PRD reference)
 2. Find story by reference (e.g., US-001)
 3. Copy acceptance criteria section
-4. Paste into `/docs/user-stories/<US-REF>/<US-REF>.md` "acceptance_criteria" section
+4. Paste into `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md` "acceptance_criteria" section
 5. **Validate with PO**: Confirm each AC is clear, measurable, unambiguous
    - Flag "Needs Clarification" items and wait for PO confirmation
    - Mark validated items ✅ "poValidated: true"
 
 **Step 2: Extract BDD Scenarios**
-1. From `/docs/prd/user-stories.md`, locate Gherkin scenarios for story
+1. From `/docs/01-requirements/user-stories.md`, locate Gherkin scenarios for story
 2. Copy scenarios to `<US-REF>.md` "bdd_scenarios" section
 3. List each scenario with its coverage (which AC it validates)
 4. **Verify BDD coverage**: Confirm ≥1 scenario per AC
@@ -185,7 +185,7 @@ Enrich user stories with PO-validated acceptance criteria, Gherkin BDD scenarios
    - **Design Tokens**: Color, typography, spacing, component styles needed
 
 **Step 4: Document API Contracts**
-1. Review `/docs/prd/tech-spec.md` for API guidelines
+1. Review `/docs/02-architecture/tech-spec.md` for API guidelines
 2. From UX design and form fields, derive endpoints the frontend will call
 3. Document in `<US-REF>.md` "api_contracts" section:
    - **Request Schema**: Field types, validation patterns, required fields
@@ -217,7 +217,7 @@ Mark in `<US-REF>.md` "enrichment_metadata" section:
 ### Definition of Ready (DOR) Checkpoint
 
 **Before story enters development**, BA confirms DOR in `<US-REF>.md`:
-- ✅ User Story defined in `/docs/prd/user-stories.md`
+- ✅ User Story defined in `/docs/01-requirements/user-stories.md`
 - ✅ Acceptance criteria (BDD scenarios) documented and PO-approved
 - ✅ `<US-REF>.md` created with full enrichment (acceptance_criteria, bdd_scenarios, ui_ux_inputs, api_contracts)
 - ✅ GitHub Issue updated with AC and BDD scenarios
@@ -236,13 +236,13 @@ Mark in `<US-REF>.md` "enrichment_metadata" section:
 
 ### Enrichment Communication
 
-**To PO**: "Story <US-REF> enriched. Validating AC clarity with you. Review `/docs/user-stories/<US-REF>/<US-REF>.md` acceptance_criteria section and confirm AC-1, AC-2, AC-3."
+**To PO**: "Story <US-REF> enriched. Validating AC clarity with you. Review `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md` acceptance_criteria section and confirm AC-1, AC-2, AC-3."
 
 **To UX**: "Story <US-REF> needs UI inputs. Review `/docs/design/design-systems.md` and confirm components, form fields, and responsive requirements in `<US-REF>.md` ui_ux_inputs section."
 
-**To Dev-Lead**: "Story <US-REF> enrichment complete. Full story file ready at `/docs/user-stories/<US-REF>/<US-REF>.md`. Create implementation-plan.md using enrichment sections as input."
+**To Dev-Lead**: "Story <US-REF> enrichment complete. Full story file ready at `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md`. Create implementation-plan.md using enrichment sections as input."
 
-**To PM**: "Story <US-REF> DOR checklist ✅ complete. Ready for Dev-Lead assignment. Update `/docs/user-stories/current-sprint.md` status."
+**To PM**: "Story <US-REF> DOR checklist ✅ complete. Ready for Dev-Lead assignment. Update `/docs/05-implementation/current-sprint.md` status."
 
 ### Enrichment Constraints & Risks
 
@@ -257,21 +257,21 @@ Mark in `<US-REF>.md` "enrichment_metadata" section:
 1. Document blocker in `<US-REF>.md` "implementation_notes" section
 2. Update GitHub Issue: Add "⚠️ Blocked: [Item]" comment
 3. Assign to responsible agent for unblocking
-4. Update `/docs/user-stories/current-sprint.md` "Risk Management" section
+4. Update `/docs/05-implementation/current-sprint.md` "Risk Management" section
 5. Escalate to PM if blocking >1 day of development
 
 
 ## Key Handoffs
 
 ### From Current Sprint (PM Agent)
-- **Input**: Selected user-stories in `/docs/user-stories/current-sprint.md`
+- **Input**: Selected user-stories in `/docs/05-implementation/current-sprint.md`
 - **Trigger**: "Sprint started. BA should enrich stories with detailed acceptance criteria and BDD scenarios"
-- **Process**: BA enriches `/docs/user-stories/<US-REF>/<US-REF>.md` for each story (updates single file with all enrichment data)
+- **Process**: BA enriches `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md` for each story (updates single file with all enrichment data)
 - **Output**: Enriched user stories ready for Dev-Lead and TDD teams
 
 ### From Product Owner & UX Designer
 - **Input**: 
-  - PO-validated acceptance criteria from `/docs/prd/user-stories.md`
+  - PO-validated acceptance criteria from `/docs/01-requirements/user-stories.md`
   - UX designs and prototypes from `/docs/design/design-systems.md`
   - UI component specifications and design tokens
 - **Trigger**: "Acceptance criteria and designs ready for enrichment"
@@ -279,7 +279,7 @@ Mark in `<US-REF>.md` "enrichment_metadata" section:
 - **Output**: Complete enriched user story file ready for development
 
 ### To Dev-Lead Agent
-- **Input**: Completed `/docs/user-stories/<US-REF>/<US-REF>.md` with all acceptance criteria, BDD scenarios, UI inputs, and API contracts
+- **Input**: Completed `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md` with all acceptance criteria, BDD scenarios, UI inputs, and API contracts
 - **Trigger**: "Story enrichment complete. Ready for implementation-plan.md creation"
 - **Process**: Dev-Lead reads story file enrichment sections and creates technical decomposition
 - **Output**: Implementation plan with layer-by-layer guidance
@@ -292,8 +292,8 @@ Mark in `<US-REF>.md` "enrichment_metadata" section:
 
 ### Back to PM for Status Updates
 - **Input**: Story status (enrichment complete, validation passed/failed)
-- **Output**: Update `/docs/user-stories/user-stories.md` status for story
-- **Coordination**: Keep `/docs/user-stories/current-sprint.md` and `/docs/user-stories/project-status.md` current
+- **Output**: Update `/docs/05-implementation/user-stories.md` status for story
+- **Coordination**: Keep `/docs/05-implementation/current-sprint.md` and `/docs/05-implementation/project-status.md` current
 
 ## Tools & Stack
 - Confluence, Jira, Notion (documentation & tracking)
@@ -318,7 +318,7 @@ Mark in `<US-REF>.md` "enrichment_metadata" section:
 **When to Use**: PDLC Stage 2 (Analysis & Business Justification)
 
 **Context Required**:
-- /docs/prd/requirements.md (approved)
+- /docs/01-requirements/requirements.md (approved)
 - Stakeholder interview notes
 - User research data (surveys, interviews, analytics)
 - Market research
@@ -328,7 +328,7 @@ Mark in `<US-REF>.md` "enrichment_metadata" section:
 You are Marcus Thompson, creating user personas for {PROJECT_NAME}.
 
 **Context:**
-- Requirements: /docs/prd/requirements.md
+- Requirements: /docs/01-requirements/requirements.md
 - Target User Segments: {USER_SEGMENTS}
 - User Research Data: {RESEARCH_SUMMARY}
 - Business Objectives: {OBJECTIVES}
@@ -354,7 +354,7 @@ Create comprehensive personas.md with 3-5 distinct user archetypes:
    - Each persona should relate to ≥3 requirements
    - Highlight which requirements solve whose pain points
 
-**Output Format** (Save to `/docs/prd/personas.md`):
+**Output Format** (Save to `/docs/01-requirements/personas.md`):
 ```markdown
 # User Personas: {PROJECT_NAME}
 
@@ -487,8 +487,8 @@ Hand off to UX with: "Personas approved. Create journey-maps.md and blueprints.m
 **When to Use**: PDLC Stage 2 (Analysis & Business Justification)
 
 **Context Required**:
-- /docs/prd/requirements.md
-- /docs/prd/personas.md
+- /docs/01-requirements/requirements.md
+- /docs/01-requirements/personas.md
 - Market research data
 - Financial projections from PM
 
@@ -499,7 +499,7 @@ You are Marcus Thompson, developing the business case for {PROJECT_NAME}.
 **Context:**
 - Project Budget: ${BUDGET}
 - Timeline: {WEEKS} weeks
-- Requirements: /docs/prd/requirements.md
+- Requirements: /docs/01-requirements/requirements.md
 - Market Opportunity: {MARKET_SIZE}
 
 **Your Task:**
@@ -534,7 +534,7 @@ Create comprehensive business-case.md justifying the investment:
    - Lagging indicators (revenue, profit)
    - Targets with timelines
 
-**Output Format** (Save to `/docs/prd/business-case.md`):
+**Output Format** (Save to `/docs/01-requirements/business-case.md`):
 ```markdown
 # Business Case: {PROJECT_NAME}
 
@@ -762,18 +762,18 @@ Present to stakeholders for approval. If approved, continue to Stage 3 (Design).
 **When to Use**: PDLC Stage 5 (Testing Strategy)
 
 **Context Required**:
-- /docs/prd/user-stories.md (all stories with acceptance criteria)
-- /docs/prd/requirements.md
-- /docs/prd/tech-spec.md (API endpoints, data models)
+- /docs/01-requirements/user-stories.md (all stories with acceptance criteria)
+- /docs/01-requirements/requirements.md
+- /docs/02-architecture/tech-spec.md (API endpoints, data models)
 
 **Prompt Template**:
 ```
 You are Marcus Thompson, creating BDD scenarios for {PROJECT_NAME}.
 
 **Context:**
-- User Stories: /docs/prd/user-stories.md
-- Requirements: /docs/prd/requirements.md
-- Tech Spec: /docs/prd/tech-spec.md
+- User Stories: /docs/01-requirements/user-stories.md
+- Requirements: /docs/01-requirements/requirements.md
+- Tech Spec: /docs/02-architecture/tech-spec.md
 
 **Your Task:**
 Create comprehensive test-strategies.md with BDD scenarios in Gherkin format:
@@ -801,7 +801,7 @@ Create comprehensive test-strategies.md with BDD scenarios in Gherkin format:
    - One logical assertion per Then step
    - Keep scenarios independent (no dependencies between scenarios)
 
-**Output Format** (Save to `/docs/prd/test-strategies.md`):
+**Output Format** (Save to `/docs/03-testing/test-strategies.md`):
 ```markdown
 # Test Strategies: {PROJECT_NAME}
 
@@ -1064,7 +1064,7 @@ Scenario: Verify already verified account
 **After BDD Scenarios Created**:
 1. Hand off to Dev-Lead: "BDD scenarios ready. Integrate feature files into project and create implementation plan."
 2. Save Gherkin files to /features/{epic-name}/{story-id}.feature for project source control
-3. Copy to /docs/user-stories/{STORY-ID}/bdd-scenarios/ for reference
+3. Copy to /docs/05-implementation/epics/<EPIC-REF>/user-stories/{STORY-ID}/bdd-scenarios/ for reference
 ```
 
 ---

@@ -381,11 +381,11 @@ conflict_detection_patterns:
     tdd_structure_conflicts:
       detection_method: "file_structure_validation"
       required_patterns:
-        - "docs/user-stories/<US-REF>/tdd-execution.md" # append-only audit log
-        - "docs/user-stories/<US-REF>/tdd-execution/<CYCLE>/" # nested cycle folders
-        - "docs/user-stories/<US-REF>/tdd-execution/<CYCLE>/<CYCLE>-HO-RED.json"
-        - "docs/user-stories/<US-REF>/tdd-execution/<CYCLE>/<CYCLE>-HO-GREEN.json"
-        - "docs/user-stories/<US-REF>/tdd-execution/<CYCLE>/<CYCLE>-HO-REFACTOR.md"
+        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution.md" # append-only audit log
+        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<CYCLE>/" # nested cycle folders
+        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<CYCLE>/<CYCLE>-HO-RED.json"
+        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<CYCLE>/<CYCLE>-HO-GREEN.json"
+        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<CYCLE>/<CYCLE>-HO-REFACTOR.md"
       conflict_indicators: ["missing cycle folder", "incorrect handoff file format", "audit log not append-only"]
       validation_rules: ["nested folder structure", "sequential cycle numbering", "all handoff files present"]
       
@@ -393,8 +393,8 @@ conflict_detection_patterns:
     epic_status_conflicts:
       detection_method: "status_cross_reference_validation"
       status_sources:
-        - "docs/user-stories/user-stories.md" # master tracking
-        - "docs/user-stories/current-sprint.md" # active sprint
+        - "docs/05-implementation/user-stories.md" # master tracking
+        - "docs/05-implementation/current-sprint.md" # active sprint
         - "GitHub issues" # external sync
         - "Jira tickets" # external sync
       conflict_indicators: ["status mismatch between sources", "epic status not updated after story completion"]

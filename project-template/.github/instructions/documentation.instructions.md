@@ -2,7 +2,62 @@
 applyTo: '**'
 ---
 
-# Documentation Rules
+# Documentation Standards Instructions
+
+## Overview
+
+This document provides systematic instructions for documentation standards and content creation guidelines using the AI-first delivery methodology. These instructions establish clear boundaries between code-level documentation (required), project documentation (forbidden unless requested), and structured artifacts (template-based) to maintain focused, maintainable documentation that enhances code readability without creating maintenance burden.
+
+## Process Overview
+
+**Documentation Standards Implementation** transforms documentation requirements into structured content creation guidelines that deliver focused code documentation, prevent documentation bloat, and maintain consistency through established templates while ensuring developers can access necessary information without overwhelming maintenance overhead or redundant content creation.
+
+## Implementation Process
+
+### 1. Code Documentation Generation
+**Objective**: Create comprehensive inline documentation that enhances code readability and maintainability
+
+**Activities**:
+- Generate inline comments explaining WHY for non-obvious logic and business rules
+- Create API documentation using JSDoc/docstrings for all public functions and classes
+- Implement automated code review reports against coding standards checklist
+- Add TODO comments referencing future implementations with story references
+
+**Quality Standards**:
+- All public APIs include comprehensive JSDoc/docstring documentation
+- Inline comments explain business reasoning, not obvious code functionality
+- Security and performance annotations are present where relevant
+- Test documentation clearly states purpose and BDD scenario mappings
+
+### 2. Documentation Boundary Enforcement
+**Objective**: Prevent creation of maintenance-heavy project documentation unless explicitly required
+
+**Activities**:
+- Restrict creation of additional markdown files in /docs/ directory
+- Prevent duplicate documentation when README.md covers the topic
+- Use code comments instead of separate Architecture Decision Records
+- Direct project documentation requests to established templates
+
+**Quality Standards**:
+- No unnecessary markdown files created outside standard templates
+- README.md remains the single source for project overview information
+- Code comments serve as primary source for architectural decisions
+- All project documentation follows established template patterns
+
+### 3. Structured Artifact Creation
+**Objective**: Maintain consistency through template-based documentation for formal deliverables
+
+**Activities**:
+- Create PRD documents in phase-based folders following established templates (01-requirements, 02-architecture, 03-testing, 04-planning)
+- Generate implementation plans in /docs/05-implementation/epics/<EPIC-REF>/user-stories/ with consistent format
+- Produce handoff files in JSON format using handoff-tmpl.md template
+- Generate meeting minutes in YAML format using meeting.assistant.agent
+
+**Quality Standards**:
+- All structured artifacts follow designated template formats exactly
+- PRD documents maintain consistency across requirements, user-stories, and technical specifications
+- Implementation plans use standardized structure for reproducible workflows
+- Meeting minutes capture actionable items in structured YAML format
 
 ## Documentation Categories
 
@@ -30,8 +85,8 @@ Project-level documentation is FORBIDDEN unless explicitly requested by user:
 ### 📋 STANDARD PROJECT DOCUMENTATION (Follow Templates)
 These are created during PDLC/Implementation workflows using templates:
 
-- PRD documents in /docs/prd/ (requirements, user-stories, architecture-design, etc.)
-- Implementation plans in /docs/user-stories/<US-REF>/
+- PRD documents in phase folders: docs/01-requirements/, docs/02-architecture/, docs/03-testing/, docs/04-planning/
+- Implementation plans in /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/
 - Handoff files (JSON format using handoff-tmpl.md)
 - Meeting minutes (YAML format using meeting.assistant.agent)
 

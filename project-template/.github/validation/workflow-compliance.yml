@@ -53,11 +53,11 @@ assessment_to_documents:
 ### Documents → Implementation  
 documents_to_implementation:
   required_artifacts:
-    - "docs/prd/requirements.md"
-    - "docs/prd/user-stories.md"
-    - "docs/prd/architecture-design.md"
-    - "docs/prd/tech-spec.md"
-  completion_marker: "docs/prd/.documents-complete"
+    - "docs/01-requirements/requirements.md"
+    - "docs/01-requirements/user-stories.md"
+    - "docs/02-architecture/architecture-design.md"
+    - "docs/02-architecture/tech-spec.md"
+  completion_marker: "docs/.documents-complete"
   quality_checks:
     - user_stories_have_acceptance_criteria: true
     - bdd_scenarios_present: true
@@ -265,7 +265,7 @@ guidance_templates:
     message: "Project workflow enforcement active. Choose your path:"
     options:
       - "🔍 Start Assessment (@orchestrator Assess project)"
-      - "📋 View Requirements (Check existing docs/prd/)"
+      - "📋 View Requirements (Check existing docs/01-requirements/ through docs/04-planning/)"
       - "🚀 Emergency Override (Requires justification)"
   
   missing_prerequisites:

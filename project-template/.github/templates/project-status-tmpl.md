@@ -11,12 +11,12 @@
 
 | Metric | Value | Status |
 |--------|-------|--------|
-| **Total User Stories** | [N] | Reference from `/docs/prd/user-stories.md` |
-| **Stories Completed** | [N] | "Delivered" status in `/docs/user-stories/user-stories.md` |
+| **Total User Stories** | [N] | Reference from `/docs/01-requirements/user-stories.md` |
+| **Stories Completed** | [N] | "Delivered" status in `/docs/05-implementation/user-stories.md` |
 | **Stories In Progress** | [N] | "In Progress" or "Implemented" status |
 | **Stories Not Started** | [N] | "Not Started" status |
 | **Project Completion** | [X]% | (Delivered / Total) × 100 |
-| **Current Iteration** | Iteration [N] | Active sprint from `/docs/user-stories/current-sprint.md` |
+| **Current Iteration** | Iteration [N] | Active sprint from `/docs/05-implementation/current-sprint.md` |
 | **Velocity** | [N] points/sprint | Average from last 3 sprints |
 | **Projected Completion** | [DATE] | Based on current velocity |
 
@@ -42,7 +42,7 @@
 ## Current Sprint
 
 **Sprint**: Iteration [N] | Period: [START_DATE] - [END_DATE]  
-**Sprint File**: `/docs/user-stories/current-sprint.md`
+**Sprint File**: `/docs/05-implementation/current-sprint.md`
 
 ### Sprint Metrics
 - **Stories Selected**: [N]
@@ -79,12 +79,12 @@ Iteration 3: [X] points (Current Average: [X] points/sprint)
 | BDD Test Pass Rate | 100% | [X]% | 🟢/🟡/🔴 |
 
 ### Release Readiness
-- [ ] All requirements captured in `/docs/prd/requirements.md`
-- [ ] All user stories defined in `/docs/prd/user-stories.md`
-- [ ] Architecture documented in `/docs/prd/architecture-design.md`
-- [ ] Tech specs completed in `/docs/prd/tech-spec.md`
-- [ ] Design system finalized in `/docs/design/design-systems.md`
-- [ ] Test strategies defined in `/docs/prd/test-strategies.md`
+- [ ] All requirements captured in `/docs/01-requirements/requirements.md`
+- [ ] All user stories defined in `/docs/01-requirements/user-stories.md`
+- [ ] Architecture documented in `/docs/02-architecture/architecture-design.md`
+- [ ] Tech specs completed in `/docs/02-architecture/tech-spec.md`
+- [ ] Design system defined in `/docs/02-architecture/design-systems.md`
+- [ ] Test strategies defined in `/docs/03-testing/test-strategies.md`
 - [ ] CI/CD pipeline configured
 - [ ] Security review passed
 - [ ] Performance testing complete
@@ -125,7 +125,13 @@ Iteration 3: [X] points (Current Average: [X] points/sprint)
 
 ## Documentation Status
 
-### PRD Documents (Read in /docs/prd/)
+### PRD Documents (PDLC Phases 1-6)
+
+**Read from phase-based structure:**
+- Phase 1-2: `/docs/01-requirements/` (requirements.md, personas.md, user-stories.md, business-case.md)
+- Phase 3-4: `/docs/02-architecture/` (architecture-design.md, tech-spec.md, design-systems.md)
+- Phase 5: `/docs/03-testing/` (test-strategies.md)
+- Phase 6: `/docs/04-planning/` (iteration-planning.md, deployment-plan.md)
 - [ ] requirements.md - Stakeholder & business requirements
 - [ ] personas.md - User archetypes and segments
 - [ ] user-stories.md - All epics and user stories with BDD scenarios
@@ -137,10 +143,10 @@ Iteration 3: [X] points (Current Average: [X] points/sprint)
 - [ ] deployment-plan.md - Release and deployment strategy
 
 ### Implementation Artifacts
-- [ ] `/docs/user-stories/user-stories.md` - ⭐ SINGLE SOURCE OF TRUTH (status tracking)
-- [ ] `/docs/user-stories/current-sprint.md` - Active sprint planning
-- [ ] `/docs/user-stories/<US-REF>/implementation-plan.md` - Per-story technical decomposition
-- [ ] `/docs/user-stories/<US-REF>/ba-enrichment.md` - BA validated info and acceptance criteria
+- [ ] `/docs/05-implementation/user-stories.md` - ⭐ SINGLE SOURCE OF TRUTH (status tracking)
+- [ ] `/docs/05-implementation/current-sprint.md` - Active sprint planning
+- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` - Per-story technical decomposition
+- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/ba-enrichment.md` - BA validated info and acceptance criteria
 - [ ] `features/` - BDD feature files with failing tests
 
 ---
@@ -150,7 +156,7 @@ Iteration 3: [X] points (Current Average: [X] points/sprint)
 ### Agent Assignments
 | Agent Role | Current Assignment | Status | Next Action |
 |------------|------------------|--------|-------------|
-| PM (Project Manager) | Sprint planning & velocity tracking | 🟢 Active | Review `/docs/user-stories/current-sprint.md` |
+| PM (Project Manager) | Sprint planning & velocity tracking | 🟢 Active | Review `/docs/05-implementation/current-sprint.md` |
 | PO (Product Owner) | Requirements & prioritization | 🟢 Active | Update user story definitions |
 | BA (Business Analyst) | Acceptance testing & validation | 🟢 Active | Enrich stories in `ba-enrichment.md` |
 | Architect | System design & tech decisions | 🟢 Standby | Architecture reviews as needed |
@@ -159,7 +165,7 @@ Iteration 3: [X] points (Current Average: [X] points/sprint)
 
 ### GitHub Integration
 - **Repository**: [REPO_URL]
-- **Issue Tracker**: GitHub Issues (synchronized with `/docs/user-stories/user-stories.md`)
+- **Issue Tracker**: GitHub Issues (synchronized with `/docs/05-implementation/user-stories.md`)
 - **CI/CD Pipeline**: [PIPELINE_STATUS]
 - **Deployment**: [ENVIRONMENT_STATUS]
 
@@ -183,10 +189,10 @@ Iteration 3: [X] points (Current Average: [X] points/sprint)
 
 ## Quick Links
 
-- **PRD Documents**: `/docs/prd/`
-- **Implementation Tracking**: `/docs/user-stories/user-stories.md`
-- **Current Sprint**: `/docs/user-stories/current-sprint.md`
-- **Archive Sprints**: `/docs/user-stories/sprint-*.md`
+- **PDLC Phase Documents**: `/docs/01-requirements/`, `/docs/02-architecture/`, `/docs/03-testing/`, `/docs/04-planning/`
+- **Implementation Tracking**: `/docs/05-implementation/user-stories.md`
+- **Current Sprint**: `/docs/05-implementation/current-sprint.md`
+- **Archive Sprints**: `/docs/05-implementation/sprint-*.md`
 - **Design System**: `/docs/design/design-systems.md`
 - **GitHub Issues**: [REPO_URL]/issues
 - **CI/CD Pipelines**: [PIPELINE_URL]
@@ -198,28 +204,28 @@ Iteration 3: [X] points (Current Average: [X] points/sprint)
 
 ### For Project Managers
 → Check **Current Sprint** section and **Key Metrics & Health Indicators**  
-→ Review `/docs/user-stories/current-sprint.md` for detailed daily tracking  
+→ Review `/docs/05-implementation/current-sprint.md` for detailed daily tracking  
 → Monitor **Active Blockers & Risks** for escalation needs
 
 ### For Product Owners
 → Review **Epic Progress** to prioritize next stories  
 → Check **Project Timeline & Milestones** for release planning  
-→ Examine **Story Status** in `/docs/user-stories/user-stories.md`
+→ Examine **Story Status** in `/docs/05-implementation/user-stories.md`
 
 ### For Architects
 → Verify **Release Readiness** checklist completion  
-→ Review tech decisions in `/docs/prd/architecture-design.md`  
+→ Review tech decisions in `/docs/02-architecture/architecture-design.md`  
 → Monitor **At-Risk Items** for architectural conflicts
 
 ### For Developers
 → Check **Current Sprint** for assigned stories  
-→ Read implementation guidance in `/docs/user-stories/<US-REF>/implementation-plan.md`  
+→ Read implementation guidance in `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md`  
 → Review **Code Quality Metrics** for refactoring priorities
 
 ### For Business Analysts
-→ Review **BA Enrichment** documents in `/docs/user-stories/<US-REF>/ba-enrichment.md`  
+→ Review **BA Enrichment** documents in `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/ba-enrichment.md`  
 → Check **Active Blockers** for validation delays  
-→ Use **Acceptance Criteria** from `/docs/prd/user-stories.md` for testing
+→ Use **Acceptance Criteria** from `/docs/01-requirements/user-stories.md` for testing
 
 ---
 

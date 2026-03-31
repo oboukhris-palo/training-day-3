@@ -29,6 +29,8 @@ cp -r project-template/.github your-project/.github
 
 ### Step 2: Replace Example Identifiers with Your Context
 
+**Note on Documentation Paths**: Framework 2.0.0 uses phase-based folder structure (`01-requirements/`, `02-architecture/`, etc.) instead of the older `/docs/prd/` pattern. All examples below use the new structure.
+
 #### Identifier Substitution Template
 
 | Example (Framework) | Your Project | Files to Update |
@@ -111,23 +113,23 @@ All task prompts use `.prompt.md` suffix:
 ### Pattern 1: New Project (Greenfield)
 ```
 1. Copy .github/ into project
-2. Run: @orchestrator Start PDLC for [PROJECT_NAME]
+2. Run: @orchestrator Assess project status for [PROJECT_NAME]
 3. Answer stakeholder questions (PO, BA agents guide you)
-4. Generate PDLC docs (requirements, personas, architecture, etc.)
-5. When Stage 1-6 complete, start Implementation Phase 1
-6. Hand off to Dev-Lead for sprint planning
-7. Execute TDD cycles with BDD-driven tests
+4. Generate PDLC docs (requirements in 01-requirements/, architecture in 02-architecture/, etc.)
+5. When PDLC Stages 1-6 complete, review approval gates
+6. Start Implementation Phase 1 with Dev-Lead
+7. Execute TDD cycles with BDD-driven tests in 05-implementation/
 ```
 
 ### Pattern 2: Brownfield Project (Retro-Documentation)
 ```
 1. Copy .github/ into project
-2. Run: @orchestrator Retro-document [PROJECT_NAME] for brownfield
+2. Run: @orchestrator Assess project status for [PROJECT_NAME]
 3. BA agent scans code, extracts existing specs
-4. Reconstruct requirements, architecture, design decisions
-5. Create user stories with BDD scenarios
+4. Reconstruct requirements (01-requirements/), architecture (02-architecture/), design decisions
+5. Create user stories with BDD scenarios (05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/)
 6. Validate with stakeholders
-7. Begin Implementation Phase 1 for next features
+7. Begin Implementation Phase 1 for next features with approval gates
 ```
 
 ### Pattern 3: Mid-Development Project
@@ -135,24 +137,26 @@ All task prompts use `.prompt.md` suffix:
 1. Copy .github/ into project
 2. Run: @orchestrator Assess project status for [PROJECT_NAME]
 3. Orchestrator detects current state (PDLC Stage X, Implementation Phase Y)
-4. Recommends next milestone
-5. Hand off to appropriate agent (Architect, Dev-Lead, etc.)
-6. Continue orchestrated workflow
+4. Checks documentation in 01-06/ (immutable PRD phases) and 05-implementation/ (mutable tracking)
+5. Recommends next milestone based on approval gates and plan status
+6. Hand off to appropriate agent (Architect, Dev-Lead, etc.)
+7. Continue orchestrated workflow with quality gates
 ```
 
 ### Pattern 4: Rapid Prototyping with YOLO Mode ⭐ *NEW (Framework 2.0.0)*
 ```
-1. User story has complete BDD tests (failing) and implementation plan
-2. Run: @orchestrator YOLO mode for [US-REF] (I acknowledge the risks)
-3. Orchestrator runs pre-flight checks:
+1. User story has complete BDD tests (failing) in 05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/bdd-scenarios/
+2. Implementation plan approved in plan-approval.yaml
+3. Run: @orchestrator YOLO mode for [US-REF] (I acknowledge the risks)
+4. Orchestrator runs pre-flight checks:
    ✅ All BDD tests written and failing
    ✅ Git working tree clean
-   ✅ Implementation plan exists and complete
+   ✅ Implementation plan exists and complete (plan-approval.yaml: approved)
    ✅ No open blockers
-4. Execute single TDD cycle (RED → GREEN → REFACTOR)
-5. Auto-abort if ANY existing test fails (safety rail)
-6. After cycle, mandatory human review required
-7. Normal approval workflow for subsequent cycles
+5. Execute single TDD cycle (RED → GREEN → REFACTOR) with cycle logging
+6. Auto-abort if ANY existing test fails (safety rail)
+7. After cycle, mandatory human review required
+8. Auto-creates new approval gate for subsequent cycles (changes-requested status)
 ```
 
 ---
@@ -164,10 +168,10 @@ All task prompts use `.prompt.md` suffix:
 **You adopt**: YOUR_PREFIX-001, YOUR_PREFIX-002, etc.
 
 Where they appear:
-- `/docs/prd/user-stories.md` - Define your stories with YOUR IDs
-- `/docs/user-stories/<YOUR_ID>/` - Create folders per YOUR ID
+- `/docs/01-requirements/user-stories.md` - Define your PRD stories with YOUR IDs (immutable reference)
+- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<YOUR_ID>/` - Create folders per YOUR ID for implementation
 - Git commits: `TDD-YOUR_ID-RED-1:` format
-- BDD scenarios: Reference YOUR stories
+- BDD scenarios: Reference YOUR stories in `bdd-scenarios/` folder
 
 ### 2. Feature Domains
 **Framework uses**: `features/auth/`, `features/payment/`, `features/billing/`  
@@ -201,21 +205,22 @@ File: `/api/openapi.yaml`
 **Framework provides**: `plan-approval-tmpl.yaml` template  
 **You populate**: Approval status, validation checklist results, approver role/name
 
-File: `/docs/user-stories/<US-REF>/plan-approval.yaml`
-- Dev-Lead creates during Phase 2 (preparation)
+File: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-approval.yaml`
+- Dev-Lead creates during Implementation Phase 2 (preparation)
 - Orchestrator validates before TDD execution begins
 - Status: `approved | changes-requested | revoked`
-- Plan modifications auto-revoke approval (requires snapshot & re-review)
+- Plan modifications auto-revoke approval (creates `implementation-plan-vN.md` snapshot, resets status to `changes-requested`)
+- Human review required before status can return to `approved`
 
 ### 6. Action Tracing Logs ⭐ *NEW (Framework 2.0.0)*
 **Framework provides**: Immutable daily log pattern  
 **You populate**: Agent actions, files touched, rationale, next steps
 
 Locations:
-- Root-level agents: `/docs/logs/agent-{agent_name}-YYYYMMDD.md`
-- TDD agents: `/docs/user-stories/<US-REF>/logs/agent-{agent_name}-YYYYMMDD.md`
-- Append-only with ISO8601 timestamps
-- Audit trails for debugging, compliance, and process improvement
+- Root-level agents (e.g., orchestrator, dev-lead): `/docs/logs/agent-{agent_name}-YYYYMMDD.md`
+- TDD agents: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-{agent_name}-YYYYMMDD.md`
+- Append-only with ISO8601 timestamps (e.g., `2026-03-31T14:30:15Z`)
+- Used for audit trails, debugging, compliance, and process improvement
 
 ---
 

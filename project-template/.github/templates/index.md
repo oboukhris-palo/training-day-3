@@ -57,7 +57,7 @@ Used for requirements gathering, user research, and specification.
 | **func-doc.template.yml** | Functional specification per feature | YAML | Detailed functional design |
 | **user-story-draft-checklist.md** | Validation gate before story enters sprint | Markdown | Before story is "ready" |
 
-**Output**: `/docs/prd/`, `/docs/user-stories/user-stories.md`
+**Output**: PDLC phase documents in `/docs/01-requirements/`, `/docs/02-architecture/`, `/docs/03-testing/`, `/docs/04-planning/`, and `/docs/05-implementation/user-stories.md`
 
 ### Meetings & Stakeholder Communication
 
@@ -77,10 +77,10 @@ Used during development when building features.
 
 | Template | Purpose | Format | Output |
 |----------|---------|--------|--------|
-| **implementation-plan.template.md** | Layer-by-layer architecture (4 layers max 500 words each) | Markdown | `/docs/user-stories/{US-REF}/implementation-plan.md` |
-| **layer-completion-checklist.template.md** | Per-layer validation & BDD assertion tracking | Markdown | `/docs/user-stories/{US-REF}/layer-{N}-checklist.md` |
-| **handoff.template.json** | Cycle snapshot with decisions, metrics, next steps | JSON | `/docs/user-stories/{US-REF}/handoff.md` |
-| **tdd-execution.template.md** | Append-only audit log of RED→GREEN→REFACTOR cycles | Markdown | `/docs/user-stories/{US-REF}/tdd-execution.md` |
+| **implementation-plan.template.md** | Layer-by-layer architecture (4 layers max 500 words each) | Markdown | `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/implementation-plan.md` |
+| **layer-completion-checklist.template.md** | Per-layer validation & BDD assertion tracking | Markdown | `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/layer-{N}-checklist.md` |
+| **handoff.template.json** | Cycle snapshot with decisions, metrics, next steps | JSON | `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/handoff.md` |
+| **tdd-execution.template.md** | Append-only audit log of RED→GREEN→REFACTOR cycles | Markdown | `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/tdd-execution.md` |
 
 ### Code Quality & Review
 
@@ -92,7 +92,7 @@ Used during development when building features.
 
 | Template | Purpose | Format | Output |
 |----------|---------|--------|--------|
-| **user-stories-tracking.template.md** | SSOT implementation status by epic & story | Markdown | `/docs/user-stories/user-stories.md` |
+| **user-stories-tracking.template.md** | SSOT implementation status by epic & story | Markdown | `/docs/05-implementation/user-stories.md` |
 | **project-status.template.md** | Dashboard with KPIs, metrics, health indicators | Markdown | `/docs/project-status.md` |
 
 ---
@@ -111,7 +111,7 @@ Used during development when building features.
 
 | Template | Purpose | Output |
 |----------|---------|--------|
-| **monitoring-setup.template.md** | Metrics, thresholds, alerts, on-call escalation | `/docs/user-stories/{US-REF}/monitoring.md` |
+| **monitoring-setup.template.md** | Metrics, thresholds, alerts, on-call escalation | `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/monitoring.md` |
 | **compliance-checklist.template.md** | GDPR/SOC2/PCI-DSS validation with evidence | `/docs/compliance-checklist.md` |
 | **incident-response.template.md** | Escalation procedures, post-mortems, RCAs | `/docs/incidents/incident-{ID}.md` |
 
@@ -119,8 +119,8 @@ Used during development when building features.
 
 | Template | Purpose | Output |
 |----------|---------|--------|
-| **dependency-matrix.template.md** | Service dependencies, deployment ordering, cascade analysis | `/docs/user-stories/{US-REF}/dependencies.md` |
-| **performance-testing.template.md** | Load test scenarios, baselines, acceptance criteria | `/docs/user-stories/{US-REF}/perf-plan.md` |
+| **dependency-matrix.template.md** | Service dependencies, deployment ordering, cascade analysis | `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/dependencies.md` |
+| **performance-testing.template.md** | Load test scenarios, baselines, acceptance criteria | `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/perf-plan.md` |
 | **metadata-frontmatter-standard.md** | Standardized frontmatter for YAML/Markdown templates | `/docs/standards/metadata.md` (applies to all templates) |
 
 ---
@@ -149,7 +149,7 @@ Used during development when building features.
 
 | Template | Purpose | Use When |
 |----------|---------|----------|
-| **user-story-folder.template.md** | Directory structure for story artifacts | Creating new `/docs/user-stories/{US-REF}/` |
+| **user-story-folder.template.md** | Directory structure for story artifacts | Creating new `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/` |
 
 ---
 

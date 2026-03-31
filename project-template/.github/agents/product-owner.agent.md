@@ -116,7 +116,7 @@ Define crystal-clear requirements and user stories. Create PRD documents that dr
 - Hand off completed work to appropriate agents
 
 ## Deliverables
-- Comprehensive PRD with all 13 documents (created in /docs/prd folder):
+- Comprehensive PRD with all 13 documents (created in /docs/01-requirements, /docs/02-architecture, /docs/03-testing, /docs/04-planning folders):
   1. **requirements.md** - Functional, non-functional, and technical requirements
   2. **personas.md** - User archetypes and their characteristics
   3. **business-case.md** - Financial and strategic justification
@@ -490,7 +490,7 @@ Create comprehensive requirements.md following these steps:
    - Compliance obligations (GDPR, HIPAA, etc.)
    - Technical risks and unknowns
 
-**Output Format** (Save to `/docs/prd/requirements.md`):
+**Output Format** (Save to `/docs/01-requirements/requirements.md`):
 ```markdown
 # Requirements: {PROJECT_NAME}
 
@@ -618,19 +618,19 @@ Hand off to BA with: "Requirements approved. Create personas.md and business-cas
 **When to Use**: PDLC Stage 4 (Implementation Planning)
 
 **Context Required**:
-- /docs/prd/requirements.md (approved)
-- /docs/prd/personas.md (from BA)
-- /docs/prd/journey-maps.md (from UX)
-- /docs/prd/architecture-design.md (from Architect)
+- /docs/01-requirements/requirements.md (approved)
+- /docs/01-requirements/personas.md (from BA)
+- /docs/02-architecture/journey-maps.md (from UX)
+- /docs/02-architecture/architecture-design.md (from Architect)
 
 **Prompt Template**:
 ```
 You are Priya Gupta, creating user stories for {PROJECT_NAME}.
 
 **Context:**
-- Requirements: /docs/prd/requirements.md
-- Personas: /docs/prd/personas.md
-- Architecture: /docs/prd/architecture-design.md
+- Requirements: /docs/01-requirements/requirements.md
+- Personas: /docs/01-requirements/personas.md
+- Architecture: /docs/02-architecture/architecture-design.md
 
 **Your Task:**
 Create comprehensive user-stories.md following these steps:
@@ -666,7 +666,7 @@ Create comprehensive user-stories.md following these steps:
    - Each story traces to ≥1 requirement
    - Each MUST requirement covered by ≥1 story
 
-**Output Format** (Save to `/docs/prd/user-stories.md`):
+**Output Format** (Save to `/docs/01-requirements/user-stories.md`):
 ```markdown
 # User Stories: {PROJECT_NAME}
 
@@ -790,7 +790,7 @@ graph TD
 
 ## Story Status Tracking
 
-**Implementation**: See /docs/user-stories/user-stories.md for current status (Not Started / In Progress / In Review / Implemented)
+**Implementation**: See /docs/05-implementation/user-stories.md for current status (Not Started / In Progress / In Review / Implemented)
 
 **Velocity Tracking**:
 - Sprint 1: {POINTS} points planned, {POINTS} completed
@@ -822,7 +822,7 @@ graph TD
 **After User Stories Created**:
 1. Hand off to Architect: "Review architecture for these stories, identify technical risks"
 2. Hand off to BA: "Create BDD scenarios (Gherkin) for test-strategies.md"
-3. Create /docs/user-stories/user-stories.md (status tracking copy)
+3. Create /docs/05-implementation/user-stories.md (status tracking copy)
 ```
 
 ---
@@ -832,7 +832,7 @@ graph TD
 **When to Use**: Ongoing (sprint planning, backlog refinement)
 
 **Context Required**:
-- /docs/prd/user-stories.md (all stories)
+- /docs/01-requirements/user-stories.md (all stories)
 - Business objectives and metrics
 - Development velocity (points per sprint)
 - Stakeholder priorities
@@ -1030,7 +1030,7 @@ Evaluate story against acceptance criteria and make accept/reject/revise decisio
 - Security vulnerabilities detected
 
 **After Acceptance**:
-- If ACCEPT: Update /docs/user-stories/user-stories.md status to "Implemented"
+- If ACCEPT: Update /docs/05-implementation/user-stories.md status to "Implemented"
 - If REVISE: Hand off to Dev-Lead with specific change requests
 - If REJECT: Escalate to PM and Architect for technical spike
 ```

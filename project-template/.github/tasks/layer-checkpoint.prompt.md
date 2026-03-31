@@ -88,9 +88,9 @@ Ready for Layer 3: No (2 quality gates failing)
 ```
 
 ## Context Sources
-- `/docs/user-stories/<US-REF>/implementation-plan.md` (layer targets)
-- `/docs/user-stories/<US-REF>/TDD-execution.md` (cycle status)  
-- `/docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md` (current state)
+- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` (layer targets)
+- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/TDD-execution.md` (cycle status)  
+- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>-HANDOFF.md` (current state)
 - BDD test results (live test execution)
 - Code quality metrics (coverage, complexity tools)
 

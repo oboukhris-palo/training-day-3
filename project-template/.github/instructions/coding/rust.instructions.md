@@ -3,7 +3,17 @@ description: Rust programming language best practices, patterns, and conventions
 applyTo: "**/*.rs"
 ---
 
-# Rust Best Practices & Development Guidelines
+# Rust Development Instructions
+
+## Overview
+
+This document provides systematic instructions for Rust programming language best practices and conventions using the AI-first delivery methodology. These instructions follow established Rust development patterns and transform systems programming requirements into comprehensive coding standards that leverage Rust's memory safety, performance guarantees, and concurrency features for reliable system development.
+
+## Process Overview
+
+**Rust Development Implementation** transforms systems programming requirements into structured Rust implementations that deliver memory-safe applications, effective ownership patterns, comprehensive testing strategies, and maintainable codebases through proper Rust idioms, borrow checker compliance, and established patterns for safe concurrent systems.
+
+## Implementation Process & Development Guidelines
 
 This document establishes coding standards and best practices for Rust development. All team members must follow these guidelines to maintain consistency, quality, and maintainability across Rust projects.
 

@@ -65,9 +65,9 @@ Attempted: Start implementation (@dev-lead Begin implementation)
 Missing: Completed documentation phase
 
 REQUIRED PREREQUISITES:
-❌ docs/prd/user-stories.md - User stories with acceptance criteria  
-❌ docs/prd/architecture-design.md - System architecture design
-❌ docs/user-stories/user-stories.md - Implementation status tracking
+❌ docs/01-requirements/user-stories.md - User stories with acceptance criteria  
+❌ docs/02-architecture/architecture-design.md - System architecture design
+❌ docs/05-implementation/user-stories.md - Implementation status tracking
 
 ESTIMATED COMPLETION TIME: 2-4 hours
 ```
@@ -144,8 +144,8 @@ Dev-lead trying to hand off to TDD agents without complete implementation plan.
 🤝 HANDOFF VALIDATION FAILED: @dev-lead → @dev-tdd
 
 MISSING HANDOFF ARTIFACTS:
-❌ docs/user-stories/US-001/implementation-plan.md
-❌ docs/user-stories/US-001/handoff.md
+❌ docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md
+❌ docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/handoff.md
 
 HANDOFF REQUIREMENTS:
 ✅ User story US-001 exists and is prioritized
@@ -200,8 +200,8 @@ Generated structure:
 ├─ Layer 3 (Config): Routes, middleware, environment variables  
 ├─ Layer 4 (Frontend): Login/logout forms, auth state management
 
-📄 CREATED: docs/user-stories/US-001/implementation-plan.md
-🤝 CREATED: docs/user-stories/US-001/handoff.md
+📄 CREATED: docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md
+🤝 CREATED: docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/handoff.md
 
 ✅ HANDOFF VALIDATED: @dev-lead → @dev-tdd ready to proceed
 ```

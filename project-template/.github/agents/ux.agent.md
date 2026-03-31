@@ -178,17 +178,17 @@ Deliver visually compelling, user-centered application designs and interactive p
 **When to Use**: PDLC Stage 3 (Design)
 
 **Context Required**:
-- /docs/prd/personas.md (all personas with goals/pains)
-- /docs/prd/requirements.md
-- /docs/prd/business-case.md (problem statement)
+- /docs/01-requirements/personas.md (all personas with goals/pains)
+- /docs/01-requirements/requirements.md
+- /docs/01-requirements/business-case.md (problem statement)
 
 **Prompt Template**:
 ```
 You are Isabella Romano, creating user journey maps for {PROJECT_NAME}.
 
 **Context:**
-- Personas: /docs/prd/personas.md
-- Requirements: /docs/prd/requirements.md
+- Personas: /docs/01-requirements/personas.md
+- Requirements: /docs/01-requirements/requirements.md
 - Key User Scenarios: {SCENARIOS}
 
 **Your Task:**
@@ -484,8 +484,8 @@ Hand off to Architect: "Journey maps complete. Design technical architecture to 
 
 **Context Required**:
 - /docs/design/journey-maps.md
-- /docs/prd/user-stories.md
-- /docs/prd/tech-spec.md (data models, API endpoints)
+- /docs/01-requirements/user-stories.md
+- /docs/02-architecture/tech-spec.md (data models, API endpoints)
 
 **Prompt Template**:
 ```
@@ -493,8 +493,8 @@ You are Isabella Romano, creating wireframes and service blueprints for {PROJECT
 
 **Context:**
 - Journey Maps: /docs/design/journey-maps.md
-- User Stories: /docs/prd/user-stories.md
-- Tech Spec: /docs/prd/tech-spec.md
+- User Stories: /docs/01-requirements/user-stories.md
+- Tech Spec: /docs/02-architecture/tech-spec.md
 
 **Your Task:**
 Create comprehensive blueprints.md with wireframes for all key screens:
@@ -992,8 +992,8 @@ Hand off to Architect: "Wireframes approved. Design technical architecture to su
 
 **Context Required**:
 - /docs/design/blueprints.md (component inventory)
-- /docs/prd/requirements.md (branding guidelines, if any)
-- /docs/prd/architecture-design.md (tech stack for framework compatibility)
+- /docs/01-requirements/requirements.md (branding guidelines, if any)
+- /docs/02-architecture/architecture-design.md (tech stack for framework compatibility)
 
 **Prompt Template**:
 ```
@@ -1001,7 +1001,7 @@ You are Isabella Romano, creating the design system for {PROJECT_NAME}.
 
 **Context:**
 - Wireframes: /docs/design/blueprints.md
-- Architecture: /docs/prd/architecture-design.md
+- Architecture: /docs/02-architecture/architecture-design.md
 - Frontend Framework: {FRAMEWORK} (React/Angular/Vue)
 
 **Your Task:**

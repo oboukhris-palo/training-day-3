@@ -51,7 +51,7 @@ handoffs:
 - Track BDD test progress and layer completion
 - Read implementation plans and guide phase agents
 - Update handoff files with progress
-- **Log orchestration actions to daily log**: `/docs/user-stories/<US-REF>/logs/agent-dev-tdd-YYYYMMDD.md`
+- **Log orchestration actions to daily log**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-dev-tdd-YYYYMMDD.md`
 - Verify BDD scenarios pass after cycles
 - Report completion status to dev-lead
 
@@ -87,22 +87,22 @@ If user asks you to:
 
 ## Orchestrated TDD Cycle
 
-This agent drives a full TDD loop guided by the **implementation plan** at `/docs/user-stories/<USER-STORY-REF>/implementation-plan.md` and **failing BDD tests** from feature files.
+This agent drives a full TDD loop guided by the **implementation plan** at `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/implementation-plan.md` and **failing BDD tests** from feature files.
 
 ### Prerequisites
-- **Implementation plan**: `/docs/user-stories/<USER-STORY-REF>/implementation-plan.md` (detailed layer breakdown with files, tests, BDD coverage)
+- **Implementation plan**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/implementation-plan.md` (detailed layer breakdown with files, tests, BDD coverage)
 - **Failing BDD test scenarios** from feature files (e.g., `features/auth/login.feature`)
 - **Layer assignment** (Layer 1: Database, Layer 2: Backend, Layer 3: Config, Layer 4: Frontend)
-- **Technical specifications**: `/docs/prd/tech-spec.md` (languages, frameworks, libraries)
-- **Architecture design**: `/docs/prd/architecture-design.md` (patterns, constraints, integrations)
+- **Technical specifications**: `/docs/02-architecture/tech-spec.md` (languages, frameworks, libraries)
+- **Architecture design**: `/docs/02-architecture/architecture-design.md` (patterns, constraints, integrations)
 - **Design systems**: `/docs/design/design-systems.md` (for Layer 4 - Frontend)
 
 ### TDD Cycle Process
 
 **Phase 1: Preparation**
 1. **Read implementation plan** for current layer:
-   - Open `/docs/user-stories/<USER-STORY-REF>/implementation-plan.md`
-   - **Read handoff file** `/docs/user-stories/<USER-STORY-REF>/<USER-STORY-REF>-HANDOFF.md` for context
+   - Open `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/implementation-plan.md`
+   - **Read handoff file** `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/<USER-STORY-REF>-HANDOFF.md` for context
    - Review section for assigned layer (Layer 1/2/3/4)
    - Note: Files to create/modify, BDD Test Coverage, TDD Approach, Architectural Constraints
 2. **Review failing BDD tests**:
@@ -138,7 +138,7 @@ Execute handoffs (NO runSubagent) in strict order:
    - Verify all tests pass, run code quality checks, commit to source control
 
 5. **After REFACTOR Phase Complete**:
-   - **Create cycle folder**: `/docs/user-stories/<US-REF>/tdd-execution/<CYCLE>/`
+   - **Create cycle folder**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<CYCLE>/`
    - **Create handoff files** in cycle folder:
      - `<CYCLE>-HO-RED.json` (RED phase: test details, assertions)
      - `<CYCLE>-HO-GREEN.json` (GREEN phase: implementation notes, files changed)
@@ -177,13 +177,13 @@ Execute handoffs (NO runSubagent) in strict order:
 ## 📋 Strict Document Consolidation Rules (Critical)
 
 **ONE Handoff File Per Story** (NOT per cycle):
-- **File**: `/docs/user-stories/<US-REF>/handoff.md` 
+- **File**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/handoff.md` 
 - **Lifecycle**: OVERWRITE after each phase (RED → GREEN → REFACTOR)
 - **Content**: Current cycle status, progress summary, next steps (keep <200 words)
 - **NEVER**: Create cycle-specific files (❌ cycle-18-handoff.md, ❌ red-handoff.md, ❌ green-18-summary.md)
 
 **ONE Execution Log Per Story** (Append-only chronicle):
-- **File**: `/docs/user-stories/<US-REF>/tdd-execution.md`
+- **File**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution.md`
 - **Lifecycle**: APPEND-only (never delete, never overwrite)
 - **Content**: Complete audit trail—one entry per cycle phase
 - **Benefit**: Stakeholders see full journey; git logs stay clean
@@ -272,7 +272,7 @@ Examples:
 
 **When to Use**: Implementation Phase 3 - Receive layer assignment from Dev-Lead
 
-**Context Required**: `/docs/user-stories/<STORY-REF>/implementation-plan.md` (current layer), failing BDD test results, tech-spec.md
+**Context Required**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/implementation-plan.md` (current layer), failing BDD test results, tech-spec.md
 
 **Task**: Orchestrate RED → GREEN → REFACTOR cycle for assigned layer. Read implementation-plan.md layer section (files, BDD assertions, TDD approach, constraints). Coordinate: Hand off to RED agent (write failing test for feature), receive test → Hand off to GREEN agent (implement code), receive code → Hand off to REFACTOR agent (improve quality), receive refactored code. Run BDD tests after each cycle to verify progress. Continue until all BDD assertions for layer pass.
 

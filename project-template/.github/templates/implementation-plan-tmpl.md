@@ -24,7 +24,7 @@
 ## Story Overview
 
 ### Description
-{User story description from /docs/prd/user-stories.md}
+{User story description from /docs/01-requirements/user-stories.md}
 
 ### Business Value
 {Why this story matters to users/business}
@@ -36,7 +36,7 @@
 
 ## BDD Scenarios
 
-**Location**: `/docs/user-stories/{USER-STORY-REF}/bdd-scenarios/`
+**Location**: `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{USER-STORY-REF}/bdd-scenarios/`
 
 ### Failing BDD Tests Summary
 {List which BDD scenarios are failing and which assertions need implementation}
@@ -117,7 +117,7 @@ After Layer 1 complete, these BDD assertions will pass:
 - Test constraints (unique email, foreign key cascade)
 
 ### Architectural Constraints
-- Follow [architecture-design.md](../../docs/prd/architecture-design.md) data model
+- Follow [architecture-design.md](../../docs/02-architecture/architecture-design.md) data model
 - Use UUID for all primary keys (distributed system future-proof)
 - Soft deletes NOT implemented (out of scope for this story)
 
@@ -237,7 +237,7 @@ After Layer 2 complete, these BDD assertions will pass:
   - Test both tables updated atomically
 
 ### Architectural Constraints
-- Follow [architecture-design.md](../../docs/prd/architecture-design.md) service layer patterns
+- Follow [architecture-design.md](../../docs/02-architecture/architecture-design.md) service layer patterns
 - Use dependency injection for repositories and payment gateway
 - Implement idempotency for payment operations (idempotency key header)
 - Transaction scope: Single database transaction for dual-write
@@ -323,7 +323,7 @@ After Layer 3 complete, these BDD assertions will pass:
   - Test rate limiting (exceed limit → 429 status)
 
 ### Architectural Constraints
-- Follow [architecture-design.md](../../docs/prd/architecture-design.md) configuration patterns
+- Follow [architecture-design.md](../../docs/02-architecture/architecture-design.md) configuration patterns
 - Environment-based feature flags (not database-driven)
 - Middleware order: CORS → Authentication → Rate Limit → Routes
 
@@ -465,7 +465,7 @@ After Layer 4 complete, ALL BDD assertions will pass:
   - Test error scenarios (payment declined)
 
 ### Architectural Constraints
-- Follow [architecture-design.md](../../docs/prd/architecture-design.md) frontend patterns
+- Follow [architecture-design.md](../../docs/02-architecture/architecture-design.md) frontend patterns
 - Use [design-systems.md](../../docs/design/design-systems.md) tokens (no hardcoded colors)
 - Redux for global state, local state for modal open/close
 - Stripe Elements integration (PCI compliance)
@@ -518,7 +518,7 @@ After Layer 4 complete, ALL BDD assertions will pass:
 ## Definition of Done
 
 ### Functional Requirements
-- [ ] All BDD scenarios in `/docs/user-stories/{USER-STORY-REF}/bdd-scenarios/` passing
+- [ ] All BDD scenarios in `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{USER-STORY-REF}/bdd-scenarios/` passing
 - [ ] User.tier and Subscription.tier synchronized (verified in BDD tests)
 - [ ] Payment processed successfully via Stripe (test mode)
 - [ ] Frontend displays updated tier badge immediately after upgrade
@@ -531,9 +531,9 @@ After Layer 4 complete, ALL BDD assertions will pass:
 - [ ] No obvious performance issues (query time <50ms, API response <200ms)
 
 ### Technical Specifications Met
-- [ ] Architecture patterns followed (per [architecture-design.md](../../docs/prd/architecture-design.md))
-- [ ] Design tokens used (per [design-systems.md](../../docs/design/design-systems.md))
-- [ ] Tech stack requirements met (per [tech-spec.md](../../docs/prd/tech-spec.md))
+- [ ] Architecture patterns followed (per [architecture-design.md](../../docs/02-architecture/architecture-design.md))
+- [ ] Design tokens used (per [design-systems.md](../../docs/02-architecture/design-systems.md))
+- [ ] Tech stack requirements met (per [tech-spec.md](../../docs/02-architecture/tech-spec.md))
 - [ ] Security requirements met (authentication, input validation, payment security)
 
 ### Documentation Requirements

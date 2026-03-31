@@ -1,14 +1,12 @@
-# New Meeting Folder Creation Prompt
-
 ## Objective
-Create a standardized meeting folder structure for capturing raw materials (transcripts, notes, recordings) and generating meeting minutes following Gen-e2 repository conventions.
+Create a standardized meeting folder structure for capturing raw materials (transcripts, notes, recordings) and generating meeting minutes following AI-first delivery repository conventions.
 
 ## Context
-You are organizing a new meeting or interview session as part of a Gen-e2 assessment engagement. The folder structure must comply with repository naming conventions and provide proper organization for raw materials and deliverables.
+You are organizing a new meeting or interview session as part of an AI-first delivery assessment engagement. The folder structure must comply with repository naming conventions and provide proper organization for raw materials and deliverables.
 
 ## Requirements
 
-### Meeting Information Needed
+### Meeting Information Collection
 Before creating the folder, gather:
 - **Date**: Meeting date in YYYYMMDD format
 - **Type**: Meeting type (Workshop, one2one, Interview, Planning Session, etc.)
@@ -16,7 +14,7 @@ Before creating the folder, gather:
 - **Participant(s)**: Primary participant name(s)
 - **Location**: If not provided, ask the user to specify the appropriate directory
 
-### Directory Structure to Create
+### Directory Structure Standards
 ```
 [YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]/
 ├── RAW/
@@ -24,80 +22,56 @@ Before creating the folder, gather:
 └── [YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]_CR.md (meeting minutes)
 ```
 
-### Naming Convention Standards
-
-**Folder Name Format**: `[YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]`
-
-Examples:
-- `20251124_ai-driven-sdlc-workshop_john-smith/`
-- `20251113_project-mvp_jane-doe/`
-- `20251124_planning-session_alex-johnson/`
-
-**Meeting Minutes File Format**: `[YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]_CR.md`
-
-Examples:
-- `20251124_ai-driven-sdlc-workshop_john-smith_CR.md`
-- `20251113_project-mvp_jane-doe_CR.md`
-- `20251124_planning-session_alex-johnson_CR.md`
-
-**Note**: Use kebab-case (lowercase with hyphens) for all topics and participant names. Underscores separate the main components (date, topic, participant, CR).
+### Naming Convention Rules
+- **Folder Format**: `[YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]`
+- **Meeting Minutes Format**: `[YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]_CR.md`
+- Use kebab-case (lowercase with hyphens) for topics and participant names
+- Underscores separate main components (date, topic, participant, CR)
 
 ## Deliverables
 
-### 1. Create Directory Structure
-Based on provided meeting information, create:
+### 1. Directory Structure Creation
+Execute folder creation commands:
 ```bash
-# Navigate to appropriate location (ask user if not specified)
 cd [specified-location]
-
-# Create folder structure
 mkdir -p "[YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]/RAW"
-```
-
-### 2. Create Placeholder Files
-Inside the RAW folder, create `.gitkeep` to ensure folder is tracked:
-```bash
 touch "[YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]/RAW/.gitkeep"
 ```
 
-### 3. Initialize Meeting Minutes File
-Create the CR file with basic metadata:
+### 2. Meeting Minutes File Initialization
+Create empty CR file with proper naming:
 ```bash
 touch "[YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]/[YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]_CR.md"
 ```
 
+### 3. Location Confirmation
+Provide user with created folder path and next steps for adding raw materials.
+
 ## Quality Standards
 
-### Naming Compliance
 - ✅ Date format: YYYYMMDD (8 digits, no separators)
-- ✅ Underscore `_` separates main components (date, topic, participant)
-- ✅ Kebab-case (lowercase with hyphens) for topics and participant names
+- ✅ Underscore separates main components (date, topic, participant)
+- ✅ Kebab-case for topics and participant names
 - ✅ No spaces or special characters except hyphens and underscores
 - ✅ All lowercase for folder and file names
-- ✅ `.md` extension for meeting minutes
-- ✅ `_CR` suffix for meeting minutes (Compte Rendu)
-
-### Directory Location
-- ✅ Project meetings: `[project-name]/meetings/`
-- ✅ Assessment meetings: `01-assess/docs/meetings/`
-- ✅ Context meetings: `00-context/docs/meetings/`
-- ✅ If location unclear, ask user to specify the appropriate directory
-
-### Folder Contents
-- ✅ RAW subfolder exists with `.gitkeep`
+- ✅ RAW subfolder exists with .gitkeep
 - ✅ CR file created at folder root level
 - ✅ Clear separation between raw materials and deliverables
-- ✅ Consistent with existing repository structure
 
 ## File Management
 
-### Raw Materials Storage
+### Target Locations
+- Project meetings: `[project-name]/meetings/`
+- Assessment meetings: `docs/meetings/`
+- If location unclear, prompt user for specification
+
+### Raw Materials Organization
 Place in `RAW/` subfolder:
 - Transcript files (.txt, .vtt, .srt)
-- Audio/video recordings (if applicable)
+- Audio/video recordings
 - Handwritten notes scans
 - Presentation slides
-- Any source materials used for meeting minutes
+- Supporting documents
 
 ### Meeting Minutes Location
 Place at folder root level:

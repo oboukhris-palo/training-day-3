@@ -3,7 +3,17 @@ description: Angular framework best practices, patterns, and conventions
 applyTo: "frontend/**/*.ts"
 ---
 
-# Angular Best Practices & Framework Guidelines
+# Angular Development Instructions
+
+## Overview
+
+This document provides systematic instructions for Angular framework development best practices and patterns using the AI-first delivery methodology. These instructions follow established Angular conventions and transform modern frontend application requirements into comprehensive development standards that leverage Angular's capabilities, maintain component architecture, and ensure scalable TypeScript-based development.
+
+## Process Overview
+
+**Angular Development Implementation** transforms frontend application requirements into structured Angular implementations that deliver scalable single-page applications, effective component communication, comprehensive testing strategies, and maintainable user interfaces through proper module organization, Angular patterns, and established conventions for enterprise Angular applications.
+
+## Implementation Process & Framework Guidelines
 
 This document establishes coding standards and best practices for Angular development. All frontend team members must follow these guidelines to maintain consistency, quality, and maintainability across Angular projects.
 

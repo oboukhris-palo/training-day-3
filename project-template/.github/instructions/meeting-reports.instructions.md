@@ -2,11 +2,18 @@
 description: Standards and rules for generating meeting reports (CR)
 applyTo: "**/*_CR.md"
 ---
-# Meeting Report Generation Standards
 
-## STATUS: ALWAYS APPLY
+# Meeting Reports Instructions
 
-These rules must be enforced when generating or updating meeting reports.
+## Overview
+
+This document provides systematic instructions for generating meeting reports (CRs) and structured documentation using the AI-first delivery methodology. These instructions follow professional meeting documentation standards and transform discussion content into comprehensive, actionable reports that capture decisions, action items, and next steps while maintaining consistency and accountability across all stakeholder communications.
+
+## Process Overview
+
+**Meeting Reports Implementation** transforms discussion content into structured documentation that delivers professional meeting minutes, clear action item tracking, decision documentation, and stakeholder accountability through standardized reporting formats ensuring consistent communication and follow-up tracking across all project meetings and client interactions.
+
+## Implementation Process
 
 ## Language Requirements
 

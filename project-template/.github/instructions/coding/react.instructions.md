@@ -3,7 +3,17 @@ description: React framework best practices, patterns, and conventions
 applyTo: "**/*.tsx,**/*.jsx"
 ---
 
-# React Best Practices & Framework Guidelines
+# React Development Instructions
+
+## Overview
+
+This document provides systematic instructions for React framework development best practices and patterns using the AI-first delivery methodology. These instructions follow established React conventions and transform modern frontend requirements into comprehensive development standards that leverage React's capabilities, maintain component reusability, and ensure scalable user interface development.
+
+## Process Overview
+
+**React Development Implementation** transforms frontend application requirements into structured React implementations that deliver reusable components, effective state management, comprehensive testing strategies, and maintainable user interfaces through proper component architecture, React patterns, and established conventions for scalable React applications.
+
+## Implementation Process & Framework Guidelines
 
 This document establishes coding standards and best practices for React development. All frontend team members must follow these guidelines to maintain consistency, quality, and maintainability across React projects.
 

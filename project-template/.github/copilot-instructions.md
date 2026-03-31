@@ -8,8 +8,8 @@
 
 **Before taking action**, always:
 1. **Check which agent you are**: Read `.github/agents/<agent-name>.agent.md` for your responsibilities
-2. **Verify handoff context**: Read latest cycle handoff in `docs/user-stories/<STORY-REF>/tdd-execution/<CYCLE>/` for current TDD phase state
-3. **Follow the plan**: Reference `docs/user-stories/<STORY-REF>/implementation-plan.md` for guidance
+2. **Verify handoff context**: Read latest cycle handoff in `docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/tdd-execution/<CYCLE>/` for current TDD phase state
+3. **Follow the plan**: Reference `docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/implementation-plan.md` for guidance
 
 **Agent Roles** (handoff chain):
 - **orchestrator**: Coordinates workflows, presents decision gates (3 options with tradeoffs)
@@ -23,7 +23,71 @@
 - **dev-tdd-red/green/refactor**: Execute TDD phases following implementation plan
 - **qa**: Executes comprehensive testing (E2E, BDD validation), verifies acceptance criteria, ensures quality gates
 
-## 📋 Critical Document Patterns
+## � Folder Structure & Path Naming Conventions
+
+### Documentation Hierarchy (Immutable PRD)
+```
+docs/
+├── 01-requirements/          # Phase 1-2: Requirements & personas (IMMUTABLE)
+│   ├── requirements.md       # Master PRD
+│   ├── personas.md           # User personas
+│   ├── user-stories.md       # PRD catalog (REFERENCE: /docs/01-requirements/user-stories.md)
+│   ├── business-case.md      # Business justification
+│   └── themes/               # Route B outputs
+│
+├── 02-architecture/          # Phase 3-4: Architecture & tech specs (IMMUTABLE)
+│   ├── architecture-design.md
+│   ├── tech-spec.md
+│   └── design-systems.md
+│
+├── 03-testing/               # Phase 5: Testing strategies (IMMUTABLE)
+│   └── test-strategies.md
+│
+├── 04-planning/              # Phase 6-7: Deployment & planning (IMMUTABLE)
+│   ├── iteration-planning.md
+│   └── deployment-plan.md
+```
+
+### Implementation Status Tracking (Mutable SSOT)
+```
+docs/
+└── 05-implementation/
+    ├── user-stories.md       # ⭐ SINGLE SOURCE OF TRUTH for implementation progress
+    │                          # REFERENCE: /docs/05-implementation/user-stories.md
+    │
+    └── epics/
+        └── <EPIC-REF>/       # Epic identifier (e.g., AUTH-001)
+            └── user-stories/
+                └── <US-REF>/ # User story identifier (e.g., US-001)
+                    ├── <US-REF>.md                          # Story definition (copied from PRD)
+                    ├── implementation-plan.md               # FROZEN after approval (reference)
+                    ├── implementation-plan-v1.md            # IMMUTABLE snapshot (historical)
+                    ├── plan-approval.yaml                   # Human validation gate
+                    ├── bdd-scenarios/                       # BDD feature files (per layer)
+                    ├── tdd-execution.md                     # APPEND-ONLY cycle summary
+                    ├── logs/                                # Per-story agent action logs
+                    │   ├── agent-dev-tdd-red-YYYYMMDD.md
+                    │   ├── agent-dev-tdd-green-YYYYMMDD.md
+                    │   └── agent-dev-tdd-refactor-YYYYMMDD.md
+                    └── tdd-execution/                       # Per-cycle handoff artifacts
+                        ├── 001/
+                        │   ├── 001-HO-RED.json
+                        │   ├── 001-HO-GREEN.json
+                        │   └── 001-HO-REFACTOR.md
+                        └── 002/
+                            ├── 002-HO-RED.json
+                            ├── 002-HO-GREEN.json
+                            └── 002-HO-REFACTOR.md
+```
+
+### Key Path Distinctions
+- **PRD References**: Use `/docs/01-requirements/user-stories.md` for immutable specifications
+- **Implementation Status**: Use `/docs/05-implementation/user-stories.md` for current progress tracking (SSOT)
+- **Epic Structure**: Always include `/epics/<EPIC-REF>/user-stories/<US-REF>/` when referencing implementation artifacts
+- **Agent Logs**: TDD agents log to `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-{name}-YYYYMMDD.md`
+- **Plan Snapshots**: Immutable versions created when plans change: `implementation-plan-v1.md`, `implementation-plan-v2.md`, etc.
+
+## �📋 Critical Document Patterns
 
 **Phase 0 Assessment Outputs** (ONE set per engagement):
 ```
@@ -41,20 +105,29 @@ docs/assessment/
 
 **Phase 1-7 Documentation Outputs** (ONE PRD suite per engagement):
 ```
-docs/prd/
+docs/01-requirements/
 ├── requirements.md                 # Master PRD (consolidated from routes)
 ├── personas.md                     # User personas (if interview-driven)
 ├── user-stories.md                 # User stories with epics and acceptance criteria
+├── business-case.md                # Business justification
+└── themes/                         # Route B outputs (functional themes)
+
+docs/02-architecture/
 ├── architecture-design.md          # System architecture
 ├── tech-spec.md                    # Technical specifications
-├── design-systems.md               # Design system and components
-├── test-strategies.md              # Testing approach and BDD scenarios
-└── themes/                         # Route B outputs (functional themes)
+└── design-systems.md               # Design system and components
+
+docs/03-testing/
+└── test-strategies.md              # Testing approach and BDD scenarios
+
+docs/04-planning/
+├── iteration-planning.md           # Sprint/iteration planning
+└── deployment-plan.md              # Deployment and rollout strategy
 ```
 
 **Phase 8 Implementation Outputs** (ONE entry per user story):
 ```
-docs/user-stories/US-001/
+docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/
 ├── US-001.md                  # Story definition (copied from PRD)
 ├── implementation-plan.md     # Frozen after creation (reference only)
 ├── api-design.md              # API contracts (if applicable)
@@ -125,7 +198,7 @@ compatible_with:
 **Agent actions are logged to immutable daily files** for audit trails and debugging:
 
 **TDD Agents** (per-story):
-- Location: `/docs/user-stories/<US-REF>/logs/agent-{agent_name}-YYYYMMDD.md`
+- Location: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-{agent_name}-YYYYMMDD.md`
 - Examples: `agent-dev-tdd-red-20260317.md`, `agent-dev-tdd-green-20260317.md`
 
 **Other Agents** (root-level):
@@ -154,7 +227,7 @@ compatible_with:
 
 **Human validation required before TDD execution** via `plan-approval.yaml`:
 
-**Location**: `/docs/user-stories/<US-REF>/plan-approval.yaml`
+**Location**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-approval.yaml`
 
 **Workflow**:
 1. **Dev-Lead creates plan** → Creates `plan-approval.yaml` with `status: changes-requested`
@@ -225,15 +298,18 @@ compatible_with:
 | `docs/assessment/` | Assessment phase outputs (prerequisites, AI readiness report) | Generated during Phase 0 |
 | `docs/inputs/` | Client-provided materials (epics, docs, interviews, code) | Input source for Phase 0 assessment |
 | `docs/logs/agent-{agent}-YYYYMMDD.md` | Root-level agent action logs (non-TDD agents) | Append-only daily logs |
-| `docs/prd/` | PRD documents (requirements, user-stories, architecture, tech-spec) | Generated during Phases 1-7 |
-| `docs/prd/user-stories.md` | PRD user stories catalog | Generated during documentation phase |
-| `docs/user-stories/user-stories.md` | ⭐ Implementation status tracking (SSOT) | Update as stories progress |
-| `docs/user-stories/<US-REF>/implementation-plan.md` | Layer-by-layer architecture (CURRENT version) | Frozen after approval |
-| `docs/user-stories/<US-REF>/implementation-plan-v{N}.md` | IMMUTABLE plan snapshots (historical) | Created when plan modified |
-| `docs/user-stories/<US-REF>/plan-approval.yaml` | Human validation gate for TDD execution | Created by dev-lead, updated on changes |
-| `docs/user-stories/<US-REF>/logs/agent-{agent}-YYYYMMDD.md` | Per-story TDD agent action logs | Append-only daily logs |
-| `docs/user-stories/<US-REF>/tdd-execution.md` | Cycle summary audit trail | Append-only after each cycle |
-| `docs/user-stories/<US-REF>/tdd-execution/<CYCLE>/*-HO-*.json` | Phase-specific handoffs | Create once per phase |
+| `docs/01-requirements/` | Requirements phase documents (requirements, personas, user-stories, business-case) | Generated during Phase 1-2 |
+| `docs/02-architecture/` | Architecture phase documents (architecture-design, tech-spec, design-systems) | Generated during Phase 3-4 |
+| `docs/03-testing/` | Testing phase documents (test-strategies) | Generated during Phase 5 |
+| `docs/04-planning/` | Planning phase documents (iteration-planning, deployment-plan) | Generated during Phase 6-7 |
+| `docs/01-requirements/user-stories.md` | PRD user stories catalog | Generated during documentation phase |
+| `docs/05-implementation/user-stories.md` | ⭐ Implementation status tracking (SSOT) | Update as stories progress |
+| `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` | Layer-by-layer architecture (CURRENT version) | Frozen after approval |
+| `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan-v{N}.md` | IMMUTABLE plan snapshots (historical) | Created when plan modified |
+| `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-approval.yaml` | Human validation gate for TDD execution | Created by dev-lead, updated on changes |
+| `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-{agent}-YYYYMMDD.md` | Per-story TDD agent action logs | Append-only daily logs |
+| `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution.md` | Cycle summary audit trail | Append-only after each cycle |
+| `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<CYCLE>/*-HO-*.json` | Phase-specific handoffs | Create once per phase |
 
 ## 🚀 PDLC Workflow Sequence
 
@@ -324,3 +400,27 @@ When context is tight:
 - Reference tdd-execution.md for cycle history and latest cycle folder for detailed handoff context
 - Use `grep_search` to find specific patterns instead of reading full files
 - Delegate read-only research to `runSubagent` (never for writing/editing)
+---
+
+## 🔄 Path Migration Reference (Framework 2.0.0)
+
+**If you encounter references to old paths in legacy documentation**, use this mapping:
+
+| Old Path (Pre-March 2026) | New Path (Current) | Purpose |
+|---------------------------|-------------------|---------|
+| `/docs/prd/` | `/docs/01-requirements/` | Requirements phase (immutable) |
+| `/docs/prd/user-stories.md` | `/docs/01-requirements/user-stories.md` | PRD catalog reference |
+| `/docs/prd/tech-spec.md` | `/docs/02-architecture/tech-spec.md` | Technical specifications |
+| `/docs/user-stories/user-stories.md` | `/docs/05-implementation/user-stories.md` | Implementation status SSOT |
+| `/docs/user-stories/<US-REF>/` | `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/` | Story implementation folder |
+| `/docs/user-stories/<US-REF>/implementation-plan.md` | `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` | Layer-by-layer implementation |
+| `/docs/user-stories/<US-REF>/bdd-scenarios/` | `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/bdd-scenarios/` | BDD feature files |
+| `/docs/user-stories/<US-REF>/tdd-execution/` | `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/` | Per-cycle handoff artifacts |
+
+**Critical Rules**:
+- ✅ **Read from `/docs/01-requirements/`** when accessing PRD or immutable specifications
+- ✅ **Update `/docs/05-implementation/user-stories.md`** for progress tracking and story status
+- ✅ **Always include epic path** when referencing implementation: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/`
+- ✅ **Preserve IMMUTABLE snapshots** when plan changes: create `implementation-plan-v1.md`, `v2.md`, etc., keep current as `implementation-plan.md`
+- ❌ **Never modify** documentation under `/docs/01-*/` (immutable PRD)
+- ❌ **Never reference old paths** in new or modified documentation

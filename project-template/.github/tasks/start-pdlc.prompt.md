@@ -78,8 +78,8 @@ Start with Stage 1: Requirements Gathering
 4. Invokes PO Agent (po-validate-personas) → Validates alignment
 
 **Deliverables**:
-- docs/prd/personas.md
-- docs/prd/business-case.md
+- docs/01-requirements/personas.md
+- docs/01-requirements/business-case.md
 - Technical risk matrix
 
 **Decision Gates**:
@@ -103,8 +103,8 @@ Start with Stage 1: Requirements Gathering
 **Deliverables**:
 - docs/prd/journey-maps.md
 - docs/prd/blueprints.md
-- docs/prd/architecture-design.md
-- docs/prd/user-stories.md (with Epics and User Stories sections)
+- docs/02-architecture/architecture-design.md
+- docs/01-requirements/user-stories.md (with Epics and User Stories sections)
 - docs/prd/flow-diagrams.md
 
 **Decision Gates**:
@@ -125,9 +125,9 @@ Start with Stage 1: Requirements Gathering
 5. Invokes UX Agent (ux-design-systems) → Creates design-systems.md
 
 **Deliverables**:
-- docs/prd/tech-spec.md
+- docs/02-architecture/tech-spec.md
 - docs/prd/code-generation.md
-- docs/prd/design-systems.md
+- docs/02-architecture/design-systems.md
 
 **Decision Gates**:
 - ✋ **Gate 4.1**: Technology stack selection (3 options presented - USER DECIDES)
@@ -146,7 +146,7 @@ Start with Stage 1: Requirements Gathering
 
 **Deliverables**:
 - Gherkin feature files (features/**/*.feature) for each user story
-- docs/prd/test-strategies.md
+- docs/03-testing/test-strategies.md
 - Test coverage matrix
 
 **Decision Gates**:
@@ -164,8 +164,8 @@ Start with Stage 1: Requirements Gathering
 3. Invokes PM Agent (pm-deployment-coordination) → Coordinates release schedule
 
 **Deliverables**:
-- docs/prd/iteration-planning.md
-- docs/prd/deployment-plan.md
+- docs/04-planning/iteration-planning.md
+- docs/04-planning/deployment-plan.md
 - Release schedule
 
 **Decision Gates**:
@@ -390,4 +390,4 @@ Moving to Stage 2: Analysis & Business Justification...
 - **PDLC Workflow**: [.github/workflows/documents.workflows.md](/.github/workflows/documents.workflows.md)
 - **All Agent Definitions**: [.github/agents/](/.github/agents/)
 - **Document Templates**: [.github/templates/](/.github/templates/)
-- **PRD Documents**: [docs/prd/](docs/prd/)
+- **PRD Documents**: [docs/01-requirements/](docs/01-requirements/), [docs/02-architecture/](docs/02-architecture/), [docs/03-testing/](docs/03-testing/), [docs/04-planning/](docs/04-planning/)

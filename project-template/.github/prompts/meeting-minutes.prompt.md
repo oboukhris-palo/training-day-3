@@ -1,53 +1,97 @@
-# Generate Meeting Minutes Prompt
-
 ## Objective
-Generate comprehensive meeting minutes from raw materials (transcripts, notes, recordings) following Gen-e2 repository conventions and professional documentation standards.
+Generate comprehensive meeting minutes from raw materials (transcripts, notes, recordings) following AI-first delivery repository conventions and professional documentation standards.
 
 ## Context
-You are documenting a meeting or interview session. The meeting folder structure should already exist (created using `new-meeting-folder.prompt.md`), and raw materials are available for processing into formal meeting minutes.
+You are processing raw meeting materials into structured, professional meeting minutes (Compte Rendu/CR). The meeting folder structure should already exist with raw materials ready for processing into formal documentation.
 
-**Prerequisites**: Meeting folder created with the following structure:
+## Requirements
+
+### Prerequisites Verification
+Confirm meeting folder structure exists:
 ```
 [YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]/
 ├── RAW/
 │   └── [raw materials: transcripts, audio, notes, etc.]
-└── [YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]_CR.md (to be filled)
+└── [YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]_CR.md
 ```
 
-## Requirements
-
-### Source Materials Location
-Raw materials should be located in the meeting folder's `RAW/` subfolder:
+### Source Materials Processing
+Process materials from `RAW/` subfolder:
 - Transcript files (.txt, .vtt, .srt)
-- Audio/video recordings (if applicable)
-- Handwritten notes or scans
-- Presentation slides or supporting documents
+- Audio/video recordings analysis
+- Handwritten notes interpretation
+- Presentation slides content extraction
+- Supporting document review
 
-### Meeting Minutes File
-The target file for meeting minutes:
-- **Location**: Meeting folder root level
-- **Format**: `[YYYYMMDD]_[topic-in-kebab-case]_[participant-name-in-kebab-case]_CR.md`
+### Meeting Minutes Structure
+Generate structured CR document containing:
+1. **Meeting Metadata**: Date, time, participants, duration, format
+2. **Context & Objective**: Meeting purpose and background
+3. **Discussion Summary**: Key points and decisions organized by topic
+4. **Action Items**: Specific tasks with owners and deadlines
+5. **Decisions Made**: Clear list of conclusions and agreements
+6. **Next Steps**: Follow-up activities and timelines
 
 ## Deliverables
 
-Follow the structure defined in `.gene2-core/templates/interviews/interview-minutes-generic-tmpl.md`:
+### 1. Professional Meeting Minutes Document
+Complete CR file with:
 
-### 1. Meeting Information
-Include complete metadata:
-- **Date:** YYYYMMDD formatted
-- **Time:** Start - End Time
-- **Meeting Type:** Workshop | Discussion | Planning Session | Status Update | Decision Meeting | Brainstorming
-- **Participants:** List with roles/titles and organizations
-- **Duration:** XX minutes/hours
-- **Location/Format:** Physical/Remote/Hybrid
-- **Objective:** Primary meeting goal and expected outcomes
+**Header Section**:
+- Date: YYYYMMDD format
+- Time: Start - End duration
+- Meeting Type: Workshop/Discussion/Planning/Status Update/Decision
+- Participants: Names, roles, organizations
+- Location: Physical/Remote/Hybrid
+- Objective: Primary meeting goals
 
-### 2. Context & Background
+**Content Sections**:
+- **Context & Background**: Meeting focus, scope, current situation
+- **Discussion Summary**: Organized by topics/agenda items
+- **Key Insights**: Important observations and conclusions
+- **Decisions & Agreements**: Clear list of what was decided
+- **Action Items**: Tasks with owners and due dates
+- **Issues & Blockers**: Identified problems and constraints
+- **Next Steps**: Follow-up meetings and activities
 
-#### Meeting Focus Area
-- **Topic:** Subject matter or domain being discussed
-- **Scope:** Boundaries of discussion (what's in scope and out of scope)
-- **Current Situation:** Relevant background and current state
+### 2. Action Items Tracking
+Separate action items section with:
+- Clear task descriptions
+- Assigned responsible parties
+- Specific deadlines
+- Priority levels (High/Medium/Low)
+- Dependencies between tasks
+
+### 3. Meeting Effectiveness Summary
+Brief assessment of:
+- Objective achievement level
+- Key outcomes and value delivered
+- Follow-up requirements
+- Participant engagement quality
+
+## Quality Standards
+
+- ✅ All content directly traceable to raw materials
+- ✅ Professional language appropriate for business context
+- ✅ Clear, actionable language for decisions and action items
+- ✅ Consistent formatting and structure throughout
+- ✅ Complete participant information with proper attribution
+- ✅ Accurate timestamps and meeting metadata
+- ✅ Organized content with logical topic groupings
+- ✅ Specific, measurable action items with clear ownership
+
+## File Management
+
+### Output Location
+- Update existing CR.md file in meeting folder root
+- Preserve original folder structure and naming conventions
+- Maintain RAW materials for reference and audit trail
+
+### Content Processing
+- Extract key information without speculation or interpretation beyond stated content
+- Organize content logically for easy reference and follow-up
+- Maintain professional tone suitable for stakeholder review
+- Include exact quotes when they provide important context
 - **Key Stakeholders:** People or groups affected by or involved in the discussion
 
 #### Organizational Context *(Optional - include if relevant)*

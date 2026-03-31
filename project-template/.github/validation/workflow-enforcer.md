@@ -134,8 +134,8 @@ documents_workflow:
     - input_materials_cataloged: docs/inputs/inventory.yml
   
   phase_completion:
-    - prd_documents_created: docs/prd/ (13 documents minimum)
-    - user_stories_validated: docs/prd/user-stories.md
+    - prd_documents_created: docs/01-requirements/, docs/02-architecture/, docs/03-testing/, docs/04-planning/ (phase-based docs)
+    - user_stories_validated: docs/01-requirements/user-stories.md
     - bdd_scenarios_present: features/ or user-story BDD sections
 ```
 
@@ -143,8 +143,8 @@ documents_workflow:
 ```yaml
 implementation_workflow:
   prerequisites:
-    - documents_complete: docs/prd/.documents-complete
-    - user_stories_ready: docs/user-stories/user-stories.md
+    - documents_complete: docs/.documents-complete
+    - user_stories_ready: docs/05-implementation/user-stories.md
     - github_integration: .github-integration-configured
   
   tdd_validation:
@@ -354,7 +354,7 @@ Actual: @orchestrator → @dev-lead (skipped PM/PO/BA)
 
 Agent: @dev-lead → @dev-tdd
 Missing: Implementation plan handoff file
-Expected: docs/user-stories/US-001/handoff.md
+Expected: docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/handoff.md
 
 📋 TEMPLATE: Use implementation-plan-tmpl.md
 ⏰ ESTIMATED TIME: 15-30 minutes to complete

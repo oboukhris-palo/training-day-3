@@ -55,7 +55,7 @@ Story Points Remaining by Day:
 ## Definition of Ready (DOR)
 
 ✅ Each story in this sprint has:
-- [ ] User Story defined in `/docs/prd/user-stories.md`
+- [ ] User Story defined in `/docs/01-requirements/user-stories.md`
 - [ ] Acceptance criteria (BDD scenarios) documented
 - [ ] GitHub Issue created with AC and BDD scenarios
 - [ ] Technical feasibility reviewed by Architect
@@ -75,7 +75,7 @@ Story Points Remaining by Day:
 - [ ] Code review approved (13-point checklist)
 - [ ] BA validation passed (Playwright E2E tests)
 - [ ] GitHub Issue marked "Delivered" and closed
-- [ ] `/docs/user-stories/user-stories.md` status "Delivered"
+- [ ] `/docs/05-implementation/user-stories.md` status "Delivered"
 - [ ] Release notes entry created
 
 ---
@@ -103,18 +103,18 @@ Story Points Remaining by Day:
 - **Sprint Retrospective**: [DATE] - Team reflects on process improvements
 
 ### Generated Documents
-- **Current Sprint File**: `/docs/user-stories/current-sprint.md`
-- **Project Status**: `/docs/user-stories/project-status.md`
-- **BA Enrichment**: Per-story in `/docs/user-stories/<US-REF>/ba-enrichment.md`
+- **Current Sprint File**: `/docs/05-implementation/current-sprint.md`
+- **Project Status**: `/docs/05-implementation/project-status.md`
+- **BA Enrichment**: Per-story in `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/ba-enrichment.md`
 
 ---
 
 ## Links & References
 
-- **PRD User Stories**: `/docs/prd/user-stories.md`
-- **Implementation Status**: `/docs/user-stories/user-stories.md`
-- **Architecture**: `/docs/prd/architecture-design.md`
-- **Tech Specs**: `/docs/prd/tech-spec.md`
+- **PRD User Stories**: `/docs/01-requirements/user-stories.md`
+- **Implementation Status**: `/docs/05-implementation/user-stories.md`
+- **Architecture**: `/docs/02-architecture/architecture-design.md`
+- **Tech Specs**: `/docs/02-architecture/tech-spec.md`
 - **Design System**: `/docs/design/design-systems.md`
 
 ---

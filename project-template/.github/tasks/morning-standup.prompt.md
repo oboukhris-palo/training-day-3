@@ -54,14 +54,14 @@ Next: Hand off to TDD-GREEN for validation implementation
 ```
 
 ## Context Sources
-- `/docs/user-stories/user-stories.md` (implementation status)
-- `/docs/user-stories/current-sprint.md` (active sprint)
-- `/docs/user-stories/<US-REF>/implementation-plan.md` (today's tasks)
-- `/docs/user-stories/<US-REF>/<US-REF>-HANDOFF.md` (current context)
+- `/docs/05-implementation/user-stories.md` (implementation status)
+- `/docs/05-implementation/current-sprint.md` (active sprint)
+- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` (today's tasks)
+- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>-HANDOFF.md` (current context)
 
 ## Orchestrator Instructions
 
-1. **Read current sprint**: Check `/docs/user-stories/current-sprint.md` for active stories
+1. **Read current sprint**: Check `/docs/05-implementation/current-sprint.md` for active stories
 2. **Find in-progress story**: Look for status "In Progress" in user-stories.md
 3. **Get layer context**: Read implementation-plan.md for current layer assignment  
 4. **Check BDD status**: Count passing vs total BDD assertions for current layer

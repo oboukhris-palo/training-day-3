@@ -3,7 +3,17 @@ applyTo: '**'
 ---
 
 
-# Web Project Rules
+# Next.js Development Instructions
+
+## Overview
+
+This document provides systematic instructions for Next.js framework development best practices and patterns using the AI-first delivery methodology. These instructions follow established Next.js conventions and transform modern full-stack React requirements into comprehensive development standards that leverage Next.js capabilities, maintain performance optimization, and ensure scalable web application development.
+
+## Process Overview
+
+**Next.js Development Implementation** transforms full-stack web application requirements into structured Next.js implementations that deliver performance-optimized applications, effective server-side rendering, comprehensive testing strategies, and maintainable codebases through proper Next.js patterns, React integration, and established conventions for scalable modern web development.
+
+## Implementation Process
 
 ## Project Structure
 ```

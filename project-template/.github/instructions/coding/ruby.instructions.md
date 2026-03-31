@@ -3,7 +3,17 @@ description: Ruby programming language best practices, patterns, and conventions
 applyTo: "**/*.rb"
 ---
 
-# Ruby Best Practices & Development Guidelines
+# Ruby Development Instructions
+
+## Overview
+
+This document provides systematic instructions for Ruby programming language best practices and conventions using the AI-first delivery methodology. These instructions follow established Ruby development patterns and transform web application requirements into comprehensive coding standards that leverage Ruby's expressiveness, maintain convention over configuration, and ensure productive development.
+
+## Process Overview
+
+**Ruby Development Implementation** transforms web application requirements into structured Ruby implementations that deliver expressive code, effective framework usage, comprehensive testing strategies, and maintainable applications through proper Ruby idioms, Rails conventions, and established patterns for productive Ruby development.
+
+## Implementation Process & Development Guidelines
 
 This document establishes coding standards and best practices for Ruby development. All team members must follow these guidelines to maintain consistency, quality, and maintainability across Ruby projects.
 

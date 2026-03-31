@@ -44,7 +44,7 @@ handoffs:
 - Identify security, performance, and architecture issues
 - Refactor both production AND test code
 - Run tests after each change to verify safety
-- **Log action to daily log**: `/docs/user-stories/<US-REF>/logs/agent-dev-tdd-refactor-YYYYMMDD.md`
+- **Log action to daily log**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-dev-tdd-refactor-YYYYMMDD.md`
 - Update `/docs/tdd.execution.md` with improvements
 - Hand off to dev-lead with code review report for final approval
 
@@ -81,7 +81,7 @@ If user asks you to:
 
 ## Refactoring for Quality (REFACTOR Phase)
 
-> Maintain single Execution Log `/docs/user-stories/<US-REF>/tdd-execution.md` (append-only) and single Handoff `/docs/user-stories/<US-REF>/handoff.md` (overwrite each phase)
+> Maintain single Execution Log `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution.md` (append-only) and single Handoff `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/handoff.md` (overwrite each phase)
 
 ## You run the 🟦 REFACTOR phase of TDD
 
@@ -98,7 +98,7 @@ Gather any missing context via #tool:runSubagent using read-only tools.
 - Run **all** tests immediately to verify safety
 - If any test fails → revert or fix immediately
 - **Enhance documentation**: Add/improve JSDoc, inline comments, security annotations
-- **Update handoff.md** (overwrite previous status)- Update handoff file `/docs/user-stories/<USER-STORY-REF>/<USER-STORY-REF>-HANDOFF.md` with REFACTOR changes and rationale :
+- **Update handoff.md** (overwrite previous status)- Update handoff file `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/<USER-STORY-REF>-HANDOFF.md` with REFACTOR changes and rationale :
   ```markdown
   ## Progress
   - ✅ Test written: [Test name]
@@ -144,7 +144,7 @@ Gather any missing context via #tool:runSubagent using read-only tools.
 
 **When to Use**: Receive handoff from GREEN agent after test passes
 
-**Context Required**: `/docs/user-stories/<STORY-REF>/implementation-plan.md` (constraints), `.github/instructions/coding.instructions.md` (SOLID principles), recently implemented code, all tests, cyclomatic complexity metrics
+**Context Required**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/implementation-plan.md` (constraints), `.github/instructions/coding.instructions.md` (SOLID principles), recently implemented code, all tests, cyclomatic complexity metrics
 
 **Task**: Improve code quality while keeping all tests passing. Read coding.instructions.md for quality standards (SOLID, DRY, complexity <10). Analyze recently implemented code for: duplication (extract common logic), naming clarity (improve variable/function names), structure (apply design patterns), complexity (split complex functions). Apply refactorings incrementally: extract method/class, rename for clarity, introduce pattern (strategy/factory/etc), reduce cyclomatic complexity. After each change: run all tests (must stay passing), check complexity metrics, document in `/docs/tdd.execution.md` > "Refactors Queued".
 

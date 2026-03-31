@@ -6,7 +6,7 @@
 ## How to Use This Template
 
 ### 1. **At Project Start** (After PDLC Stage 4 Complete)
-- Copy `/docs/prd/user-stories.md` structure to `/docs/user-stories/user-stories.md`
+- Copy `/docs/01-requirements/user-stories.md` structure to `/docs/05-implementation/user-stories.md`
 - Add status tracking fields for each user story
 - Initialize all stories as "Not Started"
 - This becomes the **SINGLE SOURCE OF TRUTH**

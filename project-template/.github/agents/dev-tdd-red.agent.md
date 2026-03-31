@@ -41,7 +41,7 @@ handoffs:
 - Document test purpose, assumptions, and BDD scenario mappings
 - Use test data comments from dev-lead's skeleton classes
 - Verify tests fail for the right reason
-- **Log action to daily log**: `/docs/user-stories/<US-REF>/logs/agent-dev-tdd-red-YYYYMMDD.md`
+- **Log action to daily log**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-dev-tdd-red-YYYYMMDD.md`
 - Update `/docs/tdd.execution.md` with test progress
 - Hand off to GREEN phase after test fails
 
@@ -71,7 +71,7 @@ Write one failing test per cycle that maps to BDD assertion. Test must fail for 
 ## Process
 1. Read implementation plan layer section
 2. Read skeleton classes created by dev-lead with method signatures and test data comments
-3. Read handoff file `/docs/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` for current context
+3. Read handoff file `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` for current context
 4. Identify specific BDD assertion to support
 5. **Create test class file** (e.g., `UserService.test.ts`, `SubscriptionService.spec.ts`)
 6. **Document test strategy** at top of test file:
@@ -83,7 +83,7 @@ Write one failing test per cycle that maps to BDD assertion. Test must fail for 
    ```
 7. Write focused failing test using test data from skeleton class comments
 8. Run test to confirm it fails
-9. **Update handoff.md** (overwrite cycle status with new RED phase info) Update the handoff file `/docs/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` with progress:
+9. **Update handoff.md** (overwrite cycle status with new RED phase info) Update the handoff file `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` with progress:
    ```markdown
    ## Progress
    - ✅ Test written: Failing test for [assertion name]
@@ -167,7 +167,7 @@ If you catch yourself planning implementation steps for YOU to execute, STOP. TD
 
 **When to Use**: Receive handoff from TDD Orchestrator or GREEN phase (next cycle)
 
-**Context Required**: `/docs/user-stories/<STORY-REF>/implementation-plan.md` (layer TDD approach), `/docs/tdd.execution.md` (next test), failing BDD test (feature file line), code files (existing implementation)
+**Context Required**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/implementation-plan.md` (layer TDD approach), `/docs/tdd.execution.md` (next test), failing BDD test (feature file line), code files (existing implementation)
 
 **Task**: Write one failing unit/integration test supporting BDD assertion. Read implementation-plan.md for layer TDD approach (test patterns, file structure). Identify next unchecked behavior in `/docs/tdd.execution.md` > "Test List (Next)". Write minimal test: Arrange (setup), Act (execute), Assert (expect result). Test must: map to BDD assertion (document which), actually fail (run it), fail for right reason (document why). Use AAA pattern, descriptive name (e.g., `test_register_hashes_password_with_bcrypt`).
 

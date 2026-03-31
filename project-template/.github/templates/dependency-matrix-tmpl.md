@@ -13,9 +13,9 @@ status: "draft"
 project_name: ""
 related_documents:
   - type: "architecture"
-    reference: "docs/prd/architecture-design.md"
+    reference: "docs/02-architecture/architecture-design.md"
   - type: "tech_spec"
-    reference: "docs/prd/tech-spec.md"
+    reference: "docs/02-architecture/tech-spec.md"
 
 compliance_frameworks: []
 security_level: "internal"

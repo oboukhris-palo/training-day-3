@@ -13,9 +13,9 @@ status: "draft"
 user_story_ref: ""
 related_documents:
   - type: "implementation_plan"
-    reference: "docs/user-stories/{US-REF}/implementation-plan.md"
+    reference: "docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/implementation-plan.md"
   - type: "incident_response"
-    reference: "docs/user-stories/{US-REF}/incident-response.md"
+    reference: "docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/incident-response.md"
 
 compliance_frameworks: []
 security_level: "confidential"

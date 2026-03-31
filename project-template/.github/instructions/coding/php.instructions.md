@@ -3,7 +3,17 @@ description: PHP programming language best practices, patterns, and conventions
 applyTo: "**/*.php"
 ---
 
-# PHP Best Practices & Development Guidelines
+# PHP Development Instructions
+
+## Overview
+
+This document provides systematic instructions for PHP programming language best practices and conventions using the AI-first delivery methodology. These instructions follow established PHP development patterns and transform web application requirements into comprehensive coding standards that leverage modern PHP features, maintain security best practices, and ensure scalable web development.
+
+## Process Overview
+
+**PHP Development Implementation** transforms web application requirements into structured PHP implementations that deliver secure web applications, effective framework usage, comprehensive testing strategies, and maintainable codebases through proper PHP patterns, security practices, and established conventions for scalable PHP development.
+
+## Implementation Process & Development Guidelines
 
 This document establishes coding standards and best practices for PHP development. All team members must follow these guidelines to maintain consistency, quality, and maintainability across PHP projects.
 

@@ -22,7 +22,7 @@
 - **Owner**: Document creator (BA owns story.yaml, Dev-Lead owns implementation-plan.md)
 - **Access**: READ ONLY - agents reference, don't copy
 - **Cost**: ~500 tokens per reference (once, not per handoff)
-- **Example**: `See /docs/user-stories/US-001/story.yaml for acceptance criteria`
+- **Example**: `See /docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/story.yaml for acceptance criteria`
 
 ### Level 2: Delta Packets (Handoff Changes)
 - **What**: Only what changed in this step
@@ -36,7 +36,7 @@
 - **Owner**: Orchestrator
 - **Format**: Role instructions + canonical source links
 - **Cost**: ~800-1200 tokens per agent
-- **Example**: `Dev-Lead: Review #file:/docs/user-stories/US-001/implementation-plan.md#L450`
+- **Example**: `Dev-Lead: Review #file:/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md#L450`
 
 ---
 
@@ -51,7 +51,7 @@
 # ✅ AFTER (350 bytes - 85% reduction)
 **Handoff**: Dev-Lead → Dev-TDD
 **Delta**: Layer 2 API endpoints finalized. Authentication now in Layer 1 dependencies.
-**Canonical References**: See #file:/docs/user-stories/US-001/implementation-plan.md#L450
+**Canonical References**: See #file:/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md#L450
 **Next Action**: RED phase - write failing test for `/subscription/tier/sync`
 ```
 
@@ -62,7 +62,7 @@
 ### 1. Canonical Source References
 **Pattern**: Always link to source, never duplicate
 ```markdown
-See [story.yaml](file:/docs/user-stories/US-001/story.yaml#L1-L50) for acceptance criteria
+See [story.yaml](file:/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/story.yaml#L1-L50) for acceptance criteria
 ```
 
 ### 2. Delta Handoff Summaries
@@ -78,7 +78,7 @@ See [story.yaml](file:/docs/user-stories/US-001/story.yaml#L1-L50) for acceptanc
     "removed": ["Redundant fixture IDs"]
   },
   "canonical_refs": [
-    "/docs/user-stories/US-001/implementation-plan.md#L450",
+    "/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md#L450",
     "/api/openapi.yaml#SubscriptionController"
   ],
   "next_action": "RED phase - write failing test"
@@ -88,7 +88,7 @@ See [story.yaml](file:/docs/user-stories/US-001/story.yaml#L1-L50) for acceptanc
 ### 3. Semantic Pointers with Context Hints
 **Pattern**: File + line range + semantic hint
 ```markdown
-#file:/docs/user-stories/US-001/implementation-plan.md#L450 (Layer 2 API definitions)
+#file:/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md#L450 (Layer 2 API definitions)
 ```
 
 ---
@@ -97,7 +97,7 @@ See [story.yaml](file:/docs/user-stories/US-001/story.yaml#L1-L50) for acceptanc
 
 ### Orchestrator
 - **Context**: Decision gates, handoff routing, escalations
-- **Canonical Sources**: `docs/user-stories/user-stories.md` (story catalog)
+- **Canonical Sources**: `docs/05-implementation/user-stories.md` (story catalog)
 - **Handoff Format**: 3-option decisions + routing instructions
 - **Token Budget**: 1.5-2KB per decision
 
@@ -119,7 +119,7 @@ See [story.yaml](file:/docs/user-stories/US-001/story.yaml#L1-L50) for acceptanc
 
 ### Consolidate Handoff Data
 ```
-docs/user-stories/US-001/
+docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/
 ├── story.yaml                # CANONICAL - BA owns
 ├── implementation-plan.md    # CANONICAL - Dev-Lead owns
 ├── handoff.md                # OVERWRITE - current cycle state
@@ -150,7 +150,7 @@ docs/user-stories/US-001/
 ## Implementation Checklist
 
 ### Phase 1: Canonical Source Identification
-- [ ] Audit all files in `docs/user-stories/<US-REF>/`
+- [ ] Audit all files in `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/`
 - [ ] Identify duplicated content (API specs, BDD mappings, curl examples)
 - [ ] Tag canonical sources with ownership metadata
 
@@ -297,21 +297,21 @@ graph LR
 ## Layer 2: Backend Handoff Summary
 
 ### What Changed
-- Updated /docs/user-stories/<US-REF>/implementation-plan.md
+- Updated /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md
   - Added 2 endpoints (createUser, getUserById)
   - Defined request/response schemas (UserCreateRequest, User)
   - Mapped 5 BDD scenarios to operationIds
 
 ### Where to Find Details
-- **API Endpoints**: /docs/user-stories/<US-REF>/implementation-plan.md#L85 (API Endpoints section)
-- **BDD Mapping**: /docs/user-stories/<US-REF>/implementation-plan.md#L125 (BDD Mapping section)
-- **TDD Plan**: /docs/user-stories/<US-REF>/implementation-plan.md#L140 (TDD Per Layer section)
+- **API Endpoints**: /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md#L85 (API Endpoints section)
+- **BDD Mapping**: /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md#L125 (BDD Mapping section)
+- **TDD Plan**: /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md#L140 (TDD Per Layer section)
 - **OpenAPI Spec**: /api/openapi.yaml (canonical source)
 
 ### Critical Gotchas for Next Agent
 - ⚠️ **Tier Sync**: User.tier and Subscription.tier MUST match in service layer (see implementation-plan.md#L135)
 - ⚠️ **Error Codes**: Use OpenAPI schema enum, not ad-hoc codes
-- 📋 **BDD Wiring**: Copy /docs/prd/user-stories.md scenarios to /features/auth/ for step definitions
+- 📋 **BDD Wiring**: Copy /docs/01-requirements/user-stories.md scenarios to /features/auth/ for step definitions
 ```
 
 **Impact**: 75% size reduction, full context remains accessible via reference
@@ -412,10 +412,10 @@ Instead of passing full implementation-plan.md through each handoff, pass a delt
   
   "delta": {
     "files_created": [
-      "docs/user-stories/AUTH-003/implementation-plan.md"
+      "docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md"
     ],
     "files_updated": [
-      "docs/user-stories/AUTH-003/story.yaml"
+      "docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/story.yaml"
     ],
     "sections_changed": {
       "implementation-plan.md": [
@@ -439,9 +439,9 @@ Instead of passing full implementation-plan.md through each handoff, pass a delt
   ],
   
   "next_agent_pointers": {
-    "canonical_implementation_plan": "docs/user-stories/AUTH-003/implementation-plan.md",
+    "canonical_implementation_plan": "docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md",
     "current_layer": "Layer 1 - Database",
-    "failing_test": "docs/user-stories/AUTH-003/bdd-scenarios/auth.feature:15",
+    "failing_test": "docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/bdd-scenarios/auth.feature:15",
     "files_to_create": [
       "migrations/20260120_create_users_table.sql",
       "src/models/User.ts"
@@ -494,9 +494,9 @@ You are the Product Development Lifecycle coordinator. You:
 - What's next: PO requirements definition
 
 ## Canonical Sources (You reference, don't copy)
-- Full story: `/docs/user-stories/AUTH-003/story.yaml`
-- Timeline: `/docs/prd/requirements.md` (Stage 1 output)
-- Status tracking: `/docs/user-stories/user-stories.md` (master status table)
+- Full story: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/story.yaml`
+- Timeline: `/docs/01-requirements/requirements.md` (Stage 1 output)
+- Status tracking: `/docs/05-implementation/user-stories.md` (master status table)
 
 ## Your Decision Gates
 **At stage completion**, present user 3 options:
@@ -522,7 +522,7 @@ Message template:
 ```
 @po handoff: AUTH-003 from ORCHESTRATOR
 Orchestrator approved charter. Story ready for requirements definition.
-See: /docs/user-stories/AUTH-003/story.yaml
+See: /docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/story.yaml
 Next decision gate: Acceptance criteria lock (after PO/BA complete)
 ```
 ```
@@ -549,12 +549,12 @@ Technical Lead responsible for:
 **Story Reference**: AUTH-003
 **Title**: User Registration with Email Verification
 **Epic**: Authentication System
-**BDD Scenarios**: 5 scenarios in `/docs/prd/user-stories.md#AUTH-003-BDD`
+**BDD Scenarios**: 5 scenarios in `/docs/01-requirements/user-stories.md#AUTH-003-BDD`
 **Status**: Ready for implementation planning (Architect approved)
 
 ## What You Must Produce
 
-### 1. Implementation Plan (`/docs/user-stories/AUTH-003/implementation-plan.md`)
+### 1. Implementation Plan (`/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md`)
 Must include 4 layers:
 
 **Layer 1 - Database**
@@ -588,7 +588,7 @@ Create mapping matrix: **Scenarios → operationIds → assertions**
 - Each BDD scenario maps to 1+ API endpoint(s)
 - Each assertion maps to response field or status code
 
-### 4. Handoff Package (`/docs/user-stories/AUTH-003/<US-REF>-HANDOFF.md`)
+### 4. Handoff Package (`/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/<US-REF>-HANDOFF.md`)
 See delta_summary.json template in context-optimization-strategy.md
 
 ## Critical Project Constraints
@@ -605,7 +605,7 @@ When User is created/updated in service layer:
 - Don't invent new codes; update OpenAPI schema first
 
 ⚠️ **BDD Scenario Mapping**
-- Copy BDD scenarios from `/docs/prd/user-stories.md` to feature files
+- Copy BDD scenarios from `/docs/01-requirements/user-stories.md` to feature files
 - Create step definitions calling actual API endpoints (not mocks)
 - Step files: `/features/<domain>/<feature>.steps.ts`
 
@@ -613,10 +613,10 @@ When User is created/updated in service layer:
 
 | Document | Location | Purpose |
 |----------|----------|---------|
-| Acceptance Criteria | `/docs/user-stories/AUTH-003/story.yaml` | Define what "done" means |
-| BDD Scenarios | `/docs/prd/user-stories.md#AUTH-003-BDD` | Test entry points |
-| Architecture Constraints | `/docs/prd/architecture-design.md` | Design decisions you must respect |
-| Tech Stack | `/docs/prd/tech-spec.md` | Language, framework, database |
+| Acceptance Criteria | `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/story.yaml` | Define what "done" means |
+| BDD Scenarios | `/docs/01-requirements/user-stories.md#AUTH-003-BDD` | Test entry points |
+| Architecture Constraints | `/docs/02-architecture/architecture-design.md` | Design decisions you must respect |
+| Tech Stack | `/docs/02-architecture/tech-spec.md` | Language, framework, database |
 | Design System | `/docs/design/design-systems.md` | UI components and tokens |
 
 ## Failing Tests You'll Define
@@ -645,10 +645,10 @@ For each layer, describe the initial failing test:
 
 ## Checklist Before Handoff
 
-- [ ] `/docs/user-stories/AUTH-003/implementation-plan.md` complete with 4 layers
+- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md` complete with 4 layers
 - [ ] `/api/openapi.yaml` updated with new endpoints
 - [ ] BDD scenarios copied to `/features/<domain>/` with step definitions
-- [ ] Handoff package created: `/docs/user-stories/AUTH-003/<US-REF>-HANDOFF.md`
+- [ ] Handoff package created: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/<US-REF>-HANDOFF.md`
 - [ ] All layer-specific failing tests documented
 - [ ] Critical notes (tier sync, error codes) documented
 - [ ] No broken links to canonical sources
@@ -684,7 +684,7 @@ RED phase of TDD cycle. You:
 
 ## What You're Testing
 
-From `/docs/user-stories/AUTH-003/implementation-plan.md#L45`:
+From `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md#L45`:
 
 ```
 Layer 1 - Database:
@@ -788,7 +788,7 @@ it('migration file exists and creates users table with required columns', () => 
 
 **File to Create**: `migrations/20260120_create_users_table.sql`
 
-**Implementation Requirements** (from `/docs/user-stories/AUTH-003/implementation-plan.md#L50`):
+**Implementation Requirements** (from `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md#L50`):
 ```
 UP Migration:
 CREATE TABLE users (
@@ -871,8 +871,8 @@ SAVINGS:           3900 tokens per story (45% efficiency gain)
 ## Implementation Priority
 
 **Phase 1 (Week 1)**: Canonical source setup + prompt templates
-- Create `/docs/user-stories/<US-REF>/story.yaml` template
-- Create `/docs/user-stories/<US-REF>/implementation-plan.md` template
+- Create `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/story.yaml` template
+- Create `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` template
 - Write 4 core agent prompts (Dev-Lead, TDD-RED, TDD-GREEN, TDD-REFACTOR)
 - Validate semantic references work
 

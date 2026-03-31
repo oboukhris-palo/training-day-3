@@ -4,6 +4,16 @@ applyTo: "00-context/glossary.md"
 ---
 # Glossary Maintenance Instructions
 
+## Overview
+
+This document provides systematic instructions for maintaining and updating project glossaries using the AI-first delivery methodology. These instructions follow knowledge management best practices and transform terminology management into structured glossary maintenance that ensures consistent definitions, eliminates ambiguity, and maintains current technical vocabulary across all project documentation and communications.
+
+## Process Overview
+
+**Glossary Maintenance Implementation** transforms terminology management requirements into systematic glossary updates that deliver consistent definitions, eliminate ambiguous terms, maintain current technical vocabulary, and ensure all stakeholders share common understanding through structured definition management and regular review processes across all project artifacts.
+
+## Implementation Process
+
 ## STATUS: ALWAYS APPLY
 
 These instructions govern how to maintain, update, and validate terms in the Edenred AI-first delivery assessment glossary.

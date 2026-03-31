@@ -162,13 +162,13 @@ environment:
 related_documents:
   references:
     - doc_type: "user_stories"
-      link: "docs/prd/user-stories.md"
+      link: "docs/01-requirements/user-stories.md"
       rationale: "Child user stories for this epic"
     - doc_type: "functional_spec"
-      link: "docs/prd/requirements.md"
+      link: "docs/01-requirements/requirements.md"
       rationale: "Non-functional requirements affecting this epic"
     - doc_type: "architecture"
-      link: "docs/prd/architecture-design.md"
+      link: "docs/02-architecture/architecture-design.md"
       rationale: "System design affecting deliverables"
     - doc_type: "project_status"
       link: "docs/assessment/project-status.md"

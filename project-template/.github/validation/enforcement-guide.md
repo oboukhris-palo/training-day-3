@@ -94,8 +94,8 @@ A smart validation system that ensures proper workflow usage in every project us
 
 Choose your starting point:
 1. 🔍 Full Assessment (@orchestrator Assess project status)
-2. 📋 Existing Documentation (Review docs/prd/)  
-3. 🚀 Implementation Ready (docs/user-stories/)
+2. 📋 Existing Documentation (Review docs/01-requirements/ through docs/04-planning/)  
+3. 🚀 Implementation Ready (docs/05-implementation/)
 4. ⚡ Emergency Override (Skip workflows with justification)
 
 💡 RECOMMENDATION: Start with assessment for best results
@@ -115,9 +115,9 @@ Choose your starting point:
 ⚠️ SEQUENCE VIOLATION: Implementation workflow requires completed documentation
 
 MISSING PREREQUISITES:
-- docs/prd/user-stories.md (User stories with acceptance criteria)
-- docs/prd/architecture-design.md (System architecture)
-- docs/user-stories/user-stories.md (Implementation tracking)
+- docs/01-requirements/user-stories.md (User stories with acceptance criteria)
+- docs/02-architecture/architecture-design.md (System architecture)
+- docs/05-implementation/user-stories.md (Implementation tracking)
 
 🔧 FIX OPTIONS:
 1. Complete documentation workflow first
@@ -156,8 +156,8 @@ REMEDIATION:
 🤝 HANDOFF INCOMPLETE: @dev-lead → @dev-tdd
 
 MISSING ARTIFACTS:
-- docs/user-stories/US-001/implementation-plan.md
-- docs/user-stories/US-001/handoff.md
+- docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md
+- docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/handoff.md
 
 📋 TEMPLATES:
 - implementation-plan-tmpl.md
@@ -324,7 +324,7 @@ Terminate parallel cycle or queue this work? (terminate/queue)
 ```
 📋 TEMPLATE SUGGESTION
 
-Creating: docs/user-stories/US-001/implementation-plan.md
+Creating: docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md
 Context Available:
 - User story: US-001 User Authentication
 - Architecture: Node.js + Express + PostgreSQL  
@@ -480,7 +480,7 @@ parallel_development:
 # Apply templates to multiple user stories
 for story in US-001 US-002 US-003; do
   echo "Generating implementation plan for $story"
-  cp .github/templates/implementation-plan-tmpl.md "docs/user-stories/$story/implementation-plan.md"
+  cp .github/templates/implementation-plan-tmpl.md "docs/05-implementation/epics/$epic/user-stories/$story/implementation-plan.md"
 done
 ```
 

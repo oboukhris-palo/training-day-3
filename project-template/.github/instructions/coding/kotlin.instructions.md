@@ -3,7 +3,17 @@ description: Kotlin programming language best practices, patterns, and conventio
 applyTo: "**/*.kt"
 ---
 
-# Kotlin Best Practices & Development Guidelines
+# Kotlin Development Instructions
+
+## Overview
+
+This document provides systematic instructions for Kotlin programming language best practices and conventions using the AI-first delivery methodology. These instructions follow established Kotlin development patterns and transform modern JVM programming requirements into comprehensive coding standards that leverage Kotlin's conciseness, safety features, and interoperability for scalable applications.
+
+## Process Overview
+
+**Kotlin Development Implementation** transforms modern JVM programming requirements into structured Kotlin implementations that deliver concise code, effective null safety, comprehensive testing strategies, and maintainable applications through proper Kotlin idioms, language features, and established patterns for scalable Kotlin development.
+
+## Implementation Process & Development Guidelines
 
 This document establishes coding standards and best practices for Kotlin development. All team members must follow these guidelines to maintain consistency, quality, and maintainability across Kotlin projects.
 

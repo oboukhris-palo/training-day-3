@@ -45,7 +45,7 @@ function createHandoffWithTrace(handoffData, tracer) {
   handoffData.handoff.spanId = trace.spanId;
   
   // Save handoff file
-  const handoffDir = `docs/user-stories/${handoffData.handoff.storyRef}`;
+  const handoffDir = `docs/05-implementation/epics/${handoffData.handoff.epicRef}/user-stories/${handoffData.handoff.storyRef}`;
   if (!fs.existsSync(handoffDir)) {
     fs.mkdirSync(handoffDir, { recursive: true });
   }

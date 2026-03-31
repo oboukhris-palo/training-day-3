@@ -1,4 +1,14 @@
-# Naming Conventions - Edenred Assessment Repository
+# Naming Conventions Instructions
+
+## Overview
+
+This document provides systematic instructions for naming conventions and identifier standards using the AI-first delivery methodology. These instructions follow established naming best practices and transform code organization requirements into consistent naming standards that enhance readability, maintain consistency, and facilitate team collaboration through clear, predictable naming patterns across all code elements.
+
+## Process Overview
+
+**Naming Conventions Implementation** transforms code organization requirements into systematic naming standards that deliver consistent identifier patterns, enhanced code readability, improved team collaboration, and maintainable codebase structure through established naming rules for variables, functions, classes, files, and directories across all programming languages and frameworks.
+
+## Implementation Process - Edenred Assessment Repository
 
 **Document Type**: Repository Standards  
 **Status**: Active  

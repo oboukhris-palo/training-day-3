@@ -168,4 +168,4 @@ This review follows:
 - [coding.instructions.md](../.github/instructions/coding.instructions.md) - 13-point checklist
 - [code-review.instructions.md](../.github/instructions/code-review.instructions.md) - Severity classification
 - [security-requirements](../.github/instructions/coding.instructions.md#security) - Security checklist
-- [architecture-design.md](../../docs/prd/architecture-design.md) - Architecture patterns
+- [architecture-design.md](../../docs/02-architecture/architecture-design.md) - Architecture patterns

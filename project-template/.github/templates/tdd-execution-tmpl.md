@@ -298,7 +298,7 @@ Date: {timestamp}
 - SOLID principles: ✅ All reviewed
 - Ready for merge: ✅
 
-**See `/docs/user-stories/{USER-STORY-REF}/code-review-report.md` for detailed review.**
+**See `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{USER-STORY-REF}/code-review-report.md` for detailed review.**
 
 ---
 

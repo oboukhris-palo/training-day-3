@@ -1,37 +1,74 @@
----
-agent: agent
----
-# **Update Repository Session Context**
+## Objective
+Maintain comprehensive session tracking by updating the session context log with timestamped activity records for AI context preservation across multiple assessment sessions.
 
+## Context
+You are maintaining AI-first delivery assessment repository documentation. The session-context.md tracks detailed chronological changes to ensure continuity and context preservation for AI agents working across multiple sessions and phases.
 
-## Prompt Content
+## Requirements
 
-Update the repository documentation to reflect the current state of the Gen-e2 assessment project, ensuring comprehensive session tracking for continuity across assessment activities.
+### Session Tracking Standards
+1. **Timestamp Documentation**: Record precise date and time for all activities (YYYY-MM-DD HH:MM format)
+2. **Activity Logging**: Document all significant repository changes and interactions
+3. **Context Preservation**: Maintain chronological history for multi-session continuity
+4. **User Interaction Recording**: Capture user prompts and AI responses verbatim
+5. **Change Documentation**: List all files created, modified, or updated with rationale
 
-### Objective
-Maintain accurate and current repository documentation by updating the session context log with the latest timestamped activity records.
+### Session Context Requirements
+- **Chronological Order**: Maintain strict time-based sequence of all activities
+- **Complete Attribution**: Document who (user/AI) performed each action
+- **Change Rationale**: Explain why changes were made and their impact
+- **File Tracking**: Comprehensive list of all file modifications
+- **Context Continuity**: Preserve information needed for future session resumption
 
-### Context
-You are maintaining the Assessment repository documentation. The session-context.md tracks detailed chronological changes for AI context preservation across multiple assessment sessions.
+## Deliverables
 
-### Requirements
+### 1. Updated Session-Context.md
+Chronological activity log containing:
+- **Timestamp Entries**: All activities with precise YYYY-MM-DD HH:MM timestamps
+- **User Prompt Records**: Exact user requests and queries verbatim
+- **AI Response Documentation**: Complete record of AI responses and actions taken
+- **File Modification Log**: Comprehensive list of all files created/modified/updated
+- **Action Rationale**: Clear explanations for why each change was made
+- **Session Boundaries**: Clear markers for session start/end and handoffs
 
-#### For Session-Context.md Updates
-1. **Timestamp Documentation**: Record precise date and time for all new changes (format: YYYY-MM-DD HH:MM)
-2. **User Prompt Capture**: Document exact user requests verbatim
-3. **Copilot Response Documentation**: Record AI responses and actions taken
-4. **File Modification Tracking**: List all files created, modified, or updated
-5. **Context Preservation**: Maintain detailed chronological log for session continuity
-6. **Action Documentation**: Describe specific changes made and rationale
+### 2. Continuity Summary
+Brief session overview including:
+- Total activities logged in current session
+- Major milestones or phase completions
+- Outstanding tasks or follow-up requirements
+- Context required for next session continuation
 
-### Deliverables
-1. **Updated Session-Context.md**: Chronological change log with timestamped entries for all new repository activities
-2. **Verification Summary**: Brief confirmation of updates made and statistics refreshed
+## Quality Standards
 
-### Quality Standards
-- ✅ Session-context.md preserves complete chronological change history
-- ✅ Timestamps follow consistent format (YYYY-MM-DD HH:MM for session-context.md, YYYY-MM-DD for INDEX.md)
-- ✅ Professional formatting per Gen-e2 documentation standards
+- ✅ All timestamps follow consistent YYYY-MM-DD HH:MM format
+- ✅ Complete chronological change history preserved
+- ✅ User interactions captured verbatim without interpretation
+- ✅ AI responses documented with sufficient detail
+- ✅ All file modifications tracked with rationale
+- ✅ Professional formatting follows AI-first delivery documentation standards
+- ✅ Session continuity information clearly documented
 
-### File Management
-- **Primary Files**: `/00-context/session-context.md`
+## File Management
+
+### Primary Target
+- **Main File**: `/00-context/session-context.md` (or equivalent session tracking file)
+- **Append-Only**: Add new entries without modifying existing historical records
+- **Backup**: Preserve complete chronological history for audit and reference
+
+### Entry Format
+```markdown
+## Session Entry - YYYY-MM-DD HH:MM
+
+### User Request
+[Exact user prompt or query]
+
+### AI Response Summary
+[Summary of actions taken and responses provided]
+
+### Files Modified
+- [file1.md] - [reason for modification]
+- [file2.yaml] - [reason for modification]
+
+### Context Notes
+[Any important context for future reference]
+```

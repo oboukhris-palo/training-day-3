@@ -207,7 +207,7 @@
 
 **For each functional theme, PO (`po-theme-prd-generation`):**
 
-**Create:** `/docs/prd/themes/{{theme-name}}.md`
+**Create:** `/docs/01-requirements/themes/{{theme-name}}.md`
 
 **Structure per theme:**
 ```markdown
@@ -262,7 +262,7 @@
 
 **PO (`po-master-prd-assembly`)** → Consolidate theme PRDs into master document:
 
-**Create:** `/docs/prd/requirements.md`
+**Create:** `/docs/01-requirements/requirements.md`
 
 **Master Structure:**
 1. **Executive Summary** - Overall product vision and strategy
@@ -540,7 +540,7 @@
 4. **Define Success Scenarios** - What good looks like for each persona
 5. **Create Persona Profiles** - Detailed persona documents
 
-**Create:** `/docs/prd/personas.md`
+**Create:** `/docs/01-requirements/personas.md`
 
 **Output:** Comprehensive user personas with interview evidence
 
@@ -548,7 +548,7 @@
 
 **PO (`po-requirements-assembly`)** → Transform synthesized requirements into PRD structure:
 
-**Create:** `/docs/prd/requirements.md`
+**Create:** `/docs/01-requirements/requirements.md`
 
 **Assembly Process:**
 1. **Executive Summary** - Strategic context from executive interviews
@@ -941,7 +941,7 @@ After each engagement, capture lessons learned:
 
 ## Document Governance
 
-**Storage**: `/docs/prd/` | Version control: Git | Approval history tracked
+**Storage**: `/docs/01-requirements/`, `/docs/02-architecture/`, `/docs/03-testing/`, `/docs/04-planning/` | Version control: Git | Approval history tracked
 
 **Approval Gates**:
 - Stage 1: PM, PO, Stakeholders

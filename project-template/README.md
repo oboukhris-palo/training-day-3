@@ -118,7 +118,7 @@
 
 ---
 
-## 📂 Project Structure (Optimized)
+## 📂 Project Structure (Optimized) — Framework 2.0.0
 
 ```
 project-root/
@@ -134,84 +134,77 @@ project-root/
 │   │   └── diagram-usage.guide.md # Diagram standards
 │   ├── instructions/              # Coding and documentation standards
 │   ├── prompts/                   # Agent system prompts
+│   ├── validation/                # Workflow enforcement system
 │   └── copilot-instructions.md    # Master system guide
 │
 ├── docs/
-│   ├── prd/                       # PDLC Documents (13 files)
+│   ├── 01-requirements/           # Phase 1-2: Requirements & personas (IMMUTABLE)
 │   │   ├── requirements.md
-│   │   ├── user-stories.md        # BDD scenarios (PRD - read-only)
-│   │   ├── architecture-design.md
-│   │   └── ...
+│   │   ├── personas.md
+│   │   ├── user-stories.md        # PRD catalog (IMMUTABLE reference)
+│   │   └── business-case.md
 │   │
-│   ├── user-stories/              # Implementation tracking
-│   │   ├── user-stories.md        # ⭐ Status tracking (SSOT)
-│   │   ├── current-sprint.md        # ⭐ Status tracking (SSOT)
-│   │   ├── project-status.md        # ⭐ Status tracking (SSOT)
-│   │   └── <US-REF>/             # Per-story folders
-│   │       ├── <US-REF>.md       # the user story content (copy of the original user story from PRD)
-│   │       ├── implementation-plan.md  # Implementation plan for the user story
-│   │       ├── api-design.md      # API design details for the user story
-│   │       ├── us-completition-checklist.md         # Checklist for user story completion
-│   │       ├── features/         # BDD feature files (project source)
-│   │       └── tdd-execution/     # TDD execution details and results
-│   │           └── <TDD-CYCLE>/     # Per TDD cycle folders
-│   │               ├── <TDD-CYCLE>-HO-REFACTOR.md   # REFACTOR agent Handoff file for tdd cycle number <TDD-CYCLE>
-│   │               ├── <TDD-CYCLE>-HO-GREEN.json  # GREEN agent Handoff file for tdd cycle number <TDD-CYCLE>
-│   │               └── <TDD-CYCLE>-HO-RED.json  # RED agent Handoff file for tdd cycle number <TDD-CYCLE>
+│   ├── 02-architecture/           # Phase 3-4: Architecture & tech specs (IMMUTABLE)
+│   │   ├── architecture-design.md
+│   │   ├── tech-spec.md
+│   │   └── design-systems.md
+│   │
+│   ├── 03-testing/                # Phase 5: Testing strategies (IMMUTABLE)
+│   │   └── test-strategies.md
+│   │
+│   ├── 04-planning/               # Phase 6-7: Deployment & planning (IMMUTABLE)
+│   │   ├── iteration-planning.md
+│   │   └── deployment-plan.md
+│   │
+│   ├── 05-implementation/         # Phase 8: Implementation status tracking (MUTABLE)
+│   │   ├── user-stories.md        # ⭐ SSOT: Overall progress tracking
+│   │   ├── epics/
+│   │   │   └── <EPIC-REF>/
+│   │   │       └── user-stories/
+│   │   │           └── <US-REF>/  # Per-story implementation folder
+│   │   │               ├── <US-REF>.md                          # Story definition (copied from PRD)
+│   │   │               ├── implementation-plan.md               # Frozen after approval
+│   │   │               ├── implementation-plan-v{N}.md          # IMMUTABLE snapshots (historical)
+│   │   │               ├── plan-approval.yaml                   # Human validation gate ⭐ NEW
+│   │   │               ├── bdd-scenarios/                       # BDD feature files
+│   │   │               ├── tdd-execution.md                     # APPEND-ONLY cycle summary
+│   │   │               ├── logs/                                # Per-story agent action logs ⭐ NEW
+│   │   │               │   ├── agent-dev-tdd-red-YYYYMMDD.md
+│   │   │               │   ├── agent-dev-tdd-green-YYYYMMDD.md
+│   │   │               │   └── agent-dev-tdd-refactor-YYYYMMDD.md
+│   │   │               └── tdd-execution/                       # Per-cycle handoff artifacts
+│   │   │                   ├── 001/
+│   │   │                   │   ├── 001-HO-RED.json
+│   │   │                   │   ├── 001-HO-GREEN.json
+│   │   │                   │   └── 001-HO-REFACTOR.md
+│   │   │                   └── 002/
+│   │   │                       ├── 002-HO-RED.json
+│   │   │                       ├── 002-HO-GREEN.json
+│   │   │                       └── 002-HO-REFACTOR.md
+│   │   └── logs/                  # Root-level agent action logs ⭐ NEW
+│   │       ├── agent-orchestrator-YYYYMMDD.md
+│   │       ├── agent-dev-lead-YYYYMMDD.md
+│   │       └── agent-{name}-YYYYMMDD.md
+│   │
+│   ├── assessment/                # Phase 0: Assessment outputs
+│   │   ├── PREREQUISITES-REQUEST.yml
+│   │   ├── AI-READINESS-REPORT.md
+│   │   └── MULTI-DIMENSIONAL-ASSESSMENT.md
+│   │
+│   └── design/                    # UX/UI design documents and systems
+│       └── diagrams/              # Design system diagrams
 │
 ├── features/                      # BDD feature files (project source)
 ├── src/                          # Application source code
-└── api/openapi.yaml              # API contracts
+└── api/openapi.yaml              # API contracts (OpenAPI specification)
 ```
 
----
+### Path Migration (Framework 2.0.0)
 
-## 📂 Project Structure (Optimized)
-
-```
-project-root/
-├── .github/
-│   ├── agents/                    # 11 specialized AI agents
-│   ├── workflows/                 # PDLC, Implementation, CI/CD workflows
-│   ├── tasks/                     # Workflow launcher prompts
-│   ├── templates/                 # Document templates
-│   ├── schemas/                   # JSON schemas for validation
-│   ├── guides/                    # Best practices and strategies
-│   │   ├── handoff-guide.md       # ⭐ Single source of truth for handoffs
-│   │   ├── context-optimization-strategy.md  # Token efficiency (~350 lines)
-│   │   └── diagram-usage.guide.md # Diagram standards
-│   ├── instructions/              # Coding and documentation standards
-│   ├── prompts/                   # Agent system prompts
-│   └── copilot-instructions.md    # Master system guide
-│
-├── docs/
-│   ├── prd/                       # PDLC Documents (13 files)
-│   │   ├── requirements.md
-│   │   ├── user-stories.md        # BDD scenarios (PRD - read-only)
-│   │   ├── architecture-design.md
-│   │   └── ...
-│   │
-│   ├── user-stories/              # Implementation tracking
-│   │   ├── user-stories.md        # ⭐ Status tracking (SSOT)
-│   │   ├── current-sprint.md        # ⭐ Status tracking (SSOT)
-│   │   ├── project-status.md        # ⭐ Status tracking (SSOT)
-│   │   └── <US-REF>/             # Per-story folders
-│   │       ├── <US-REF>.md       # the user story content (copy of the original user story from PRD)
-│   │       ├── implementation-plan.md  # Implementation plan for the user story
-│   │       ├── api-design.md      # API design details for the user story
-│   │       ├── us-completition-checklist.md         # Checklist for user story completion
-│   │       ├── features/         # BDD feature files (project source)
-│   │       └── tdd-execution/     # TDD execution details and results
-│   │           └── <TDD-CYCLE>/     # Per TDD cycle folders
-│   │               ├── <TDD-CYCLE>-HO-REFACTOR.md   # REFACTOR agent Handoff file for tdd cycle number <TDD-CYCLE>
-│   │               ├── <TDD-CYCLE>-HO-GREEN.json  # GREEN agent Handoff file for tdd cycle number <TDD-CYCLE>
-│   │               └── <TDD-CYCLE>-HO-RED.json  # RED agent Handoff file for tdd cycle number <TDD-CYCLE>
-│   └── design/                    # UX/UI documents
-│
-├── features/                      # BDD feature files (project source)
-├── src/                          # Application source code
-└── api/openapi.yaml              # API contracts
-```
+If you encounter legacy paths in older documentation:
+- **Old**: `/docs/prd/` → **New**: `/docs/01-requirements/`
+- **Old**: `/docs/user-stories/` → **New**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/`
+- **New path always includes epic container**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/`
 
 ---
 
