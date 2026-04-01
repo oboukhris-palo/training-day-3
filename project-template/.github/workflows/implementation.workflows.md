@@ -78,6 +78,53 @@ This document defines the **Implementation & Development Execution Workflow** - 
 
 ## Implementation Checkpoint Documents
 
+### Epic-Level Documents
+
+#### `/docs/05-implementation/epics/<EPIC-REF>/readme.md` 📄
+**Purpose**: Epic overview document providing scope, objectives, team assignments, and status tracking for the entire epic
+
+**Managed by**: Dev-Lead (creates during epic folder setup)
+
+**Document Metadata** (required section at top of file):
+```yaml
+---
+generated_from_template: epic-tmpl.yml
+template_path: .github/templates/epic-tmpl.yml
+generation_date: YYYY-MM-DD
+generator_agent: dev-lead
+epic_key: {EPIC-REF}
+project_key: {PROJECT-KEY}
+---
+```
+
+**Content Structure**:
+- **Metadata**: Template reference (as above), epic key, project context
+- **Epic Overview**: Name, objectives, business context, success criteria
+- **Scope**: Features included, functional boundaries, out-of-scope items
+- **Team Assignments**: Epic lead, team members, roles
+- **User Stories**: List of child stories with status, story points, priority
+- **Dependencies**: Internal and external dependencies, blocking issues
+- **Timeline**: Start date, target completion, milestones
+- **Metrics**: Story count, estimated completion %, velocity, risk level
+- **Related Documents**: Links to architecture-design.md, tech-spec.md, design-systems.md
+- **Status Tracking**: Current progress, blockers, next steps
+
+**Creation Process**:
+1. **When**: Dev-Lead sets up epic folder structure (Phase 1)
+2. **How**: Use `#file:.github/templates/epic-tmpl.yml` as reference for metadata structure
+3. **Template Reference**: Add document metadata block at top of file with template path and generation info
+4. **Content**: Copy epic details from `/docs/01-requirements/themes/epics/{EPIC-KEY}/epic.yml`
+5. **Child Stories**: Populate user stories list from epic's `childIssues` field
+6. **Location**: Save to `/docs/05-implementation/epics/<EPIC-REF>/readme.md`
+7. **Status**: Read-only after creation (reference for implementation)
+
+**Update Triggers**:
+- **Created once** by Dev-Lead when epic folder is created (Phase 1)
+- **Read-only reference** during implementation (no further edits)
+- **Status updates**: Only via `/docs/05-implementation/user-stories.md` (epic status auto-calculated from child stories)
+
+---
+
 ### User-Story Level Documents
 
 #### `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md` 📖
@@ -85,7 +132,21 @@ This document defines the **Implementation & Development Execution Workflow** - 
 
 **Managed by**: Dev-Lead (creates during story folder setup at Phase 1: Intake & BDD Integration)
 
+**Document Metadata** (required section at top of file):
+```yaml
+---
+generated_from_template: user-story-tmpl.yml
+template_path: .github/templates/user-story-tmpl.yml
+generation_date: YYYY-MM-DD
+generator_agent: dev-lead
+story_key: {EPIC-KEY}-US-{NUMBER}
+epic_key: {EPIC-REF}
+project_key: {PROJECT-KEY}
+---
+```
+
 **Content Structure**:
+- **Metadata**: Template reference (as above), story key, epic linkage, project context
 - **User Story**: As a [user], I want to [action], so that [benefit]
 - **Acceptance Criteria**: All measurable, testable conditions for story completion
 - **Related BDD Scenarios**: References to feature files in `bdd-scenarios/` folder
@@ -97,8 +158,9 @@ This document defines the **Implementation & Development Execution Workflow** - 
 1. **When**: Dev-Lead accepts story for implementation (status transition: Not Started → In Progress)
 2. **How**: Copy exact content from `/docs/01-requirements/user-stories.md` for matching US-REF
 3. **Enrichment**: Add GitHub Issue link, technical constraints from architecture-design.md
-4. **Location**: Save to `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md`
-5. **Status**: Read-only after creation (reference for implementation)
+4. **Template Metadata**: Add document metadata block (as above) referencing `#file:.github/templates/user-story-tmpl.yml`
+5. **Location**: Save to `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md`
+6. **Status**: Read-only after creation (reference for implementation)
 
 **Update Triggers**:
 - **Created once** by Dev-Lead when story folder is created (Phase 1)
@@ -328,6 +390,133 @@ tdd-execution/
 
 ---
 
+## Template Metadata Reference Guide
+
+### Purpose
+
+Document metadata references maintain traceability between generated implementation documents and their template sources (`epic-tmpl.yml` and `user-story-tmpl.yml`). This enables:
+- Clear audit trail of document generation
+- Easy reference back to template definitions
+- Consistency validation across all documents
+- Template version tracking over time
+
+### Metadata Format
+
+All generated implementation documents must include metadata block at the top (YAML frontmatter format):
+
+#### Epic README Metadata Example
+
+**File**: `/docs/05-implementation/epics/AUTH-001/readme.md`
+
+```yaml
+---
+generated_from_template: epic-tmpl.yml
+template_path: .github/templates/epic-tmpl.yml
+generation_date: 2026-04-01
+generator_agent: dev-lead
+epic_key: AUTH-001
+project_key: PROJ
+schema_version: "1.0.0"
+---
+
+# Epic: AUTH-001 - User Authentication
+
+**Epic Key**: AUTH-001  
+**Status**: To Do  
+**Priority**: High  
+**Team Lead**: john.doe@example.com  
+
+## Overview
+[Epic content follows...]
+```
+
+#### User Story Description Metadata Example
+
+**File**: `/docs/05-implementation/epics/AUTH-001/user-stories/AUTH-001-US-001/description.md`
+
+```yaml
+---
+generated_from_template: user-story-tmpl.yml
+template_path: .github/templates/user-story-tmpl.yml
+generation_date: 2026-04-01
+generator_agent: dev-lead
+story_key: AUTH-001-US-001
+epic_key: AUTH-001
+project_key: PROJ
+schema_version: "1.0.0"
+---
+
+# User Story: AUTH-001-US-001
+
+**Story Key**: AUTH-001-US-001  
+**Epic**: AUTH-001 (User Authentication)  
+**Status**: Not Started  
+**Priority**: High  
+
+## User Story Format
+
+As a **registered user**,  
+I want to **log in with my credentials**,  
+So that **I can access my account securely**.
+
+[Story content follows...]
+```
+
+### Metadata Fields
+
+| Field | Required | Description | Example |
+|-------|----------|-------------|---------|
+| `generated_from_template` | Yes | Template YAML filename | `epic-tmpl.yml` or `user-story-tmpl.yml` |
+| `template_path` | Yes | Relative path to template | `.github/templates/epic-tmpl.yml` |
+| `generation_date` | Yes | ISO 8601 date when document was generated | `2026-04-01` |
+| `generator_agent` | Yes | Agent responsible for generation | `dev-lead`, `ba`, `pm` |
+| `epic_key` | Yes (stories) | Parent epic identifier | `AUTH-001`, `CORE-001` |
+| `project_key` | Yes | Project identifier | `PROJ`, `MERCHANT` |
+| `schema_version` | Optional | Template schema version for migration tracking | `1.0.0`, `2.0.0` |
+| `story_key` | Yes (stories) | Unique story identifier | `AUTH-001-US-001` |
+
+### Best Practices
+
+1. **Always include metadata block** at the very top of generated documents (before any content)
+2. **Use ISO 8601 format** for dates: `YYYY-MM-DD`
+3. **Reference template files** using relative paths from repository root: `#file:.github/templates/epic-tmpl.yml`
+4. **Keep metadata current** - update generation_date if document is regenerated
+5. **Document schema version** when template structure changes to support future migrations
+6. **Link back to PRD sources** in the content sections (e.g., "Copied from `/docs/01-requirements/themes/epics/{EPIC-KEY}/epic.yml`")
+
+### Traceability Workflow
+
+```
+1. Template Definition
+   ↓
+   .github/templates/epic-tmpl.yml
+   .github/templates/user-story-tmpl.yml
+   ↓
+2. Document Generation (Phase 0 / Phase 2)
+   ↓
+   Developer reads template → Creates document with metadata reference
+   ↓
+3. Metadata Block Added
+   ↓
+   ```yaml
+   generated_from_template: epic-tmpl.yml
+   template_path: .github/templates/epic-tmpl.yml
+   ```
+   ↓
+4. Document Ready for Use
+   ↓
+   /docs/05-implementation/epics/{EPIC-KEY}/readme.md
+   /docs/05-implementation/epics/{EPIC-KEY}/user-stories/{US-REF}/description.md
+   ↓
+5. Validation (Quality Gates)
+   ↓
+   Verify metadata present and correct
+   Verify epic/story keys match file paths
+   Verify generation_date is recent
+```
+
+---
+
 ## Agent Communication Patterns
 
 ### Document-Based Communication Rules
@@ -432,6 +621,16 @@ PHASE 0: PM INITIALIZES PROJECT & GITHUB INTEGRATION
 ├─ ✅ Verify GitHub repository exists with write access
 ├─ ✅ Create /docs/05-implementation/user-stories.md (mirrors PRD with status tracking)
 ├─ ✅ Create /docs/05-implementation/project-status.md (dashboard template with project overview, epic progress, team setup)
+├─ ✅ Create epic folder structure and readme documents for EACH epic in `/docs/01-requirements/themes/epics/`:
+│  ├─ Create /docs/05-implementation/epics/<EPIC-REF>/ folder per epic
+│  ├─ Create /docs/05-implementation/epics/<EPIC-REF>/readme.md with:
+│  │  ├─ **ADD TEMPLATE METADATA REFERENCE** (as first content block):
+│  │  │  └─ Include YAML frontmatter referencing `#file:.github/templates/epic-tmpl.yml` with generation date, epic key, project key
+│  │  ├─ Copy epic details from `/docs/01-requirements/themes/epics/{EPIC-KEY}/epic.yml`
+│  │  ├─ Document epic objectives, scope, team assignments
+│  │  ├─ List child user stories (populated later as stories are added)
+│  │  └─ Include status tracking and progress metrics
+│  └─ Create user-stories/ subfolder for later story documentation
 ├─ For EACH user-story in /docs/01-requirements/user-stories.md:
 │  ├─ Create GitHub Issue (title, acceptance criteria, BDD scenarios)
 │  ├─ Tag with parent epic label
@@ -481,6 +680,8 @@ PHASE 2: BA ENRICHES USER STORIES (During Sprint Planning)
 ├─ For EACH user-story in current-sprint.md:
 │  ├─ **VERIFY US-REF**: Confirm reference matches exactly with `/docs/01-requirements/user-stories.md` (no typos, abbreviations)
 │  ├─ Open/create /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md (using exact US-REF from PRD)
+│  ├─ **ADD TEMPLATE METADATA REFERENCE** (as first content block):
+│  │  └─ Include YAML frontmatter referencing `#file:.github/templates/user-story-tmpl.yml` with generation date, story key, epic key
 │  ├─ Import PO-validated acceptance criteria from /docs/01-requirements/user-stories.md (update acceptance_criteria section)
 │  ├─ Extract and validate Gherkin BDD scenarios (update bdd_scenarios section)
 │  ├─ Integrate UI inputs from UX agent and /docs/design/design-systems.md (update ui_ux_inputs section)

@@ -2,3 +2,7 @@
 
 **/node_modules
 **/package-lock.json
+
+# Agent execution logs (gitignored by default, opt-in commits allowed)
+/logs/
+!/logs/.keep

@@ -114,7 +114,17 @@
 - `recommendation-plan-tmpl.md` - Recommendation plan format
 - `handoff-tmpl.md` - Agent handoff format
 - `tdd-execution-tmpl.md` - Audit log template- `plan-approval-tmpl.yaml` - Human validation gate for implementation plans ⭐ *NEW*
+- `pull_request_template.md` - PR validation checklist for Gen‑e2 compliance
 
+### 🔧 [scripts/](.github/scripts/) - Automation & Validation Scripts
+**Framework automation scripts** (ESM Node.js modules in `.mjs` format)
+- `update-index.mjs` - Generates/updates INDEX.md files across docs hierarchy
+  - Usage: `node .github/scripts/update-index.mjs [target-directory]`
+- `enforce-naming.mjs` - Validates naming conventions (EPIC-xxx, US-xxx patterns)
+  - Usage: `node .github/scripts/enforce-naming.mjs [--branch] [--commits]`
+  - Configuration: Environment variables (APP_PREFIX, EPIC_PREFIX, STORY_PREFIX, ID_WIDTH)
+- `migrate-structure.mjs` - One-time migration helper for legacy structures
+  - Usage: `node .github/scripts/migrate-structure.mjs [--dry-run] [--force]`
 
 ---
 

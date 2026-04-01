@@ -7,9 +7,274 @@
 
 **Agents**: PM (coordination) | PO (product definition) | BA (requirements/BDD) | UX (design) | Architect (architecture) | Dev-Lead (implementation) | TDD Navigator (development)
 
-**Templates**: prd-tmpl.yml (13 docs) | user-story-tmpl.yml | func-doc-tmpl.yml | tech-doc-tmpl.yml
+**Templates**: 
+- **PRD Suite**: prd-tmpl.yml (13 phase-based docs) | func-doc-tmpl.yml | tech-doc-tmpl.yml
+- **Epic & Story Management**: epic-tmpl.yml (Jira-compatible epic schema) | user-story-tmpl.yml (Jira-compatible story schema with epic linkage)
+- **Epic Grouping**: All user stories MUST be linked to parent epics via `epicLink` and `epicKey` fields
 
 **Supported Input Scenarios**: Perfect docs | Jira/ADO epics | Architecture diagrams | Sparse documentation | Mixed legacy sources | Interview-based discovery
+
+---
+
+## Epic-Story Document Structure & Hierarchy
+
+**Core Principle**: All user stories MUST be organized within epic groups following Jira-compatible schema for seamless project management integration.
+
+### Document Organization
+
+**Epic-Centric Folder Structure:**
+```
+docs/
+├── 01-requirements/
+│   ├── requirements.md              # Master PRD
+│   ├── personas.md                  # User personas
+│   ├── business-case.md             # Business justification
+│   ├── user-stories.md              # MASTER catalog: All epics + stories in hierarchical view
+│   │
+│   └── themes/                      # Route B: Functional theme organization
+│       ├── theme-name.md            # Theme-specific PRD
+│       └── epics/
+│           ├── {EPIC-KEY}/          # e.g., AUTH-001/
+│           │   ├── epic.yml         # Epic metadata (epic-tmpl.yml)
+│           │   └── stories/
+│           │       ├── {EPIC-KEY}-US-001.yml    # Story metadata (user-story-tmpl.yml)
+│           │       ├── {EPIC-KEY}-US-002.yml
+│           │       └── {EPIC-KEY}-US-003.yml
+│           │
+│           └── {EPIC-KEY}/          # e.g., CORE-001/
+│               ├── epic.yml
+│               └── stories/
+│                   └── ...
+```
+
+### Epic-Story Relationship Model
+
+**Parent-Child Linkage:**
+```yaml
+# Epic File: docs/01-requirements/themes/epics/AUTH-001/epic.yml
+metadata:
+  epicId: "epic-auth-001"
+  projectKey: "PROJ"
+  epicKey: "AUTH-001"
+
+basic_info:
+  name: "User Authentication"
+  status: "In Progress"
+
+tracking:
+  childIssues:
+    - key: "AUTH-001-US-001"
+      title: "Implement login endpoint"
+      issueType: "Story"
+    - key: "AUTH-001-US-002"
+      title: "Create user registration flow"
+      issueType: "Story"
+    - key: "AUTH-001-US-003"
+      title: "Add password reset functionality"
+      issueType: "Story"
+```
+
+```yaml
+# User Story File: docs/01-requirements/themes/epics/AUTH-001/stories/AUTH-001-US-001.yml
+metadata:
+  issueId: "story-auth-001-us-001"
+  projectKey: "PROJ"
+  issueKey: "AUTH-001-US-001"
+  issueType: "Story"
+
+basic_info:
+  summary: "Implement login endpoint"
+  epicLink: "User Authentication"        # Links to parent epic name
+  epicKey: "AUTH-001"                    # Links to parent epic key
+
+user_story_format:
+  asA: "registered user"
+  iWantTo: "log in with my credentials"
+  soThat: "I can access my account securely"
+
+acceptance_criteria:
+  criteria:
+    - "User can log in with valid email and password"
+    - "Invalid credentials show error message"
+    - "Session token is generated on successful login"
+  poValidated: true
+```
+
+### Epic Completion Tracking
+
+**Epic Status Calculation:**
+- **Epic Progress** = (Completed Stories / Total Stories) × 100%
+- **Epic Status**:
+  - `To Do`: 0% stories completed
+  - `In Progress`: 1-99% stories completed
+  - `In Review`: 100% stories completed, pending QA validation
+  - `Done`: 100% stories completed AND QA validated
+
+**Epic Metrics:**
+```yaml
+# Auto-calculated from child stories
+metrics:
+  issuesCompleted: 2        # Stories with status "Done"
+  issuesInProgress: 1       # Stories with status "In Progress"
+  issuesTodo: 3             # Stories with status "To Do"
+  totalIssues: 6            # Total child stories
+  completionPercentage: 33  # (2/6) * 100
+```
+
+### Working with Templates
+
+**Creating a New Epic:**
+```bash
+# 1. Copy epic template
+cp .github/templates/epic-tmpl.yml docs/01-requirements/themes/epics/AUTH-001/epic.yml
+
+# 2. Populate required fields:
+#    - metadata.epicKey (e.g., AUTH-001)
+#    - basic_info.name, description, status
+#    - details.priority, risk
+#    - team.assignee
+
+# 3. Create stories folder
+mkdir -p docs/01-requirements/themes/epics/AUTH-001/stories/
+```
+
+**Creating a User Story:**
+```bash
+# 1. Copy user story template
+cp .github/templates/user-story-tmpl.yml \
+   docs/01-requirements/themes/epics/AUTH-001/stories/AUTH-001-US-001.yml
+
+# 2. Populate required fields:
+#    - metadata.issueKey (e.g., AUTH-001-US-001)
+#    - basic_info.epicLink (parent epic name)
+#    - basic_info.epicKey (e.g., AUTH-001)
+#    - user_story_format (asA, iWantTo, soThat)
+#    - acceptance_criteria
+
+# 3. Update parent epic's childIssues list
+```
+
+### Validation Rules
+
+**Epic Validation Checklist:**
+✅ Epic key follows naming convention: `{THEME-PREFIX}-{NUMBER}`  
+✅ All required metadata fields populated  
+✅ At least one child story exists  
+✅ `childIssues` list matches actual story files  
+✅ Status aligns with child story completion percentage
+
+**User Story Validation Checklist:**
+✅ Story key follows naming convention: `{EPIC-KEY}-US-{NUMBER}`  
+✅ `epicLink` and `epicKey` fields correctly reference parent epic  
+✅ Parent epic's `childIssues` includes this story key  
+✅ User story format complete (asA, iWantTo, soThat)  
+✅ At least one acceptance criterion defined  
+✅ BDD scenarios provided (if story is ready for development)
+
+### Cross-Route Epic Management
+
+**Route A (Traditional PDLC):**
+- Epics defined in Stage 3 (Design & Architecture)
+- Epic keys based on functional domains
+- All stories created before implementation begins
+
+**Route B (Functional Extraction):**
+- Epics extracted from Jira/ADO exports
+- Epic keys preserved from source system OR regenerated with theme prefixes
+- Stories organized by theme, then epic
+
+**Route C (Interview-Driven):**
+- Epics derived from stakeholder interviews
+- Epic structure based on identified functional domains
+- Stories created iteratively as requirements emerge
+
+**Route D (Hybrid Assembly):**
+- Epics assembled from multiple sources
+- Epic keys standardized across mixed inputs
+- Story linkage validated across all sources
+
+### Epic Naming Conventions & Best Practices
+
+**Epic Key Format:**
+```
+{PROJECT-KEY}-{THEME-PREFIX}-{NUMBER}
+```
+
+**Examples:**
+- `PROJ-AUTH-001`: First authentication epic in project PROJ
+- `PROJ-PAY-001`: First payment epic in project PROJ
+- `PROJ-CORE-012`: Twelfth core business logic epic
+
+**Alternative Format (without project key):**
+```
+{THEME-PREFIX}-{NUMBER}
+```
+- `AUTH-001`, `PAY-002`, `CORE-012`
+
+**Theme Prefix Standards:**
+
+| Theme/Domain | Prefix | Examples |
+|--------------|--------|----------|
+| Authentication & Authorization | AUTH | AUTH-001, AUTH-002 |
+| User Management | USER | USER-001, USER-002 |
+| Core Business Logic | CORE | CORE-001, CORE-002 |
+| Payment Processing | PAY | PAY-001, PAY-002 |
+| Data Management | DATA | DATA-001, DATA-002 |
+| Analytics & Reporting | ANLY | ANLY-001, ANLY-002 |
+| Integration & APIs | API | API-001, API-002 |
+| Notifications | NOTIF | NOTIF-001, NOTIF-002 |
+| Admin & Configuration | ADMIN | ADMIN-001, ADMIN-002 |
+| Security & Compliance | SEC | SEC-001, SEC-002 |
+
+**User Story Key Format:**
+```
+{EPIC-KEY}-US-{NUMBER}
+```
+
+**Examples:**
+- `AUTH-001-US-001`: First story in AUTH-001 epic
+- `AUTH-001-US-002`: Second story in AUTH-001 epic
+- `PAY-001-US-015`: Fifteenth story in PAY-001 epic
+
+**Best Practices:**
+
+1. **Consistency Across Routes:**
+   - Use same theme prefixes regardless of route (A/B/C/D)
+   - Maintain epic key format across all documentation
+   - Ensure story keys always reference parent epic
+
+2. **Epic Scope Guidelines:**
+   - **Ideal Epic Size**: 5-15 user stories
+   - **Maximum Epic Size**: 25 user stories (consider splitting if larger)
+   - **Minimum Epic Size**: 3 user stories (combine single stories into "Quick Wins" epic)
+
+3. **Epic Completion Definition:**
+   - ALL child stories must reach "Done" status
+   - All acceptance criteria validated
+   - All BDD scenarios passing
+   - QA sign-off received
+   - Epic marked as "Done" only after all stories complete
+
+4. **Version Control:**
+   - Commit epic files before creating child stories
+   - Update epic `childIssues` list when adding new stories
+   - Tag epic completion in git: `epic/{EPIC-KEY}/completed`
+
+5. **Migration from External Systems:**
+   - **Preserve Original Keys**: When migrating from Jira/ADO, preserve original epic keys if possible
+   - **Mapping File**: Create `EPIC-MIGRATION-MAP.md` documenting old → new key mappings
+   - **Cross-Reference**: Include original epic ID in `custom_fields` of epic YAML
+
+**Example Migration Mapping:**
+```markdown
+# EPIC-MIGRATION-MAP.md
+
+| Original System | Original Key | New Epic Key | Theme | Status |
+|-----------------|-------------|--------------|-------|--------|
+| Jira | JIRA-123 | AUTH-001 | Authentication | Migrated |
+| ADO | ADO-456 | PAY-001 | Payment | Migrated |
+| GitHub | GH-789 | CORE-001 | Core Logic | Migrated |
+```
 
 ---
 
@@ -158,16 +423,29 @@
 - Map to industry-standard functional areas
 - Validate with stakeholder interviews
 
-**BA (`ba-theme-categorization`)** → Organize epics/stories by functional themes:
+**BA (`ba-theme-categorization`)** → Organize epics/stories by functional themes using `epic-tmpl.yml`:
 
-| Theme | Epic Count | Story Count | Confidence | Coverage |
-|-------|------------|-------------|------------|----------|
-| User Management | 5 | 23 | High | 85% |
-| Core Business Logic | 12 | 67 | Medium | 60% |
-| Data Management | 8 | 31 | High | 90% |
-| Integration & APIs | 6 | 19 | Low | 40% |
+**Epic Creation per Theme:**
+- Generate epic using `#file:.github/templates/epic-tmpl.yml` for each functional theme
+- Assign unique epic key (format: `{THEME-PREFIX}-{NUMBER}`, e.g., AUTH-001, CORE-001)
+- Document epic metadata:
+  - `epicId`: Unique identifier
+  - `projectKey`: Project identifier
+  - `epicKey`: Auto-generated (e.g., PROJ-AUTH-001)
+  - `name`: Epic title
+  - `description`: Business context and objectives
+  - `status`: To Do | In Progress | In Review | Done
+  - `priority`: Lowest | Low | Medium | High | Highest
+  - `risk`: Low | Medium | High
 
-**Output:** `FUNCTIONAL-THEMES-MATRIX.md` with epic-to-theme mappings
+| Theme | Epic Key | Epic Count | Story Count | Confidence | Coverage |
+|-------|----------|------------|-------------|------------|----------|
+| User Management | AUTH-001 to AUTH-005 | 5 | 23 | High | 85% |
+| Core Business Logic | CORE-001 to CORE-012 | 12 | 67 | Medium | 60% |
+| Data Management | DATA-001 to DATA-008 | 8 | 31 | High | 90% |
+| Integration & APIs | API-001 to API-006 | 6 | 19 | Low | 40% |
+
+**Output:** `FUNCTIONAL-THEMES-MATRIX.md` with epic-to-theme mappings and epic metadata
 
 #### Step B.1.3: Narrative Transformation & Business Context Extraction
 
@@ -203,15 +481,32 @@
 
 **Agents:** PO (requirements synthesis), BA (acceptance criteria), UX (journey mapping where possible)
 
-#### Step B.2.1: Generate Theme-Specific PRDs
+#### Step B.2.1: Generate Theme-Specific PRDs with Epic Grouping
 
 **For each functional theme, PO (`po-theme-prd-generation`):**
 
-**Create:** `/docs/01-requirements/themes/{{theme-name}}.md`
+**Create Epic Group:** Generate epics using `#file:.github/templates/epic-tmpl.yml`
+
+**Epic Generation Steps:**
+1. Create epic YAML file per theme: `/docs/01-requirements/themes/epics/{{epic-key}}.yml`
+2. Populate epic metadata from `epic-tmpl.yml`:
+   - `epicId`, `projectKey`, `epicKey` (e.g., AUTH-001)
+   - `name`: Epic title (e.g., "User Authentication")
+   - `description`: Business context and theme narrative
+   - `status`, `priority`, `risk`, `team` assignments
+   - `childIssues`: List of user story keys (populated after story creation)
+
+**Create Theme PRD:** `/docs/01-requirements/themes/{{theme-name}}.md`
 
 **Structure per theme:**
 ```markdown
 # {{Theme Name}} - Product Requirements
+
+## Epic Overview
+**Epic Key:** {{EPIC-KEY}} (e.g., AUTH-001)  
+**Epic Status:** {{status}}  
+**Priority:** {{priority}}  
+**Risk Level:** {{risk}}
 
 ## Executive Summary
 {{Business narrative synthesized from epics in this theme}}
@@ -223,7 +518,14 @@
 {{Extracted from epic descriptions and acceptance criteria}}
 
 ## User Stories & Acceptance Criteria  
-{{Organized by epic, cleaned and structured}}
+{{Organized by epic, using user-story-tmpl.yml structure}}
+{{Each story includes epicLink and epicKey fields}}
+
+### User Stories for Epic {{EPIC-KEY}}
+- **{{EPIC-KEY}}-US-001**: {{Story Title}}
+  - Epic Link: {{epicLink}}
+  - Epic Key: {{epicKey}}
+  - [Full story in user-story-tmpl.yml format]
 
 ## Success Metrics
 {{KPIs and measurable outcomes for this theme}}
@@ -235,9 +537,19 @@
 {{Technical and business limitations}}
 ```
 
+**User Story Generation:**
+- BA (`ba-user-story-generation`) → Create stories using `#file:.github/templates/user-story-tmpl.yml`:
+  - Generate story YAML files: `/docs/01-requirements/themes/epics/{{epic-key}}/stories/{{story-key}}.yml`
+  - **CRITICAL**: Set `epicLink` and `epicKey` fields to link to parent epic
+  - Populate story metadata: `issueId`, `issueKey` (format: {{EPIC-KEY}}-US-{{NUMBER}})
+  - Add acceptance criteria, BDD scenarios, UI/UX requirements, API contracts
+
 **BA (`ba-acceptance-criteria-extraction`)** → Extract and formalize acceptance criteria from epic descriptions
 
-**Output:** Individual theme PRDs (typically 5-12 themes per client)
+**Output:** 
+- Individual theme PRDs (typically 5-12 themes per client)
+- Epic YAML files with complete metadata
+- User story YAML files with epic linkage
 
 #### Step B.2.2: Cross-Theme Integration Analysis
 
@@ -318,10 +630,18 @@
 
 **Deliverables:**
 - `requirements.md` - Master PRD with functional themes
-- `themes/` folder - Individual theme PRDs  
-- `FUNCTIONAL-THEMES-MATRIX.md` - Epic-to-theme mappings
+- `themes/` folder - Individual theme PRDs with epic grouping
+- `themes/epics/` folder - Epic YAML files (using `epic-tmpl.yml`)
+- `themes/epics/{epic-key}/stories/` folder - User story YAML files (using `user-story-tmpl.yml`)
+- `FUNCTIONAL-THEMES-MATRIX.md` - Epic-to-theme mappings with epic keys
 - `CROSS-THEME-INTEGRATION.md` - Integration dependencies
 - `GAP-ANALYSIS.md` - Identified gaps and interview results
+
+**Epic & Story Linkage:**
+✅ All epics created using `epic-tmpl.yml` with unique keys
+✅ All user stories linked to parent epics via `epicLink` and `epicKey` fields
+✅ Story keys follow naming convention: `{EPIC-KEY}-US-{NUMBER}`
+✅ Epic `childIssues` field populated with story keys
 
 **Quality Gates:**
 ✅ All functional themes documented with business context  
@@ -329,6 +649,7 @@
 ✅ Cross-theme dependencies identified  
 ✅ Stakeholder gaps filled through targeted interviews  
 ✅ Requirements traceable to source epics/stories
+✅ Epic-story hierarchy properly established and validated
 
 **Handoff to Implementation:** Route to Stage 7 (skip stages 2-6) OR continue to missing stages if needed
 
@@ -575,9 +896,17 @@
 **Deliverables:**
 - `requirements.md` - Master PRD from stakeholder synthesis
 - `personas.md` - User personas from interview data
+- `epics/` folder - Epic YAML files (using `#file:.github/templates/epic-tmpl.yml`)
+- `user-stories/` folder - User story YAML files (using `#file:.github/templates/user-story-tmpl.yml`)
 - `STAKEHOLDER-INTERVIEW-REPORTS/` - Individual interview notes
 - `INTERVIEW-SYNTHESIS.md` - Cross-interview analysis
 - `CONFLICT-RESOLUTIONS.md` - Documented requirement conflict decisions
+
+**Epic & Story Organization:**
+✅ Epics organized by interview-derived functional domains
+✅ Each epic includes stakeholder source attribution
+✅ User stories linked to parent epics with `epicLink` and `epicKey`
+✅ Interview evidence mapped to specific stories and acceptance criteria
 
 **Quality Gates:**
 ✅ All key stakeholder tiers interviewed  
@@ -595,12 +924,19 @@
 | Agent | Domain | Subagent Types | Active Stages | Authority |
 |-------|--------|---------------|---------------|----------|
 | **PM** | Project execution, timeline, budget | kickoff, iteration-planning, deployment-coordination, sprint-planning, input-assessment, gap-analysis, stakeholder-mapping | 0, 1, 6, 8, B, C | Timeline, resources, maturity assessment |
-| **PO** | Product definition, prioritization | requirements-analysis, user-stories, feature-acceptance, test-strategies-approval, monitoring-feedback, gather-feedback, analyze-impact, requirements-refinement, business-domain-analysis, theme-prd-generation, stakeholder-interviews | 0, 1-6, 8, B, C | Requirements, stories, acceptance, business context |
-| **BA** | Requirements analysis, BDD | personas, business-case, bdd-scenarios, bdd-execution, source-extraction, narrative-transformation, acceptance-criteria-extraction, interview-synthesis | 2, 5, 7, B, C | Persona accuracy, test completeness, extraction quality |
-| **UX** | UX design, journey mapping | journey-maps, blueprints, design-systems, persona-synthesis | 3, 4, C | UX/UI decisions, accessibility, user experience synthesis |
-| **Architect** | System architecture, tech stack | requirements-review, tech-spec, design, flow-diagrams, deployment, impact-assessment, input-analysis, cross-theme-integration | 0, 1-4, 6, 8, B | Architecture, technology, security, technical assessment |
+| **PO** | Product definition, prioritization, **epic ownership** | requirements-analysis, **epics-definition**, user-stories, **epic-approval**, feature-acceptance, test-strategies-approval, monitoring-feedback, gather-feedback, analyze-impact, requirements-refinement, business-domain-analysis, theme-prd-generation, stakeholder-interviews, **user-story-generation** | 0, 1-6, 8, B, C | Requirements, **epic structure**, stories, acceptance, business context, **epic-story linkage** |
+| **BA** | Requirements analysis, BDD, **story validation** | personas, business-case, **epics-validation**, **stories-validation**, bdd-scenarios, bdd-execution, source-extraction, narrative-transformation, acceptance-criteria-extraction, interview-synthesis, **epic-story-linkage-validation** | 2, 5, 7, B, C | Persona accuracy, test completeness, extraction quality, **epic-story hierarchy validation** |
+| **UX** | UX design, journey mapping, **story enrichment** | journey-maps, blueprints, design-systems, persona-synthesis, **story-enrichment** (UI/UX requirements) | 3, 4, C | UX/UI decisions, accessibility, user experience synthesis, **story design requirements** |
+| **Architect** | System architecture, tech stack, **story technical review** | requirements-review, tech-spec, design, flow-diagrams, deployment, impact-assessment, input-analysis, cross-theme-integration, **story-technical-review** (API contracts, DB schema) | 0, 1-4, 6, 8, B | Architecture, technology, security, technical assessment, **story technical constraints** |
 | **Dev-Lead** | Technical execution, TDD orchestration | tech-spec-review, bdd-integration, implementation-planning, code-review | 4, 5, 7 | Implementation plans, code quality |
 | **TDD Orchestrator** | Layer-by-layer TDD execution | layer-execution, tdd-cycle-coordination | 7 | Layer completion, BDD test validation |
+
+**Epic & Story Management Responsibilities:**
+- **PO**: Owns epic creation, definition, approval, and user story generation using templates
+- **BA**: Validates epic scope, story linkage, acceptance criteria completeness, and epic-story hierarchy
+- **UX**: Enriches stories with UI/UX requirements, design tokens, and accessibility standards
+- **Architect**: Adds technical constraints to stories (API contracts, DB schema, integration points)
+- **All Agents**: Must ensure epic-story linkage integrity (`epicLink` and `epicKey` fields)
 
 ---
 
@@ -664,14 +1000,53 @@
 
 **Journey Maps**: UX (`ux-journey-maps`) → journey-maps.md | PO validates
 
-**Epics & User Stories** (same document):
-- **Concept**: Epics = organizational groupings, User-Stories = work units
-- PO (`po-epics-definition`) → Define epic groupings
-- BA (`ba-epics-validation`) → Validate scope
-- PO (`po-user-stories`) → user-stories.md with:
-  - Section 1: Epics (objectives, completion = all child stories done)
-  - Section 2: Stories grouped by epic (acceptance criteria, BDD outline)
-- BA (`ba-stories-validation`) → Validate + attach Gherkin scenarios per story
+**Epics & User Stories** (structured with templates):
+- **Concept**: Epics = organizational groupings, User-Stories = work units (parent-child relationship)
+- **Templates Used**: 
+  - `#file:.github/templates/epic-tmpl.yml` - Jira-compatible epic schema
+  - `#file:.github/templates/user-story-tmpl.yml` - Jira-compatible story schema with epic linkage
+
+**Epic Creation Process**:
+1. PO (`po-epics-definition`) → Define epic groupings using `epic-tmpl.yml`:
+   - Identify functional domains or feature themes (e.g., AUTH-001: Authentication, PAY-001: Payment Processing)
+   - Assign unique epic keys (format: `{PROJECT-KEY}-{EPIC-NUMBER}`, e.g., PROJ-001)
+   - Document epic objectives, success criteria, and team assignments
+   - Set epic status, priority, and risk level
+   - Define story point estimates and timeline
+2. BA (`ba-epics-validation`) → Validate epic scope, dependencies, and completeness
+3. PO (`po-epic-approval`) → Review and approve each epic before story creation
+
+**User Story Creation Process**:
+1. PO (`po-user-stories`) → Create user-stories.md with epic grouping using `user-story-tmpl.yml`:
+   - **Epic Linkage**: Each story MUST include:
+     - `epicLink` field pointing to parent epic name
+     - `epicKey` field with parent epic key (e.g., PROJ-001)
+     - Story key format: `{EPIC-KEY}-{STORY-NUMBER}` (e.g., PROJ-001-US-001)
+   - **Story Structure** per epic group:
+     - User story format: "As a [user type], I want to [action], so that [benefit]"
+     - Acceptance criteria (PO-validated requirements)
+     - BDD scenario outlines (Given-When-Then format)
+     - UI/UX requirements (form fields, components, design tokens)
+     - API contracts (endpoints, schemas, status codes)
+     - Implementation notes and layer hints
+   - **Document Organization**:
+     - Section 1: Epic Inventory (all epics with metadata)
+     - Section 2: Stories Grouped by Epic (hierarchical structure)
+     - Epic completion = all child stories done
+2. BA (`ba-stories-validation`) → Validate stories:
+   - Verify epic linkage correctness
+   - Attach detailed Gherkin scenarios per story
+   - Validate acceptance criteria completeness
+   - Check Definition of Ready (DOR) criteria
+3. UX (`ux-story-enrichment`) → Enrich stories with design requirements:
+   - UI components and design tokens
+   - Responsive requirements and accessibility standards
+   - Figma/design file links
+4. Architect (`architect-story-technical-review`) → Add technical constraints:
+   - API contract specifications
+   - Database schema changes
+   - Integration points and dependencies
+   - Security and performance requirements
 
 **Blueprints**: UX (`ux-blueprints`) → blueprints.md | PO approves
 

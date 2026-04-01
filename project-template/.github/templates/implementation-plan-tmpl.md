@@ -1,42 +1,33 @@
 # Implementation Plan: {USER-STORY-REF}
 
-**User Story**: {USER-STORY-TITLE}  
+**Story ID**: {USER-STORY-REF}  
+**Version**: 1.0  
+**Status**: Draft  
+**Last Updated**: {YYYY-MM-DD}  
 **Epic**: {EPIC-NAME}  
 **Priority**: {High/Medium/Low}  
 **Estimated Effort**: {X} story points
 
 ---
 
-## Related Documents
-
-| Document | Type | Purpose |
-|----------|------|---------|
-| [User Story](../../../prd/user-stories.md) | PRD | Full acceptance criteria and acceptance tests |
-| [BDD Scenarios](./bdd-scenarios/) | Tests | Executable specifications driving implementation |
-| [Handoff](./handoff.md) | Control | Current cycle state and context |
-| [TDD Execution](./tdd-execution.md) | Audit | Complete implementation audit trail |
-| [Tech Spec](../../../prd/tech-spec.md) | PRD | Technical design and architecture |
-| [Test Strategy](../../../prd/test-strategies.md) | PRD | Testing approach and coverage goals |
-| [SYSTEM-STATUS-DEFINITIONS](../SYSTEM-STATUS-DEFINITIONS.md) | Reference | Status terminology standards |
-
----
-
 ## Story Overview
 
 ### Description
-{User story description from /docs/01-requirements/user-stories.md}
+{User story description from description.md}
 
 ### Business Value
 {Why this story matters to users/business}
 
 ### Acceptance Criteria
-{Copy from user story - what must be true for this story to be accepted}
+[ ] {Copy checkbox acceptance criteria from description.md}
+[ ] {Each acceptance criterion becomes a checkbox}
+[ ] {Mark as [x] when all associated layer tasks complete}
 
 ---
 
 ## BDD Scenarios
 
-**Location**: `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{USER-STORY-REF}/bdd-scenarios/`
+**Location**: `./bdd-scenarios/`
 
 ### Failing BDD Tests Summary
 {List which BDD scenarios are failing and which assertions need implementation}
@@ -48,6 +39,191 @@ Feature: Subscription Tier Upgrade
     Given a free tier user with active subscription
     When the user upgrades to premium tier with valid payment
     Then both User.tier and Subscription.tier are set to "premium"  ❌ FAILING
+    And the user receives premium storage limit (3GB)  ❌ FAILING
+    And payment is processed successfully  ❌ FAILING
+```
+
+---
+
+## Layer Architecture Implementation
+
+### Layer 1: Database & Domain Model
+**Purpose**: Data persistence and core domain entities
+
+#### Database Tasks
+- [ ] Create/modify database schema for {entity}
+- [ ] Add migration files: `migrations/{number}_{description}.sql`
+- [ ] Create rollback migration: `migrations/{number}_{description}_down.sql`
+- [ ] Add database indexes for performance
+- [ ] Validate foreign key constraints and relationships
+
+#### Domain Model Tasks  
+- [ ] Create domain model class: `src/models/{Entity}.{ext}`
+- [ ] Add validation rules and constraints
+- [ ] Implement domain logic methods
+- [ ] Add type safety and error handling
+- [ ] Test model validation rules
+
+#### Files to Create/Modify
+- [ ] `src/models/{Entity}.{ext}` - Domain model with validation
+- [ ] `migrations/{number}_{description}.sql` - Up migration
+- [ ] `migrations/{number}_{description}_down.sql` - Down migration
+- [ ] `tests/models/{Entity}.test.{ext}` - Model validation tests
+
+#### BDD Validation  
+- [ ] Domain model exists with required fields
+- [ ] Validation rules prevent invalid data
+- [ ] Database constraints enforced correctly
+
+---
+
+### Layer 2: Backend Services & API
+**Purpose**: Business logic, API endpoints, and service integrations
+
+#### Service Layer Tasks
+- [ ] Create service class: `src/services/{Entity}Service.{ext}`
+- [ ] Implement business logic methods
+- [ ] Add error handling and validation
+- [ ] Integrate with external services (if applicable)
+- [ ] Add logging and monitoring points
+
+#### API Layer Tasks
+- [ ] Create API controller: `src/controllers/{Entity}Controller.{ext}`
+- [ ] Define API endpoints with proper HTTP methods
+- [ ] Add request/response validation
+- [ ] Implement authentication/authorization
+- [ ] Add API documentation (OpenAPI/Swagger)
+
+#### Files to Create/Modify
+- [ ] `src/services/{Entity}Service.{ext}` - Business logic service
+- [ ] `src/controllers/{Entity}Controller.{ext}` - API controller
+- [ ] `src/routes/{entity}.{ext}` - Route definitions
+- [ ] `api/openapi.yaml` - API specification update
+- [ ] `tests/services/{Entity}Service.test.{ext}` - Service tests
+- [ ] `tests/controllers/{Entity}Controller.test.{ext}` - API tests
+
+#### BDD Validation
+- [ ] API endpoints return expected responses
+- [ ] Business logic produces correct results
+- [ ] Error cases handled gracefully
+- [ ] External integrations work correctly
+
+---
+
+### Layer 3: Configuration & Integration  
+**Purpose**: Environment configuration, middleware, and system integration
+
+#### Configuration Tasks
+- [ ] Add environment variables to `.env.example`
+- [ ] Update configuration files: `config/{environment}.json`
+- [ ] Add validation for required configuration
+- [ ] Document configuration options
+- [ ] Set up environment-specific settings
+
+#### Integration Tasks  
+- [ ] Configure middleware for new endpoints
+- [ ] Update authentication/authorization rules
+- [ ] Add monitoring and health checks
+- [ ] Configure logging for new components
+- [ ] Update deployment configuration
+
+#### Files to Create/Modify
+- [ ] `config/{environment}.{ext}` - Environment configuration
+- [ ] `src/middleware/{feature}Middleware.{ext}` - Custom middleware
+- [ ] `src/utils/{feature}Utils.{ext}` - Helper utilities
+- [ ] `docker/Dockerfile` - Container configuration (if applicable)
+- [ ] `docker-compose.yml` - Service orchestration (if applicable)
+
+#### BDD Validation
+- [ ] Configuration loads correctly in all environments
+- [ ] Middleware processes requests properly
+- [ ] Integration points communicate successfully
+- [ ] Monitoring and logging capture events
+
+---
+
+### Layer 4: Frontend & Components
+**Purpose**: User interface, components, and client-side functionality
+
+#### UI Component Tasks
+- [ ] Create UI components: `src/components/{Feature}Component.{ext}`
+- [ ] Implement user interaction handlers
+- [ ] Add form validation and error display
+- [ ] Integrate with backend API endpoints
+- [ ] Add loading states and error boundaries
+
+#### State Management Tasks
+- [ ] Define state models and actions
+- [ ] Create state management logic (Redux/Zustand/etc.)
+- [ ] Add API integration and caching
+- [ ] Implement optimistic updates
+- [ ] Add state persistence (if required)
+
+#### Files to Create/Modify
+- [ ] `src/components/{Feature}/{Component}.{ext}` - UI components
+- [ ] `src/hooks/use{Feature}.{ext}` - Custom hooks
+- [ ] `src/services/api/{entity}Api.{ext}` - API client
+- [ ] `src/types/{feature}Types.{ext}` - TypeScript types
+- [ ] `src/pages/{FeaturePage}.{ext}` - Page components
+- [ ] `tests/components/{Component}.test.{ext}` - Component tests
+
+#### BDD Validation
+- [ ] User interfaces render correctly
+- [ ] User interactions work as expected
+- [ ] API calls succeed and handle errors
+- [ ] Loading states provide good user experience
+- [ ] Form validation prevents invalid submissions
+
+---
+
+## BDD Mapping Matrix
+
+| BDD Scenario | Layer | Checkpoint | Files Affected | Test Assertion |
+|--------------|-------|------------|----------------|----------------|
+| {Scenario name} | Layer 1 | [ ] {Database task} | `{file list}` | {What gets verified} |
+| {Scenario name} | Layer 2 | [ ] {API endpoint} | `{file list}` | {What gets verified} |
+| {Scenario name} | Layer 3 | [ ] {Configuration} | `{file list}` | {What gets verified} |
+| {Scenario name} | Layer 4 | [ ] {UI component} | `{file list}` | {What gets verified} |
+
+**Example**:
+| BDD Scenario | Layer | Checkpoint | Files Affected | Test Assertion |
+|--------------|-------|------------|----------------|----------------|
+| User upgrades to premium | Layer 1 | [x] User.tier field created | `models/User.ts`, `migrations/003_add_tier.sql` | User.tier accepts "premium" value |
+| User upgrades to premium | Layer 2 | [ ] Upgrade API endpoint | `services/SubscriptionService.ts`, `controllers/SubscriptionController.ts` | POST /api/users/:id/upgrade returns 200 |
+| User upgrades to premium | Layer 3 | [ ] Payment integration | `config/stripe.json`, `middleware/paymentAuth.ts` | Payment processes successfully |
+| User upgrades to premium | Layer 4 | [ ] Upgrade button | `components/SubscriptionUpgrade.tsx` | Button triggers upgrade flow |
+
+---
+
+## Definition of Done
+
+### Technical Requirements
+- [ ] All layer checkboxes marked as [x] completed
+- [ ] All BDD scenarios pass (green)
+- [ ] Unit test coverage ≥ 80% for new code
+- [ ] Integration tests pass in testing environment
+- [ ] Code review completed and approved
+- [ ] API documentation updated (if applicable)
+
+### Quality Gates
+- [ ] No critical security vulnerabilities
+- [ ] Performance requirements met
+- [ ] Accessibility standards followed (if UI changes)
+- [ ] Cross-browser compatibility verified (if UI changes)
+- [ ] Mobile responsiveness tested (if UI changes)
+
+### Documentation & Handoff
+- [ ] Implementation plan checkboxes all marked [x]
+- [ ] BDD mapping matrix validated
+- [ ] Any breaking changes documented
+- [ ] Deployment notes created (if needed)
+- [ ] Knowledge transfer completed
+
+---
+
+**Framework**: Gen‑e2 Compliance v2.0.0  
+**Template**: Implementation Plan with Layer Checkboxes  
+**Usage**: TDD agents execute against these checkboxes as SSOT
     And the user receives premium storage limit (3GB)  ❌ FAILING
     And payment is processed successfully  ❌ FAILING
 ```
