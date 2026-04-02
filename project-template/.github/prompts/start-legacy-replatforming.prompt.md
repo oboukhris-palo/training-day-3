@@ -51,14 +51,11 @@ Create comprehensive directory structure including legacy analysis:
 │   ├── setup.sh               # Dependency installation
 │   ├── init_db.sh             # Database initialization
 │   └── migrate.sh             # Data migration scripts
-├── apps/                       # Modern frontend applications
-│   ├── mobile/                # Mobile application
-│   └── web/                   # Web application
-├── backend/                    # Modern backend services
-│   ├── api/                   # API implementation
-│   ├── services/              # Business logic services
-│   ├── data/                  # Data access layer
-│   └── docs/                  # Backend documentation
+├── src/                        # Source code generation root
+│   ├── backend/               # Modern backend application components
+│   │   └── src/              # Backend source code (API, services, data)
+│   └── frontend/              # Modern frontend application components
+│       └── src/              # Frontend source code (web, mobile)
 ├── docs/                       # Comprehensive project documentation
 │   ├── legacy-app/            # Legacy system analysis
 │   ├── features/              # Feature documentation (current and new)
@@ -173,14 +170,11 @@ Create detailed migration planning:
 │   ├── manage.sh -- Manages servers and services (start,stop,status)
 │   ├── setup.sh -- Installs project dependencies
 │   ├── init_db.sh -- Initializes the database (if required)
-├── apps/ -- Contains the frontend application
-│   ├── mobile/ -- Contains the mobile application
-│   └── web/ -- Contains the web application
-├── backend/ -- Contains the backend application
-│   ├── api/ -- Contains the API code
-│   ├── services/ -- Contains the services code
-│   ├── data/ -- Contains the data access code (e.g., database, SQL, ORM, etc.)
-│   └── docs/ -- Contains backend documentation
+├── src/ -- Contains source code generation root
+│   ├── backend/ -- Contains the backend application components
+│   │   └── src/ -- Contains backend source code (API, services, data, ORM)
+│   └── frontend/ -- Contains the frontend application components
+│       └── src/ -- Contains frontend source code (web, mobile)
 ├── docs/ -- Contains project documentation
 │   ├── features/ -- Contains documentation for project features (one file per feature)
 │   ├── project-overview/ -- Contains an overview of the project

@@ -132,9 +132,85 @@ project-root/
 │   ├── assessment/                # Phase 0 assessment outputs (if applicable)
 │   └── [other documentation]/     # Architecture, deployment, etc.
 │
+├── src/                          # Source code generation root (see Source Code Organization below)
+│   └── [modules/components]       # Backend/Frontend or Module-based organization
 ├── README.md                      # Project overview and setup
 └── TODO.md                        # Project task breakdown (by domain)
 ```
+
+## Source Code Organization
+
+The `/src` folder serves as the **code generation root** with two organizational patterns based on project architecture:
+
+### Pattern 1: Backend/Frontend Applications
+
+For projects with distinct backend and frontend components:
+
+```
+src/
+├── backend/               # Server-side application components  
+│   └── src/              # Backend source code
+│       ├── controllers/  # API controllers and route handlers
+│       ├── services/     # Business logic layer
+│       ├── models/       # Data models and DTOs
+│       ├── repositories/ # Data access layer
+│       ├── middleware/   # Authentication, validation, logging
+│       ├── config/       # Configuration and settings
+│       └── utils/        # Shared utilities and helpers
+│
+└── frontend/              # Client-side application components
+    └── src/              # Frontend source code  
+        ├── components/   # Reusable UI components
+        ├── pages/        # Route-based page components
+        ├── hooks/        # Custom React hooks (React/Next.js)
+        ├── services/     # API clients and business logic
+        ├── stores/       # State management (Zustand, Redux)
+        ├── utils/        # Frontend utilities and helpers
+        ├── types/        # TypeScript type definitions
+        └── styles/       # Global styles and CSS modules
+```
+
+### Pattern 2: Module-Based Applications  
+
+For projects with multiple functional modules or microservices:
+
+```
+src/
+├── module1/               # First functional module (e.g., user-management)
+│   └── src/              # Module 1 source code
+│       ├── controllers/  # Module-specific API controllers
+│       ├── services/     # Module business logic
+│       ├── models/       # Module data models
+│       ├── repositories/ # Module data access
+│       ├── tests/        # Module-specific tests
+│       └── config/       # Module configuration
+│
+├── module2/               # Second functional module (e.g., payment-processing)
+│   └── src/              # Module 2 source code  
+│       ├── controllers/  # Module-specific API controllers
+│       ├── services/     # Module business logic
+│       ├── models/       # Module data models
+│       ├── repositories/ # Module data access
+│       ├── tests/        # Module-specific tests
+│       └── config/       # Module configuration
+│
+└── shared/                # Shared components across modules
+    └── src/              # Shared source code
+        ├── utils/        # Common utilities
+        ├── types/        # Shared TypeScript types  
+        ├── middleware/   # Shared middleware
+        └── config/       # Global configuration
+```
+
+### Code Generation Guidelines
+
+The `/src` folder structure follows these principles:
+
+- **Single source root**: All generated code resides under `/src` for consistency
+- **Nested `/src` pattern**: Each major component (backend/frontend or module) has its own `/src` subfolder
+- **Clear separation**: Backend, frontend, or modules are isolated with their own dependencies and configurations
+- **Shared code**: Common utilities and types are placed in appropriate shared locations
+- **Test co-location**: Tests are placed within each component's structure for maintainability
 
 ---
 
@@ -230,12 +306,11 @@ project-root/
 
 - **`README.md`**: Project overview, goals, setup instructions, and quick start guide
 - **`scripts/`**: Automation scripts for project management, setup, and database initialization
-- **`apps/`**: frontend applications (web, mobile)
-- **`backend/`**: Server-side application code including API, services, and data access layers
+- **`src/`**: **Code generation root** - All application source code organized by backend/frontend or modules
 - **`docs/`**: Comprehensive project documentation
 - **`infra/`**: Infrastructure as Code (Terraform, CloudFormation, etc.)
 - **`DevOps/`**: CI/CD pipeline configurations and automation
-- **`services/`**: Serverless functions (AWS Lambda, Azure Functions, etc.)
+- **`services/`**: External services configuration and serverless functions (if applicable)
 
 ### Brownfield-Specific Directories
 

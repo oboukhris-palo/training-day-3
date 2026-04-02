@@ -47,14 +47,11 @@ Create complete directory architecture based on requirements:
 │   ├── manage.sh              # Service management (start/stop/status)
 │   ├── setup.sh               # Dependency installation
 │   └── init_db.sh             # Database initialization
-├── apps/                       # Frontend applications
-│   ├── mobile/                # Mobile application
-│   └── web/                   # Web application
-├── backend/                    # Backend services
-│   ├── api/                   # API implementation
-│   ├── services/              # Business logic services
-│   ├── data/                  # Data access layer
-│   └── docs/                  # Backend documentation
+├── src/                        # Source code generation root
+│   ├── backend/               # Backend application components
+│   │   └── src/              # Backend source code (API, services, data)
+│   └── frontend/              # Frontend application components  
+│       └── src/              # Frontend source code (web, mobile)
 ├── docs/                       # Project documentation
 │   ├── features/              # Feature specifications
 │   ├── project-overview/      # Project context and goals
@@ -80,7 +77,7 @@ Create complete directory architecture based on requirements:
 - **docs/features/**: Individual feature documentation (one file per feature)
 
 ### 3. Technical Specifications
-- **API Documentation**: `backend/docs/apidoc.yaml` (OpenAPI/Swagger specification)
+- **API Documentation**: `src/backend/src/docs/apidoc.yaml` (OpenAPI/Swagger specification)
 - **Infrastructure Architecture**: PlantUML diagrams in `infra/docs/`
 - **Database Schema**: Data model documentation and migration scripts
 - **Security Documentation**: Authentication, authorization, and security best practices

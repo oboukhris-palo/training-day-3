@@ -178,11 +178,11 @@ docs/
 - Store infrastructure diagrams in infra/docs/diagrams/
 
 ### Application Documentation
-- Location: apps/docs/index.md
+- Location: src/docs/index.md (if application-specific) or root docs/
 - Include development guidelines
 - Define testing requirements
 - Maintain Definition of Done
-- Store application diagrams in apps/docs/diagrams/
+- Store application diagrams in docs/architecture/diagrams/
 
 ### Services Documentation
 - Location: services/docs/index.md
