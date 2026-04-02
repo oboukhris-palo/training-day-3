@@ -11,7 +11,7 @@
 
 **Critical Understanding**: 
 - **This entire `.github/` folder is a reusable framework** designed to be copied into ANY third-party project
-- **User-story identifiers** (AUTH-003, US-001, US-xxx, etc.) are **EXAMPLE IDENTIFIERS ONLY**—they represent hypothetical stories in your future projects
+- **User-story identifiers** (US-XXX, US-001, US-xxx, etc.) are **EXAMPLE IDENTIFIERS ONLY**—they represent hypothetical stories in your future projects
 - **This framework is NOT tied to any specific project**—it's a meta-framework for orchestrating AI agents to:
   - 🔄 **Retro-document brownfield projects** (reconstruct missing specs, architecture, decisions)
   - 🗣️ **Facilitate stakeholder meetings** (conduct interviews, gather requirements, surface tradeoffs)
@@ -154,6 +154,22 @@ project-root/
 │   ├── validation/                # Workflow enforcement system
 │   └── copilot-instructions.md    # Master system guide
 │
+├── logs/                          # Agent action logs (all phases) ⭐ NEW
+│   ├── 00-assessment/             # Assessment phase logs
+│   ├── 01-requirements/           # Requirements phase logs
+│   ├── 02-architecture/           # Architecture phase logs
+│   ├── 03-testing/                # Testing phase logs
+│   ├── 04-planning/               # Planning phase logs
+│   ├── 05-implementation/         # Implementation phase logs
+│   │   └── epics/
+│   │       └── <EPIC-REF>/
+│   │           └── user-stories/
+│   │               └── <US-REF>/
+│   │                   ├── agent-dev-tdd-red-YYYYMMDD.md
+│   │                   ├── agent-dev-tdd-green-YYYYMMDD.md
+│   │                   └── agent-dev-tdd-refactor-YYYYMMDD.md
+│   └── agent-{name}-YYYYMMDD.md   # Cross-phase logs (root level)
+│
 ├── docs/
 │   ├── 01-requirements/           # Phase 1-2: Requirements & personas (IMMUTABLE)
 │   │   ├── requirements.md
@@ -175,33 +191,22 @@ project-root/
 │   │
 │   ├── 05-implementation/         # Phase 8: Implementation status tracking (MUTABLE)
 │   │   ├── user-stories.md        # ⭐ SSOT: Overall progress tracking
-│   │   ├── epics/
-│   │   │   └── <EPIC-REF>/
-│   │   │       └── user-stories/
-│   │   │           └── <US-REF>/  # Per-story implementation folder
-│   │   │               ├── description.md                          # Story definition (copied from PRD)
-│   │   │               ├── implementation-plan.md               # Frozen after approval
-│   │   │               ├── implementation-plan-v{N}.md          # IMMUTABLE snapshots (historical)
-│   │   │               ├── plan-approval.yaml                   # Human validation gate ⭐ NEW
-│   │   │               ├── bdd-scenarios/                       # BDD feature files
-│   │   │               ├── tdd-execution.md                     # APPEND-ONLY cycle summary
-│   │   │               ├── logs/                                # Per-story agent action logs ⭐ NEW
-│   │   │               │   ├── agent-dev-tdd-red-YYYYMMDD.md
-│   │   │               │   ├── agent-dev-tdd-green-YYYYMMDD.md
-│   │   │               │   └── agent-dev-tdd-refactor-YYYYMMDD.md
-│   │   │               └── tdd-execution/                       # Per-cycle handoff artifacts
-│   │   │                   ├── 001/
-│   │   │                   │   ├── 001-HO-RED.json
-│   │   │                   │   ├── 001-HO-GREEN.json
-│   │   │                   │   └── 001-HO-REFACTOR.md
-│   │   │                   └── 002/
-│   │   │                       ├── 002-HO-RED.json
-│   │   │                       ├── 002-HO-GREEN.json
-│   │   │                       └── 002-HO-REFACTOR.md
-│   │   └── logs/                  # Root-level agent action logs ⭐ NEW
-│   │       ├── agent-orchestrator-YYYYMMDD.md
-│   │       ├── agent-dev-lead-YYYYMMDD.md
-│   │       └── agent-{name}-YYYYMMDD.md
+│   │   └── epics/
+│   │       └── <EPIC-REF>/
+│   │           └── user-stories/
+│   │               └── <US-REF>/  # Per-story implementation folder
+│   │                   ├── description.md                    # Story definition
+│   │                   ├── implementation-plan.md            # Frozen after approval
+│   │                   ├── implementation-plan-v{N}.md       # IMMUTABLE snapshots
+│   │                   ├── plan-approval.yaml                # Human validation gate ⭐
+│   │                   ├── bdd-scenarios/                    # BDD feature files
+│   │                   ├── tdd-execution.md                  # APPEND-ONLY cycle summary
+│   │                   └── tdd-execution/                    # Per-cycle handoff artifacts
+│   │                       ├── 001/
+│   │                       │   ├── 001-HO-RED.json
+│   │                       │   ├── 001-HO-GREEN.json
+│   │                       │   └── 001-HO-REFACTOR.md
+│   │                       └── 002/
 │   │
 │   ├── assessment/                # Phase 0: Assessment outputs
 │   │   ├── PREREQUISITES-REQUEST.yml
@@ -216,12 +221,21 @@ project-root/
 └── api/openapi.yaml              # API contracts (OpenAPI specification)
 ```
 
-### Path Migration (Framework 2.0.0)
+### Path Reference (Framework 2.0.0)
 
-If you encounter legacy paths in older documentation:
-- **Old**: `/docs/prd/` → **New**: `/docs/01-requirements/`
-- **Old**: `/docs/user-stories/` → **New**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/`
-- **New path always includes epic container**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/`
+**Documentation paths** (immutable PRD phases):
+- Requirements: `/docs/01-requirements/`
+- Architecture: `/docs/02-architecture/`
+- Testing: `/docs/03-testing/`
+- Planning: `/docs/04-planning/`
+
+**Implementation paths** (mutable tracking):
+- User stories: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/`
+
+**Agent Logs** (action tracing):
+- Phase-specific: `/logs/{phase}/agent-{name}-YYYYMMDD.md`
+- Story-specific: `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-{name}-YYYYMMDD.md`
+- Root-level: `/logs/agent-{name}-YYYYMMDD.md`
 
 ---
 

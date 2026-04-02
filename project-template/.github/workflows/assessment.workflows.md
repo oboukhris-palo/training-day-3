@@ -221,7 +221,7 @@ Based on available inputs, conduct quick assessment:
 - Security vulnerabilities
 - Scalability constraints
 
-**Output:** `BASELINE-ASSESSMENT.md` (preliminary findings with low confidence ratings)
+**Output:** `baseline-assessment.md` (preliminary findings with low confidence ratings)
 
 ---
 
@@ -272,7 +272,7 @@ Compare available inputs against ideal assessment requirements:
 
 ### 2.2 Generate Prerequisites Report
 
-**Create:** `/docs/assessment/PREREQUISITES-REQUEST.yml`
+**Create:** `/docs/assessment/prerequisites-request.yml`
 
 **Using:** `prerequisites-tmpl.yml`
 
@@ -308,9 +308,9 @@ Compare available inputs against ideal assessment requirements:
 - Project sponsor
 
 **Attachments:**
-- `PREREQUISITES-REQUEST.yml`
-- `PREREQUISITES-REQUEST.md` (human-readable export)
-- `BASELINE-ASSESSMENT.md` (preliminary findings)
+- `prerequisites-request.yml`
+- `prerequisites-request.md` (human-readable export)
+- `baseline-assessment.md` (preliminary findings)
 
 **Follow-up Actions:**
 - Schedule access provisioning check-in (weekly)
@@ -328,7 +328,7 @@ Compare available inputs against ideal assessment requirements:
 
 ### 3.1 Prerequisites Tracking
 
-**Update:** `/docs/assessment/PREREQUISITES-REQUEST.yml` (tracking section)
+**Update:** `/docs/assessment/prerequisites-request.yml` (tracking section)
 
 **Weekly Check-ins:**
 - Review prerequisites status (REQUESTED → GRANTED)
@@ -653,7 +653,7 @@ Evaluate client maturity across **8 core dimensions**:
 
 ### 4.10 Consolidate Multi-Dimensional Scores
 
-**Create:** `/docs/assessment/MULTI-DIMENSIONAL-ASSESSMENT.md`
+**Create:** `/docs/assessment/multi-dimensional-assessment.md`
 
 **Assessment Summary Table:**
 
@@ -746,7 +746,7 @@ Evaluate client maturity across **8 core dimensions**:
 
 ### 6.1 Generate AI Readiness Report
 
-**Create:** `/docs/assessment/AI-READINESS-REPORT.md`
+**Create:** `/docs/assessment/ai-readiness-report.md`
 
 **Using:** `recommendation-plan-tmpl.md` structure
 
@@ -924,10 +924,10 @@ Evaluate client maturity across **8 core dimensions**:
 #### 1. Assessment Summary
 ```
 /docs/assessment/HANDOFF-PACKAGE/
-├── AI-READINESS-REPORT.md          # Full assessment report
+├── ai-readiness-report.md          # Full assessment report
 ├── EXECUTIVE-SUMMARY.md            # 2-page executive brief
 ├── PREREQUISITES-FULFILLMENT.yml   # Final access status
-└── MULTI-DIMENSIONAL-ASSESSMENT.md # 8-dimension scores
+└── multi-dimensional-assessment.md # 8-dimension scores
 ```
 
 #### 2. Documentation Foundation
@@ -1020,10 +1020,10 @@ Evaluate client maturity across **8 core dimensions**:
 
 | Output | Template | Location | Purpose |
 |--------|----------|----------|---------|
-| **Prerequisites Request** | `prerequisites-tmpl.yml` | `/docs/assessment/PREREQUISITES-REQUEST.yml` | Formal access request to client |
-| **Baseline Assessment** | Custom | `/docs/assessment/BASELINE-ASSESSMENT.md` | Initial findings from available inputs |
-| **Multi-Dimensional Assessment** | Custom | `/docs/assessment/MULTI-DIMENSIONAL-ASSESSMENT.md` | 8-dimension maturity scores |
-| **AI Readiness Report** | `recommendation-plan-tmpl.md` | `/docs/assessment/AI-READINESS-REPORT.md` | Comprehensive transformation strategy |
+| **Prerequisites Request** | `prerequisites-tmpl.yml` | `/docs/assessment/prerequisites-request.yml` | Formal access request to client |
+| **Baseline Assessment** | Custom | `/docs/assessment/baseline-assessment.md` | Initial findings from available inputs |
+| **Multi-Dimensional Assessment** | Custom | `/docs/assessment/multi-dimensional-assessment.md` | 8-dimension maturity scores |
+| **AI Readiness Report** | `recommendation-plan-tmpl.md` | `/docs/assessment/ai-readiness-report.md` | Comprehensive transformation strategy |
 | **Handoff Package** | Custom | `/docs/assessment/HANDOFF-PACKAGE/` | Complete context for documentation phase |
 | **Stakeholder Validation** | Custom | `/docs/assessment/interviews/` | Validation notes and workshop summaries |
 

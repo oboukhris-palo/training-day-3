@@ -284,7 +284,7 @@ status: "draft"
 
 jira:
   project_key: "AUTH"
-  issue_key: "AUTH-003"
+  issue_key: "US-XXX"
   issue_type: "Story"
 
 project_name: "Merchant Platform"

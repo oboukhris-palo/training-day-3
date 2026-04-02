@@ -496,7 +496,7 @@ describe('SubscriptionService', () => {
 
 ```typescript
 describe('Feature: Subscription Tier Upgrade', () => {
-  // BDD MAPPING: AUTH-003 - User can upgrade subscription tier
+  // BDD MAPPING: US-XXX - User can upgrade subscription tier
   // Test Strategy: Unit tests for business logic, integration for DB sync
   // Edge Cases: Invalid tier, payment failure, concurrent upgrades
   // Mocks: PaymentGateway (unit), Real DB (integration)

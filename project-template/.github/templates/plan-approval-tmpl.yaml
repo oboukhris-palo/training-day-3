@@ -5,7 +5,7 @@
 # Status: approved | changes-requested | revoked
 ---
 
-story: <US-REF>                      # Example: US-001, AUTH-003
+story: <US-REF>                      # Example: US-001, US-XXX
 plan_version: v1                     # Example: v1, v2, v3 (matches implementation-plan-vX.md)
 
 scope: 

@@ -35,7 +35,7 @@ cp -r project-template/.github your-project/.github
 
 | Example (Framework) | Your Project | Files to Update |
 |-------------------|-------------|-----------------|
-| `AUTH-003` | `YOUR-PREFIX-###` | docs/prd/user-stories.md |
+| `US-XXX` | `YOUR-PREFIX-###` | docs/prd/user-stories.md |
 | `US-001` | `YOUR-PREFIX-###` | All docs/ references |
 | `features/auth/` | `features/your-domain/` | Feature file paths |
 | `/api/auth/register` | `/api/your-endpoint/` | API specs, implementation |
@@ -43,7 +43,7 @@ cp -r project-template/.github your-project/.github
 
 **Example: Payment Processor Project**
 ```
-AUTH-003 → PAYMENT-001, PAYMENT-002, BILLING-003
+US-XXX → PAYMENT-001, PAYMENT-002, BILLING-003
 features/auth/ → features/payment/, features/billing/
 POST /api/auth/register → POST /api/payments/subscribe
 UserTierSync → PaymentProcessing
@@ -164,7 +164,7 @@ All task prompts use `.prompt.md` suffix:
 ## 📋 What You Customize (Project-Specific)
 
 ### 1. User Story Identifiers
-**Framework uses**: AUTH-003, US-001, PAYMENT-001  
+**Framework uses**: US-XXX, US-001, PAYMENT-001  
 **You adopt**: YOUR_PREFIX-001, YOUR_PREFIX-002, etc.
 
 Where they appear:
@@ -212,15 +212,18 @@ File: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-appro
 - Plan modifications auto-revoke approval (creates `implementation-plan-vN.md` snapshot, resets status to `changes-requested`)
 - Human review required before status can return to `approved`
 
-### 6. Action Tracing Logs ⭐ *NEW (Framework 2.0.0)*
-**Framework provides**: Immutable daily log pattern  
-**You populate**: Agent actions, files touched, rationale, next steps
+### 6. Agent Logging ⭐ *NEW (Framework 2.0.0)*
+**Framework provides**: Concise template at `.github/templates/agent-log-tmpl.md`
+**You get**: Immutable daily logs with ISO8601 timestamps, PRU tracking, handoff information
 
-Locations:
+Log locations:
 - Root-level agents (e.g., orchestrator, dev-lead): `/logs/agent-{agent_name}-YYYYMMDD.md`
+- Phase-specific agents: `/logs/{phase}/agent-{agent_name}-YYYYMMDD.md`
 - TDD agents: `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-{agent_name}-YYYYMMDD.md`
 - Append-only with ISO8601 timestamps (e.g., `2026-03-31T14:30:15Z`)
 - Used for audit trails, debugging, compliance, and process improvement
+
+**Full documentation**: See `.github/instructions/agent-logging.instructions.md`
 
 ---
 

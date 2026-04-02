@@ -2,26 +2,28 @@
 
 ## ⚡ CRITICAL: This is a Reusable Template Framework
 
-**You are working in a META-FRAMEWORK**, not a specific project. All identifiers (AUTH-003, US-001, PAYMENT-001) are EXAMPLES showing patterns for future projects. This `.github/` folder gets copied into any project to orchestrate AI agents through PDLC workflows.
+**You are working in a META-FRAMEWORK**, not a specific project. All identifiers (US-XXX, US-001, PAYMENT-001) are EXAMPLES showing patterns for future projects. This `.github/` folder gets copied into any project to orchestrate AI agents through PDLC workflows.
 
 ## 🎯 Your Role & Context
 
 **Before taking action**, always:
 1. **Check which agent you are**: Read `.github/agents/<agent-name>.agent.md` for your responsibilities
-2. **Verify handoff context**: Read latest cycle handoff in `docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/tdd-execution/<CYCLE>/` for current TDD phase state
-3. **Follow the plan**: Reference `docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/implementation-plan.md` for guidance
+2. **Verify current progress**: Check `docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/implementation-plan.md` checkboxes and git commit history for current TDD phase state
+3. **Follow the plan**: Reference `docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/implementation-plan.md` for layer-by-layer implementation guidance
 
 **Agent Roles** (handoff chain):
 - **orchestrator**: Coordinates workflows, presents decision gates (3 options with tradeoffs)
-- **pm**: Manages project execution, timelines, and coordination across teams
-- **po**: Defines product requirements and prioritizes features—surfaces tradeoffs, NEVER decides unprompted
+- **project-manager**: Manages project execution, timelines, and coordination across teams
+- **product-owner**: Defines product requirements and prioritizes features—surfaces tradeoffs, NEVER decides unprompted
 - **ba**: Creates functional specifications, BDD scenarios, and acceptance criteria for stories
 - **ux**: Designs user experiences and creates interactive prototypes
 - **architect**: Designs system architecture, selects technology stack, and guides technical strategy
+- **ai-engineering**: Optimizes prompts, designs multi-agent systems, evaluates LLM models, manages PRU costs
 - **dev-lead**: Pre-creates folder structure, writes concise implementation plans (max 500 words/layer)
 - **dev-tdd**: Orchestrates RED → GREEN → REFACTOR (strict sequencing, no parallel cycles)
 - **dev-tdd-red/green/refactor**: Execute TDD phases following implementation plan
 - **qa**: Executes comprehensive testing (E2E, BDD validation), verifies acceptance criteria, ensures quality gates
+- **meeting.assistant**: Transforms meeting transcripts into professional meeting minutes (Comptes Rendus)
 
 ## � Folder Structure & Path Naming Conventions
 
@@ -87,15 +89,18 @@ docs/
 **Phase 0 Assessment Outputs** (ONE set per engagement):
 ```
 docs/assessment/
-├── PREREQUISITES-REQUEST.yml       # Formal access request to client
-├── AI-READINESS-REPORT.md          # Comprehensive maturity assessment
-├── MULTI-DIMENSIONAL-ASSESSMENT.md # 8-dimension scores with confidence
+├── prerequisites-request.yml       # Formal access request to client
+├── baseline-assessment.md          # Initial findings from available inputs
+├── multi-dimensional-assessment.md # 8-dimension maturity scores with confidence
+├── ai-readiness-report.md          # Comprehensive transformation strategy & roadmap
 ├── HANDOFF-PACKAGE/                # Complete context for documentation phase
-│   ├── Executive summaries
-│   ├── Technology inventory
-│   ├── Roadmap and success metrics
-│   └── Raw data and evidence
-└── interviews/                     # Stakeholder validation notes
+│   ├── assessment-summary.md       # Executive summary (2 pages)
+│   ├── technology-inventory.md     # Complete tech stack with versions
+│   ├── architecture-overview.md    # System architecture and integration map
+│   ├── transformation-roadmap.md   # Phased implementation plan (0-18+ months)
+│   ├── success-metrics.md          # KPIs and measurement approach
+│   └── raw-data/                   # Evidence sources and supporting data
+└── interviews/                     # Stakeholder validation notes and workshop summaries
 ```
 
 **Phase 1-7 Documentation Outputs** (ONE PRD suite per engagement):
@@ -137,7 +142,7 @@ docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/
 - Documentation phase: `DOC-PHASE-[1-7]-[STEP]: [description]`  
   Example: `DOC-PHASE-2-PERSONAS: Create user personas from stakeholder interviews`
 - TDD phase: `TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD: [description]` (date in YYYYMMDD format)  
-  Example: `TDD-US-001-RED-18: Write failing test for user tier sync`
+  Example: `TDD-US-001-RED-18-20260402: Write failing test for user tier sync`
 
 ## 🔄 TDD Workflow (Non-Negotiable Sequencing)
 
@@ -352,7 +357,7 @@ compatible_with:
 | `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-approval.yaml` | Human validation gate for TDD execution | Created by dev-lead, updated on changes |
 | `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-{agent}-YYYYMMDD.md` | Per-story TDD agent action logs | Append-only daily logs |
 | `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` | Implementation plan with checkboxes | Update checkboxes as work completes |
-| `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<CYCLE>/*-HO-*.json` | Phase-specific handoffs | Create once per phase |
+| `.github/agents/CHANGELOG.md` | Agent versioning and migration history (Framework 2.0.0+) | Reference for breaking changes |
 
 ## 🚀 PDLC Workflow Sequence
 

@@ -407,15 +407,15 @@ Instead of passing full implementation-plan.md through each handoff, pass a delt
 {
   "handoff_from": "Dev-Lead",
   "handoff_to": "dev-tdd-red",
-  "story_ref": "AUTH-003",
+  "story_ref": "US-XXX",
   "timestamp": "2026-01-20T14:30:00Z",
   
   "delta": {
     "files_created": [
-      "docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md"
+      "docs/05-implementation/epics/<EPIC-REF>/user-stories/US-XXX/implementation-plan.md"
     ],
     "files_updated": [
-      "docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/story.yaml"
+      "docs/05-implementation/epics/<EPIC-REF>/user-stories/US-XXX/story.yaml"
     ],
     "sections_changed": {
       "implementation-plan.md": [
@@ -439,9 +439,9 @@ Instead of passing full implementation-plan.md through each handoff, pass a delt
   ],
   
   "next_agent_pointers": {
-    "canonical_implementation_plan": "docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md",
+    "canonical_implementation_plan": "docs/05-implementation/epics/<EPIC-REF>/user-stories/US-XXX/implementation-plan.md",
     "current_layer": "Layer 1 - Database",
-    "failing_test": "docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/bdd-scenarios/auth.feature:15",
+    "failing_test": "docs/05-implementation/epics/<EPIC-REF>/user-stories/US-XXX/bdd-scenarios/auth.feature:15",
     "files_to_create": [
       "migrations/20260120_create_users_table.sql",
       "src/models/User.ts"
@@ -479,9 +479,9 @@ You are the Product Development Lifecycle coordinator. You:
 - Present 3 options at decision gates with tradeoffs
 - Validate story completion criteria before advancing
 
-## Current Context: Story AUTH-003
+## Current Context: Story US-XXX
 
-**Story Reference**: AUTH-003
+**Story Reference**: US-XXX
 **Epic**: Authentication System
 **Status**: In progress (currently with Dev-Lead)
 **Handoff From**: PM
@@ -494,7 +494,7 @@ You are the Product Development Lifecycle coordinator. You:
 - What's next: PO requirements definition
 
 ## Canonical Sources (You reference, don't copy)
-- Full story: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/story.yaml`
+- Full story: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-XXX/story.yaml`
 - Timeline: `/docs/01-requirements/requirements.md` (Stage 1 output)
 - Status tracking: `/docs/05-implementation/user-stories.md` (master status table)
 
@@ -520,9 +520,9 @@ Option C: Aggressive
 Hand off to: PO (Product Owner)
 Message template:
 ```
-@po handoff: AUTH-003 from ORCHESTRATOR
+@po handoff: US-XXX from ORCHESTRATOR
 Orchestrator approved charter. Story ready for requirements definition.
-See: /docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/story.yaml
+See: /docs/05-implementation/epics/<EPIC-REF>/user-stories/US-XXX/story.yaml
 Next decision gate: Acceptance criteria lock (after PO/BA complete)
 ```
 ```
@@ -544,17 +544,17 @@ Technical Lead responsible for:
 - Wiring BDD features to API contracts (OpenAPI)
 - Preparing handoff packages for TDD agents with failing tests
 
-## Current Context: Story AUTH-003
+## Current Context: Story US-XXX
 
-**Story Reference**: AUTH-003
+**Story Reference**: US-XXX
 **Title**: User Registration with Email Verification
 **Epic**: Authentication System
-**BDD Scenarios**: 5 scenarios in `/docs/01-requirements/user-stories.md#AUTH-003-BDD`
+**BDD Scenarios**: 5 scenarios in `/docs/01-requirements/user-stories.md#US-XXX-BDD`
 **Status**: Ready for implementation planning (Architect approved)
 
 ## What You Must Produce
 
-### 1. Implementation Plan (`/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md`)
+### 1. Implementation Plan (`/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-XXX/implementation-plan.md`)
 Must include 4 layers:
 
 **Layer 1 - Database**
@@ -615,8 +615,8 @@ When User is created/updated in service layer:
 
 | Document | Location | Purpose |
 |----------|----------|---------|
-| Acceptance Criteria | `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/story.yaml` | Define what "done" means |
-| BDD Scenarios | `/docs/01-requirements/user-stories.md#AUTH-003-BDD` | Test entry points |
+| Acceptance Criteria | `/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-XXX/story.yaml` | Define what "done" means |
+| BDD Scenarios | `/docs/01-requirements/user-stories.md#US-XXX-BDD` | Test entry points |
 | Architecture Constraints | `/docs/02-architecture/architecture-design.md` | Design decisions you must respect |
 | Tech Stack | `/docs/02-architecture/tech-spec.md` | Language, framework, database |
 | Design System | `/docs/design/design-systems.md` | UI components and tokens |
@@ -647,9 +647,9 @@ For each layer, describe the initial failing test:
 
 ## Checklist Before TDD Execution
 
-- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/description.md` complete with requirements and acceptance criteria
-- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md` complete with 4 layers and checkboxes
-- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/plan-approval.yaml` status set to `approved`
+- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-XXX/description.md` complete with requirements and acceptance criteria
+- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-XXX/implementation-plan.md` complete with 4 layers and checkboxes
+- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-XXX/plan-approval.yaml` status set to `approved`
 - [ ] `/api/openapi.yaml` updated with new endpoints (if applicable)
 - [ ] BDD scenarios created in `features/` folder
 - [ ] All layer-specific failing tests documented in implementation-plan.md
@@ -678,15 +678,15 @@ RED phase of TDD cycle. You:
 - Ensure test fails for the right reason (not implementation detail)
 - Pass to green agent once test is committed and confirmed failing
 
-## Current Context: Story AUTH-003, Layer 1
+## Current Context: Story US-XXX, Layer 1
 
-**Story Reference**: AUTH-003
+**Story Reference**: US-XXX
 **Layer**: 1 - Database
 **Current Failing Test**: "User migration creates users table with required columns"
 
 ## What You're Testing
 
-From `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md#L45`:
+From `/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-XXX/implementation-plan.md#L45`:
 
 ```
 Layer 1 - Database:
@@ -767,9 +767,9 @@ GREEN phase of TDD cycle. You:
 - Focus on satisfying test assertions, not perfection
 - Pass to refactor agent with passing test
 
-## Current Context: Story AUTH-003, Layer 1
+## Current Context: Story US-XXX, Layer 1
 
-**Story Reference**: AUTH-003
+**Story Reference**: US-XXX
 **Layer**: 1 - Database
 **Failing Test**: `tests/migrations/20260120.migrations.test.ts:12` (from RED agent)
 **Test Status**: FAILING ✗
@@ -790,7 +790,7 @@ it('migration file exists and creates users table with required columns', () => 
 
 **File to Create**: `migrations/20260120_create_users_table.sql`
 
-**Implementation Requirements** (from `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md#L50`):
+**Implementation Requirements** (from `/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-XXX/implementation-plan.md#L50`):
 ```
 UP Migration:
 CREATE TABLE users (
@@ -885,7 +885,7 @@ SAVINGS:           3900 tokens per story (45% efficiency gain)
 
 **Phase 3 (Week 3)**: Full agent flow
 - Activate remaining agent prompts (PM, PO, BA, UX, Architect)
-- End-to-end test with real story (AUTH-003)
+- End-to-end test with real story (US-XXX)
 - Measure actual token savings vs. baseline
 
 ---
@@ -907,7 +907,7 @@ Once this context architecture is approved:
 1. **Audit existing agents** against these prompt templates
 2. **Create per-role prompt files** in `/.github/agents/prompts/` (organized by role)
 3. **Validate semantic references** in implementation-plan.md templates
-4. **Test with AUTH-003** story using optimized prompts
+4. **Test with US-XXX** story using optimized prompts
 5. **Measure and report** actual token savings achieved
 
 ---

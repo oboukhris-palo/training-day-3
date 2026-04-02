@@ -75,7 +75,7 @@ Write one failing test per cycle that maps to BDD assertion. Test must fail for 
 5. **Create test class file** (e.g., `UserService.test.ts`, `SubscriptionService.spec.ts`)
 6. **Document test strategy** at top of test file:
    ```typescript
-   // BDD MAPPING: AUTH-003 - User can upgrade subscription tier
+   // BDD MAPPING: US-XXX - User can upgrade subscription tier
    // Test Strategy: Unit tests for business logic with mocked repositories
    // Edge Cases: Invalid tier, payment failure, concurrent upgrades
    // Mocks: PaymentGateway (external API), Real DB for integration tests

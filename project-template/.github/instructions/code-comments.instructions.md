@@ -143,7 +143,7 @@ Use JSDoc for TypeScript/JavaScript, docstrings for Python:
  * Upgrades user subscription to specified tier.
  * 
  * WHY: Synchronizes both User.tier and Subscription.tier to prevent data inconsistency.
- * Critical for AUTH-003 BDD scenario compliance.
+ * Critical for US-XXX BDD scenario compliance.
  * 
  * @param userId - UUID of user to upgrade
  * @param targetTier - Tier to upgrade to ('free' | 'premium' | 'enterprise')

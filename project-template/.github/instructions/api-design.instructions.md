@@ -374,7 +374,7 @@ paths:
       summary: Upgrade user subscription tier
       description: |
         Upgrades a user's subscription to the specified tier. This operation:
-        - Synchronizes User.tier and Subscription.tier (critical for AUTH-003)
+        - Synchronizes User.tier and Subscription.tier (critical for US-XXX)
         - Charges payment method
         - Activates new tier immediately
         
