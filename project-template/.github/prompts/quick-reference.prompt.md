@@ -37,14 +37,7 @@ Provide agent-specific guidance for:
 | Creating implementation plan | implementation-plan-tmpl.md | @Tech Lead | Pre-implementation |
 | TDD session execution | tdd.prompt.md + implementation plan | @TDD Orchestrator | Implementation cycles |
 | Code review | code-review.instructions.md | @QA Engineer | Quality gates |
-| API design | api-design.instructions.md | @Solution Architect | Architecture phase |
-
-### 2. Phase Navigation Guide
-**Phase 0: Assessment**
-- Workflow: assessment.workflows.md
-- Templates: project-status-tmpl.md
-- Agent: @Workflow Orchestrator
-
+| API design | tech-spec.md (project level) | @Solution Architect | Architecture phase |
 **Phases 1-7: Documentation**
 - Workflow: documents.workflows.md
 - Templates: user-story-tmpl.yml, prd-tmpl.yml
@@ -52,11 +45,12 @@ Provide agent-specific guidance for:
 
 **Phase 8: Implementation**
 - Workflow: implementation.workflows.md
-- Templates: implementation-plan-tmpl.md, tdd-execution-tmpl.md
+- Templates: implementation-plan-tmpl.md, plan-approval-tmpl.yaml, user-story-folder-tmpl.md
 - Agents: @TDD Orchestrator, @TDD RED/GREEN/REFACTOR Phase Agents
+- Progress tracking: Checkboxes in implementation-plan.md + git commits
 
 ### 3. Agent-Specific Quick Access
-- **Orchestrator**: Project coordination and handoff management
+- **Orchestrator**: Project coordination and workflow orchestration
 - **Product Owner**: Requirements definition and user story creation
 - **Solution Architect**: System design and technical decision making
 - **Tech Lead**: Implementation planning and technical leadership
@@ -110,7 +104,7 @@ Provide agent-specific guidance for:
 | Guide | Purpose | When to Read |
 |-------|---------|--------------|
 | **[copilot-instructions.md](./../copilot-instructions.md)** | Framework overview + agent roles | First thing — defines everything |
-| **[HANDOFF-GUIDE.md](./guides/handoff-guide.md)** | Handoff format + quality gates | When designing handoffs |
+| **[tdd-enforcement.guide.md](./guides/tdd-enforcement.guide.md)** | TDD sequencing rules + quality gates | Before starting implementation |
 | **[context-optimization-strategy.md](./guides/context-optimization-strategy.md)** | Token efficiency + 3-level model | When optimizing prompts |
 | **[tdd-enforcement.guide.md](./guides/tdd-enforcement.guide.md)** | TDD sequencing rules | Before starting implementation |
 | **[pru-optimization.instructions.md](./../instructions/pru-optimization.instructions.md)** | Token budgets by agent type | Planning PRU strategy |
@@ -124,7 +118,7 @@ Provide agent-specific guidance for:
 | **General coding** | `#file:.github/instructions/coding.instructions.md` | All code |
 | **Code documentation** | `#file:.github/instructions/code-comments.instructions.md` | All code comments |
 | **Code review checklist** | `#file:.github/instructions/code-review.instructions.md` | Code review |
-| **API design** | `#file:.github/instructions/api-design.instructions.md` | API routes |
+| **API design** | `#file:.github/instructions/api-design.instructions.md` (project-level tech-spec.md) | API routes |
 | **Test strategy** | `#file:.github/instructions/test-strategy.instructions.md` | Test files |
 | **Documentation rules** | `#file:.github/instructions/documentation.instructions.md` | Markdown files |
 | **Analysis guardrails** | `#file:.github/instructions/ai.analysis.guardrails.instructions.md` | Artifact analysis |
@@ -153,9 +147,9 @@ Provide agent-specific guidance for:
 - Architecture design: `#file:.github/templates/architecture-design.template.md`
 
 **Implementation**:
-- Handoff: `#file:.github/templates/handoff.template.json`
-- TDD execution log: `#file:.github/templates/tdd-execution.template.md`
-- Layer completion checklist: `#file:.github/templates/layer-completion-checklist.template.md`
+- Plan approval: `#file:.github/templates/plan-approval-tmpl.yaml`
+- User story folder: `#file:.github/templates/user-story-folder-tmpl.md`
+- Layer completion: Checkboxes in implementation-plan.md (mark [x] as tasks complete)
 
 **Review & QA**:
 - Code review checklist: `#file:.github/templates/code-review-checklist.template.md`
@@ -216,10 +210,10 @@ Provide agent-specific guidance for:
 | TDD Implementation | 3-5K | Single layer, single file |
 | Review/Strategy | 5-8K | Cost analysis |
 
-### 3-Level Context Model
-1. **CANONICAL**: Single source of truth (read-only references)
-2. **DELTA**: What changed this cycle (handoff.md)
-3. **CONTEXTUAL**: Agent-specific prompts (task-specific files)
+### Simplified Context Model
+1. **CANONICAL**: Single source of truth (description.md, implementation-plan.md, features/)
+2. **PROGRESS**: Checkboxes in implementation-plan.md (mark [x] as tasks complete)
+3. **AUDIT**: Git commits with `TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD` format (date in YYYYMMDD)
 
 ---
 
@@ -234,14 +228,15 @@ Provide agent-specific guidance for:
 ### User Story (Planning → Development → Validation)
 1. `@Product Owner` — Run `#file:.github/prompts/plan-us.prompt.md`
 2. `@Tech Lead` — Create `implementation-plan.md`
-3. `@TDD Orchestrator` — Execute RED → GREEN → REFACTOR
-4. `@Tech Lead` — Validate completion
+3. Human approves `plan-approval.yaml` (status: approved)
+4. `@TDD Orchestrator` — Execute RED → GREEN → REFACTOR (checkboxes + commits)
+5. `@Tech Lead` — Validate completion
 
 ### Code Review Checklist
 1. Load: `#file:.github/instructions/code-review.instructions.md`
 2. Load: `#file:.github/templates/code-review-checklist.template.md`
 3. Review against 13-point checklist
-4. Document in handoff.md
+4. Mark checkboxes in implementation-plan.md, commit with `TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD` format
 
 ---
 
@@ -268,7 +263,7 @@ Provide agent-specific guidance for:
 **New to the framework?** Follow this sequence:
 
 1. Read: `#file:.github/copilot-instructions.md` (5 min)
-2. Review: `#file:.github/guides/HANDOFF-GUIDE.md` (10 min)
+2. Review: `#file:.github/guides/tdd-enforcement.guide.md` (10 min)
 3. Scan: `#file:.github/guides/context-optimization-strategy.md` (5 min)
 4. Reference: This quick-reference as needed (ongoing)
 
@@ -289,7 +284,7 @@ Provide agent-specific guidance for:
 | "What are my TDD rules?" | Load: `#file:.github/guides/tdd-enforcement.guide.md` |
 | "How do I optimize tokens?" | Load: `#file:.github/instructions/pru-optimization.instructions.md` |
 | "What's my role?" | Load: `#file:.github/agents/<role>.agent.md` |
-| "How do handoffs work?" | Load: `#file:.github/guides/HANDOFF-GUIDE.md` |
+| "How does TDD workflow work?" | Load: `#file:.github/guides/tdd-enforcement.guide.md` |
 
 ---
 

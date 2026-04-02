@@ -134,76 +134,88 @@ ACTIVE MONITORING:
 
 ---
 
-## Example 3: Agent Handoff Validation
+## Example 3: Implementation Plan Approval Validation
 
 ### Scenario
-Dev-lead trying to hand off to TDD agents without complete implementation plan.
+Dev-TDD trying to start TDD execution without approved implementation plan.
 
 ### System Response
 ```
-🤝 HANDOFF VALIDATION FAILED: @dev-lead → @dev-tdd
+⚠️ APPROVAL REQUIRED: TDD execution blocked for US-001
 
-MISSING HANDOFF ARTIFACTS:
-❌ docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md
-❌ docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/handoff.md
+PLAN APPROVAL STATUS:
+❌ docs/05-implementation/epics/EPIC-001/user-stories/US-001/plan-approval.yaml
+   Current status: changes-requested (expected: approved)
 
-HANDOFF REQUIREMENTS:
+VALIDATION CHECKS:
 ✅ User story US-001 exists and is prioritized
 ✅ BDD scenarios defined (5 scenarios found)
-❌ Implementation plan missing - required for TDD cycle planning
-❌ Handoff artifact missing - required for context transfer
+✅ Implementation plan exists at docs/05-implementation/epics/EPIC-001/user-stories/US-001/implementation-plan.md
+❌ Plan approval status: changes-requested - human review required
 
-🔧 QUICK FIXES AVAILABLE:
+🔧 REQUIRED ACTION:
 ```
 
-### Auto-Fix Options
+### Approval Workflow
 ```
-⚡ QUICK GENERATION OPTIONS:
+📋 PLAN APPROVAL WORKFLOW:
 
-1. AUTO-GENERATE FROM CONTEXT
-   └ 🤖 Create implementation-plan.md from:
-     ├─ Existing user story acceptance criteria  
-     ├─ BDD scenarios in features/
-     ├─ Architecture patterns from tech-spec.md
-     └─ Team coding standards
+1. REQUEST DEV-LEAD REVIEW
+   └ 👤 Submit plan for human validation:
+     ├─ Review layer architecture (DB → Service → API → UI)
+     ├─ Verify BDD scenario mapping to layers
+     ├─ Check dependencies and gotchas
+     └─ Validate test coverage approach
+   ⏰ Time: 15-30 minutes
+   
+2. EMERGENCY OVERRIDE (Tech-Lead Only)
+   └ ⚡ Bypass approval with justification:
+     ├─ Document override reason in plan-approval.yaml
+     ├─ Set monitoring requirements
+     └─ Auto-flag for post-implementation review
    ⏰ Time: 2-3 minutes
+   ⚠️ Risk: Potential rework if plan flawed
    
-2. TEMPLATE-ASSISTED CREATION
-   └ 📋 Use implementation-plan-tmpl.md:
-     ├─ Pre-filled with current context
-     ├─ Guided sections with examples
-     └─ Validation checks as you complete
-   ⏰ Time: 15-20 minutes
-   
-3. MANUAL CREATION
-   └ ✍️ Create from scratch:
-     ├─ Full control over structure
-     ├─ Custom approach for complex stories
-     └─ Manual validation required
-   ⏰ Time: 30-45 minutes
+3. REVISE PLAN
+   └ ✍️ Address feedback in plan-approval.yaml:
+     ├─ Update implementation-plan.md based on comments
+     ├─ Request re-review
+     └─ Repeat until approved
+   ⏰ Time: Varies by complexity
 ```
 
-### Your Choice: Auto-Generate
+### Your Choice: Request Dev-Lead Review
 ```
-🤖 AUTO-GENERATING IMPLEMENTATION PLAN...
+👤 REQUESTING DEV-LEAD REVIEW FOR US-001...
 
-Analyzing context:
-✅ User story: US-001 User Authentication
-✅ Acceptance criteria: 8 criteria found
-✅ BDD scenarios: 5 scenarios covering login/logout/registration  
-✅ Architecture: Node.js + Express + PostgreSQL + JWT
-✅ Code standards: ESLint + Prettier + Jest
+Plan submitted for approval:
+✅ Implementation layers defined (4 layers)
+✅ BDD scenarios mapped to layers (5 scenarios)
+✅ Dependencies documented (JWT, bcrypt, pg)
+✅ Gotchas noted (tier sync, error codes)
 
-Generated structure:
-├─ Layer 1 (Database): User model, authentication schema
-├─ Layer 2 (Backend): Auth service, JWT handling, password hashing
-├─ Layer 3 (Config): Routes, middleware, environment variables  
-├─ Layer 4 (Frontend): Login/logout forms, auth state management
+📧 Notification sent to @dev-lead
+⏰ Typical review time: 15-30 minutes
 
-📄 CREATED: docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md
-🤝 CREATED: docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/handoff.md
+WHILE WAITING:
+- Work on another approved story
+- Review BDD scenarios in features/
+- Prepare test environment setup
 
-✅ HANDOFF VALIDATED: @dev-lead → @dev-tdd ready to proceed
+📄 STATUS: Awaiting approval in plan-approval.yaml
+```
+
+### After Approval
+```
+✅ PLAN APPROVED: US-001 ready for TDD execution
+
+Approved by: @dev-lead
+Approval timestamp: 2026-03-25T14:30:00Z
+Status in plan-approval.yaml: approved
+
+🚀 PROCEEDING: TDD execution now unblocked
+📊 TRACKING: Progress via checkboxes in implementation-plan.md
+⚡ START TDD: Type '@dev-tdd start US-001' to begin RED phase
 ```
 
 ---

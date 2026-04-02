@@ -145,8 +145,8 @@ Iteration 3: [X] points (Current Average: [X] points/sprint)
 ### Implementation Artifacts
 - [ ] `/docs/05-implementation/user-stories.md` - ⭐ SINGLE SOURCE OF TRUTH (status tracking)
 - [ ] `/docs/05-implementation/current-sprint.md` - Active sprint planning
-- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` - Per-story technical decomposition
-- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/ba-enrichment.md` - BA validated info and acceptance criteria
+- [ ] `/docs/05-implementation/epics/EPIC-001/user-stories/US-001/implementation-plan.md` - Per-story technical decomposition
+- [ ] `/docs/05-implementation/epics/EPIC-001/user-stories/US-001/ba-enrichment.md` - BA validated info and acceptance criteria
 - [ ] `features/` - BDD feature files with failing tests
 
 ---
@@ -219,11 +219,11 @@ Iteration 3: [X] points (Current Average: [X] points/sprint)
 
 ### For Developers
 → Check **Current Sprint** for assigned stories  
-→ Read implementation guidance in `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md`  
+→ Read implementation guidance in `/docs/05-implementation/epics/EPIC-001/user-stories/US-001/implementation-plan.md`  
 → Review **Code Quality Metrics** for refactoring priorities
 
 ### For Business Analysts
-→ Review **BA Enrichment** documents in `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/ba-enrichment.md`  
+→ Review **BA Enrichment** documents in `/docs/05-implementation/epics/EPIC-001/user-stories/US-001/ba-enrichment.md`  
 → Check **Active Blockers** for validation delays  
 → Use **Acceptance Criteria** from `/docs/01-requirements/user-stories.md` for testing
 

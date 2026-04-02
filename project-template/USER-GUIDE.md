@@ -217,8 +217,8 @@ File: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-appro
 **You populate**: Agent actions, files touched, rationale, next steps
 
 Locations:
-- Root-level agents (e.g., orchestrator, dev-lead): `/docs/logs/agent-{agent_name}-YYYYMMDD.md`
-- TDD agents: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-{agent_name}-YYYYMMDD.md`
+- Root-level agents (e.g., orchestrator, dev-lead): `/logs/agent-{agent_name}-YYYYMMDD.md`
+- TDD agents: `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-{agent_name}-YYYYMMDD.md`
 - Append-only with ISO8601 timestamps (e.g., `2026-03-31T14:30:15Z`)
 - Used for audit trails, debugging, compliance, and process improvement
 

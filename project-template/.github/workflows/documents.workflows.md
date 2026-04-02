@@ -7,6 +7,8 @@
 
 **Agents**: PM (coordination) | PO (product definition) | BA (requirements/BDD) | UX (design) | Architect (architecture) | Dev-Lead (implementation) | TDD Navigator (development)
 
+**Logging**: Phase-specific agent logs (Requirements: `/logs/01-requirements/`, Architecture: `/logs/02-architecture/`, Testing: `/logs/03-testing/`, Planning: `/logs/04-planning/`)
+
 **Templates**: 
 - **PRD Suite**: prd-tmpl.yml (13 phase-based docs) | func-doc-tmpl.yml | tech-doc-tmpl.yml
 - **Epic & Story Management**: epic-tmpl.yml (Jira-compatible epic schema) | user-story-tmpl.yml (Jira-compatible story schema with epic linkage)
@@ -1340,6 +1342,79 @@ After each engagement, capture lessons learned:
 6. Complete documentation (audit trail)
 7. Stakeholder alignment (regular reviews)
 8. Version control (clear history)
+
+---
+
+## 📋 Agent Logging Requirements (MANDATORY)
+
+**⚠️ UNBREAKABLE RULE: ALL agent interactions during documentation phase MUST be logged.**
+
+### Logging Locations by Documentation Phase
+
+| PDLC Phase | Agent Log Location | Responsible Agents |
+|------------|-------------------|--------------------|
+| **Phase 1: Requirements** | `/logs/01-requirements/agent-{name}-YYYYMMDD.md` | PO, BA, orchestrator |
+| **Phase 2: Architecture** | `/logs/02-architecture/agent-{name}-YYYYMMDD.md` | Architect, ai-engineering |
+| **Phase 3: Testing** | `/logs/03-testing/agent-{name}-YYYYMMDD.md` | BA, QA |
+| **Phase 4: Planning** | `/logs/04-planning/agent-{name}-YYYYMMDD.md` | PM, orchestrator |
+
+### Agents Required to Log
+
+| Agent | Primary Activities | Phase | Log Path |
+|-------|-------------------|-------|----------|
+| **po** | PRD creation, user story definition, epic management | Phase 1 | `/logs/01-requirements/agent-po-YYYYMMDD.md` |
+| **ba** | Functional specs, BDD scenarios, acceptance criteria | Phases 1, 3 | `/logs/01-requirements/agent-ba-YYYYMMDD.md`, `/logs/03-testing/agent-ba-YYYYMMDD.md` |
+| **architect** | System architecture, tech stack selection, API design | Phase 2 | `/logs/02-architecture/agent-architect-YYYYMMDD.md` |
+| **ux** | Design systems, prototypes, UI components | Phase 2 | `/logs/02-architecture/agent-ux-YYYYMMDD.md` |
+| **ai-engineering** | Prompt optimization, model selection, context engineering | Phase 2 | `/logs/02-architecture/agent-ai-engineering-YYYYMMDD.md` |
+| **pm** | Iteration planning, timeline management, deployment strategy | Phase 4 | `/logs/04-planning/agent-pm-YYYYMMDD.md` |
+| **orchestrator** | Workflow coordination, decision gates, quality checks | All phases | `{phase_logs}/agent-orchestrator-YYYYMMDD.md` |
+
+### Mandatory Logging Points
+
+**Route A (Traditional PDLC)**:
+- Log PRD creation and validation
+- Log user story extraction and epic grouping
+- Log architecture design decisions
+- Log BDD scenario generation
+- Log iteration planning and deployment strategy
+
+**Route B (Functional Extraction)**:
+- Log epic/story parsing from client materials
+- Log functional theme identification
+- Log acceptance criteria extraction
+- Log technical constraint analysis
+
+**Route C (Interview-Driven)**:
+- Log stakeholder interview findings
+- Log persona generation
+- Log journey mapping creation
+- Log requirements synthesis
+
+**Route D (Mixed Assembly)**:
+- Log data source consolidation
+- Log gap analysis and fill strategies
+- Log stakeholder validation
+- Log inconsistency resolution
+
+### Template Reference
+
+**Use**: `.github/templates/agent-log-tmpl.md` for all log entries.
+
+**No inline templates** - always reference the main template file.
+
+### Validation Enforcement
+
+**Orchestrator validates logs before**:
+- Each phase transition (Phase 1 → 2, 2 → 3, 3 → 4)
+- PRD approval gates
+- Architecture review
+- BDD scenario validation
+- Handoff to implementation workflow
+
+**Missing logs = documentation incomplete** (cannot proceed to implementation)
+
+**Full Documentation**: See `.github/instructions/agent-logging.instructions.md` for comprehensive standards.
 
 ---
 

@@ -213,18 +213,16 @@ auto_resolution_rules:
       - conflict: "API doc format (Swagger vs manual)"
         resolution: "use format established in tech-spec.md"
         
-  # TDD Cycle Structure Conflicts
-  tdd_cycle_structure_conflicts:
-    rule_name: "follow_established_cycle_structure"
-    description: "Use consistent TDD cycle folder structure and file naming"
-    authority_source: "implementation.workflows.md + project-structure.instructions.md"
+  # Implementation Plan & Checkbox Tracking
+  implementation_plan_conflicts:
+    rule_name: "use_checkboxes_for_progress_tracking"
+    description: "Track TDD progress via checkboxes in implementation-plan.md, not separate files"
+    authority_source: "implementation.workflows.md + user-story-folder-tmpl.md"
     examples:
-      - conflict: "<CYCLE>-RED.md vs <CYCLE>-HO-RED.json"
-        resolution: "use <CYCLE>-HO-RED.json (nested folder structure)"
-      - conflict: "flat vs nested tdd-execution structure"
-        resolution: "use nested: tdd-execution/<CYCLE>/"
-      - conflict: "append vs overwrite tdd-execution.md"
-        resolution: "append-only (audit trail requirement)"
+      - conflict: "separate audit log vs checkbox tracking"
+        resolution: "use checkboxes in implementation-plan.md + git commit history"
+      - conflict: "handoff files vs direct plan updates"
+        resolution: "no handoffs - agents read/update implementation-plan.md directly"
         
   # Story Folder Creation Conflicts
   story_folder_structure_conflicts:
@@ -344,11 +342,10 @@ conflict_detection_patterns:
     folder_structure_conflicts:
       detection_method: "directory_structure_validation"
       required_structure:
-        - "<US-REF>.md" # story definition
-        - "implementation-plan.md" # frozen architecture
-        - "tdd-execution.md" # append-only audit log
-        - "features/" # BDD feature files
-        - "tdd-execution/" # cycle handoff folders
+        - "description.md" # story definition: requirements, acceptance criteria, DoD
+        - "implementation-plan.md" # layer-by-layer guide with checkboxes
+        - "plan-approval.yaml" # human validation gate
+        - "features/" # BDD feature files from BA agent
       conflict_indicators: ["missing required files", "incorrect folder structure", "dev-lead automation not triggered"]
       validation_rules: ["all template files present", "folder created by dev-lead", "structure matches template"]
       escalation_trigger: "missing story folder after 1 hour of dev-lead assignment"
@@ -375,19 +372,18 @@ conflict_detection_patterns:
       detection_method: "story_reference_analysis"
       story_patterns: ["US-[0-9]+", "Epic E[0-9]+", "Story [0-9]+"]
       conflict_indicators: ["same story referenced with different status", "missing story folder structure"]
-      validation_rules: ["story folder exists", "status transitions valid", "handoff files present"]
+      validation_rules: ["story folder exists", "status transitions valid", "implementation plan has checkboxes"]
       
-    # TDD Cycle Structure Conflicts
-    tdd_structure_conflicts:
-      detection_method: "file_structure_validation"
+    # Implementation Plan Checkbox Tracking
+    implementation_progress_conflicts:
+      detection_method: "checkbox_analysis"
       required_patterns:
-        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution.md" # append-only audit log
-        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<CYCLE>/" # nested cycle folders
-        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<CYCLE>/<CYCLE>-HO-RED.json"
-        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<CYCLE>/<CYCLE>-HO-GREEN.json"
-        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<CYCLE>/<CYCLE>-HO-REFACTOR.md"
-      conflict_indicators: ["missing cycle folder", "incorrect handoff file format", "audit log not append-only"]
-      validation_rules: ["nested folder structure", "sequential cycle numbering", "all handoff files present"]
+        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md" # requirements
+        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md" # checkboxes
+        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-approval.yaml" # validation gate
+        - "docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/features/" # BDD scenarios
+      conflict_indicators: ["checkbox state inconsistent with commits", "plan approval missing", "BDD scenarios incomplete"]
+      validation_rules: ["checkboxes correlate with git commits", "plan approved before TDD starts", "all required files present"]
       
     # Epic Status Consistency Conflicts
     epic_status_conflicts:

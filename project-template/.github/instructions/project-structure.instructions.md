@@ -38,8 +38,8 @@ project-root/
 │   ├── workflows/                 # PDLC workflows (assessment, documents, implementation, cicd)
 │   ├── prompts/                   # Reusable copy-paste prompts for agents
 │   ├── tasks/                     # Daily task prompts (standup, TDD, code review, etc.)
-│   ├── templates/                 # Document templates (user-story, implementation-plan, handoff, etc.)
-│   └── guides/                    # Deep-dive guides (context-optimization, TDD-enforcement, handoffs, etc.)
+├── templates/                 # Document templates (user-story, implementation-plan, plan-approval, etc.)
+└── guides/                    # Deep-dive guides (context-optimization, TDD-enforcement, etc.)
 │
 ├── docs/
 │   ├── 00-assessment/             # Phase 0 assessment outputs (prerequisites, AI-readiness report)
@@ -81,34 +81,13 @@ project-root/
 │   │   │   │   ├── readme.md      # Epic overview and scope
 │   │   │   │   └── user-stories/  # User stories belonging to this epic
 │   │   │   │       ├── us-001/    # ✨ Per-story implementation folder
-│   │   │   │       │   ├── description.md              # Story definition (from 01-requirements)
-│   │   │   │       │   ├── implementation-plan.md      # Dev-Lead's layer architecture (CURRENT)
-│   │   │   │       │   ├── implementation-plan-v1.md   # IMMUTABLE snapshot v1
-│   │   │   │       │   ├── implementation-plan-v2.md   # IMMUTABLE snapshot v2 (if evolved)
-│   │   │   │       │   ├── plan-approval.yaml          # Human validation gate (Framework 2.0.0)
-│   │   │   │       │   ├── api-design.md               # API endpoints, schemas, auth, errors
-│   │   │   │       │   ├── us-completion-checklist.md  # Definition of Done criteria
-│   │   │   │       │   ├── tdd-execution.md            # 📋 APPEND-ONLY audit log (cycle summary)
-│   │   │   │       │   ├── bdd-scenarios/              # BDD feature files (Gherkin scenarios)
-│   │   │   │       │   │   ├── <domain>-<story-ref>.feature  # Feature file with scenarios
-│   │   │   │       │   │   └── <domain>-<story-ref>.steps.ts  # Step definitions & tests
-│   │   │   │       │   │
-│   │   │   │       │   ├── logs/                       # 📋 Per-story TDD agent action logs
-│   │   │   │       │   │   ├── agent-dev-tdd-YYYYMMDD.md      # TDD Orchestrator daily log
-│   │   │   │       │   │   ├── agent-dev-tdd-red-YYYYMMDD.md  # RED agent daily log
-│   │   │   │       │   │   ├── agent-dev-tdd-green-YYYYMMDD.md # GREEN agent daily log
-│   │   │   │       │   │   └── agent-dev-tdd-refactor-YYYYMMDD.md # REFACTOR agent daily log
-│   │   │   │       │   │
-│   │   │   │       │   └── tdd-execution/              # 🔄 TDD Cycle Tracking (per cycle)
-│   │   │   │       │       ├── 001/                    # First TDD cycle
-│   │   │   │       │       │   ├── 001-HO-RED.json     # RED phase handoff
-│   │   │   │       │       │   ├── 001-HO-GREEN.json   # GREEN phase handoff
-│   │   │   │       │       │   └── 001-HO-REFACTOR.md  # REFACTOR phase handoff
-│   │   │   │       │       ├── 002/                    # Additional cycles (as needed)
-│   │   │   │       │       │   ├── 002-HO-RED.json
-│   │   │   │       │       │   ├── 002-HO-GREEN.json
-│   │   │   │       │       │   └── 002-HO-REFACTOR.md
-│   │   │   │       │       └── [... cycles ...]
+│   │   │   │       │   ├── description.md              # Story definition: requirements, acceptance criteria, DoD
+│   │   │   │       │   ├── implementation-plan.md      # Layer-by-layer guide with checkboxes
+│   │   │   │       │   ├── plan-approval.yaml          # Human validation gate (approved before TDD starts)
+│   │   │   │       │   └── features/                   # BDD scenarios from BA agent
+│   │   │   │       │       ├── user-authentication.feature
+│   │   │   │       │       └── profile-management.feature
+│   │   │   │       │
 │   │   │   │       └── us-002/    # Additional stories in this epic
 │   │   │   │
 │   │   │   ├── epic-02/           # Epic 2: [Domain]
@@ -437,7 +416,7 @@ This section documents the `.github/` directory structure and workflow-related f
 ├── templates/                         # Document templates (copy when creating new files)
 │   ├── user-story-tmpl.md         # User story template
 │   ├── implementation-plan-tmpl.md # Implementation plan template
-│   ├── handoff-tmpl.md            # Handoff file template (per TDD cycle)
+│   ├── plan-approval-tmpl.yaml   # Plan approval gate template
 │   ├── tdd-execution-tmpl.md      # TDD execution audit log template
 │   └── ...                            # Other templates
 │
@@ -504,40 +483,20 @@ docs/05-implementation/
 │   │   ├── readme.md                    # Epic overview, scope, and goals
 │   │   └── user-stories/                # Stories grouped under this epic
 │   │       ├── us-001/                  # ✨ First story in epic
-│   │       │   ├── description.md       # Story definition (from 01-requirements)
-│   │       │   ├── implementation-plan.md       # ⭐ FROZEN architecture (ref only)
-│   │       │   ├── implementation-plan-v1.md   # IMMUTABLE snapshot v1
-│   │       │   ├── implementation-plan-v2.md   # IMMUTABLE snapshot v2 (if evolved)
-│   │       │   ├── plan-approval.yaml          # Approval gate (Framework 2.0.0)
-│   │       │   ├── api-design.md               # API specs (if applicable)
-│   │       │   ├── us-completion-checklist.md  # Definition of Done
-│   │       │   ├── tdd-execution.md            # 📋 APPEND-ONLY audit log
-│   │       │   ├── bdd-scenarios/              # BDD feature files (TDD driver)
-│   │       │   │   ├── domain-us-001.feature   # Feature file with Given-When-Then
-│   │       │   │   └── domain-us-001.steps.ts  # Step definitions & tests
-│   │       │   │
-│   │       │   ├── logs/                       # 📋 Per-story TDD agent logs
-│   │       │   │   ├── agent-dev-tdd-YYYYMMDD.md
-│   │       │   │   ├── agent-dev-tdd-red-YYYYMMDD.md
-│   │       │   │   ├── agent-dev-tdd-green-YYYYMMDD.md
-│   │       │   │   └── agent-dev-tdd-refactor-YYYYMMDD.md
-│   │       │   │
-│   │       │   └── tdd-execution/              # 🔄 TDD Cycle Tracking
-│   │       │       ├── 001/                    # First TDD cycle
-│   │       │       │   ├── 001-HO-RED.json
-│   │       │       │   ├── 001-HO-GREEN.json
-│   │       │       │   └── 001-HO-REFACTOR.md
-│   │       │       ├── 002/                    # Additional cycles
-│   │       │       │   ├── 002-HO-RED.json
-│   │       │       │   ├── 002-HO-GREEN.json
-│   │       │       │   └── 002-HO-REFACTOR.md
-│   │       │       └── [... additional cycles ...]
+│   │       │   ├── description.md              # Story definition (requirements, acceptance criteria, DoD)
+│   │       │   ├── implementation-plan.md      # Layer-by-layer guide with checkboxes (CURRENT version)
+│   │       │   ├── implementation-plan-v1.md   # IMMUTABLE snapshot v1 (if plan modified)
+│   │       │   ├── implementation-plan-v2.md   # IMMUTABLE snapshot v2 (if further evolved)
+│   │       │   ├── plan-approval.yaml          # Human validation gate (approved/changes-requested/revoked)
+│   │       │   └── features/                   # BDD scenarios from BA agent (Given/When/Then)
+│   │       │       ├── domain-us-001.feature   # Feature file with scenarios
+│   │       │       └── domain-us-001.steps.ts  # Step definitions & tests
 │   │       │
 │   │       ├── us-002/                  # Additional stories in epic
 │   │       │   ├── description.md
 │   │       │   ├── implementation-plan.md
-│   │       │   ├── [... same structure ...]
-│   │       │   └── tdd-execution/
+│   │       │   ├── plan-approval.yaml
+│   │       │   └── features/
 │   │       │
 │   │       └── us-NNN/
 │   │
@@ -608,17 +567,10 @@ docs/05-implementation/
 
 #### `docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/implementation-plan.md` (Per-Story Plan)
 - **Purpose**: Layer-by-layer architecture (Database → Service → API → Frontend)
-- **Update Pattern**: Frozen after dev-lead creates; serves as reference throughout TDD
-- **Content**: 1-2 paragraphs per layer, decision rationale, tech choices, BDD mapping
-- **Used By**: dev-tdd (reference during RED phase), dev-tdd-red (guiding test design)
-- **Status**: 🔒 Frozen (reference only during development)
-
-#### `docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/tdd-execution.md` (APPEND-ONLY Audit Log)
-- **Purpose**: Complete audit trail of all TDD cycles (single source of truth during development)
-- **Update Pattern**: Append-only after each cycle; never modify existing entries
-- **Content**: Per-cycle summary: timestamp, phase, test count, coverage %, refactor notes, links to handoffs
-- **Used By**: PM (progress tracking), dev-tdd (cycle reference), retrospectives (learnings)
-- **Status**: 📋 Append-only; git history preserves all entries
+- **Update Pattern**: Reference throughoutTDD via checkboxes marked [x] as work completes
+- **Content**: 1-2 paragraphs per layer, decision rationale, tech choices, BDD mapping, concrete checkboxes
+- **Used By**: All TDD agents (track progress via checkboxes)
+- **Status**: 📝 Living document (checkboxes updated during development)
 
 #### `docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/plan-approval.yaml` (Human Validation Gate)
 - **Purpose**: Framework 2.0.0 approval gate preventing TDD execution until plan validated
@@ -627,12 +579,12 @@ docs/05-implementation/
 - **Used By**: orchestrator (blocking TDD until approved), dev-lead (reviewing layers)
 - **Status**: 🔐 Blocks TDD execution until status = approved
 
-#### `docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/bdd-scenarios/` (BDD Feature Files)
+#### `docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/features/` (BDD Feature Files)
 - **Purpose**: Executable specifications (Gherkin/BDD syntax) driving TDD implementation
-- **Update Pattern**: Add new scenarios as RED phase reveals missing feature needs
-- **Contents**: Feature files (e.g., `domain-us-XXX.feature`) + step definitions (e.g., `domain-us-XXX.steps.ts`)
-- **Used By**: dev-tdd-red (driver for test design), dev-tdd-green (validation against scenarios)
-- **Status**: ⭐ Grows during implementation (new scenarios per cycle)
+- **Update Pattern**: Created by BA agent during story elaboration
+- **Contents**: Feature files (e.g., `user-authentication.feature`, `profile-management.feature`)
+- **Used By**: All TDD agents (validate implementation against BDD scenarios)
+- **Status**: ⭐ Static after BA creates; drives implementation
 
 ### Commit Message Conventions
 
@@ -651,7 +603,7 @@ Example: DOC-PHASE-5-API: Design REST endpoints for auth service
 
 #### Implementation Phase (Phase 8 - TDD)
 ```
-TDD-<US-REF>-<PHASE>-<CYCLE>: [description]
+TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD: [description]
 Example: TDD-US-xxx-RED-1: Write failing test for user tier sync
 Example: TDD-US-xxx-GREEN-1: Implement user tier sync in service layer
 Example: TDD-US-xxx-REFACTOR-1: Extract tier sync logic to separate method
@@ -662,7 +614,7 @@ Example: TDD-US-xxx-REFACTOR-1: Extract tier sync logic to separate method
 - Include cycle number (1, 2, 3, etc.) for traceability
 - Message should describe what was tested/implemented/improved
 
-### Handoff Chain & File Transitions
+### Agent Coordination & Progress Tracking
 
 ```
 Phase 0: Assessment
@@ -671,20 +623,23 @@ Phase 1-7: Documentation
 ↓ (outputs: docs/01-requirements/, docs/02-architecture/, docs/03-testing/, docs/04-planning/)
 Phase 8: Implementation (TDD)
 ├─ RED phase
-│  ├─ Input: Feature files + implementation-plan.md
-│  ├─ Output: Failing tests + handoff.md (overwrite)
+│  ├─ Input: Features from features/ + implementation-plan.md checkboxes
+│  ├─ Output: Failing tests
+│  ├─ Update: Mark checkbox [x] in implementation-plan.md
 │  ├─ Commit: TDD-<US>-RED-<CYCLE>
 │  └─ Next: dev-tdd-green.agent
 ├─ GREEN phase
-│  ├─ Input: handoff.md + failing tests
-│  ├─ Output: Passing implementation + handoff.md (overwrite)
+│  ├─ Input: Failing tests + implementation-plan.md constraints
+│  ├─ Output: Passing implementation
+│  ├─ Update: Mark checkbox [x] in implementation-plan.md
 │  ├─ Commit: TDD-<US>-GREEN-<CYCLE>
 │  └─ Next: dev-tdd-refactor.agent
 └─ REFACTOR phase
-   ├─ Input: handoff.md + passing code
-   ├─ Output: Improved code + handoff.md (overwrite)
+   ├─ Input: Passing code + implementation-plan.md constraints
+   ├─ Output: Improved code quality
+   ├─ Update: Mark checkbox [x] in implementation-plan.md
    ├─ Commit: TDD-<US>-REFACTOR-<CYCLE>
-   └─ Next: dev-tdd.agent (new cycle or story)
+   └─ Next: dev-tdd.agent (new checkpoint or story)
 ```
 
 ---
@@ -695,129 +650,33 @@ Phase 8: Implementation (TDD)
 
 ### Overview
 
-Starting with Framework 2.0.0, all agent actions are logged to immutable daily files for audit trails, debugging, and process improvement. Logs are scoped by agent type:
+All TDD progress is tracked via checkboxes in `implementation-plan.md`. Git commits provide the audit trail. No separate action logs are needed.
 
-- **TDD Agents** (dev-tdd, dev-tdd-red, dev-tdd-green, dev-tdd-refactor): Per-story logs in `/docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/logs/`
-- **Other Agents** (orchestrator, pm, po, ba, architect, ux, dev-lead, qa): Root-level logs in `/docs/99-operations/logs/`
+### Progress Tracking
 
-### Log File Structure
+**Progress tracked in**: `/docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/implementation-plan.md`
 
-#### TDD Agent Logs (Per-Story, Epic-Based)
-
-**Location**: `/docs/05-implementation/epics/epic-XX/user-stories/<US-REF>/logs/agent-{agent_name}-YYYYMMDD.md`
-
-**Examples**:
-- `/docs/05-implementation/epics/epic-01/user-stories/us-001/logs/agent-dev-tdd-20260317.md`
-- `/docs/05-implementation/epics/epic-01/user-stories/us-001/logs/agent-dev-tdd-red-20260317.md`
-- `/docs/05-implementation/epics/epic-01/user-stories/us-001/logs/agent-dev-tdd-green-20260317.md`
-- `/docs/05-implementation/epics/epic-01/user-stories/us-001/logs/agent-dev-tdd-refactor-20260317.md`
-
-#### Other Agent Logs (Root-Level)
-
-**Location**: `/docs/99-operations/logs/agent-{agent_name}-YYYYMMDD.md`
-
-**Examples**:
-- `/docs/99-operations/logs/agent-orchestrator-20260317.md`
-- `/docs/99-operations/logs/agent-dev-lead-20260317.md`
-- `/docs/99-operations/logs/agent-pm-20260317.md`
-- `/docs/99-operations/logs/agent-po-20260317.md`
-- `/docs/99-operations/logs/agent-ba-20260317.md`
-- `/docs/99-operations/logs/agent-architect-20260317.md`
-- `/docs/99-operations/logs/agent-ux-20260317.md`
-- `/docs/99-operations/logs/agent-qa-20260317.md`
-
-### Log Entry Format
-
-Each agent action is appended to the daily log file with ISO8601 timestamp and structured metadata:
-
+**Checkbox Format**:
 ```markdown
-## {TIMESTAMP} | Phase: {RED|GREEN|REFACTOR|...} | Cycle: {cycle_number}
+## Layer 1: Database & Domain Model
 
-- **Status**: {success|needs-review|blocked}
-- **Layer**: {Layer 1|Layer 2|...} or "N/A"
-- **Files touched**: [path1, path2, ...]
-- **Handoff artifact**: #file:tdd-execution/{cycle}/{cycle}-HO-{PHASE}.{json|md}
-- **Rationale**: {short bullets explaining decisions}
-- **Next step**: {awaiting → to_agent|ready_for_review}
+- [x] Create migration: `migrations/001_create_users_table.sql`
+- [x] Create model: `models/User.ts`
+- [ ] Write unit test: `models/__tests__/User.test.ts`
+- [ ] Verify BDD scenario passes: "User data persists correctly"
 ```
 
-**Example TDD Agent Entry**:
-```markdown
-## 2026-03-17T09:45:33Z | Phase: RED | Cycle: 001
+**Audit Trail**: Git commit history provides complete trace:
 
-- **Status**: success
-- **Layer**: Layer 1 (Database & Domain Model)
-- **Files touched**: src/tests/BDD/features/US-xxx.feature, src/Application/Interfaces/IUserTierService.cs
-- **Handoff artifact**: #file:tdd-execution/001/001-HO-RED.json
-- **Rationale**: Created failing test for user.tier sync with subscription.tier. BDD scenario validates tier consistency.
-- **Next step**: awaiting → dev-tdd-green
+```bash
+git log --oneline --grep="TDD-US-001"
+# TDD-US-001-REFACTOR-03: Extract validation logic  
+# TDD-US-001-GREEN-03: Implement UserService.validate()
+# TDD-US-001-RED-03: Write failing test for validation
+# TDD-US-001-REFACTOR-02: Improve error messages
+# TDD-US-001-GREEN-02: Implement UserRepository.create()
+# TDD-US-001-RED-02: Write failing test for user creation
 ```
-
-**Example Non-TDD Agent Entry**:
-```markdown
-## 2026-03-17T08:30:15Z | Story: US-042 | Action: Plan Created
-
-- **Status**: success
-- **Scope**: Layer 1-4 (Full Implementation)
-- **Files touched**: docs/05-implementation/epics/EPIC-001/user-stories/US-042/implementation-plan.md, docs/05-implementation/epics/EPIC-001/user-stories/US-042/plan-approval.yaml
-- **Rationale**: Initial plan created; awaiting architect review before approval
-- **Next step**: awaiting → architect
-```
-
-### Log File Conventions
-
-1. **One file per agent per day**: Prevents file bloat, maintains chronological order
-2. **Append-only**: Never edit existing entries; only append new events
-3. **ISO8601 timestamps**: Use UTC timezone (`YYYY-MM-DDTHH:MM:SSZ`)
-4. **Immutable records**: Once written, log entries are never modified
-5. **Daily rotation**: New file created each day (YYYYMMDD format)
-
-### TDD Execution Index vs Action Logs
-
-**Distinction**:
-- **`tdd-execution.md`**: High-level cycle summary table (links to handoffs, status, brief summary)
-- **Action logs (`logs/agent-*.md`)**: Detailed agent actions, rationale, and decisions
-
-**Example tdd-execution.md**:
-```markdown
-| Cycle | Phase | Started | Handoff | Status | Summary |
-|-------|-------|---------|---------|--------|---------|
-| 001 | RED | 2026-03-17T09:45 | [001-HO-RED.json](tdd-execution/001/001-HO-RED.json) | ✅ Passing | User tier validation test (Layer 1) |
-| 001 | GREEN | 2026-03-17T10:12 | [001-HO-GREEN.json](tdd-execution/001/001-HO-GREEN.json) | ✅ Passing | Service layer implements tier sync |
-| 001 | REFACTOR | 2026-03-17T10:45 | [001-HO-REFACTOR.md](tdd-execution/001/001-HO-REFACTOR.md) | ✅ Merged | Extract repository pattern, error handling |
-```
-
-**Corresponding action log** (`logs/agent-dev-tdd-red-20260317.md`):
-```markdown
-## 2026-03-17T09:45:33Z | Phase: RED | Cycle: 001
-
-- **Status**: success
-- **Layer**: Layer 1 (Database & Domain Model)
-- **Files touched**: src/tests/BDD/features/US-xxx.feature, src/Application/Interfaces/IUserTierService.cs
-- **Handoff artifact**: #file:tdd-execution/001/001-HO-RED.json
-- **Rationale**: 
-  - Created failing test for user.tier sync with subscription.tier
-  - BDD scenario validates tier consistency across domain models
-  - Test expects UserTierService to throw exception when tiers mismatch
-- **Next step**: awaiting → dev-tdd-green
-```
-
-### Use Cases
-
-1. **Debugging**: Trace exact agent decisions and file changes during TDD cycles
-2. **Audit**: Verify compliance with workflow sequencing and handoff patterns
-3. **Process Improvement**: Identify bottlenecks, repeated failures, or agent inefficiencies
-4. **Knowledge Transfer**: Onboard new team members by reviewing historical decisions
-5. **Rollback**: Recreate state by replaying agent actions from logs
-
-### Maintenance
-
-- **Retention**: Archive logs older than 90 days to prevent context bloat
-- **Review**: Weekly review of action logs for process improvements
-- **Validation**: Ensure agents append logs after every significant action
-- **Cleanup**: Delete logs when user stories are archived or deprecated
-
----
 
 ## Project Setup Checklist
 

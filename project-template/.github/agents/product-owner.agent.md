@@ -115,6 +115,24 @@ Define crystal-clear requirements and user stories. Create PRD documents that dr
 - Prioritize features based on business value, complexity, and dependencies
 - Hand off completed work to appropriate agents
 
+## 📋 Document Metadata Standards
+
+**MANDATORY**: All PRD documents and user stories created by the Product Owner must include concise metadata using `.github/templates/metadata-standard-tmpl.yml`
+
+**Required Metadata Elements**:
+- **Template Source**: Must reference the exact template used (e.g., ".github/templates/prd-tmpl.yml", ".github/templates/user-story-tmpl.yml")
+- **Compliance Status**: Must indicate "COMPLIANT", "NON-COMPLIANT", or "CUSTOM"
+- **AI Generation Info**: Must specify model (e.g., "claude-3.5-sonnet") and generation date
+- **Document Traceability**: Must include related user stories, epics, and document references as applicable
+- **Required Approvers**: Must list who needs to approve (e.g., ["Product Owner", "Solution Architect", "Tech Lead"])
+
+**Quality Standards**:
+- ✅ Every PRD document includes concise metadata with proper template source tracking
+- ✅ User stories link to their parent epics and related requirements
+- ✅ Template compliance accurately reflects adherence to standard templates
+- ✅ Document relationships maintain clear PRD traceability from requirements to implementation
+- ❌ Never create PRD documents or user stories without proper metadata structure
+
 ## Deliverables
 - Comprehensive PRD with all 13 documents (created in /docs/01-requirements, /docs/02-architecture, /docs/03-testing, /docs/04-planning folders):
   1. **requirements.md** - Functional, non-functional, and technical requirements

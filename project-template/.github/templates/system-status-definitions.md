@@ -62,8 +62,7 @@ Used to track the progression of work items (stories, tasks, features) through t
   - → NOT_STARTED (if blocked or deprioritized; with reason)
 - **Used in Templates**:
   - user-stories.md (status field)
-  - layer-completion-checklist.md (layer status)
-  - tdd-execution.md (cycle tracking)
+  - implementation-plan.md (checkbox progress tracking)
   - project-status.md (epic progress)
 - **Example in YAML**:
   ```yaml
@@ -389,7 +388,7 @@ approval_transitions:
 - ✅ Backward only if work found to be inadequate/blocked
 - ✅ Always document "why" when transitioning backward
 - ✅ Update timestamp on every transition
-- ✅ Log transitions in append-only audit trail (tdd-execution.md, etc.)
+- ✅ Log transitions in git commit history (TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD messages)
 
 ---
 

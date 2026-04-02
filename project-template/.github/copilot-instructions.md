@@ -59,32 +59,27 @@ docs/
         └── <EPIC-REF>/       # Epic identifier (e.g., AUTH-001)
             └── user-stories/
                 └── <US-REF>/ # User story identifier (e.g., US-001)
-                    ├── <US-REF>.md                          # Story definition (copied from PRD)
-                    ├── implementation-plan.md               # FROZEN after approval (reference)
-                    ├── implementation-plan-v1.md            # IMMUTABLE snapshot (historical)
-                    ├── plan-approval.yaml                   # Human validation gate
-                    ├── bdd-scenarios/                       # BDD feature files (per layer)
-                    ├── tdd-execution.md                     # APPEND-ONLY cycle summary
-                    ├── logs/                                # Per-story agent action logs
-                    │   ├── agent-dev-tdd-red-YYYYMMDD.md
-                    │   ├── agent-dev-tdd-green-YYYYMMDD.md
-                    │   └── agent-dev-tdd-refactor-YYYYMMDD.md
-                    └── tdd-execution/                       # Per-cycle handoff artifacts
-                        ├── 001/
-                        │   ├── 001-HO-RED.json
-                        │   ├── 001-HO-GREEN.json
-                        │   └── 001-HO-REFACTOR.md
-                        └── 002/
-                            ├── 002-HO-RED.json
-                            ├── 002-HO-GREEN.json
-                            └── 002-HO-REFACTOR.md
+                    ├── description.md          # Story definition: requirements, acceptance criteria, DoD
+                    ├── implementation-plan.md  # Layer-by-layer guide with checkboxes (TDD execution)
+                    ├── plan-approval.yaml      # Human validation gate (approved before TDD starts)
+                    └── features/               # BDD scenarios from BA agent (Given/When/Then)
+                        ├── user-authentication.feature
+                        └── profile-management.feature
 ```
 
 ### Key Path Distinctions
 - **PRD References**: Use `/docs/01-requirements/user-stories.md` for immutable specifications
 - **Implementation Status**: Use `/docs/05-implementation/user-stories.md` for current progress tracking (SSOT)
 - **Epic Structure**: Always include `/epics/<EPIC-REF>/user-stories/<US-REF>/` when referencing implementation artifacts
-- **Agent Logs**: TDD agents log to `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-{name}-YYYYMMDD.md`
+- **Agent Logs**: **MANDATORY for ALL agents** - See comprehensive logging rules in `.github/instructions/agent-logging.instructions.md`
+  - **Assessment Phase**: `/logs/00-assessment/agent-{name}-YYYYMMDD.md`
+  - **Requirements Phase**: `/logs/01-requirements/agent-{name}-YYYYMMDD.md`
+  - **Architecture Phase**: `/logs/02-architecture/agent-{name}-YYYYMMDD.md`
+  - **Testing Phase**: `/logs/03-testing/agent-{name}-YYYYMMDD.md`
+  - **Planning Phase**: `/logs/04-planning/agent-{name}-YYYYMMDD.md`
+  - **Implementation (TDD)**: `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-{name}-YYYYMMDD.md`
+  - **Implementation (Non-TDD)**: `/logs/05-implementation/agent-{name}-YYYYMMDD.md`
+  - **Cross-Phase**: `/logs/agent-{name}-YYYYMMDD.md`
 - **Plan Snapshots**: Immutable versions created when plans change: `implementation-plan-v1.md`, `implementation-plan-v2.md`, etc.
 
 ## �📋 Critical Document Patterns
@@ -128,21 +123,12 @@ docs/04-planning/
 **Phase 8 Implementation Outputs** (ONE entry per user story):
 ```
 docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/
-├── US-001.md                  # Story definition (copied from PRD)
-├── implementation-plan.md     # Frozen after creation (reference only)
-├── api-design.md              # API contracts (if applicable)
-├── us-completition-checklist.md # DoD checklist (QA validation)
-├── tdd-execution.md           # APPEND-ONLY cycle summary (TDD-Orchestrator)
-├── bdd-scenarios/             # BDD feature files (entry point for TDD)
-└── tdd-execution/             # Per-cycle handoff folders
-    ├── 001/                   # Cycle 1: RED → GREEN → REFACTOR
-    │   ├── 001-HO-RED.json
-    │   ├── 001-HO-GREEN.json
-    │   └── 001-HO-REFACTOR.md
-    └── 002/                   # Cycle 2 (if needed)
-        ├── 002-HO-RED.json
-        ├── 002-HO-GREEN.json
-        └── 002-HO-REFACTOR.md
+├── description.md             # Story definition: requirements, acceptance criteria, DoD
+├── implementation-plan.md     # Layer-by-layer guide with checkboxes (TDD execution)
+├── plan-approval.yaml         # Human validation gate (approved before TDD starts)
+└── features/                  # BDD scenarios from BA agent (Given/When/Then)
+    ├── user-authentication.feature
+    └── profile-management.feature
 ```
 
 **Git commits**: 
@@ -150,20 +136,77 @@ docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/
   Example: `ASSESSMENT-PHASE-0: Client maturity analysis and prerequisites request`
 - Documentation phase: `DOC-PHASE-[1-7]-[STEP]: [description]`  
   Example: `DOC-PHASE-2-PERSONAS: Create user personas from stakeholder interviews`
-- TDD phase: `TDD-<US-REF>-<PHASE>-<CYCLE>: [description]`  
+- TDD phase: `TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD: [description]` (date in YYYYMMDD format)  
   Example: `TDD-US-001-RED-18: Write failing test for user tier sync`
 
 ## 🔄 TDD Workflow (Non-Negotiable Sequencing)
 
-**RED Phase** → Write failing test, create `<CYCLE>-HO-RED.json`, commit  
-**GREEN Phase** → Implement minimal code, create `<CYCLE>-HO-GREEN.json`, commit  
-**REFACTOR Phase** → Improve quality, create `<CYCLE>-HO-REFACTOR.md`, append to `tdd-execution.md` summary, commit
+**RED Phase** → Write failing test, mark checkbox in implementation-plan.md, commit  
+**GREEN Phase** → Implement minimal code, mark checkbox in implementation-plan.md, commit  
+**REFACTOR Phase** → Improve quality, mark checkbox in implementation-plan.md, commit
 
 **Rules**:
 - One active cycle per story (no parallel RED/GREEN/REFACTOR)
 - One active story in TDD at a time
 - BDD scenarios from `features/` drive implementation
 - All tests must pass before moving to next phase
+
+---
+
+## 📋 Agent Logging (MANDATORY - No Exceptions)
+
+**⚠️ UNBREAKABLE RULE: ALL agent interactions MUST be logged.**
+
+### Core Logging Requirements
+
+**Every agent action requires**:
+1. **Log file creation**: Use template `.github/templates/agent-log-tmpl.md`
+2. **Phase-specific path**: Log to appropriate PDLC phase directory
+3. **Real-time logging**: Log immediately after action completes
+4. **Complete entry**: Include all required fields (timestamp, action, status, context, outcome, handoff)
+
+### Log Location by Phase
+
+| Phase | Path Pattern |
+|-------|-------------|
+| Assessment | `/logs/00-assessment/agent-{name}-YYYYMMDD.md` |
+| Requirements | `/logs/01-requirements/agent-{name}-YYYYMMDD.md` |
+| Architecture | `/logs/02-architecture/agent-{name}-YYYYMMDD.md` |
+| Testing | `/logs/03-testing/agent-{name}-YYYYMMDD.md` |
+| Planning | `/logs/04-planning/agent-{name}-YYYYMMDD.md` |
+| Implementation (TDD) | `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-{name}-YYYYMMDD.md` |
+| Implementation (Non-TDD) | `/logs/05-implementation/agent-{name}-YYYYMMDD.md` |
+| Cross-Phase | `/logs/agent-{name}-YYYYMMDD.md` |
+
+### Quick Log Entry Template
+
+```markdown
+## {ISO8601_TIMESTAMP} | Action: {DESCRIPTION} | Status: {success|failure|partial|blocked}
+
+- **Phase**: {PDLC_PHASE}
+- **Epic/Story**: {EPIC_REF}/{US_REF} (if applicable)
+- **Layer/Cycle**: {LAYER}/{CYCLE} (if applicable)
+- **Files**: [{changed_files}]
+- **PRU**: ~{estimate}
+- **Status**: {status}
+- **Changes**: {brief_description}
+- **Blockers**: {none_or_description}
+- **Next**: {next_agent} (if handoff)
+
+---
+```
+
+### Validation Enforcement
+
+**Orchestrator validates logs at**:
+- Every agent handoff
+- Every phase transition
+- Every quality gate
+- End of day (daily summary)
+
+**Missing logs = non-compliant action** (requires remediation)
+
+**Full Documentation**: See `.github/instructions/agent-logging.instructions.md` for comprehensive logging standards, examples, and enforcement mechanisms.
 
 ---
 
@@ -198,11 +241,11 @@ compatible_with:
 **Agent actions are logged to immutable daily files** for audit trails and debugging:
 
 **TDD Agents** (per-story):
-- Location: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-{agent_name}-YYYYMMDD.md`
+- Location: `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-{agent_name}-YYYYMMDD.md`
 - Examples: `agent-dev-tdd-red-20260317.md`, `agent-dev-tdd-green-20260317.md`
 
 **Other Agents** (root-level):
-- Location: `/docs/logs/agent-{agent_name}-YYYYMMDD.md`
+- Location: `/logs/agent-{agent_name}-YYYYMMDD.md`
 - Examples: `agent-orchestrator-20260317.md`, `agent-dev-lead-20260317.md`
 
 **Log Entry Format** (ISO8601 timestamps, append-only):
@@ -212,7 +255,7 @@ compatible_with:
 - **Status**: success
 - **Layer**: Layer 1 (Database & Domain Model)
 - **Files touched**: [file1.cs, file2.sql]
-- **Handoff artifact**: #file:tdd-execution/001/001-HO-RED.json
+- **Progress tracking**: Checkboxes in implementation-plan.md marked [x] as tasks complete
 - **Rationale**: Created failing test for tier sync validation
 - **Next step**: awaiting → dev-tdd-green
 ```
@@ -308,7 +351,7 @@ compatible_with:
 | `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan-v{N}.md` | IMMUTABLE plan snapshots (historical) | Created when plan modified |
 | `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-approval.yaml` | Human validation gate for TDD execution | Created by dev-lead, updated on changes |
 | `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-{agent}-YYYYMMDD.md` | Per-story TDD agent action logs | Append-only daily logs |
-| `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution.md` | Cycle summary audit trail | Append-only after each cycle |
+| `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` | Implementation plan with checkboxes | Update checkboxes as work completes |
 | `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<CYCLE>/*-HO-*.json` | Phase-specific handoffs | Create once per phase |
 
 ## 🚀 PDLC Workflow Sequence
@@ -397,7 +440,7 @@ override_request:
 
 When context is tight:
 - Read only the current layer section from implementation-plan.md
-- Reference tdd-execution.md for cycle history and latest cycle folder for detailed handoff context
+- Read implementation-plan.md checkboxes for current progress
 - Use `grep_search` to find specific patterns instead of reading full files
 - Delegate read-only research to `runSubagent` (never for writing/editing)
 ---

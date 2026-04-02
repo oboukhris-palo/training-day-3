@@ -113,7 +113,7 @@
 ### Ready for Next Layer?
 - [ ] **All DoD Criteria Met**: Every checkbox above is ✅
 - [ ] **No Open Blockers**: All issues resolved or escalated
-- [ ] **Handoff Context Complete**: {US-REF}-HANDOFF.md updated with layer results
+- [ ] **Progress Tracking Complete**: All layer checkboxes [x] in implementation-plan.md
 - [ ] **BDD Test Suite Stable**: Test runs consistently green
 
 ---

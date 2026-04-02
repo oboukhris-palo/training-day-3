@@ -57,7 +57,7 @@ Next: Hand off to TDD-GREEN for validation implementation
 - `/docs/05-implementation/user-stories.md` (implementation status)
 - `/docs/05-implementation/current-sprint.md` (active sprint)
 - `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` (today's tasks)
-- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>-HANDOFF.md` (current context)
+- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` (current progress checkboxes)
 
 ## Orchestrator Instructions
 
@@ -65,7 +65,7 @@ Next: Hand off to TDD-GREEN for validation implementation
 2. **Find in-progress story**: Look for status "In Progress" in user-stories.md
 3. **Get layer context**: Read implementation-plan.md for current layer assignment  
 4. **Check BDD status**: Count passing vs total BDD assertions for current layer
-5. **Scan for blockers**: Check handoff files for any escalated issues
+5. **Scan for blockers**: Check implementation-plan.md and plan-approval.yaml for any blocked tasks
 6. **Extract today's tasks**: Get "Today's TDD Checklist" from current layer section
 7. **Format output**: Use compact bullet format, not paragraphs
 
@@ -78,6 +78,6 @@ Next: Hand off to TDD-GREEN for validation implementation
 
 ## Integration Points
 - Uses existing `/docs/` structure
-- Compatible with handoff.schema.json
+- Follows simplified progress tracking pattern (checkboxes + git commits)
 - References validation-rules.yml for quality checks
 - Works with existing agent prompts

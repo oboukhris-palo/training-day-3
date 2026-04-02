@@ -19,8 +19,8 @@ This document provides systematic instructions for organizing Product Requiremen
 **Objective**: Establish the foundational folder hierarchy under PRD architecture that organizes User Stories by their parent Epic.
 
 **Activities**:
-- Read `docs/01-requirements/user-stories.md` to identify all Epics (E001, E002, etc.) and their associated User Stories
-- Create Epic folder: `docs/05-implementation/epics/epic-XX/` (where XX is the Epic number, e.g., epic-01, epic-02)
+- Read `docs/01-requirements/user-stories.md` to identify all Epics (EPIC-001, EPIC-002, etc.) and their associated User Stories
+- Create Epic folder: `docs/05-implementation/epics/epic-01/` (where 01 is zero-padded Epic number, e.g., epic-01, epic-02)
 - Create `user-stories/` subfolder within each Epic folder
 - Ensure folder names use lowercase kebab-case per naming conventions
 - Document Epic-to-User-Story mapping for traceability
@@ -64,11 +64,11 @@ docs/05-implementation/epics/
 
 **User Story Folder Example**:
 ```
-docs/prd/architecture/epic-01/user-stories/
+docs/05-implementation/epics/epic-01/user-stories/
 ├── us-001/                     # US-001: SSO Authentication via Entra ID
 └── us-002/                     # US-002: RBAC Implementation
 
-docs/prd/architecture/epic-02/user-stories/
+docs/05-implementation/epics/epic-02/user-stories/
 ├── us-003/                     # US-003: Display Research Packages
 ├── us-004/                     # US-004: Enter Votes
 ├── us-005/                     # US-005: Add Justifications
@@ -83,8 +83,8 @@ docs/prd/architecture/epic-02/user-stories/
 **Objective**: Create standardized `description.md` file for each User Story containing complete story definition from PRD.
 
 **Activities**:
-- Copy User Story content from `docs/prd/user-stories.md`
-- Create `description.md` in User Story folder: `docs/prd/architecture/epic-XX/user-stories/us-YYY/description.md`
+- Copy User Story content from `docs/01-requirements/user-stories.md`
+- Create `description.md` in User Story folder: `docs/05-implementation/epics/epic-XX/user-stories/us-YYY/description.md`
 - Include all sections: Story statement, Acceptance Criteria, BDD scenarios references, Dependencies, Technical Constraints
 - Add metadata: Story ID, Epic reference, Story points, Priority, Status
 - Link back to original PRD location for traceability
@@ -94,7 +94,7 @@ docs/prd/architecture/epic-02/user-stories/
 - ✅ Content matches User Story definition in PRD (no modifications or interpretations)
 - ✅ All acceptance criteria copied verbatim from PRD
 - ✅ Includes metadata section at top with Story ID, Epic, and status
-- ✅ Contains links to related BDD scenarios in `docs/user-stories/<US-REF>/bdd-scenarios/`
+- ✅ Contains links to related BDD scenarios in `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/bdd-scenarios/`
 
 **description.md Template Structure**:
 ```markdown
@@ -119,7 +119,7 @@ As a [user role], I want to [action], so that [benefit].
 - **AC3**: [Criterion description]
 
 ## BDD Scenarios
-See: `docs/user-stories/<US-REF>/bdd-scenarios/*.feature`
+See: `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/bdd-scenarios/*.feature`
 
 ## Dependencies
 - **Depends on**: US-XXX (prerequisite stories)
@@ -132,9 +132,9 @@ See: `docs/user-stories/<US-REF>/bdd-scenarios/*.feature`
 - [Security requirements]
 
 ## Related Documentation
-- PRD: [docs/prd/user-stories.md](../../user-stories.md#us-xxx)
+- PRD: [docs/01-requirements/user-stories.md](../../../01-requirements/user-stories.md#us-xxx)
 - Implementation Plan: [implementation-plan.md](./implementation-plan.md)
-- BDD Scenarios: [docs/user-stories/<US-REF>/bdd-scenarios/](../../../../user-stories/<US-REF>/bdd-scenarios/)
+- BDD Scenarios: [docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/bdd-scenarios/](./bdd-scenarios/)
 ```
 
 ---
@@ -145,7 +145,7 @@ See: `docs/user-stories/<US-REF>/bdd-scenarios/*.feature`
 **Activities**:
 - Analyze User Story acceptance criteria and technical constraints
 - Design implementation approach using layer architecture pattern (Database → Service → API → Frontend)
-- Create `implementation-plan.md` in User Story folder: `docs/prd/architecture/epic-XX/user-stories/us-YYY/implementation-plan.md`
+- Create `implementation-plan.md` in User Story folder: `docs/05-implementation/epics/epic-XX/user-stories/us-YYY/implementation-plan.md`
 - Document each layer with: Objectives, Components, BDD scenario mapping, Testing strategy, Estimated complexity
 - Mark as **DRAFT** status requiring human validation before TDD execution
 - Include placeholders for validation checkpoints
@@ -181,7 +181,7 @@ approval_date: YYYY-MM-DD
 
 ## Architecture Pattern
 - **Pattern**: Layered Architecture (Database → Service → API → Frontend)
-- **BDD-Driven**: Implementation follows BDD scenarios from `docs/user-stories/<US-REF>/bdd-scenarios/`
+- **BDD-Driven**: Implementation follows BDD scenarios from `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/bdd-scenarios/`
 - **TDD Cycles**: Each layer implemented via RED → GREEN → REFACTOR
 
 ---
@@ -303,8 +303,8 @@ approval_date: YYYY-MM-DD
 
 **Related Documentation**:
 - Description: [description.md](./description.md)
-- BDD Scenarios: [docs/user-stories/<US-REF>/bdd-scenarios/](../../../../user-stories/<US-REF>/bdd-scenarios/)
-- Architecture Design: [docs/prd/architecture-design.md](../../architecture-design.md)
+- BDD Scenarios: [docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/bdd-scenarios/](./bdd-scenarios/)
+- Architecture Design: [docs/02-architecture/architecture-design.md](../../../02-architecture/architecture-design.md)
 ```
 
 ---
@@ -470,11 +470,11 @@ docs/prd/architecture/epic-01/user-stories/us-001/
 ---
 
 ### 7. Linking to Existing TDD Execution Folders
-**Objective**: Maintain traceability between PRD architecture documentation and actual TDD execution artifacts in `docs/user-stories/` hierarchy.
+**Objective**: Maintain traceability between PRD requirements documentation and actual TDD execution artifacts in `docs/05-implementation/epics/` hierarchy.
 
 **Activities**:
 - Add cross-reference links in PRD implementation plans to TDD execution folders
-- Link from `docs/prd/architecture/epic-XX/user-stories/us-YYY/implementation-plan.md` to `docs/user-stories/US-YYY/`
+- Link from `docs/05-implementation/epics/epic-XX/user-stories/us-YYY/implementation-plan.md` to execution artifacts
 - Ensure bidirectional links: PRD → TDD execution AND TDD execution → PRD
 - Update links when folder structure changes or stories move between epics
 - Use relative paths for portability across environments
@@ -491,26 +491,25 @@ docs/prd/architecture/epic-01/user-stories/us-001/
 
 ## TDD Execution
 
-**Execution Folder**: [docs/user-stories/US-001/](../../../../user-stories/US-001/)
+**Execution Folder**: [docs/05-implementation/epics/<EPIC-REF>/user-stories/us-001/](./)
 
 **Artifacts**:
-- BDD Scenarios: [bdd-scenarios/](../../../../user-stories/US-001/bdd-scenarios/)
-- TDD Cycles: [tdd-execution/](../../../../user-stories/US-001/tdd-execution/)
-- Execution Summary: [tdd-execution.md](../../../../user-stories/US-001/tdd-execution.md)
-- QA Checklist: [us-completition-checklist.md](../../../../user-stories/US-001/us-completition-checklist.md)
+- BDD Scenarios: [features/](./features/)
+- Implementation Plan with Checkboxes: [implementation-plan.md](./implementation-plan.md)
+- Plan Approval Gate: [plan-approval.yaml](./plan-approval.yaml)
 
-**Status**: See [docs/user-stories/user-stories.md](../../../../user-stories/user-stories.md) for current implementation status
+**Status**: See [docs/05-implementation/user-stories.md](../../user-stories.md) for current implementation status
 ```
 
-**Cross-Reference Example in docs/user-stories/US-001/description.md**:
+**Cross-Reference Example in docs/05-implementation/epics/epic-01/user-stories/us-001/description.md**:
 ```markdown
 ---
 
 ## PRD Documentation
 
 **Epic**: Epic 1 - Authentication  
-**Implementation Plan**: [docs/prd/architecture/epic-01/user-stories/us-001/implementation-plan.md](../../prd/architecture/epic-01/user-stories/us-001/implementation-plan.md)  
-**Story Description**: [docs/prd/architecture/epic-01/user-stories/us-001/description.md](../../prd/architecture/epic-01/user-stories/us-001/description.md)
+**Implementation Plan**: [implementation-plan.md](./implementation-plan.md)  
+**Story Description**: [description.md](./description.md)
 ```
 
 ---
@@ -520,26 +519,27 @@ docs/prd/architecture/epic-01/user-stories/us-001/
 **Output Location**: Store completed User Story documentation in the following hierarchy:
 
 ```
-docs/prd/architecture/epic-XX/user-stories/us-YYY/
-├── description.md              # Story definition from PRD
-├── implementation-plan.md      # Current implementation plan
-├── implementation-plan-v1.md   # First version snapshot (if evolved)
-├── implementation-plan-v2.md   # Second version snapshot (if evolved)
-└── plan-approval.yaml          # Approval gate status (Framework 2.0.0)
+docs/05-implementation/epics/epic-XX/user-stories/us-YYY/
+├── description.md              # Story definition: requirements, acceptance criteria, DoD
+├── implementation-plan.md      # Layer-by-layer guide with checkboxes
+├── plan-approval.yaml          # Human validation gate (approved before TDD starts)
+└── features/                   # BDD scenarios from BA agent (Given/When/Then)
+    ├── user-authentication.feature
+    └── profile-management.feature
 ```
 
 **Source Materials**:
-- **PRD User Stories**: `docs/prd/user-stories.md` (Epic and User Story definitions)
-- **Architecture Design**: `docs/prd/architecture-design.md` (Technical constraints)
-- **Tech Spec**: `docs/prd/tech-spec.md` (API contracts, database schemas)
-- **BDD Scenarios**: `docs/user-stories/<US-REF>/bdd-scenarios/*.feature` (Acceptance criteria)
+- **PRD User Stories**: `docs/01-requirements/user-stories.md` (Epic and User Story definitions)
+- **Architecture Design**: `docs/02-architecture/architecture-design.md` (Technical constraints)
+- **Tech Spec**: `docs/02-architecture/tech-spec.md` (API contracts, database schemas)
+- **BDD Scenarios**: `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/features/*.feature` (Acceptance criteria)
 
 ---
 
 ## Quality Assurance Process
 
 ### Pre-Generation Validation
-- ✅ All Epics identified from `docs/prd/user-stories.md` with correct numbering
+- ✅ All Epics identified from `docs/01-requirements/user-stories.md` with correct numbering
 - ✅ All User Stories mapped to correct parent Epic
 - ✅ Folder naming follows lowercase kebab-case convention
 - ✅ No duplicate User Story folders across different Epics
@@ -563,11 +563,11 @@ docs/prd/architecture/epic-XX/user-stories/us-YYY/
 
 Epic-Based User Story documentation serves as foundational inputs for:
 
-- **TDD Execution** Implementation plans guide RED → GREEN → REFACTOR cycles in `docs/user-stories/<US-REF>/tdd-execution/` folders
-- **BDD Validation** Acceptance criteria from description.md drive BDD feature file creation in `docs/user-stories/<US-REF>/bdd-scenarios/`
-- **QA Validation** Implementation plans define Definition of Done checklists for `docs/user-stories/<US-REF>/us-completition-checklist.md`
+- **TDD Execution** Implementation plans guide RED → GREEN → REFACTOR cycles via checkboxes in `implementation-plan.md`
+- **BDD Validation** BA agent creates BDD feature files in `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/features/`
+- **QA Validation** Definition of Done included in `description.md` drives acceptance testing
 - **Sprint Planning** PM agent uses Epic-organized stories for sprint scope selection and velocity tracking
-- **Architecture Review** Architect agent validates technical approach in implementation plans during approval checkpoints
+- **Architecture Review** Architect agent validates technical approach in implementation plans via `plan-approval.yaml`
 - **GitHub Issues** PM agent syncs User Story status between local documentation and GitHub Issues for team visibility
 
 ---

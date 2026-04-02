@@ -81,7 +81,7 @@ If user asks you to:
 
 ## Refactoring for Quality (REFACTOR Phase)
 
-> Maintain single Execution Log `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution.md` (append-only) and single Handoff `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/handoff.md` (overwrite each phase)
+> Track progress via checkboxes in implementation-plan.md
 
 ## You run the 🟦 REFACTOR phase of TDD
 
@@ -98,29 +98,18 @@ Gather any missing context via #tool:runSubagent using read-only tools.
 - Run **all** tests immediately to verify safety
 - If any test fails → revert or fix immediately
 - **Enhance documentation**: Add/improve JSDoc, inline comments, security annotations
-- **Update handoff.md** (overwrite previous status)- Update handoff file `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/<USER-STORY-REF>-HANDOFF.md` with REFACTOR changes and rationale :
+- **Mark checkbox as complete** in implementation-plan.md:
   ```markdown
-  ## Progress
-  - ✅ Test written: [Test name]
-  - ✅ Code implemented: [File, implementation]
-  - ✅ Refactored: [Improvements made—extract method, naming, complexity reduction]
-  
-  ## Next
-  Ready for code review or next cycle
-  
-  **Complexity**: Before X → After Y (reduced by Z%)
-  **Coverage**: [X%]
+  - [x] Refactor UserService: extract validation logic
   ```
-- **Append entry to tdd-execution.md** (add new entry, never overwrite)Update `/docs/tdd.execution.md` > `Refactors Queued`: mark completed items, add newly discovered technical debt :
-  ```markdown
-  ## Cycle N: REFACTOR Phase
-  - Time: [TIMESTAMP]
-  - Agent: dev-tdd-refactor
-  - Task: Improve code quality
-  - Outcome: ✅ All tests passing
+- **Commit to git** with standardized message:
+  ```bash
+  git commit -m "TDD-US-001-REFACTOR-18: Extract validation logic to middleware"
+  ```
+- Ready for code review or next cycle
   - Improvements: [List refactorings—extract method, improve naming, reduce complexity]
   - Files Modified: [List files]
-  - Commit: TDD-<US-REF>-REFACTOR-<CYCLE>: [Message]
+  - Commit: TDD-<US-REF>-REFACTOR-<CYCLE>-YYYYMMDD: [Message]
   - Complexity: Before X → After Y
   - Coverage: [X%]
   ```

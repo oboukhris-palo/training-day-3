@@ -2,6 +2,37 @@
 # This template follows Atlassian Jira's User Story model for seamless integration via MCP
 
 metadata:
+  # Document identification
+  id: "[US-XXX]"                            # Unique user story identifier
+  title: "[User Story Title]"                # Human-readable story title
+  version: "1.0.0"                           # Semantic version
+  date: "[YYYY-MM-DD]"                       # Creation/last update date
+  author: "[Name or Agent]"                  # Document creator
+  
+  # Template and AI tracking
+  template:
+    source: ".github/templates/user-story-tmpl.yml"  # Template used
+    compliance: "COMPLIANT"                          # Template adherence status
+  
+  ai_generation:
+    model: "[LLM-MODEL-NAME]"                # LLM model used (e.g., "claude-3.5-sonnet", "human-created")
+    generation_date: "[YYYY-MM-DD]"          # When AI generated this document
+  
+  # Document relationships
+  related_documents:
+    epic: "[EPIC-XXX]"                       # Parent epic
+    dependencies: ["[DOC-REF]"]              # Documents this depends on
+  
+  # Status tracking
+  status: "Draft"                           # Document lifecycle status
+  required_approvers: ["Product Owner", "Business Analyst"]  # Who must approve
+  
+  # Classification
+  classification: "Internal"                # Data classification level
+  tags: ["user-story", "[domain]", "[sprint]"]  # Searchable tags
+
+# Legacy Jira compatibility fields (maintained for integration)
+jira_metadata:
   # Unique identifier for the user story in the system
   issueId: ""
   

@@ -25,7 +25,7 @@ handoffs:
     send: false
   - label: 💻 Hand back to Dev Lead
     agent: dev-lead
-    prompt: Validation failed for story <US-REF>. See bugs documented in GitHub Issue #<ISSUE-NUM>. Fix and resubmit for testing.
+    prompt: Validation failed for story US-001. See bugs documented in GitHub Issue #<ISSUE-NUM>. Fix and resubmit for testing.
     send: true
   - label: 📈 Hand to PM
     agent: pm
@@ -142,9 +142,9 @@ Execute comprehensive testing strategies to validate implemented features agains
 **Activities**:
 
 1. **Preparation**:
-   - 🎯 ANNOUNCE: "Ready to validate story <US-REF>. Running comprehensive test suite."
-   - Read `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md` for acceptance criteria and BDD scenarios
-   - Read `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/us-completition-checklist.md` for DoD items
+   - 🎯 ANNOUNCE: "Ready to validate story US-001. Running comprehensive test suite."
+   - Read `/docs/05-implementation/epics/EPIC-001/user-stories/US-001/US-001.md` for acceptance criteria and BDD scenarios
+   - Read `/docs/05-implementation/epics/EPIC-001/user-stories/US-001/us-completition-checklist.md` for DoD items
    - Verify GitHub Issue status is "Implemented"
    - Review implementation artifacts: test coverage reports, code review results
 
@@ -155,16 +155,16 @@ Execute comprehensive testing strategies to validate implemented features agains
 
 3. **Execute E2E Tests**:
    - Run Playwright test suite for the implemented story
-   - Execute all BDD scenarios from `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/bdd-scenarios/`
+   - Execute all BDD scenarios from `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/features/`
    - Test cross-browser compatibility (Chrome, Firefox, Safari, Edge)
    - Test responsive design (desktop, tablet, mobile viewports)
-   - Validate API contracts against `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/api-design.md`
+   - Validate API contracts (check implementation against tech-spec.md or OpenAPI spec)
    - Run accessibility tests (axe-core, keyboard navigation, screen reader)
    - Performance testing: Response time validation, load testing (if applicable)
    - Security testing: Input validation, auth/authz, injection prevention
 
 4. **Verify Acceptance Criteria**:
-   - Read acceptance criteria from `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md`
+   - Read acceptance criteria from `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md`
    - Check each criterion against actual implementation
    - Document pass/fail status in test report
 
@@ -203,7 +203,7 @@ Execute comprehensive testing strategies to validate implemented features agains
    - Record test traces for debugging
 
 4. **Validate Acceptance Criteria**:
-   - For each criterion in `<US-REF>.md`, manually verify or automated test coverage
+   - For each criterion in `description.md`, manually verify or automated test coverage
    - Document validation status: ✅ Pass / ❌ Fail / ⚠️ Partial
    - Update `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/us-completition-checklist.md`
 

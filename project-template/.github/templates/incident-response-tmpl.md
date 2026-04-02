@@ -13,9 +13,9 @@ status: "draft"
 user_story_ref: ""
 related_documents:
   - type: "implementation_plan"
-    reference: "docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/implementation-plan.md"
+    reference: "docs/05-implementation/epics/EPIC-001/user-stories/US-001/implementation-plan.md"
   - type: "monitoring_setup"
-    reference: "docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/monitoring-setup.md"
+    reference: "docs/05-implementation/epics/EPIC-001/user-stories/US-001/monitoring-setup.md"
 
 compliance_frameworks: []
 security_level: "confidential"

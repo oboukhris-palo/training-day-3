@@ -41,8 +41,7 @@ handoffs:
 - Document test purpose, assumptions, and BDD scenario mappings
 - Use test data comments from dev-lead's skeleton classes
 - Verify tests fail for the right reason
-- **Log action to daily log**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-dev-tdd-red-YYYYMMDD.md`
-- Update `/docs/tdd.execution.md` with test progress
+- **Mark checkbox in implementation-plan.md** after test written and failing
 - Hand off to GREEN phase after test fails
 
 ### ❌ I Will NOT Do
@@ -69,9 +68,9 @@ If user asks you to:
 Write one failing test per cycle that maps to BDD assertion. Test must fail for right reason. Hand off to GREEN phase immediately.
 
 ## Process
-1. Read implementation plan layer section
+1. Read implementation plan layer section from `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/implementation-plan.md`
 2. Read skeleton classes created by dev-lead with method signatures and test data comments
-3. Read handoff file `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` for current context
+3. Identify next unchecked `[ ]` checkbox in current layer
 4. Identify specific BDD assertion to support
 5. **Create test class file** (e.g., `UserService.test.ts`, `SubscriptionService.spec.ts`)
 6. **Document test strategy** at top of test file:
@@ -83,24 +82,14 @@ Write one failing test per cycle that maps to BDD assertion. Test must fail for 
    ```
 7. Write focused failing test using test data from skeleton class comments
 8. Run test to confirm it fails
-9. **Update handoff.md** (overwrite cycle status with new RED phase info) Update the handoff file `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/<STORY-REF>-HANDOFF.md` with progress:
+9. **Mark checkbox as complete** in implementation-plan.md:
    ```markdown
-   ## Progress
-   - ✅ Test written: Failing test for [assertion name]
-   - ⏳ Code implementation: Not started yet
-   
-   ## Next
-   Hand off to GREEN phase to implement
+   - [x] Write failing test for UserService.register()
    ```
-10. **Append entry to tdd-execution.md** (never overwrite—append only):
-    ```markdown
-    ## Cycle N: RED Phase
-    - Time: [TIMESTAMP]
-    - Agent: dev-tdd-red
-    - Task: [Description]
+10. **Commit changes** with message: `TDD-<US-REF>-RED-<CYCLE>-YYYYMMDD: Write failing test for [feature]`
     - Outcome: ✅ Test fails (expected X, got Y)
     - File: [Test file location]
-    - Commit: TDD-<US-REF>-RED-<CYCLE>: [Message]
+    - Commit: TDD-<US-REF>-RED-<CYCLE>-YYYYMMDD: [Message]
     ```
 11. **Commit to git** with standardized message:
     ```

@@ -148,23 +148,23 @@ REMEDIATION:
 ⚡ EMERGENCY: Available for production hotfixes
 ```
 
-### Scenario 4: Agent Handoff Validation
-**Situation**: Agent handoff missing required artifacts
+### Scenario 4: Implementation Plan Approval Validation
+**Situation**: TDD execution attempted without approved implementation plan
 
 **System Response**:
 ```
-🤝 HANDOFF INCOMPLETE: @dev-lead → @dev-tdd
+⚠️ APPROVAL REQUIRED: TDD execution blocked for US-001
 
-MISSING ARTIFACTS:
-- docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md
-- docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/handoff.md
+MISSING APPROVAL:
+- docs/05-implementation/epics/EPIC-001/user-stories/US-001/plan-approval.yaml
+  Status: changes-requested (expected: approved)
 
-📋 TEMPLATES:
-- implementation-plan-tmpl.md
-- handoff-tmpl.md
+📋 REQUIRED:
+- Human review and approval of implementation-plan.md
+- Set status: approved in plan-approval.yaml
 
-🚀 QUICK FIX: Auto-generate from existing context? (Y/N)
-⏰ ESTIMATED TIME: 10-15 minutes manual completion
+🚀 QUICK FIX: Request dev-lead review? (Y/N)
+⏰ ESTIMATED TIME: 15-30 minutes for plan review
 ```
 
 ---
@@ -213,7 +213,7 @@ Benefit: Pre-filled structure saves 15-20 minutes
 ⚡ QUICK ACTIONS AVAILABLE
 
 Based on your current state, you can:
-1. 🔄 Auto-generate missing handoff artifact (2 minutes)
+1. 🔄 Request implementation plan approval (15-30 minutes)
 2. 📋 Complete documentation from existing code (5 minutes)  
 3. 🎯 Create BDD scenarios from acceptance criteria (10 minutes)
 4. 📊 Run quality check and generate report (3 minutes)
@@ -413,17 +413,17 @@ cat docs/.project-context.yml
 touch .github/templates/.template-refresh
 ```
 
-### Issue 5: Agent Handoffs Not Validating
+### Issue 5: Plan Approval Not Validating
 
-**Problem**: Agent handoffs proceeding without validation
-**Symptoms**: Missing validation messages during handoffs
+**Problem**: TDD execution proceeding without approved implementation plan
+**Symptoms**: Missing approval gate validation during TDD session start
 **Solution**:
 ```bash
 # Check agent integration settings
 grep "agent_validation" .github/validation/workflow-compliance.yml
 
 # Verify enforcement level allows validation
-# GUIDANCE_ONLY may not block invalid handoffs
+# GUIDANCE_ONLY may not block unapproved plans from TDD execution
 ```
 
 ---

@@ -96,10 +96,10 @@ Epic 02, User Story US-006:
 `docs/05-implementation/epics/epic-02/user-stories/us-006/`
 
 Files in this folder:
+- description.md
 - implementation-plan.md
 - plan-approval.yaml
-- tdd-execution.md
-- bdd-scenarios/
+- features/
 ```
 
 ---
@@ -296,7 +296,7 @@ docs/
 **Acceptable** (within same user story context):
 ```markdown
 # In implementation-plan.md for US-006
-Reference `tdd-execution.md` in same folder
+Reference `implementation-plan.md` in same folder for progress tracking
 Reference `plan-approval.yaml` in same folder
 Reference `bdd-scenarios/` in same folder
 ```

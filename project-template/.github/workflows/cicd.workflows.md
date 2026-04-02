@@ -7,6 +7,7 @@ Automated CI/CD pipeline evolving through 3 phases: Bootstrap → Stabilization 
 
 **Scope**: Automated validation, testing, and deployment for all code changes
 **Agents Involved**: Dev-Lead (CI/CD orchestration), Architect (deployment strategy), PM (release coordination)
+**Logging**: CI/CD agent logs at `/logs/agent-{name}-YYYYMMDD.md` (cross-phase activities)
 **Key Documents**: [documents.workflows.md](.github/workflows/documents.workflows.md), [architecture-design.md](../docs/02-architecture/architecture-design.md), [tech-spec.md](../docs/02-architecture/tech-spec.md), [coding.instructions.md](../instructions/coding.instructions.md)
 
 **Version Control**: Git with feature branches → develop → main

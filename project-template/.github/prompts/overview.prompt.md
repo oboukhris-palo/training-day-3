@@ -57,7 +57,7 @@ Create templates for:
 - User stories and implementation plans
 - API documentation and specifications
 - Code review checklists
-- Meeting minutes and handoff documents
+- Meeting minutes and progress tracking
 
 ## Quality Standards
 

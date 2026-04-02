@@ -89,8 +89,7 @@ Ready for Layer 3: No (2 quality gates failing)
 
 ## Context Sources
 - `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` (layer targets)
-- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/TDD-execution.md` (cycle status)  
-- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>-HANDOFF.md` (current state)
+- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` (layer checkboxes and progress)
 - BDD test results (live test execution)
 - Code quality metrics (coverage, complexity tools)
 
@@ -99,8 +98,8 @@ Ready for Layer 3: No (2 quality gates failing)
 1. **Identify current layer**: Read implementation-plan.md for active layer
 2. **Check BDD status**: Run BDD tests for current layer assertions  
 3. **Validate code quality**: Run quality checks against validation-rules.yml
-4. **Review TDD progress**: Check TDD-execution.md for cycle completion
-5. **Identify blockers**: Scan handoff files for escalated issues
+4. **Review TDD progress**: Check implementation-plan.md checkboxes for layer completion
+5. **Identify blockers**: Review plan-approval.yaml and git log for issues
 6. **Calculate completion**: Determine if layer meets Definition of Done
 7. **Recommend action**: Next layer, continue TDD, or escalate
 
@@ -114,8 +113,8 @@ Ready for Layer 3: No (2 quality gates failing)
 ## Integration Points
 - Uses existing quality validation from validation-rules.yml
 - References layer-completion-checklist.template.md
-- Compatible with handoff.schema.json structure
-- Triggers create-handoff-with-trace.js for completion tracking
+- Follows simplified progress tracking (checkboxes + git commits)
+- Validates layer completion before advancing to next layer
 
 ## Automation Opportunities
 - **BDD Test Runner**: Auto-execute tests and parse results

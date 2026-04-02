@@ -1,20 +1,47 @@
 # Product Requirements Document (PRD) Template
 
-## Overview
-# This PRD integrates all product development lifecycle documents following a strict workflow:
-# Information Processing Pipeline: Requirements → Analysis → Design → Development → Testing → Deployment → Monitoring
-# Each document drives the next stage while maintaining traceability and coherence.
+metadata:
+  # Document identification
+  id: "PRD-XXX"                             # Unique PRD identifier
+  title: "[Product/Project Name]"            # Human-readable product/project title
+  version: "1.0.0"                           # Semantic version
+  date: "[YYYY-MM-DD]"                       # Creation/last update date
+  author: "[Name or Agent]"                  # Document creator
+  
+  # Template and AI tracking
+  template:
+    source: ".github/templates/prd-tmpl.yml"  # Template used
+    compliance: "COMPLIANT"                   # Template adherence status
+  
+  ai_generation:
+    model: "[LLM-MODEL-NAME]"                # LLM model used (e.g., "claude-3.5-sonnet", "human-created")
+    generation_date: "[YYYY-MM-DD]"          # When AI generated this document
+  
+  # Document relationships
+  related_documents:
+    user_stories: ["US-XXX", "US-YYY"]       # Related user stories
+    dependencies: ["docs/01-requirements/business-case.md"]
+  
+  # Status tracking
+  status: "Draft"                           # Document lifecycle status
+  required_approvers: ["Product Owner", "Solution Architect", "Tech Lead"]  # Who must approve
+  
+  # Classification
+  classification: "Internal"                # Data classification level
+  tags: ["prd", "requirements", "[domain]"]  # Searchable tags
 
+# Legacy project metadata (maintained for compatibility)
 project:
   name: "<Project Name>"
-  version: "<Version>"
-  date_created: "<YYYY-MM-DD>"
-  last_updated: "<YYYY-MM-DD>"
-  author: "<Author Name>"
   stakeholders:
     - name: "<Stakeholder Name>"
       role: "<Role>"
       contact: "<Email>"
+
+## Overview
+# This PRD integrates all product development lifecycle documents following a strict workflow:
+# Information Processing Pipeline: Requirements → Analysis → Design → Development → Testing → Deployment → Monitoring
+# Each document drives the next stage while maintaining traceability and coherence.
 
 ---
 # STAGE 1: REQUIREMENTS → BUSINESS CONTEXT ANALYSIS

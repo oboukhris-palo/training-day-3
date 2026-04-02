@@ -16,7 +16,7 @@ hard_rules:
   agent_authentication_required: true
   template_compliance: true
   git_commit_format: true
-  handoff_artifact_validation: true
+  checkbox_progress_tracking: true
 
 ### Soft Rules (Can Override with Justification)
 soft_rules:
@@ -70,11 +70,11 @@ implementation_phases:
     sequential_phases: true  # RED → GREEN → REFACTOR
     parallel_cycles_blocked: true
   
-  handoff_requirements:
-    dev_lead_to_tdd: "implementation-plan.md"
-    tdd_red_to_green: "cycle-handoff.json"
-    tdd_green_to_refactor: "cycle-handoff.json"
-    tdd_refactor_to_orchestrator: "cycle-complete.md"
+  progress_tracking:
+    implementation_plan_checkboxes: true  # Track via [x] in implementation-plan.md
+    git_commit_messages: "TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD"
+    plan_approval_required: true  # plan-approval.yaml must be 'approved'
+    bdd_scenarios_in_features: true  # features/ folder contains BDD tests
 
 ## Override Permissions
 
@@ -115,7 +115,7 @@ auto_override_conditions:
   
   experienced_team:
     criteria: ">90% workflow compliance history"
-    relaxed_rules: ["phase_dependencies", "handoff_timing"]
+    relaxed_rules: ["phase_dependencies", "plan_approval_timing"]
     maintains_quality_gates: true
   
   prototype_project:
@@ -175,7 +175,7 @@ detection_triggers:
   phase_transition:
     indicators:
       - "Completion marker file created"
-      - "Handoff artifact generated"
+      - "Implementation plan checkboxes completed"
       - "Quality gate checkpoint reached"
     action: "VALIDATE_PREREQUISITES"
 
@@ -187,14 +187,14 @@ monitoring_hooks:
     - "Update project state"
   
   git_commits:
-    - "Parse conventional commit format"
+    - "Parse conventional commit format (TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD)"
     - "Validate workflow phase"
     - "Update audit trail"
   
-  agent_handoffs:
-    - "Verify handoff completeness"
-    - "Check agent sequence"
-    - "Validate artifact quality"
+  implementation_plan_updates:
+    - "Verify checkbox marked [x] after commit"
+    - "Check agent commit correlation"
+    - "Validate BDD scenario coverage"
 
 ## Quality Gates
 
@@ -233,7 +233,9 @@ implementation_quality_gates:
     - tests_passing: true
     - code_reviewed: true
     - documentation_updated: true
-    - handoff_artifact_complete: true
+    - implementation_plan_complete: true
+    - plan_approval_status: "approved"
+    - bdd_scenarios_present: true
 
 ## Error Handling & Messaging
 
@@ -293,7 +295,7 @@ orchestrator_hooks:
 
 ### Agent Integration
 agent_validation:
-  handoff_verification: true
+  progress_tracking_validation: true
   artifact_completeness_check: true
   sequence_validation: true
   quality_metrics_tracking: true

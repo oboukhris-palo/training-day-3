@@ -1,7 +1,7 @@
 # Template Framework Index
 
-**Last Updated**: 2026-03-16  
-**Total Templates**: 26  
+**Last Updated**: 2026-04-02  
+**Total Templates**: 27  
 **Audit Status**: ✅ Complete (See [TEMPLATE-AUDIT-REPORT.md](TEMPLATE-AUDIT-REPORT.md))
 
 ---
@@ -25,8 +25,11 @@
 |----------|---------|------------------|
 | **[SYSTEM-STATUS-DEFINITIONS.md](SYSTEM-STATUS-DEFINITIONS.md)** | Single source of truth for workflow states (NOT_STARTED → IN_PROGRESS → IN_REVIEW → IMPLEMENTED → DELIVERED) and approval statuses (PENDING → REVIEWING → APPROVED/CONDITIONAL/REJECTED → REMEDIATION) | ✅ Before using any status field |
 | **[APPROVAL-BLOCK-TEMPLATE.md](APPROVAL-BLOCK-TEMPLATE.md)** | Reusable approval structure with 3 variants (YAML, Markdown table, JSON embed); ensures consistency across approval gates, reviews, sign-offs | ✅ When adding approval sections to templates |
+| **[agent-log-tmpl.md](agent-log-tmpl.md)** ⭐ **NEW** | Mandatory agent logging standard with YAML frontmatter (agent, model, phase), ISO8601 timestamps, action types, PRU tracking, handoff definitions | ✅ **REQUIRED for ALL agent interactions** |
 
-**Key Benefit**: Enables automation, Jira sync, and prevents terminology chaos across documents.
+**Key Benefit**: Enables automation, Jira sync, audit trails, and prevents terminology chaos across documents.
+
+**Agent Logging Enforcement**: All agents MUST log actions to phase-specific paths. See `.github/instructions/agent-logging.instructions.md` for comprehensive standards.
 
 ---
 
@@ -77,10 +80,8 @@ Used during development when building features.
 
 | Template | Purpose | Format | Output |
 |----------|---------|--------|--------|
-| **implementation-plan.template.md** | Layer-by-layer architecture (4 layers max 500 words each) | Markdown | `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/implementation-plan.md` |
-| **layer-completion-checklist.template.md** | Per-layer validation & BDD assertion tracking | Markdown | `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/layer-{N}-checklist.md` |
-| **handoff.template.json** | Cycle snapshot with decisions, metrics, next steps | JSON | `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/handoff.md` |
-| **tdd-execution.template.md** | Append-only audit log of RED→GREEN→REFACTOR cycles | Markdown | `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/tdd-execution.md` |
+| **implementation-plan.template.md** | Layer-by-layer architecture with checkboxes (4 layers max 500 words each) | Markdown | `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/implementation-plan.md` |
+| **plan-approval.template.yaml** | Human validation gate for implementation plans | YAML | `/docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/plan-approval.yaml` |
 
 ### Code Quality & Review
 

@@ -22,7 +22,7 @@
 - **Owner**: Document creator (BA owns story.yaml, Dev-Lead owns implementation-plan.md)
 - **Access**: READ ONLY - agents reference, don't copy
 - **Cost**: ~500 tokens per reference (once, not per handoff)
-- **Example**: `See /docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/story.yaml for acceptance criteria`
+- **Example**: `See /docs/05-implementation/epics/EPIC-001/user-stories/US-001/story.yaml for acceptance criteria`
 
 ### Level 2: Delta Packets (Handoff Changes)
 - **What**: Only what changed in this step
@@ -36,7 +36,7 @@
 - **Owner**: Orchestrator
 - **Format**: Role instructions + canonical source links
 - **Cost**: ~800-1200 tokens per agent
-- **Example**: `Dev-Lead: Review #file:/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md#L450`
+- **Example**: `Dev-Lead: Review #file:/docs/05-implementation/epics/EPIC-001/user-stories/US-001/implementation-plan.md#L450`
 
 ---
 
@@ -51,7 +51,7 @@
 # ✅ AFTER (350 bytes - 85% reduction)
 **Handoff**: Dev-Lead → Dev-TDD
 **Delta**: Layer 2 API endpoints finalized. Authentication now in Layer 1 dependencies.
-**Canonical References**: See #file:/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md#L450
+**Canonical References**: See #file:/docs/05-implementation/epics/EPIC-001/user-stories/US-001/implementation-plan.md#L450
 **Next Action**: RED phase - write failing test for `/subscription/tier/sync`
 ```
 
@@ -62,7 +62,7 @@
 ### 1. Canonical Source References
 **Pattern**: Always link to source, never duplicate
 ```markdown
-See [story.yaml](file:/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/story.yaml#L1-L50) for acceptance criteria
+See [story.yaml](file:/docs/05-implementation/epics/EPIC-001/user-stories/US-001/story.yaml#L1-L50) for acceptance criteria
 ```
 
 ### 2. Delta Handoff Summaries
@@ -78,7 +78,7 @@ See [story.yaml](file:/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-0
     "removed": ["Redundant fixture IDs"]
   },
   "canonical_refs": [
-    "/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md#L450",
+    "/docs/05-implementation/epics/EPIC-001/user-stories/US-001/implementation-plan.md#L450",
     "/api/openapi.yaml#SubscriptionController"
   ],
   "next_action": "RED phase - write failing test"
@@ -88,7 +88,7 @@ See [story.yaml](file:/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-0
 ### 3. Semantic Pointers with Context Hints
 **Pattern**: File + line range + semantic hint
 ```markdown
-#file:/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/implementation-plan.md#L450 (Layer 2 API definitions)
+#file:/docs/05-implementation/epics/EPIC-001/user-stories/US-001/implementation-plan.md#L450 (Layer 2 API definitions)
 ```
 
 ---
@@ -109,29 +109,28 @@ See [story.yaml](file:/docs/05-implementation/epics/<EPIC-REF>/user-stories/US-0
 
 ### Dev-TDD (RED/GREEN/REFACTOR)
 - **Context**: Test code, implementation, refactoring goals
-- **Canonical Sources**: `bdd-scenarios/`, `tdd-execution.md`
-- **Handoff Format**: Phase-specific instructions + test results
-- **Token Budget**: 800-1200 bytes per handoff
+- **Canonical Sources**: `features/` (BDD scenarios), `implementation-plan.md` (layer checkboxes)
+- **Progress Tracking**: Mark checkboxes [x] in implementation-plan.md, commit with `TDD-<US-REF>-<PHASE>-<CYCLE>` format
+- **Token Budget**: 800-1200 bytes per agent prompt
 
 ---
 
 ## File Structure Optimization
 
-### Consolidate Handoff Data
+### Simplified Story Structure
 ```
 docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/
-├── story.yaml                # CANONICAL - BA owns
-├── implementation-plan.md    # CANONICAL - Dev-Lead owns
-├── handoff.md                # OVERWRITE - current cycle state
-├── tdd-execution.md          # APPEND-ONLY - audit trail
-└── bdd-scenarios/            # CANONICAL - BDD definitions
+├── description.md            # CANONICAL - Requirements, acceptance criteria, DoD
+├── implementation-plan.md    # CANONICAL - Dev-Lead owns (layer-by-layer with checkboxes)
+├── plan-approval.yaml        # Human validation gate (approved/changes-requested/revoked)
+└── features/                 # BDD scenarios from BA agent
     └── subscription-tier-sync.feature
 ```
 
-### Remove Redundant Files
-- ❌ `cycle-18-handoff.md` → Use `handoff.md` (overwrite pattern)
-- ❌ `cycle-18-red-summary.md` → Append to `tdd-execution.md`
-- ❌ `api-contract-copy.md` → Reference `implementation-plan.md`
+### Progress Tracking Mechanism
+- ✅ **Checkboxes in implementation-plan.md**: `- [ ]` → `- [x]` as tasks complete
+- ✅ **Git commits**: `TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD: [description]` provide audit trail with timestamps
+- ✅ **plan-approval.yaml**: Blocks TDD execution until `status: approved`
 
 ---
 
@@ -139,11 +138,11 @@ docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/
 
 | File Type | Max Size | Compression | Method |
 |-----------|----------|-------------|--------|
-| Handoff | 500B | 85% | Delta summaries + canonical refs |
-| Implementation Plan | 3KB | N/A | Canonical source (reference only) |
-| Story.yaml | 1KB | N/A | Canonical source |
-| TDD Execution | 5KB | Append-only | Audit trail (grows over time) |
-| BDD Scenarios | 800B/feature | Gherkin only | No prose, strict Given/When/Then |
+| description.md | 2KB | N/A | Canonical source (requirements, AC, DoD) |
+| implementation-plan.md | 3KB | N/A | Canonical source with checkboxes |
+| plan-approval.yaml | 300B | N/A | Human validation gate |
+| BDD Features | 800B/feature | Gherkin only | No prose, strict Given/When/Then |
+| Git Log | Unlimited | N/A | Audit trail (TDD cycles tracked via commits) |
 
 ---
 
@@ -216,9 +215,10 @@ docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/
 - Reference OpenAPI spec instead of embedding JSON
 
 **For Dev-TDD**:
-- Read handoff.md for current cycle state
-- Append to tdd-execution.md (never overwrite)
-- Reference BDD scenarios via `#file:` pointers
+- Read implementation-plan.md for layer-specific tasks and checkboxes
+- Mark checkboxes [x] as tasks complete
+- Commit with `TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD: [description]` format (date in YYYYMMDD)
+- Reference BDD scenarios via `#file:` pointers to `features/`
 
 ---
 
@@ -247,12 +247,12 @@ graph LR
 
 | Source | Owner | Purpose | Update Pattern |
 |--------|-------|---------|----------------|
-| `story.yaml` | BA | Acceptance criteria | Frozen after PO approval |
-| `implementation-plan.md` | Dev-Lead | Architecture | Frozen after creation |
-| `handoff.md` | Current Agent | Cycle state | Overwrite per phase |
-| `tdd-execution.md` | Dev-TDD | Audit trail | Append-only |
+| `description.md` | BA/PO | Requirements, acceptance criteria, DoD | Frozen after PO approval |
+| `implementation-plan.md` | Dev-Lead | Layer-by-layer architecture with checkboxes | Frozen after approval (versioned if changed) |
+| `plan-approval.yaml` | Dev-Lead/Human | Validation gate for TDD execution | Updated on plan changes |
+| `features/` | BA | BDD scenarios (Given/When/Then) | Frozen after BA handoff |
 | `openapi.yaml` | Architect | API contract | Versioned updates |
-| `bdd-scenarios/` | BA | BDD definitions | Frozen after BA handoff |
+| Git commits | Dev-TDD | Audit trail (TDD cycles) | Immutable history |
 
 ---
 
@@ -263,7 +263,7 @@ graph LR
 2. **Delta handoffs** - 85% smaller than full-context handoffs
 3. **Semantic pointers** - `#file:` syntax with line ranges and hints
 4. **Agent-specific budgets** - Tailored context per role
-5. **Append-only audit** - `tdd-execution.md` preserves history without bloat
+5. **Audit via git commits** - Git history preserves TDD cycle trail without separate log files
 
 **Next Steps**:
 1. Implement delta handoff format for Dev-TDD chain
@@ -588,8 +588,10 @@ Create mapping matrix: **Scenarios → operationIds → assertions**
 - Each BDD scenario maps to 1+ API endpoint(s)
 - Each assertion maps to response field or status code
 
-### 4. Handoff Package (`/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/<US-REF>-HANDOFF.md`)
-See delta_summary.json template in context-optimization-strategy.md
+### 4. Progress Tracking
+- Mark layer checkboxes in `implementation-plan.md` as tasks complete
+- Commit with format: `TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD: [description]` (date in YYYYMMDD)
+- Update `plan-approval.yaml` if plan changes require re-approval
 
 ## Critical Project Constraints
 
@@ -643,21 +645,21 @@ For each layer, describe the initial failing test:
 - Fails because: Form has no submit handler
 - Passes when: Form calls API and handles response
 
-## Checklist Before Handoff
+## Checklist Before TDD Execution
 
-- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md` complete with 4 layers
-- [ ] `/api/openapi.yaml` updated with new endpoints
-- [ ] BDD scenarios copied to `/features/<domain>/` with step definitions
-- [ ] Handoff package created: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/<US-REF>-HANDOFF.md`
-- [ ] All layer-specific failing tests documented
-- [ ] Critical notes (tier sync, error codes) documented
-- [ ] No broken links to canonical sources
+- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/description.md` complete with requirements and acceptance criteria
+- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/implementation-plan.md` complete with 4 layers and checkboxes
+- [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/AUTH-003/plan-approval.yaml` status set to `approved`
+- [ ] `/api/openapi.yaml` updated with new endpoints (if applicable)
+- [ ] BDD scenarios created in `features/` folder
+- [ ] All layer-specific failing tests documented in implementation-plan.md
+- [ ] Critical gotchas (tier sync, error codes) documented in description.md
 
-## Next Handoff
+## Start TDD Execution
 
-To: dev-tdd-red (TDD Phase 1: RED)
-Content: Implementation plan Layer 1 + failing test definition
-Message: "Layer 1 database ready for TDD execution. See implementation-plan.md#L45 for failing test."
+Trigger: `@dev-tdd start <US-REF>`
+Agent reads: `implementation-plan.md` (Layer 1 checkboxes) → `features/` (BDD scenarios)
+Phase: RED → GREEN → REFACTOR (strict sequencing, one layer at a time)
 ```
 
 **Token cost**: ~1200 tokens | **Context window**: 8KB | **Includes full implementation-plan structure**

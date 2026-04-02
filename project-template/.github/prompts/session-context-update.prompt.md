@@ -29,7 +29,7 @@ Chronological activity log containing:
 - **AI Response Documentation**: Complete record of AI responses and actions taken
 - **File Modification Log**: Comprehensive list of all files created/modified/updated
 - **Action Rationale**: Clear explanations for why each change was made
-- **Session Boundaries**: Clear markers for session start/end and handoffs
+- **Session Boundaries**: Clear markers for session start/end and agent transitions
 
 ### 2. Continuity Summary
 Brief session overview including:

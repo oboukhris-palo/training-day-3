@@ -61,7 +61,7 @@ Create/update: `/docs/05-implementation/epics/{EPIC_REF}/user-stories/{STORY_REF
 ```
 
 ### 2. Handoff Summary
-Ensure exists: `/docs/05-implementation/epics/{EPIC_REF}/user-stories/{STORY_REF}/{STORY_REF}-HANDOFF.md`
+Ensure exists: `/docs/05-implementation/epics/{EPIC_REF}/user-stories/{STORY_REF}/plan-approval.yaml`
 
 **Content Requirements**:
 - Implementation plan summary
@@ -94,7 +94,7 @@ Ensure proper epic/story folder organization:
 docs/05-implementation/epics/{EPIC_REF}/
 └── user-stories/{STORY_REF}/
     ├── implementation-plan.md
-    ├── {STORY_REF}-HANDOFF.md
+    ├── plan-approval.yaml
     └── bdd-scenarios/
         └── [feature files]
 ```

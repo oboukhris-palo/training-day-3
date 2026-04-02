@@ -8,4 +8,4 @@ Parameters:
 - BDD_FILE: path to feature file line (e.g., features/auth/register.feature:12)
 
 Prompt:
-"Write one failing test for {STORY_REF} ({LAYER}). Map to {BDD_FILE}. Ensure AAA structure and verify it fails for the right reason. Update `/docs/tdd.execution.md` and the handoff file `/docs/05-implementation/epics/<EPIC-REF>/user-stories/{STORY_REF}/{STORY_REF}-HANDOFF.md`."
+"Write one failing test for {STORY_REF} ({LAYER}). Map to {BDD_FILE}. Ensure AAA structure and verify it fails for the right reason. Mark checkbox [x] in `implementation-plan.md` and commit with format `TDD-{STORY_REF}-RED-{CYCLE}: [description]`."

@@ -43,15 +43,14 @@
 
 ## 🔗 Logging & Traceability
 
-### Agent Action Logs
-- [ ] **Agent logs created in /logs/** directory (not in /docs)
-- [ ] Log entries follow format: `/logs/<phase>/<epic>/<story>/<YYYYMMDD>/agent-{name}-{task}.md`
-- [ ] TDD execution logs include timestamp + files touched + SHA + summary
+### Progress Tracking
+- [ ] **implementation-plan.md checkboxes** mark [x] for completed tasks
+- [ ] Git commit messages follow TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD format
+- [ ] All BDD scenarios in features/ folder pass
 
 ### No Documentation Pollution
 - [ ] No verbose logs or execution details in /docs folder
-- [ ] tdd-execution.md contains only bullet links to /logs files (if present)
-- [ ] implementation-plan.md checkboxes marked [x] for completed tasks
+- [ ] Only 3 files + 1 folder per user story (description.md, implementation-plan.md, plan-approval.yaml, features/)
 
 ## ⚙️ Technical Quality
 

@@ -13,9 +13,10 @@
 
 | Document | Type | Purpose |
 |----------|------|---------|
-| [Implementation Plan](../../user-stories/{US_REF}/implementation-plan.md) | Technical | Technical approach and architecture |
-| [Handoff](../../user-stories/{US_REF}/handoff.md) | Control | Current cycle state |
-| [TDD Execution](../../user-stories/{US_REF}/tdd-execution.md) | Audit | Implementation audit trail |
+| [Story Definition](../../user-stories/{US_REF}/description.md) | Requirements | Functional and non-functional requirements |
+| [Implementation Plan](../../user-stories/{US_REF}/implementation-plan.md) | Technical | Technical approach with checkboxes |
+| [Plan Approval](../../user-stories/{US_REF}/plan-approval.yaml) | Control | Human validation gate status |
+| [BDD Scenarios](../../user-stories/{US_REF}/features/) | Testing | Acceptance criteria as executable tests |
 | [Code Review Checklist](./code-review-checklist.template.md) | Standards | Quality gate criteria |
 | [Compliance Checklist](./compliance-checklist.template.md) | Standards | Compliance requirements |
 | [System Status Definitions](./SYSTEM-STATUS-DEFINITIONS.md) | Reference | Status and approval terminology |

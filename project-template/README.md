@@ -54,11 +54,16 @@
 
 ### 🏷️ **Framework 2.0.0: Enhanced Orchestration** ⭐ *NEW (March 2026)*
 - **Agent Versioning System**: All agents track versions with `.github/agents/CHANGELOG.md` for migration tracking
-- **Action Tracing**: Immutable daily logs per agent (`/docs/logs/` and `/docs/user-stories/<US-REF>/logs/`) for audit trails
+- **Comprehensive Agent Logging Framework** ⭐ *MANDATORY (April 2026)*: 
+  - **Phase-specific logs** for all PDLC stages (`/logs/{phase}/agent-{name}-YYYYMMDD.md`)
+  - **TDD-specific logs** per user story (`/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/`)
+  - **Structured entries** with ISO8601 timestamps, PRU tracking, handoff definitions
+  - **Validation enforcement** at every handoff and quality gate
+  - **Audit trails** for compliance, debugging, and knowledge transfer
+  - **Full docs**: [Agent Logging Framework](AGENT-LOGGING-IMPLEMENTATION.md)
 - **Implementation Plan Approval Gate**: Human validation required (`plan-approval.yaml`) before TDD execution with auto-revocation on changes
 - **Plan Versioning**: Snapshots (`implementation-plan-v1.md`, `v2.md`) preserve history when plans evolve
 - **YOLO Mode**: Rapid prototyping with pre-flight checks, single-cycle lock, and mandatory review
-- **Auto-logging Responsibilities**: All agents log decisions, files touched, and rationale to daily logs
 
 ---
 
@@ -109,11 +114,13 @@
 
 ### 🎨 [templates/](templates/) - Document Templates
 **Ensures consistent outputs across agents** (all files use `-tmpl.*` suffix)
+- `agent-log-tmpl.md` - **MANDATORY** agent logging template with PRU tracking ⭐ *NEW*
 - `user-story-tmpl.yml` - User story structure
 - `prerequisites-tmpl.yml` - Prerequisites request template (634 lines, optimized)
 - `recommendation-plan-tmpl.md` - Recommendation plan format
 - `handoff-tmpl.md` - Agent handoff format
-- `tdd-execution-tmpl.md` - Audit log template- `plan-approval-tmpl.yaml` - Human validation gate for implementation plans ⭐ *NEW*
+- `tdd-execution-tmpl.md` - Audit log template
+- `plan-approval-tmpl.yaml` - Human validation gate for implementation plans ⭐ *NEW*
 - `pull_request_template.md` - PR validation checklist for Gen‑e2 compliance
 
 ### 🔧 [scripts/](.github/scripts/) - Automation & Validation Scripts
@@ -172,7 +179,7 @@ project-root/
 │   │   │   └── <EPIC-REF>/
 │   │   │       └── user-stories/
 │   │   │           └── <US-REF>/  # Per-story implementation folder
-│   │   │               ├── <US-REF>.md                          # Story definition (copied from PRD)
+│   │   │               ├── description.md                          # Story definition (copied from PRD)
 │   │   │               ├── implementation-plan.md               # Frozen after approval
 │   │   │               ├── implementation-plan-v{N}.md          # IMMUTABLE snapshots (historical)
 │   │   │               ├── plan-approval.yaml                   # Human validation gate ⭐ NEW

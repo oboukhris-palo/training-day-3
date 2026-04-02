@@ -1,4 +1,4 @@
-# User Story Folder Template - Gen‑e2 Compliance
+# User Story Folder Template - Simplified Structure
 
 **Purpose**: This template defines the REQUIRED files for every user story folder under `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/`. Dev-Lead creates these files upfront; TDD agents execute against implementation-plan.md checkboxes.
 
@@ -8,11 +8,11 @@
 
 ```
 /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/
-├── description.md                       # Single source of truth for story definition
-├── implementation-plan.md               # SSOT for TDD execution with layer checkboxes  
-├── plan-approval.yaml                   # Human validation gate (required before TDD)
-└── bdd-scenarios/                       # BDD feature files (optional)
-    └── {feature}.feature                # Gherkin scenarios
+├── description.md                       # Single source of truth: functional/non-functional requirements, acceptance criteria
+├── implementation-plan.md               # Layer-by-layer implementation guide with checkboxes for TDD execution
+├── plan-approval.yaml                   # Human validation gate (required before TDD execution)
+└── features/                            # BDD feature files from BA agent
+    └── {feature-name}.feature           # Gherkin scenarios (Given/When/Then)
 ```
 
 ---
@@ -21,10 +21,10 @@
 
 ### 1. **description.md** (Story Definition - SSOT)
 
-**Created by**: Dev-Lead or BA  
+**Created by**: BA or Dev-Lead  
 **Updated by**: PO/BA only (with approval)  
-**Purpose**: Single source of truth for functional, non-functional, technical requirements, acceptance criteria, and optional API design  
-**Content**: Complete story definition with measurable acceptance criteria
+**Purpose**: Complete story definition including functional requirements, non-functional requirements, acceptance criteria, and Definition of Done  
+**Content**: Single source of truth for what needs to be built
 
 **Template Content**:
 ```markdown
@@ -63,37 +63,6 @@
    **When** [action/event]
    **Then** [expected result/outcome]
 
-## API Design (if applicable)
-
-### Endpoint
-`{METHOD} /api/{resource}/{action}`
-
-### Request Payload
-```json
-{
-  "field1": "value",
-  "field2": 123
-}
-```
-
-### Response (Success)
-```json
-{
-  "status": "success",
-  "data": {
-    "field1": "result",
-    "field2": 456
-  }
-}
-```
-
-### Error Responses
-- `400 Bad Request`: Invalid request data
-- `401 Unauthorized`: Authentication required  
-- `403 Forbidden`: Insufficient permissions
-- `404 Not Found`: Resource not found
-- `500 Internal Server Error`: Server processing error
-
 ## Technical Notes
 
 - [Integration dependencies]
@@ -104,7 +73,7 @@
 ## Definition of Done
 
 - [ ] All acceptance criteria validated
-- [ ] BDD scenarios pass (if applicable)
+- [ ] All BDD scenarios passing
 - [ ] Code review completed
 - [ ] Unit test coverage ≥ 80%
 - [ ] Integration tests pass
@@ -118,7 +87,7 @@
 **Epic**: {EPIC-REF}  
 **Created**: {YYYY-MM-DD}
 **Status**: Draft
-**Framework**: Gen‑e2 Compliance v2.0.0
+**Framework**: Simplified Structure v3.0
 ```
 
 ---
@@ -126,22 +95,37 @@
 ### 2. **implementation-plan.md** (TDD Execution Guide)
 
 **Created by**: Dev-Lead  
-**Updated by**: TDD agents ONLY (mark checkboxes [x] upon completion)  
-**Purpose**: Layer-by-layer implementation guide with checkboxes - SSOT for TDD agent execution  
+**Updated by**: Dev-Lead (initial creation only), TDD agents (mark checkboxes during execution)  
+**Purpose**: Layer-by-layer implementation guide with concrete checkboxes - drives TDD agent execution  
 **Content**: Uses implementation-plan-tmpl.md with checkbox tasks per layer
 
 **Key Rules**:
-- TDD agents execute against checkboxes in this file
-- Each checkbox represents a specific task/file to create/modify
+- Each checkbox `[ ]` represents a specific task/file to create or modify
+- TDD agents execute checkboxes sequentially by layer
 - Mark `[ ]` as `[x]` when task completed
-- BDD mapping matrix maps scenarios to layer checkboxes
-- Never delete or modify existing entries (append-only mindset)
+- BDD mapping matrix connects scenarios to implementation layers
+- Layer N+1 blocked until Layer N complete
 
-**Life Cycle**:
-- Dev-Lead creates complete plan with all checkboxes unchecked `[ ]`
-- plan-approval.yaml must be `approved` before TDD execution starts
-- TDD agents work through checkboxes sequentially by layer
-- Each completed checkbox marks progress toward story completion
+**Checkbox Format**:
+```markdown
+## Layer 1: Database & Domain Model
+
+**BDD Scenarios Covered**: `features/user-registration.feature` lines 5-12
+
+- [ ] Create migration: `migrations/001_create_users_table.sql`
+- [ ] Create model: `models/User.ts`
+- [ ] Write unit test: `models/__tests__/User.test.ts`
+- [ ] Verify BDD scenario passes: "User data persists to database"
+
+## Layer 2: Backend Services & API
+
+**BDD Scenarios Covered**: `features/user-registration.feature` lines 13-25
+
+- [ ] Create service: `services/UserService.ts`
+- [ ] Create controller: `controllers/UserController.ts`
+- [ ] Write integration test: `services/__tests__/UserService.test.ts`
+- [ ] Verify BDD scenario passes: "POST /api/users returns 201 Created"
+```
 
 ---
 
@@ -178,336 +162,77 @@ comments: |
 
 ---
 
-### 4. **bdd-scenarios/** (Optional BDD Test Files)
+### 4. **features/** (BDD Scenarios from BA Agent)
 
-**Created by**: BA or Dev-Lead  
-**Updated by**: BA (scenarios), Dev-TDD (step implementations)  
-**Purpose**: Executable BDD specifications that drive TDD implementation  
-**Content**: Gherkin feature files with scenarios
+**Created by**: BA agent  
+**Updated by**: BA (scenarios), Dev-TDD (during implementation to validate)  
+**Purpose**: Executable BDD specifications that define acceptance criteria as executable tests  
+**Content**: Gherkin feature files with Given/When/Then scenarios
 
 **Structure**:
 ```
-bdd-scenarios/
-├── {feature-name}.feature           # Gherkin scenarios
-└── {feature-name}.steps.{ext}       # Step definitions (if needed)
+features/
+├── user-authentication.feature      # Login/logout scenarios
+├── profile-management.feature       # CRUD operations  
+└── tier-synchronization.feature     # Business logic scenarios
+```
+
+**Example Feature File**:
+```gherkin
+Feature: User Registration
+  As a new user
+  I want to register an account
+  So that I can access the application
+
+  Scenario: Successful registration with valid data
+    Given I am on the registration page
+    And I have no existing account
+    When I submit valid registration details
+      | email           | password     | name         |
+      | john@example.com| SecurePass1! | John Doe     |
+    Then I should see a "Registration successful" message
+    And my account should be created in the database
+    And I should receive a welcome email
+
+  Scenario: Registration fails with duplicate email
+    Given an account exists with email "existing@example.com"
+    When I try to register with email "existing@example.com"
+    Then I should see an error "Email already in use"
+    And no new account should be created
 ```
 
 **Usage**:
-- BDD scenarios define WHAT should work
-- implementation-plan.md defines HOW to build it
-- BDD mapping matrix connects scenarios to implementation checkboxes
-- TDD agents implement to make BDD scenarios pass
+- BA creates BDD scenarios during story elaboration
+- Scenarios define acceptance criteria as executable tests
+- Implementation plan references BDD scenarios in layer breakdown
+- TDD agents implement code to make BDD scenarios pass
+- QA agent validates all scenarios pass before story completion
 
 ---
 
 ## Workflow Integration
 
-### Creation Sequence (Dev-Lead)
-1. Create `description.md` with complete story definition
-2. Create `implementation-plan.md` using implementation-plan-tmpl.md  
-3. Auto-create `plan-approval.yaml` with status `changes-requested`
-4. Create `bdd-scenarios/` if BDD approach used
-5. Review implementation plan and mark plan-approval.yaml as `approved`
+### Creation Sequence (Dev-Lead + BA)
+1. **BA creates `features/`** with BDD scenarios (Given/When/Then) during story elaboration
+2. **Dev-Lead creates `description.md`** with complete story definition (requirements, DoD)
+3. **Dev-Lead creates `implementation-plan.md`** using implementation-plan-tmpl.md (checkboxes per layer)  
+4. **Dev-Lead auto-creates `plan-approval.yaml`** with status `changes-requested`
+5. **Dev-Lead reviews** implementation plan validates BDD mapping, dependencies, approach
+6. **Dev-Lead marks `plan-approval.yaml`** as `approved` (enables TDD execution)
 
 ### Execution Sequence (TDD Agents)
-1. **Validation**: Check plan-approval.yaml status = "approved"
+1. **Validation**: Check `plan-approval.yaml` status = "approved" (blocks if not approved)
 2. **Layer 1**: Execute Database & Domain Model checkboxes
 3. **Layer 2**: Execute Backend Services & API checkboxes  
 4. **Layer 3**: Execute Configuration & Integration checkboxes
 5. **Layer 4**: Execute Frontend & Components checkboxes
-6. **Validation**: Verify all BDD scenarios pass and acceptance criteria met
+6. **Validation**: Verify all BDD scenarios in `features/` pass and acceptance criteria met
 
 ### Quality Gates  
-- TDD execution BLOCKED if plan-approval.yaml ≠ "approved"
-- Layer N+1 BLOCKED until Layer N checkboxes 100% complete
-- Story completion BLOCKED until all checkboxes marked [x]
-- Story acceptance BLOCKED until all acceptance criteria validated
-
----
-
-## Anti-Patterns (Do NOT Create)
-
-❌ **{US-REF}.md** - Use `description.md` instead  
-❌ **tdd-execution.md** - Execution tracked via implementation-plan.md checkboxes  
-❌ **us-completion-checklist.md** - Definition of Done in description.md  
-❌ **handoff.json** - Not needed in Gen‑e2 compliance model  
-
----
-
-**Framework**: Gen‑e2 Compliance v2.0.0  
-**Template**: User Story Folder Structure  
-**Usage**: Dev-Lead creates folder structure; TDD agents execute against checkboxes
-
----
-
-### 4. **tdd-execution/<CYCLE>/** (Detailed Cycle Handoffs)
-
-**Created by**: Dev-TDD (before RED phase of each cycle)  
-**Updated by**: Dev-TDD (after each phase: RED→GREEN→REFACTOR)  
-**Purpose**: Detailed context for each TDD phase  
-**Content**: Phase-specific handoffs with exact context, files, next steps
-
-**Life Cycle**:
-- Dev-TDD creates cycle folder before starting RED
-- Creates `<CYCLE>-HO-RED.json` after RED complete
-- Creates `<CYCLE>-HO-GREEN.json` after GREEN complete  
-- Creates `<CYCLE>-HO-REFACTOR.md` after REFACTOR complete
-- Folder becomes read-only historical record
-
-**Example Structure**:
-```
-tdd-execution/
-├── 001/
-│   ├── 001-HO-RED.json      # "Test written, failing assertion ready"
-│   ├── 001-HO-GREEN.json    # "Minimal code, test passing"
-│   └── 001-HO-REFACTOR.md   # "Quality improved, ready for next cycle"
-└── 002/
-    ├── 002-HO-RED.json      # Next feature test written
-    ├── 002-HO-GREEN.json    # Next feature implemented  
-    └── 002-HO-REFACTOR.md   # Quality pass completed
-```
-
-**Life Cycle**:
-- Tech Lead writes concise plan with:
-  - Layer 1-4 sections (each ≤500 words)
-  - Files to create, BDD coverage, TDD approach, constraints
-  - Definition of Done (cumulative)
-- TDD agents reference during RED-GREEN-REFACTOR
-- Stays frozen (no updates during execution)
-
-**Example Structure**:
-```markdown
-# Implementation Plan: US-001 User Registration
-
-## Header (100 words max)
-- Story: US-001 User Registration
-- Epic: Authentication (User Access Control)
-- BDD Scenarios: features/auth/registration.feature (lines 5-45)
-- Failing Tests: 3 scenarios needing implementation
-
-**Key Timeline**: Layer 1 (2h) → Layer 2 (4h) → Layer 3 (1h) → Layer 4 (3h)
-
----
-
-## Layer 1 - Database (500 words max)
-
-**Goal**: Create users table with secure schema
-
-**Files to Create**:
-- Migration: `/src/db/migrations/001_create_users_table.ts`
-- Model: `/src/models/User.ts`
-- Test: `/src/models/__tests__/User.test.ts`
-
-**BDD Test Coverage** (Which assertions pass after Layer 1):
-- ✅ "User table stores email and password hash"
-- ✅ "User email is unique (constraint prevents duplicates)"
-- ✅ "User.id is UUID (not auto-increment)"
-
-**TDD Approach**:
-1. RED: Test User.create() with valid data → fails
-2. GREEN: Implement migration + model
-3. REFACTOR: Extract password hashing, add JSDoc
-
-**Architectural Constraints**:
-- Use Sequelize ORM (from architecture-design.md)
-- Password must be bcrypt hash, never plaintext
-- Email field unique at DB level
-- ID field as UUID primary key
-
-**Estimated Complexity**: 3 story points (2 hours)
-
----
-
-## Layer 2 - Backend (500 words max)
-
-**Goal**: Create POST /api/auth/register endpoint
-
-**Files to Create**:
-- Controller: `src/controllers/AuthController.ts`
-- Service: `src/services/AuthService.ts`
-- DTO: `src/dtos/RegisterRequest.ts`, `RegisterResponse.ts`
-- Middleware: `src/middleware/ValidationMiddleware.ts`
-- Test: `src/services/__tests__/AuthService.test.ts`
-
-**BDD Test Coverage** (Assertions now passing):
-- ✅ Previous Layer 1 assertions still passing
-- ✅ "POST /api/auth/register returns 201 Created"
-- ✅ "Response includes user object with ID and email"
-- ✅ "Password never returned in response"
-- ✅ "Duplicate email returns 409 Conflict"
-
-**TDD Approach**:
-1. RED: Integration test for POST /api/auth/register → fails
-2. GREEN: Implement AuthService.register() + AuthController
-3. REFACTOR: Extract validation, improve error messages
-
-**Architectural Constraints**:
-- JWT token generation (from tech-spec.md)
-- bcrypt with 10 salt rounds (from security spec)
-- Rate limiting: 5 attempts per hour per IP
-- Email validation: RFC 5322 basic check
-
-**Estimated Complexity**: 5 story points (4 hours)
-
----
-
-## Layer 3 - Configuration (500 words max)
-
-[Similar structure...]
-
----
-
-## Layer 4 - Frontend (500 words max)
-
-[Similar structure...]
-
----
-
-## Implementation Sequence
-
-1. Layer 1 (Database) MUST complete before Layer 2
-2. Layer 2 (Backend) MUST complete before Layer 3
-3. Layer 3 (Config) MUST complete before Layer 4
-4. Layer 4 is independent (no blocking)
-
-**Parallel Opportunities**: None for this story (sequential)
-
----
-
-## Definition of Done (Cumulative)
-
-- ✅ All BDD scenarios in `bdd-scenarios/` passing
-- ✅ Test coverage > 80% (all layers)
-- ✅ Cyclomatic complexity < 10 (all layers)
-- ✅ Code review approved (13-point checklist)
-- ✅ Zero critical security issues
-- ✅ Performance targets met (all endpoints <500ms)
-- ✅ Design system compliance (frontend components)
-- ✅ Merged to main branch
-```
-
-**Word Count Enforcement**:
-- Header: ~100 words
-- Each Layer: ~400-500 words
-- Sequence: ~100 words
-- Total: ~2,000 words (concise, not verbose)
-
----
-
-### 5. **features/** (BDD Feature Files)
-
-**Created by**: Dev-Lead (copies from project-wide `/features/`)
-**Updated by**: Dev-TDD (as new scenarios identified during RED phase)  
-**Purpose**: BDD feature files specific to this story
-**Content**: Gherkin scenarios that drive TDD implementation
-
-**Life Cycle**:
-- Dev-Lead copies relevant feature files during story setup
-- Dev-TDD may add new scenarios during RED phases
-- Files become source of truth for test assertions
-
-**Example Structure**:
-```
-features/
-├── auth-tier-sync.feature       # Copied from /features/auth/
-├── user-registration.feature    # Copied from /features/auth/
-└── subscription-sync.feature    # Added during Cycle 3 (new requirement discovered)
-```
-
-**Created by**: Tech Lead (skeleton)  
-**Updated by**: TDD agents append after each cycle phase  
-**Purpose**: Complete, immutable audit trail  
-**Lifecycle**: APPEND-ONLY (never delete, never overwrite)
-
-**Append Pattern**:
-```
-Each TDD phase (RED, GREEN, REFACTOR) appends ONE entry:
-
-## Cycle 5: RED Phase
-- Time: 2026-02-05 10:30 UTC
-- Outcome: ✅ Test fails
-- Commit: TDD-US-001-RED-5
-
-## Cycle 5: GREEN Phase
-- Time: 2026-02-05 11:15 UTC
-- Outcome: ✅ Tests passing
-- Commit: TDD-US-001-GREEN-5
-
-## Cycle 5: REFACTOR Phase
-- Time: 2026-02-05 11:45 UTC
-- Outcome: ✅ Improved code quality
-- Commit: TDD-US-001-REFACTOR-5
-
-[NEXT CYCLE APPENDS BELOW - existing entries stay intact]
-```
-
----
-
-### 5. **bdd-scenarios/** (Feature Files)
-
-**Created by**: Dev-Lead during Phase 1 (BDD Integration)  
-**Content**: Copies of feature files from `features/` directory  
-**Purpose**: Reference for TDD agents; single source of truth is in `features/`
-
-**Example**:
-```
-bdd-scenarios/
-├── registration.feature         (Copy from features/auth/registration.feature)
-├── email-verification.feature   (Copy from features/auth/email-verification.feature)
-└── login.feature                (Copy from features/auth/login.feature)
-```
-
----
-
-### 6. **code-review-report.md** (Generated After Layer Complete)
-
-**Created by**: REFACTOR agent after final REFACTOR phase for layer  
-**Purpose**: Detailed code review against 13-point checklist (coding.instructions.md)
-
-**Content**:
-```markdown
-# Code Review Report: US-001 Layer 2 (Backend)
-
-## 13-Point Checklist
-
-1. **SOLID Principles** ✅
-   - Single Responsibility: Each class has one reason to change
-   - Open/Closed: New validation rules extend without modifying existing code
-   - Liskov Substitution: All implementations follow contract
-   - Interface Segregation: Small, focused interfaces
-   - Dependency Inversion: Depends on abstractions, not concretions
-
-2. **Test Coverage** ✅ 94%
-   - Happy path: User registration with valid data
-   - Error paths: Duplicate email, invalid format
-   - Edge cases: Empty fields, special characters
-
-[... rest of 13 points ...]
-
-## Issues Found
-
-### Critical (0)
-None
-
-### High (0)
-None
-
-### Medium (1)
-- Missing error logging in AuthService.register() → Recommend adding winston logger
-
-### Low (2)
-- JSDoc could be more detailed for DTO classes
-- Consider extracting magic number (5 rate limit) to config constant
-
-## Overall Assessment
-
-**Status**: ✅ APPROVED FOR MERGE
-
-**Summary**: Code quality is excellent. All SOLID principles followed. Test coverage 94% (exceeds 80% target). Complexity within limits (max 7, target <10). No critical or high issues. Ready for production.
-
-**Approved By**: dev-tdd-refactor  
-**Date**: 2026-02-05 12:00 UTC
-```
+- ✅ TDD execution BLOCKED if `plan-approval.yaml` ≠ "approved"
+- ✅ Layer N+1 BLOCKED until Layer N checkboxes 100% complete
+- ✅ Story completion BLOCKED until all checkboxes marked `[x]`
+- ✅ Story acceptance BLOCKED until all BDD scenarios pass
 
 ---
 
@@ -517,136 +242,124 @@ Before handing off to TDD agents, Dev-Lead ensures:
 
 ```
 ✅ Created folder: /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/
-✅ Created <US-REF>.md (link to PRD, acceptance criteria)
-✅ Created implementation-plan.md (500 words/layer max)
-✅ Created api-design.md (if applicable)
-✅ Created us-completion-checklist.md (DoD criteria)
-✅ Created tdd-execution.md (empty audit log with headers)
-✅ Created features/ folder
-✅ Copied relevant feature files to features/
-✅ Created tdd-execution/ folder for cycle handoffs
-✅ All skeleton files ready for population
-✅ implementation-plan.md references tech-spec.md constraints
-✅ Folder structure matches this template exactly
+✅ BA created features/ folder with complete BDD scenarios
+✅ Created description.md (functional/non-functional requirements, acceptance criteria, DoD)
+✅ Created implementation-plan.md (500 words/layer max, checkboxes per concrete task)
+✅ Created plan-approval.yaml (status: changes-requested initially)
+✅ Reviewed implementation plan for completeness and feasibility
+✅ Verified BDD scenarios map to implementation layers
+✅ Set plan-approval.yaml status to "approved"
+✅ Folder structure matches this template exactly (3 files + 1 folder only)
 ```
 
 ---
 
 ## Key Rules for Agents
 
-### TDD Cycle Handoff Rules
-- ✅ Create nested cycle folder: `tdd-execution/<CYCLE>/`
-- ✅ Create phase-specific handoffs: `<CYCLE>-HO-RED.json`, `<CYCLE>-HO-GREEN.json`, `<CYCLE>-HO-REFACTOR.md`
-- ✅ Each handoff file is permanent historical record
-- ✅ Include comprehensive context for next phase/cycle
-- ❌ Overwrite existing handoff files
-- ❌ Create flat structure (no direct cycle files in story root)
+### Implementation Plan Execution
+- ✅ Read `implementation-plan.md` for layer-by-layer guidance
+- ✅ Execute checkboxes sequentially within each layer
+- ✅ Mark checkbox `[x]` immediately after task completion
+- ✅ Reference `features/` for BDD scenario validation
+- ✅ Commit after each meaningful checkpoint with proper message format: `TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD: [description]` (date in YYYYMMDD)
+- ❌ Skip ahead to Layer N+1 before Layer N complete
+- ❌ Modify plan after approval without re-approval
+- ❌ Work on multiple layers in parallel (sequential execution only)
 
-### tdd-execution.md Rules  
-- ✅ APPEND new summary line after each REFACTOR completion
-- ✅ ONE summary line per completed cycle
-- ✅ Include: cycle number, timestamp, tests, coverage, commit SHA, notes
-- ✅ Never delete or overwrite existing entries (audit trail)
-- ✅ Provide high-level progress tracking for PM/stakeholders
-- ❌ Include detailed phase information (that's in cycle folders)
+### Checkbox Completion Rules
+- Checkbox marked `[x]` means: code written, tests passing, committed to git
+- Never mark checkbox as complete until code is committed
+- Each checkbox should result in at least one git commit
+- Commit message must reference the checkbox task
 
 ### Git Commit Message Rules
 ```
-TDD-<US-REF>-<PHASE>-<CYCLE>: [Description]
+TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD: [Description]
 
 Examples:
-- TDD-US-001-RED-5: Write failing test for tier sync
-- TDD-US-001-GREEN-5: Implement UserTierSyncService.sync()  
-- TDD-US-001-REFACTOR-5: Extract tierSync utility, improve naming
+- TDD-US-001-RED-01: Write failing test for user registration
+- TDD-US-001-GREEN-01: Implement UserService.register()  
+- TDD-US-001-REFACTOR-01: Extract validation logic to middleware
 ```
 
 ---
 
 ## Folder Lifecycle Example
 
-### T=0 (Dev-Lead - Phase 3, Implementation Planning)
+### T=0 (Dev-Lead - Story Planning)
 ```
 Dev-Lead creates:
 /docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/
-├── US-001.md (stub: link to PRD)
-├── implementation-plan.md (500 words per layer)
-├── api-design.md (if applicable)
-├── us-completion-checklist.md (DoD criteria)
-├── tdd-execution.md (empty audit log with headers)
-├── features/
-│   ├── registration.feature (copied from project /features/)
-│   └── email-verification.feature
-└── tdd-execution/  # Empty folder ready for cycles
+├── description.md (complete story definition, DoD)
+├── implementation-plan.md (Layer 1-4 with checkboxes, all [ ])
+├── plan-approval.yaml (status: approved after review)
+└── features/ (BA created)
+    ├── user-registration.feature
+    └── email-validation.feature
 ```
 
-### T=1h (Dev-TDD RED - Cycle 1, Layer 1)
+### T=1h (Dev-TDD - Layer 1, Checkpoint 1)
 ```
-Dev-TDD RED:
-1. Creates tdd-execution/001/ folder
-2. Reads implementation-plan.md Layer 1
-3. Writes failing test in UserRepository.test.ts
-4. Creates 001-HO-RED.json with test context and next steps
-5. Commits: TDD-US-001-RED-1: Write failing test for User creation
+Dev-TDD executes:
+1. Validates plan-approval.yaml status = "approved" ✅
+2. Reads implementation-plan.md Layer 1, first checkbox
+3. Writes failing test: UserRepository.test.ts
+4. Marks checkbox: [x] Write unit test for User creation
+5. Commits: TDD-US-001-RED-01: Write failing test for User creation
+
+implementation-plan.md now shows:
+## Layer 1: Database & Domain Model
+- [x] Create migration: `migrations/001_create_users_table.sql`
+- [ ] Create model: `models/User.ts`
+- [ ] Write unit test: `models/__tests__/User.test.ts`
 ```
 
-### T=2h (Dev-TDD GREEN - Cycle 1, Layer 1)  
+### T=2h (Dev-TDD - Layer 1, Checkpoint 2)  
 ```
-Dev-TDD GREEN:
-1. Reads tdd-execution/001/001-HO-RED.json for context
-2. Implements minimal UserRepository.ts to make tests pass
-3. Creates 001-HO-GREEN.json with implementation details
-4. Commits: TDD-US-001-GREEN-1: Implement UserRepository creation
+Dev-TDD continues:
+1. Reads failing test from previous checkpoint
+2. Implements minimal UserRepository.ts to make test pass
+3. Marks checkbox: [x] Implement UserRepository.create()
+4. Commits: TDD-US-001-GREEN-01: Implement UserRepository.create()
+
+implementation-plan.md now shows:
+## Layer 1: Database & Domain Model
+- [x] Create migration: `migrations/001_create_users_table.sql`
+- [x] Create model: `models/User.ts`
+- [ ] Write unit test: `models/__tests__/User.test.ts`
 ```
 
-### T=3h (Dev-TDD REFACTOR - Cycle 1, Layer 1)
+### T=3h (Dev-TDD - Layer 1, Checkpoint 3)
 ```
-Dev-TDD REFACTOR:
-1. Reads tdd-execution/001/001-HO-GREEN.json for optimization targets
-2. Refactors UserRepository.ts, extracts password utility
-3. Creates 001-HO-REFACTOR.md with quality improvements summary
-4. Appends summary line to tdd-execution.md (audit log)
-5. Commits: TDD-US-001-REFACTOR-1: Extract password hashing utility
+Dev-TDD refactors:
+1. Reviews code quality and identifies improvements
+2. Extracts password hashing to utility function
+3. Marks checkbox: [x] Refactor password handling
+4. Commits: TDD-US-001-REFACTOR-01: Extract password hashing utility
+
+implementation-plan.md now shows:
+## Layer 1: Database & Domain Model
+- [x] Create migration: `migrations/001_create_users_table.sql`
+- [x] Create model: `models/User.ts`
+- [x] Write unit test: `models/__tests__/User.test.ts`
+- [x] Verify BDD scenario passes: "User data persists to database"
+
+✅ Layer 1 complete - proceed to Layer 2
 ```
 
-### T=4h (Dev-TDD RED - Cycle 2, Layer 1)
-```
-Dev-TDD RED starts new cycle:
-1. Creates tdd-execution/002/ folder
-2. Reads implementation-plan.md Layer 1 (next behavior/edge case)
-3. Writes failing test for email validation edge case
-4. Creates 002-HO-RED.json with test details
-5. Commits: TDD-US-001-RED-2: Test email validation edge cases
-[Continue: GREEN → REFACTOR → next cycle...]
-```
-
-### T=∞ (After All Cycles Complete)
+### T=∞ (After All Layers Complete)
 ```
 /docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/
-├── US-001.md (unchanged reference)
-├── implementation-plan.md (frozen reference)
-├── api-design.md (if created)
-├── us-completion-checklist.md (for QA validation)
-├── tdd-execution.md (append-only audit log: ~15 summary lines)
-├── features/ (BDD files - may have grown)
-│   ├── registration.feature
-│   └── email-verification.feature
-└── tdd-execution/
-    ├── 001/
-    │   ├── 001-HO-RED.json (historical record)
-    │   ├── 001-HO-GREEN.json
-    │   └── 001-HO-REFACTOR.md
-    ├── 002/
-    │   ├── 002-HO-RED.json  
-    │   ├── 002-HO-GREEN.json
-    │   └── 002-HO-REFACTOR.md
-    └── [... up to cycle N]
+├── description.md (unchanged)
+├── implementation-plan.md (all checkboxes [x])
+├── plan-approval.yaml (status: approved)
+└── features/ (all scenarios passing ✅)
+    ├── user-registration.feature ✅
+    └── email-validation.feature ✅
 
-tdd-execution.md contains:
-- One summary line per cycle (not per phase)
-- High-level progress tracking for PM/stakeholders
-- Commit SHAs, test coverage, major decisions
-- Ready for retrospective analysis and auditing
-```
+✅ All checkboxes marked [x] = Story implementation complete
+✅ All BDD scenarios passing = Acceptance criteria met
+✅ Ready for QA validation and merge
 ```
 
 ---
@@ -655,30 +368,46 @@ tdd-execution.md contains:
 
 | Aspect | Benefit |
 |--------|---------|
-| **Document Consolidation** | No sprawl: 1 handoff + 1 log instead of cycle-* files |
-| **Auditability** | tdd-execution.md is complete audit trail (immutable) |
-| **Clarity** | handoff.md always shows current cycle state (current snapshot) |
-| **Stakeholder Visibility** | tdd-execution.md shows full journey; can generate summary report |
-| **Git Simplicity** | Commit messages linked to handoff/execution entries |
-| **Scalability** | Works for 1 story or 100 stories; structure is consistent |
-| **Traceability** | Code → BDD scenario → Layer → Cycle → Commit → Entry in log |
+| **Simplicity** | Only 3 files + 1 folder = easy to understand and maintain |
+| **Clarity** | Clear separation: description (WHAT), plan (HOW), features (ACCEPTANCE) |
+| **Traceability** | Checkbox progress in implementation-plan.md tracks status directly |
+| **Quality Gates** | Human approval required before TDD, BDD scenarios validate completion |
+| **Scalability** | Pattern works for 1 story or 100 stories consistently |
+| **Auditability** | Git commits directly reference checkboxes and BDD scenarios |
+| **No Sprawl** | Zero auxiliary files = no documentation inflation |
 
 ---
 
 ## Summary
 
-**Create Upfront (Tech Lead)**:
+**Create Upfront (Dev-Lead + BA)**:
 - ✅ Folder `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/`
-- ✅ 5 files: {US-REF}.md, implementation-plan.md, handoff.md, tdd-execution.md, bdd-scenarios/
+- ✅ BA creates `features/` with BDD scenarios (Given/When/Then)
+- ✅ Dev-Lead creates `description.md` (requirements, acceptance criteria, DoD)
+- ✅ Dev-Lead creates `implementation-plan.md` (checkboxes per layer, BDD mapping)
+- ✅ Dev-Lead creates and approves `plan-approval.yaml`
 
-**Agents Populate During TDD**:
-- OVERWRITE: handoff.md (after each phase)
-- APPEND: tdd-execution.md (after each phase)
-- GENERATE: code-review-report.md (after each layer REFACTOR)
+**Agents Execute During TDD**:
+- ✅ Mark checkboxes `[x]` in `implementation-plan.md` as work progresses
+- ✅ Validate BDD scenarios in `features/` pass after each layer
+- ✅ Commit with proper `TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD` format (date in YYYYMMDD)
 
-**Never Create**:
-- ❌ cycle-specific files (cycle-5-handoff.md, red-handoff.md)
-- ❌ per-agent files (dev-tdd-red-notes.md, dev-tdd-green-notes.md)
-- ❌ phase-specific logs (red-log.md, green-log.md, refactor-log.md)
+**Never Create (FORBIDDEN)**:
+- ❌ **tdd-execution.md** (progress tracked via checkboxes in implementation-plan.md)
+- ❌ **tdd-execution/ folder** (no separate cycle tracking needed)
+- ❌ **api-design.md** (API details belong in description.md, tech-spec.md, or OpenAPI spec)
+- ❌ **us-completion-checklist.md** (Definition of Done already in description.md)
+- ❌ **handoff.md or handoff.json** (agents read plan + features directly)
+- ❌ **cycle-specific files** (e.g., cycle-5-handoff.md, red-summary.md, green-18-notes.md)
+- ❌ **agent-specific logs** (e.g., dev-tdd-red-notes.md, dev-tdd-green-log.md)
+- ❌ **Any other files or folders** not listed in "Required Folder Structure" above
 
-**Result**: Clean, auditable, scalable structure with ZERO document sprawl.
+**Result**: Clean, minimal, auditable structure with ZERO document sprawl. Progress tracked via checkbox completion in implementation-plan.md and git commits.
+
+---
+
+**Framework**: Simplified User Story Structure v3.0  
+**Template**: User Story Folder (3 Files + 1 Folder Only)  
+**Usage**: Dev-Lead creates structure; BA provides BDD scenarios; TDD agents execute checkboxes  
+**Last Updated**: 2026-04-02  
+**Status**: ACTIVE

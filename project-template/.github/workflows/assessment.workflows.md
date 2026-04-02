@@ -1029,6 +1029,93 @@ Evaluate client maturity across **8 core dimensions**:
 
 ---
 
+## 📋 Agent Logging Requirements (MANDATORY)
+
+**⚠️ UNBREAKABLE RULE: ALL agent interactions during assessment phase MUST be logged.**
+
+### Logging Locations for Assessment Phase
+
+**All agents working in assessment phase log to**: `/logs/00-assessment/agent-{name}-YYYYMMDD.md`
+
+### Agents Required to Log
+
+| Agent | Primary Activities | Log Path |
+|-------|-------------------|----------|
+| **orchestrator** | Workflow coordination, decision gates | `/logs/00-assessment/agent-orchestrator-YYYYMMDD.md` |
+| **ba** | Input analysis, maturity assessment | `/logs/00-assessment/agent-ba-YYYYMMDD.md` |
+| **architect** | Technical inventory, architecture analysis | `/logs/00-assessment/agent-architect-YYYYMMDD.md` |
+| **ai-engineering** | AI capability assessment, model recommendations | `/logs/00-assessment/agent-ai-engineering-YYYYMMDD.md` |
+| **pm** | Prerequisites tracking, timeline planning | `/logs/00-assessment/agent-pm-YYYYMMDD.md` |
+
+### Mandatory Logging Points
+
+**Phase 1-2: Context Discovery**
+- Log input inventory results
+- Log prerequisites generation
+- Log baseline assessment findings
+
+**Phase 3: Prerequisites Fulfillment**
+- Log access request tracking
+- Log fulfillment status updates
+- Log blockers and escalations
+
+**Phase 4-5: Deep Assessment**
+- Log multi-dimensional scoring
+- Log stakeholder interview findings
+- Log confidence ratings and evidence
+
+**Phase 6: Strategic Planning**
+- Log readiness report generation
+- Log roadmap creation
+- Log handoff artifact preparation
+
+### Log Entry Template
+
+```markdown
+## {TIMESTAMP} | Action: {DESCRIPTION} | Status: {success|failure|partial|blocked}
+
+### Context
+- **Phase**: ASSESSMENT
+- **Stage**: {1|2|3|4}
+- **Dimension**: {dimension_name} (if applicable)
+
+### Action Details
+- **Action Type**: {read|write|analyze|coordinate}
+- **Files Touched**: [{files}]
+- **Tools Used**: [{tools}]
+- **PRU Consumed**: ~{estimate}
+
+### Outcome
+- **Status**: {status}
+- **Changes Made**: {description}
+- **Confidence**: {percentage}%
+- **Evidence**: {artifact_paths}
+- **Blockers**: {None | description}
+- **Rationale**: {why}
+
+### Handoff
+- **Next Step**: {awaiting|handoff_to_agent|continue|complete}
+- **Next Agent**: {agent_name}
+- **Handoff Artifact**: {path}
+- **Instructions**: {guidance}
+
+---
+```
+
+### Validation Enforcement
+
+**Orchestrator validates logs before**:
+- Each phase transition (1→2, 2→3, etc.)
+- Prerequisites fulfillment sign-off
+- Readiness report approval
+- Handoff to documents workflow
+
+**Missing logs = assessment incomplete** (cannot proceed to next phase)
+
+**Full Documentation**: See `.github/instructions/agent-logging.instructions.md` for comprehensive standards.
+
+---
+
 ## Success Criteria
 
 Assessment workflow is complete when:

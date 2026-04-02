@@ -1,15 +1,34 @@
 document_type: functional_specification
 
 metadata:
-  id: FS-XXX
-  title: "[Feature/Module Name]"
-  version: 1.0
-  date: "[YYYY-MM-DD]"
-  author: "[Name]"
-  related_user_stories:
-    - US-XXX
-    - US-YYY
-  status: "Draft | In Review | Approved"
+  # Document identification
+  id: "FS-XXX"                              # Unique functional specification identifier
+  title: "[Feature/Module Name]"             # Human-readable feature/module title
+  version: "1.0.0"                           # Semantic version
+  date: "[YYYY-MM-DD]"                       # Creation/last update date
+  author: "[Name or Agent]"                  # Document creator
+  
+  # Template and AI tracking
+  template:
+    source: ".github/templates/func-doc-tmpl.yml"  # Template used
+    compliance: "COMPLIANT"                        # Template adherence status
+  
+  ai_generation:
+    model: "[LLM-MODEL-NAME]"                # LLM model used (e.g., "claude-3.5-sonnet", "human-created")
+    generation_date: "[YYYY-MM-DD]"          # When AI generated this document
+  
+  # Document relationships
+  related_documents:
+    user_stories: ["US-XXX", "US-YYY"]       # Related user stories
+    dependencies: ["docs/01-requirements/user-stories.md", "docs/02-architecture/tech-spec.md"]
+  
+  # Status tracking
+  status: "Draft"                           # Document lifecycle status
+  required_approvers: ["Product Owner", "Tech Lead", "QA Lead"]  # Who must approve
+  
+  # Classification
+  classification: "Internal"                # Data classification level
+  tags: ["functional-specification", "[domain]", "[phase]"]  # Searchable tags
 
 overview:
   purpose: "[One-paragraph summary of what this feature does and why it matters]"

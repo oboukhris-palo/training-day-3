@@ -111,17 +111,16 @@ Break down user stories into precise implementation plans that guide TDD executi
 - **Wait for approach confirmation**: Get user choice before starting implementation
 - **ONE AGENT AT A TIME**: Ensure exclusive access during planning and implementation
 - Accept user stories from BA agent (each with **attached BDD/Gherkin scenarios**)
-- **Create implementation plan**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md`
+- **Create implementation plan**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` with layer-by-layer checkboxes
+- **Create plan approval gate**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-approval.yaml`
 - **Create skeleton classes**: Method signatures, resource comments, test data for RED agent
-- **Create handoff file**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>-HANDOFF.md` for TDD chain of thought
-- **Integrate BDD scenarios into project** - create Gherkin feature files with step definitions
+- **Integrate BDD scenarios into project** - copy BA's feature files to `features/` folder
 - Conduct technical analysis and feasibility assessment
 - Break down features into granular tasks across multiple layers (frontend, backend, database, infrastructure, CI/CD)
 - Coordinate TDD implementation via handoffs
 - Hand off layers to TDD with command: "Make these failing BDD tests pass"
 - Verify code quality, architectural consistency, and adherence to technical specifications
 - Validate that implementations fulfill business requirements and **pass all BDD tests**
-- Update handoff file with progress and chain of thought
 - Identify and resolve technical blockers and integration issues
 - **🔥 UNBLOCK STUCK TDD CYCLES**: When BDD or integration tests cannot pass:
   - Diagnose root cause (layer dependency broken, test assertion unreachable, infrastructure issue, schema mismatch)
@@ -134,7 +133,9 @@ Break down user stories into precise implementation plans that guide TDD executi
 - Maintain traceability from BDD test scenarios to code implementation
 
 ## Deliverables
-- Integrated BDD feature files with step definitions in project
+- Integrated BDD feature files in `features/` folder
+- **Implementation plan with checkboxes** ready for TDD execution
+- **Plan approval gate** for human validation
 - **Failing BDD tests** ready to be driven by TDD implementation
 - Technical execution plans (task breakdown, dependencies, sequencing)
 - Architecture diagrams and design decisions
@@ -154,29 +155,28 @@ Before ANY documentation or planning, create the per-story folder structure:
 
 ```bash
 # Create folder structure
-mkdir -p /docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>
+mkdir -p /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>
 
-# Create skeleton files (never delete, only update)
-touch /docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/description.md
-touch /docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/implementation-plan.md
-touch /docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/handoff.md
-touch /docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/tdd-execution.md
-mkdir -p /docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/bdd-scenarios/
+# Create core files (never delete, only update)
+touch /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md
+touch /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md
+touch /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-approval.yaml
+mkdir -p /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/features/
 ```
 
-**Why this matters**: Folders pre-exist so TDD agents don't worry about creating them. Files are stubs until filled in by appropriate agents. **This reduces friction and enables parallel work.**
+**Why this matters**: Folders pre-exist so TDD agents don't worry about creating them. Files are stubs until filled in. **This reduces friction and enables focused work.**
 
 1. Receive user story from BA agent - **story includes attached BDD/Gherkin scenarios**
 2. **Update story status**: Change status in `/docs/05-implementation/user-stories.md` from "Not Started" → "In Progress"
    - Record assignee (dev-lead), timestamp, and progress tracker (Layer 0/4, Cycle 0/0)
    - Update GitHub Issue status to "In Progress"
-3. Review functional specifications and acceptance criteria from `/docs/05-implementation/user-stories.md`
-4. Conduct technical feasibility assessment using `/docs/02-architecture/architecture-design.md` and `/docs/02-architecture/tech-spec.md`
-5. **Create story folder structure**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/`
-   - Create folder: `mkdir -p /docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>`
-   - Create subfolders: `bdd-scenarios/`, `tdd-execution/`
-6. **Create story definition file**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/<USER-STORY-REF>.md`
-   - Copy exact content from `/docs/01-requirements/user-stories.md` for matching US-REF
+3. Review functional specifications and acceptance criteria
+4. Conduct technical feasibility assessment using architecture and tech specs
+5. **Create story folder structure**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/`
+   - Create folder: `mkdir -p /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>`
+   - Create subfolder: `features/` for BDD scenarios
+6. **Create story definition file**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md`
+   - Include functional requirements, acceptance criteria, technical notes, Definition of Done
    - Add GitHub Issue link: `GitHub Issue: [#123](https://github.com/org/repo/issues/123)`
    - Add technical constraints from `/docs/02-architecture/architecture-design.md`
    - Add dependencies from `/docs/05-implementation/user-stories.md`
@@ -184,7 +184,7 @@ mkdir -p /docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/
 7. **Create feature file in project** (e.g., `features/auth/login.feature`)
    - Copy Gherkin scenarios from user story
    - Add feature file to project source control
-   - Store copy in `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/bdd-scenarios/`
+   - Store copy in `/docs/05-implementation/epics/EPIC-001/user-stories/US-001/bdd-scenarios/`
 8. **Create step definition file** with stubs for all scenario steps (Given, When, Then)
    - Step definitions call actual API endpoints/services (not mocks)
    - Step definitions include assertions matching scenario expected results
@@ -193,7 +193,7 @@ mkdir -p /docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/
 9. Identify architectural impacts and design patterns needed
 
 ### Phase 2: Breakdown & Planning with BDD Tests Driving Implementation
-9. **Generate implementation plan document** at `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/implementation-plan.md` with:
+9. **Generate implementation plan document** at `/docs/05-implementation/epics/EPIC-001/user-stories/US-001/implementation-plan.md` with:
    
    ⚠️ **CONSTRAINT: Maximum 500 words per layer** (concise guidance, not verbose blueprints)
    
@@ -201,7 +201,7 @@ mkdir -p /docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/
    - User Story Reference and Title
    - Epic Name (parent epic)
    - Story Description and Business Value
-   - Links to BDD scenarios: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/bdd-scenarios/`
+   - Links to BDD scenarios: `/docs/05-implementation/epics/EPIC-001/user-stories/US-001/bdd-scenarios/`
    - Failing BDD test summary (which scenarios fail, which assertions need implementation)
    
    **Layer 1 - Database** (max 500 words):
@@ -255,7 +255,7 @@ mkdir -p /docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/
    - Risk areas and mitigation strategies
    
    **Definition of Done** (bullet list):
-   - All BDD scenarios in `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/bdd-scenarios/` passing
+   - All BDD scenarios in `/docs/05-implementation/epics/EPIC-001/user-stories/US-001/bdd-scenarios/` passing
    - Test coverage > 80%
    - Code review approved
    - Technical specifications from `/docs/02-architecture/tech-spec.md` met
@@ -319,7 +319,7 @@ mkdir -p /docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/
    - Risk areas and mitigation strategies
    
    **Definition of Done**:
-   - All BDD scenarios in `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/bdd-scenarios/` passing
+   - All BDD scenarios in `/docs/05-implementation/epics/EPIC-001/user-stories/US-001/bdd-scenarios/` passing
    - Test coverage > 80%
    - Code review approved
    - Technical specifications from `/docs/02-architecture/tech-spec.md` met
@@ -403,7 +403,7 @@ mkdir -p /docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/
 13. Brief development team: "Make these failing BDD tests pass layer by layer following the implementation plan"
 14. Facilitate kickoff session with:
     - Failing BDD test results
-    - Implementation plan walkthrough: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<USER-STORY-REF>/implementation-plan.md`
+    - Implementation plan walkthrough: `/docs/05-implementation/epics/epic-01/user-stories/us-001/implementation-plan.md`
     - Technical constraints from `/docs/02-architecture/tech-spec.md`
     - Design specifications from `/docs/02-architecture/design-systems.md`
 15. **Assign Layer 1 to TDD Orchestrator** with command: "Make failing BDD tests for Layer 1 pass using RED → GREEN → REFACTOR, following implementation-plan.md Layer 1 section"

@@ -40,9 +40,7 @@ Write minimal code that makes failing tests pass. Hand off to REFACTOR phase imm
 - Document business rules inline where complexity exists
 - Run tests to verify: test passes + no regressions
 - Follow design notes and architectural constraints
-- **Log action to daily log**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-dev-tdd-green-YYYYMMDD.md`
-- **Update handoff.md** (overwrite with GREEN phase progress)
-- **Append to tdd-execution.md** (add entry for this phase)
+- **Mark checkbox in implementation-plan.md** after implementation complete
 - **Commit to git** with standardized message
 - Hand off to REFACTOR phase after test passes
 
@@ -78,7 +76,7 @@ If user asks you to:
 
 ## Implementing to Pass Tests (GREEN Phase)
 
-> Maintain single Execution Log `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution.md` (append-only) and single Handoff `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/handoff.md` (overwrite each phase)
+> Track progress via checkboxes in implementation-plan.md
 
 ## You run the 🟩 GREEN phase of TDD
 
@@ -92,30 +90,13 @@ Gather any missing context via #tool:runSubagent using read-only tools.
 
 **After implementation:**
 - Run **all** tests to ensure nothing else broke
-- **Update handoff.md** (overwrite previous phase status):
+- **Mark checkbox as complete** in implementation-plan.md:
   ```markdown
-  ## Progress
-  - ✅ Test written: [Test name]
-  - ✅ Code implemented: [File, lines of code]
-  - ⏳ Refactor: Pending
-  
-  ## Next
-  Hand off to REFACTOR phase
-  ```
-- **Append entry to tdd-execution.md** (never overwrite—add new entry):
-  ```markdown
-  ## Cycle N: GREEN Phase
-  - Time: [TIMESTAMP]
-  - Agent: dev-tdd-green
-  - Task: Implement minimal code to pass test
-  - Outcome: ✅ Test passing, no regressions
-  - Files Modified: [List files and line counts]
-  - Commit: TDD-<US-REF>-GREEN-<CYCLE>: [Message]
-  - Coverage: [X%]
+  - [x] Implement UserService.register() to pass test
   ```
 - **Commit to git** with standardized message:
   ```bash
-  git commit -m "TDD-US-001-GREEN-18: Implement UserTierSyncService.sync()"
+  git commit -m "TDD-US-001-GREEN-18-20260402: Implement UserTierSyncService.sync()"
   ```
 - Ready for REFACTOR or next RED cycle
 

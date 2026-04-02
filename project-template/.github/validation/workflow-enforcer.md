@@ -354,7 +354,7 @@ Actual: @orchestrator → @dev-lead (skipped PM/PO/BA)
 
 Agent: @dev-lead → @dev-tdd
 Missing: Implementation plan handoff file
-Expected: docs/05-implementation/epics/<EPIC-REF>/user-stories/US-001/handoff.md
+Expected: docs/05-implementation/epics/EPIC-001/user-stories/US-001/plan-approval.yaml (status: approved)
 
 📋 TEMPLATE: Use implementation-plan-tmpl.md
 ⏰ ESTIMATED TIME: 15-30 minutes to complete

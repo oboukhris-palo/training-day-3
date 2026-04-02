@@ -64,7 +64,7 @@ Next: Hand off to dev-tdd-red for failing test creation
 
 ## Context Sources
 - `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` (layer breakdown)
-- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>-HANDOFF.md` (current context)
+- `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` (layer checkboxes)
 - `/docs/02-architecture/architecture-design.md` (constraints)
 - `features/` directory (existing BDD files)
 
@@ -75,7 +75,7 @@ Next: Hand off to dev-tdd-red for failing test creation
 3. **Parse BDD mapping**: Get "BDD Assertions for This Layer" list
 4. **Get today's checklist**: Extract "Today's TDD Checklist" 
 5. **Check constraints**: Note architectural constraints and red flags
-6. **Prepare handoff**: Initialize handoff context for RED phase
+6. **Verify approval**: Check `plan-approval.yaml` status is "approved" before starting RED phase
 7. **Format session brief**: Present actionable summary for developer
 
 ## Quality Gates
@@ -85,8 +85,8 @@ Next: Hand off to dev-tdd-red for failing test creation
 - No ambiguous next actions
 
 ## Integration Points  
-- Creates/updates `<US-REF>-HANDOFF.md` with TDD session start
-- References handoff-contracts.yaml validation rules
+- Verifies `plan-approval.yaml` status before execution
+- References implementation-plan.md checkboxes for layer tasks
 - Integrates with existing dev-tdd agent chain
 - Uses layer-completion-checklist template for tracking
 

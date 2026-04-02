@@ -11,6 +11,8 @@ This document defines the **Implementation & Development Execution Workflow** - 
 - **Epic Completion is Automatic**: An Epic is marked "Implemented" when **ALL of its User Stories are implemented**
 - **Clear Handoff Points**: Lead Dev → TDD-Orchestrator → back to Lead Dev for next story
 
+**Logging**: User story-specific TDD logs at `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-{name}-YYYYMMDD.md`
+
 **Prerequisites**: All PDLC stages (1-6) must be completed with approved documents:
 - ✅ requirements.md (business requirements) - stored in `/docs/01-requirements/`
 - ✅ personas.md (user archetypes) - stored in `/docs/01-requirements/`
@@ -55,24 +57,159 @@ This document defines the **Implementation & Development Execution Workflow** - 
   │   ├── project-status.md         # 📊 Project dashboard (epic progress, metrics, blockers)
   │   ├── current-sprint.md         # 📋 Active sprint planning & daily tracking
   │   └── epics/                    # Epic-based organization (5+ stories or 2+ teams)
-  │       └── <EPIC-REF>/           # Per-epic folders (e.g., epic-01/)
+  │       └── EPIC-001/             # Per-epic folders (3 digits, uppercase)
   │           ├── readme.md         # Epic overview and scope
   │           └── user-stories/     # User stories belonging to this epic
-  │               └── <US-REF>/     # Per-story folders (e.g., us-001/)
-  │                   ├── description.md              # Story definition from PRD
-  │                   ├── implementation-plan.md      # Layer-by-layer technical decomposition
-  │                   ├── api-design.md               # API design details
-  │                   ├── us-completion-checklist.md  # DoD checklist
-  │                   ├── bdd-scenarios/              # BDD feature files (drives TDD)
-  │                   ├── logs/                       # Per-story TDD agent logs
-  │                   │   └── agent-dev-tdd-{phase}-YYYYMMDD.md
-  │                   └── tdd-execution/              # TDD cycle tracking
-  │                       └── <CYCLE>/                # Per-cycle folders
-  │                           ├── <CYCLE>-HO-RED.json
-  │                           ├── <CYCLE>-HO-GREEN.json
-  │                           └── <CYCLE>-HO-REFACTOR.md
+  │               └── US-001/       # Per-story folders (3 digits, uppercase)
+  │                   ├── description.md              # Story definition: requirements, acceptance criteria, DoD
+  │                   ├── implementation-plan.md      # Layer-by-layer guide with checkboxes
+  │                   ├── plan-approval.yaml         # Human validation gate
+  │                   └── features/                  # BDD scenarios from BA agent
+  │                       ├── user-authentication.feature
+  │                       └── profile-management.feature
   └── design/                       # UX/UI design documents
 ```
+
+---
+
+## 📋 Agent Logging Requirements (MANDATORY)
+
+**⚠️ UNBREAKABLE RULE: ALL agent interactions during implementation phase MUST be logged.**
+
+### Logging Locations for Implementation Phase
+
+**User Story-Specific TDD Logs**: `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-{name}-YYYYMMDD.md`
+
+**Non-Story Implementation Logs**: `/logs/05-implementation/agent-{name}-YYYYMMDD.md`
+
+### Agents Required to Log
+
+| Agent | Primary Activities | Log Path |
+|-------|-------------------|----------|
+| **dev-lead** | Implementation planning, folder structure creation, plan approval | `/logs/05-implementation/agent-dev-lead-YYYYMMDD.md` |
+| **dev-tdd** | TDD orchestration (RED → GREEN → REFACTOR coordination) | `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-dev-tdd-YYYYMMDD.md` |
+| **dev-tdd-red** | Write failing tests for current layer | `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-dev-tdd-red-YYYYMMDD.md` |
+| **dev-tdd-green** | Implement minimal code to pass tests | `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-dev-tdd-green-YYYYMMDD.md` |
+| **dev-tdd-refactor** | Improve code quality while maintaining green tests | `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-dev-tdd-refactor-YYYYMMDD.md` |
+| **qa** | E2E testing, BDD validation, quality gates | `/logs/05-implementation/agent-qa-YYYYMMDD.md` |
+| **orchestrator** | Workflow coordination, quality gate enforcement | `/logs/05-implementation/agent-orchestrator-YYYYMMDD.md` |
+
+### Mandatory Logging Points
+
+**Implementation Planning (Dev-Lead)**:
+- Log implementation plan creation for each user story
+- Log folder structure creation
+- Log plan approval workflow
+- Log architecture guidance and constraints
+
+**TDD Cycles (dev-tdd-red/green/refactor)**:
+- Log before each phase execution (RED, GREEN, REFACTOR)
+- Log all file modifications
+- Log test execution results
+- Log handoff artifact creation
+- Log blockers immediately when encountered
+
+**Quality Validation (QA)**:
+- Log E2E test execution
+- Log BDD scenario validation
+- Log quality gate checks (coverage, complexity, standards)
+- Log story completion validation
+
+### Log Entry Template for TDD Agents
+
+```markdown
+## {TIMESTAMP} | Action: {DESCRIPTION} | Status: {success|failure|partial|blocked}
+
+### Context
+- **Phase**: IMPLEMENTATION
+- **TDD Phase**: {RED|GREEN|REFACTOR}
+- **Epic/Story**: {EPIC-REF}/{US-REF}
+- **Layer**: {LAYER_NAME}
+- **Cycle**: {CYCLE_NUMBER}
+
+### Action Details
+- **Action Type**: {test|write|refactor}
+- **Files Touched**: 
+  - {file1.ext}
+  - {file2.ext}
+- **Tools Used**: [{tools}]
+- **PRU Consumed**: ~{estimate}
+
+### Outcome
+- **Status**: {status}
+- **Changes Made**: 
+  - {Description}
+- **Quality Metrics**: 
+  - Tests: {passed}/{total}
+  - Coverage: {percentage}%
+  - Complexity: {metric}
+- **Blockers**: {None | description}
+- **Rationale**: {why this implementation approach}
+
+### Handoff
+- **Next Step**: {awaiting|handoff_to_agent|continue|complete}
+- **Next Agent**: {dev-tdd-green | dev-tdd-refactor | qa}
+- **Handoff Artifact**: {path_to_RED-HO-GREEN or GREEN-HO-REFACTOR JSON}
+- **Instructions for Next Agent**: {Clear, actionable guidance}
+
+---
+```
+
+### Example TDD Log Entry
+
+```markdown
+## 2026-04-02T14:23:45Z | Action: Write failing test for user tier sync | Status: success
+
+### Context
+- **Phase**: IMPLEMENTATION
+- **TDD Phase**: RED
+- **Epic/Story**: AUTH-001/US-003
+- **Layer**: Layer 1 (Database & Domain Model)
+- **Cycle**: 018
+
+### Action Details
+- **Action Type**: test
+- **Files Touched**: 
+  - tests/Unit/Domain/UserServiceTests.cs
+- **Tools Used**: [xUnit, Moq, FluentAssertions]
+- **PRU Consumed**: ~800
+
+### Outcome
+- **Status**: success
+- **Changes Made**: 
+  - Created failing test: SyncSubscriptionTier_ShouldUpdateBothUserAndSubscriptionTiers
+  - Verified test fails as expected (no implementation yet)
+- **Quality Metrics**: 
+  - Tests: 0/1 (expected failure in RED phase)
+  - Coverage: N/A
+- **Blockers**: None
+- **Rationale**: BDD scenario from features/user-authentication.feature requires tier synchronization
+
+### Handoff
+- **Next Step**: handoff_to_agent
+- **Next Agent**: dev-tdd-green
+- **Handoff Artifact**: docs/05-implementation/epics/AUTH-001/user-stories/US-003/tdd-execution/018/RED-HO-GREEN-018.json
+- **Instructions for Next Agent**: Implement minimal code to make SyncSubscriptionTier test pass. Must update BOTH User.tier AND Subscription.tier in service layer (critical: sync both tiers).
+
+---
+```
+
+### Validation Enforcement
+
+**TDD Orchestrator validates logs**:
+- Before each TDD phase handoff (RED → GREEN, GREEN → REFACTOR)
+- After each layer completion
+- Before story completion sign-off
+- At quality gate checkpoints
+
+**Dev-Lead validates logs**:
+- During implementation plan approval
+- When reviewing TDD progress
+- Before merging story branches
+
+**Missing logs = incomplete implementation** (cannot proceed to next phase/story)
+
+**Full Documentation**: See `.github/instructions/agent-logging.instructions.md` for comprehensive standards.
 
 ---
 
@@ -80,7 +217,7 @@ This document defines the **Implementation & Development Execution Workflow** - 
 
 ### Epic-Level Documents
 
-#### `/docs/05-implementation/epics/<EPIC-REF>/readme.md` 📄
+#### `/docs/05-implementation/epics/EPIC-001/readme.md` 📄
 **Purpose**: Epic overview document providing scope, objectives, team assignments, and status tracking for the entire epic
 
 **Managed by**: Dev-Lead (creates during epic folder setup)
@@ -92,8 +229,8 @@ generated_from_template: epic-tmpl.yml
 template_path: .github/templates/epic-tmpl.yml
 generation_date: YYYY-MM-DD
 generator_agent: dev-lead
-epic_key: {EPIC-REF}
-project_key: {PROJECT-KEY}
+epic_key: EPIC-001
+project_key: merchant-portal
 ---
 ```
 
@@ -115,7 +252,7 @@ project_key: {PROJECT-KEY}
 3. **Template Reference**: Add document metadata block at top of file with template path and generation info
 4. **Content**: Copy epic details from `/docs/01-requirements/themes/epics/{EPIC-KEY}/epic.yml`
 5. **Child Stories**: Populate user stories list from epic's `childIssues` field
-6. **Location**: Save to `/docs/05-implementation/epics/<EPIC-REF>/readme.md`
+6. **Location**: Save to `/docs/05-implementation/epics/EPIC-001/readme.md`
 7. **Status**: Read-only after creation (reference for implementation)
 
 **Update Triggers**:
@@ -127,7 +264,7 @@ project_key: {PROJECT-KEY}
 
 ### User-Story Level Documents
 
-#### `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md` 📖
+#### `/docs/05-implementation/epics/epic-01/user-stories/us-001/description.md` 📖
 **Purpose**: Story definition document (copy of the original user story from `/docs/01-requirements/user-stories.md`)
 
 **Managed by**: Dev-Lead (creates during story folder setup at Phase 1: Intake & BDD Integration)
@@ -139,9 +276,9 @@ generated_from_template: user-story-tmpl.yml
 template_path: .github/templates/user-story-tmpl.yml
 generation_date: YYYY-MM-DD
 generator_agent: dev-lead
-story_key: {EPIC-KEY}-US-{NUMBER}
-epic_key: {EPIC-REF}
-project_key: {PROJECT-KEY}
+story_key: EPIC-001-US-001
+epic_key: EPIC-001
+project_key: merchant-portal
 ---
 ```
 
@@ -156,17 +293,17 @@ project_key: {PROJECT-KEY}
 
 **Creation Process**:
 1. **When**: Dev-Lead accepts story for implementation (status transition: Not Started → In Progress)
-2. **How**: Copy exact content from `/docs/01-requirements/user-stories.md` for matching US-REF
+2. **How**: Copy exact content from `/docs/01-requirements/user-stories.md` for matching US-001
 3. **Enrichment**: Add GitHub Issue link, technical constraints from architecture-design.md
 4. **Template Metadata**: Add document metadata block (as above) referencing `#file:.github/templates/user-story-tmpl.yml`
-5. **Location**: Save to `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md`
+5. **Location**: Save to `/docs/05-implementation/epics/EPIC-001/user-stories/US-001/description.md`
 6. **Status**: Read-only after creation (reference for implementation)
 
 **Update Triggers**:
 - **Created once** by Dev-Lead when story folder is created (Phase 1)
 - **Read-only reference** during implementation (no further edits)
 
-#### `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` 📋
+#### `/docs/05-implementation/epics/EPIC-001/user-stories/US-001/implementation-plan.md` 📋
 **Purpose**: Lead-dev implementation plan to execute per user-story (layer-by-layer technical decomposition)
 
 **Managed by**: Dev-Lead agent
@@ -183,120 +320,6 @@ project_key: {PROJECT-KEY}
 **Update Triggers**:
 - **Dev-Lead**: Creates during Phase 3, updates if requirements change
 - **TDD-Orchestrator**: May add notes about implementation approach
-
-#### `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/api-design.md` 🔌
-**Purpose**: API design details specific to this user story
-
-**Managed by**: Architect (PDLC), Dev-Lead (implementation refinement)
-
-**Content Structure**:
-- **Endpoints Affected**: List of new/modified API endpoints
-- **Request/Response Schemas**: Data contracts from OpenAPI spec
-- **Error Codes & Handling**: HTTP status codes and error responses
-- **Authentication/Authorization**: Security requirements for endpoints
-- **Rate Limiting**: If applicable
-- **Integration Points**: External systems or internal APIs called
-
-**Update Triggers**:
-- **Architect**: Defines during PDLC (Phase 4)
-- **Dev-Lead**: Refines during implementation planning (Phase 5)
-
-#### `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/us-completition-checklist.md` ✅
-**Purpose**: Definition of Done checklist - validation that story meets all requirements
-
-**Managed by**: QA (creation and validation), Dev-Lead + TDD agents (execution)
-
-**Content Structure**:
-- **Acceptance Criteria**: All from original story ✅/❌
-- **BDD Scenarios**: All passing ✅/❌ (green tests, no skips)
-- **Code Quality**: >80% coverage, cyclomatic complexity <10, SOLID principles ✅/❌
-- **Code Review**: 13-point checklist passed ✅/❌
-- **Performance**: Meet SLA requirements ✅/❌
-- **Documentation**: JSDoc, inline comments, README updates ✅/❌
-- **Security**: Authorization, validation, injection prevention ✅/❌
-- **Integration**: Works with other layers (Layer N → Layer N+1) ✅/❌
-- **Regression Testing**: No existing tests broken ✅/❌
-- **Risk Mitigation**: Edge cases handled ✅/❌
-
-**Update Triggers**:
-- **QA**: Creates during Phase 5 (from acceptance criteria)
-- **TDD-Orchestrator**: Updates as layer completion progresses
-- **Dev-Lead**: Signs off at story completion
-- **QA**: Validates all criteria during Phase 6 (validation testing)
-
-#### `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution.md` 📝
-**Purpose**: Chronological audit log summarizing all TDD cycles for the user story (append-only)
-
-**Managed by**: TDD-Orchestrator (appends after each cycle completion)
-
-**Content Structure**:
-- **Cycle Number**: Sequential cycle identifier (001, 002, etc.)
-- **Date Range**: Start and end timestamps for the cycle
-- **Layer**: Database / Backend / Config / Frontend
-- **Tests Written**: Count of unit/integration tests created
-- **Tests Passing**: Count of tests in passing state
-- **Files Modified**: List of source files created or changed
-- **BDD Progress**: Which BDD scenarios now pass after this cycle
-- **Blockers Encountered**: Any issues that required escalation
-- **Cycle Duration**: Time taken for RED → GREEN → REFACTOR
-- **Link to Detailed Handoffs**: Reference to cycle folder for detailed phase handoffs
-
-**Update Pattern**: Append-only (never delete or modify existing entries)
-
-**Example Entry**:
-```markdown
-### Cycle 001 (2026-03-15 10:00 - 2026-03-15 14:30)
-- **Layer**: Database (Layer 1)
-- **Tests Written**: 5 (schema validation, migration up/down, index performance)
-- **Tests Passing**: 5/5 ✅
-- **Files Modified**: `migrations/001_create_users.sql`, `models/User.cs`
-- **BDD Progress**: Scenario "User can register" - database assertions passing
-- **Blockers**: None
-- **Cycle Duration**: 4.5 hours
-- **Detailed Handoffs**: See `tdd-execution/001/` for RED/GREEN/REFACTOR phase details
-```
-
-**Update Triggers**:
-- **TDD-Orchestrator**: Appends new entry after each cycle's REFACTOR phase completes
-- **Never modified**: Historical entries are immutable (audit trail)
-
-#### `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/` 📁
-**Purpose**: Detailed handoff files for each TDD cycle (RED → GREEN → REFACTOR phase context)
-
-**Managed by**: TDD agents (orchestrator creates folder, red/green/refactor create phase handoffs)
-
-**Folder Structure**:
-```
-tdd-execution/
-├── tdd-execution.md           # SUMMARY: Append-only audit log (see above)
-├── 001/                       # First RED→GREEN→REFACTOR cycle
-│   ├── 001-HO-RED.json        # RED phase: Test written, failing
-│   ├── 001-HO-GREEN.json      # GREEN phase: Code implemented, test passing
-│   └── 001-HO-REFACTOR.md     # REFACTOR phase: Code quality improved
-├── 002/                       # Second cycle (if needed)
-│   ├── 002-HO-RED.json
-│   ├── 002-HO-GREEN.json
-│   └── 002-HO-REFACTOR.md
-└── [... additional cycles ...]
-```
-
-**Handoff File Content** (`-HO-RED.json`, `-HO-GREEN.json`, `-HO-REFACTOR.md`):
-- **Cycle Phase**: RED / GREEN / REFACTOR
-- **Layer**: Database / Backend / Config / Frontend
-- **Progress Summary**: What was completed in this phase
-- **Next Actions**: What the next agent should focus on
-- **Blockers**: Any issues that need escalation
-- **Context**: Key decisions, assumptions, or constraints
-- **Files Modified**: List of files created/changed in this phase
-- **Test Status**: Current pass/fail state
-- **Code Quality Metrics**: Complexity, duplication, SOLID compliance
-
-**Update Triggers**:
-- **TDD-Orchestrator**: Creates folder at cycle start, orchestrates handoffs
-- **TDD-RED**: Creates `-HO-RED.json` after writing failing tests
-- **TDD-GREEN**: Creates `-HO-GREEN.json` after implementing passing code
-- **TDD-REFACTOR**: Creates `-HO-REFACTOR.md` after quality improvements
-- **Dev-Lead**: Reviews and approves cycle completion
 
 ### Project-Level Documents
 
@@ -547,11 +570,11 @@ So that **I can access my account securely**.
 
 #### TDD Agent Communication (tdd-orchestrator, tdd-red, tdd-green, tdd-refactor)
 - **Primary Documents**: 
-  - Current cycle: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<TDD-CYCLE>/<TDD-CYCLE>-HO-RED.json` (RED), `-HO-GREEN.json` (GREEN), `-HO-REFACTOR.md` (REFACTOR)
-  - Tracking: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` (reference)
-- **Updates**: After each TDD phase (RED → GREEN → REFACTOR), layer completion, issue resolution
-- **Communication**: Current phase status, next actions, blockers, technical decisions, test results
-- **Chain of Thought**: Detailed handoff files for phase-specific context and troubleshooting
+  - Progress tracking: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` (checkboxes mark [x] as tasks complete)
+  - Audit trail: Git commits with format `TDD-<US-REF>-<PHASE>-<CYCLE>-YYYYMMDD: [description]` (YYYYMMDD = current date)
+- **Updates**: After each TDD phase (RED → GREEN → REFACTOR), mark checkbox [x] in plan, commit with cycle format
+- **Communication**: Current phase status via checkboxes, next actions in plan, blockers in plan-approval.yaml, test results in git commit messages
+- **Chain of Thought**: Git commit messages provide phase-specific context and troubleshooting details
 - **🤖 AI Logging**: RED-GREEN-REFACTOR cycle efficiency, test coverage trends, code complexity metrics, refactoring frequency, layer-specific bottlenecks, BDD assertion coverage
 
 #### QA Agent Communication
@@ -570,11 +593,11 @@ So that **I can access my account securely**.
 | **PM** | Sprint end | Archive to `sprint-N.md` | Retrospective, metrics, lessons learned |
 | **Dev-Lead** | Phase 3 start | `implementation-plan.md` | Layer decomposition, technical approach |
 | **Dev-Lead** | Phase 5 | `user-stories.md` | Status update (Not Started → In Progress) |
-| **TDD-Orchestrator** | Cycle start | `tdd-execution/<TDD-CYCLE>/` | Create cycle folder for RED-GREEN-REFACTOR |
-| **TDD-RED** | Test written | `tdd-execution/<TDD-CYCLE>/<TDD-CYCLE>-HO-RED.json` | Test details, expected behavior, assertion mapping |
-| **TDD-GREEN** | Code implemented | `tdd-execution/<TDD-CYCLE>/<TDD-CYCLE>-HO-GREEN.json` | Implementation notes, files changed, test passing |
-| **TDD-REFACTOR** | Code improved | `tdd-execution/<TDD-CYCLE>/<TDD-CYCLE>-HO-REFACTOR.md` | Refactoring summary, quality metrics, test status |
-| **TDD-Orchestrator** | Layer complete | `implementation-plan.md` | Annotate with layer completion status |
+| **TDD-Orchestrator** | Cycle start | `implementation-plan.md` | Read layer tasks, coordinate RED → GREEN → REFACTOR phases |
+| **TDD-RED** | Test written | Git commit + checkbox [x] | Format: `TDD-<US-REF>-RED-<CYCLE>-YYYYMMDD: [test description]` |
+| **TDD-GREEN** | Code implemented | Git commit + checkbox [x] | Format: `TDD-<US-REF>-GREEN-<CYCLE>-YYYYMMDD: [implementation notes]` |
+| **TDD-REFACTOR** | Code improved | Git commit + checkbox [x] | Format: `TDD-<US-REF>-REFACTOR-<CYCLE>-YYYYMMDD: [refactoring summary]` |
+| **TDD-Orchestrator** | Layer complete | `implementation-plan.md` | Mark all layer checkboxes [x] complete |
 | **Dev-Lead** | Story complete | `user-stories.md` | Status update (In Progress → Implemented) |
 | **QA** | Validation complete | `user-stories.md` | Status update (Implemented → Delivered or bugs) |
 | **QA** | Validation complete | `us-completition-checklist.md` | Mark all criteria as ✅ complete |
@@ -703,18 +726,16 @@ PHASE 3: DEV-LEAD CREATES IMPLEMENTATION PLANS (During Sprint Planning)
 ├─ For EACH story in current-sprint.md (DOR-ready stories only):
 │  ├─ Read /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md (enrichment sections: acceptance_criteria, bdd_scenarios, ui_ux_inputs, api_contracts)
 │  ├─ Create /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md with:
-│  │  ├─ Layer 1 (Database): Schema, migrations, indexes, files, BDD coverage
-│  │  ├─ Layer 2 (Backend): Endpoints, services, business logic, files, BDD coverage
-│  │  ├─ Layer 3 (Config): Routes, DI, middleware, feature flags, files, BDD coverage
-│  │  ├─ Layer 4 (Frontend): Components, state mgmt, styling, files, BDD coverage
+│  │  ├─ Layer 1 (Database): Schema, migrations, indexes, files to create, BDD coverage
+│  │  ├─ Layer 2 (Backend): Endpoints, services, business logic, files to create, BDD coverage
+│  │  ├─ Layer 3 (Config): Routes, DI, middleware, feature flags, files to create, BDD coverage
+│  │  ├─ Layer 4 (Frontend): Components, state mgmt, styling, files to create, BDD coverage
+│  │  ├─ Checkboxes [ ] for each task (marked [x] as work completes)
 │  │  └─ Definition of Done: All BDD passing, >80% coverage, code review approved, QA validation passed
-│  ├─ Create /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/api-design.md with API contract details
-│  ├─ Create /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/us-completition-checklist.md (DoD checklist)
-│  ├─ Create /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/ folder (parent for TDD cycles)
-│  ├─ Extract BDD/Gherkin scenarios from /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md (bdd_scenarios section)
-│  ├─ Create features/<domain>/<story-ref>.feature (Gherkin)
-│  ├─ Create features/<domain>/<story-ref>.steps.ts (step definitions, failing tests)
-│  ├─ Store copy in /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/bdd-scenarios/ (reference only)
+│  ├─ Create /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-approval.yaml for human validation
+│  ├─ Extract BDD/Gherkin scenarios from /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md (acceptance_criteria section)
+│  ├─ Create features/<domain>/<story-ref>.feature (Gherkin - Given/When/Then)
+│  ├─ Create /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/features/ folder (copy BDD scenarios as reference)
 │  ├─ Run BDD tests → FAIL (expected - driving TDD)
 │  └─ Commit artifacts to Git
 ├─ If DOR not met:
@@ -736,23 +757,25 @@ PHASE 4: TDD-ORCHESTRATOR EXECUTES IMPLEMENTATION (During Sprint)
 ├─ For EACH story in current-sprint.md (with complete implementation-plan.md):
 │  ├─ For each LAYER (L1→L2→L3→L4):
 │  │  └─ For each TDD CYCLE (001, 002, ...N):
-│  │     ├─ Create /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<TDD-CYCLE>/ folder
 │  │     ├─ RED Phase:
-│  │     │  ├─ Write failing tests
-│  │     │  ├─ Create /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<TDD-CYCLE>/<TDD-CYCLE>-HO-RED.json
-│  │     │  └─ Document test details, expected behavior, BDD assertion mapping
+│  │     │  ├─ Write failing tests (agent: dev-tdd-red)
+│  │     │  ├─ Mark checkbox [x] in implementation-plan.md for task
+│  │     │  ├─ Commit with format: `TDD-<US-REF>-RED-<CYCLE>-YYYYMMDD: [test description]`
+│  │     │  └─ Document test details in commit message (expected behavior, BDD assertion mapping)
 │  │     ├─ GREEN Phase:
-│  │     │  ├─ Implement minimal code to pass tests
-│  │     │  ├─ Create /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<TDD-CYCLE>/<TDD-CYCLE>-HO-GREEN.json
-│  │     │  └─ Document implementation notes, files changed
+│  │     │  ├─ Implement minimal code to pass tests (agent: dev-tdd-green)
+│  │     │  ├─ Mark checkbox [x] in implementation-plan.md for task
+│  │     │  ├─ Commit with format: `TDD-<US-REF>-GREEN-<CYCLE>-YYYYMMDD: [implementation summary]`
+│  │     │  └─ Document implementation notes in commit message (files changed, approach)
 │  │     ├─ REFACTOR Phase:
-│  │     │  ├─ Improve code quality while tests stay green
-│  │     │  ├─ Create /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/<TDD-CYCLE>/<TDD-CYCLE>-HO-REFACTOR.md
-│  │     │  └─ Document refactoring summary, quality metrics (complexity, coverage)
-│  │     └─ Commit cycle completion to Git (includes all 3 handoff files)
+│  │     │  ├─ Improve code quality while tests stay green (agent: dev-tdd-refactor)
+│  │     │  ├─ Mark checkbox [x] in implementation-plan.md for task
+│  │     │  ├─ Commit with format: `TDD-<US-REF>-REFACTOR-<CYCLE>-YYYYMMDD: [refactoring summary]`
+│  │     │  └─ Document refactoring details in commit message (complexity, coverage, improvements)
+│  │     └─ Cycle complete when all 3 phases committed (checkboxes [x] in plan)
 │  ├─ After all layers: Run full BDD test suite
 │  ├─ Target: All BDD scenarios passing for story
-│  └─ Update /docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/us-completition-checklist.md with progress
+│  └─ Update implementation-plan.md checkboxes with progress (all tasks [x] when complete)
 ├─ Daily tracking:
 │  ├─ Update /docs/05-implementation/current-sprint.md "Daily Progress Tracking"
 │  ├─ Note stories in progress, blockers, burndown progress, cycle count per story
@@ -858,7 +881,7 @@ PROJECT COMPLETION:
 | **Sprint** | Time-boxed iteration (typically 1-3 weeks) with selected user-stories from not-started queue |
 | **current-sprint.md** | Active sprint planning document; archived as sprint-[N].md after closure |
 | **project-status.md** | Live dashboard tracking epic progress, metrics, blockers, team assignments |
-| **<US-REF>.md** | User story file with story definition + enrichment sections (AC, BDD scenarios, UX inputs, API contracts) |
+| **description.md** | User story file with story definition + enrichment sections (AC, BDD scenarios, UX inputs, API contracts) |
 | **Epic** | Organizational grouping of related user-stories (e.g., "User Authentication") |
 | **User-Story** | Granular unit of work implementing specific user value (e.g., "US-001: User can login with email") |
 | **Implementation-Plan** | Layer-by-layer technical decomposition created by Dev-Lead, guides TDD-Orchestrator |
@@ -1521,15 +1544,15 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
   - [ ] `/docs/01-requirements/user-stories.md` (source of truth)
   - [ ] `/docs/05-implementation/user-stories.md` (status tracking)
   - [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/` folder path
-  - [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>.md` file name
+  - [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/description.md` file name
   - [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` header
   - [ ] GitHub Issue title (should be "[US-XXX]")
   - [ ] current-sprint.md reference list
 - [ ] User-story decomposed into 4 clear layers
 - [ ] Implementation-plan.md created with all 4 layers detailed and committed
 - [ ] **Checkpoint documents created**:
-  - [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>-HANDOFF.md` (TDD communication template)
-  - [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution.md` (execution tracking template)
+  - [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-approval.yaml` (human validation gate)
+  - [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/features/` folder with BDD scenarios
 - [ ] BDD feature file created with Gherkin scenarios and committed
 - [ ] Step definitions created with failing test code and committed
 - [ ] BDD tests run and confirmed failing
@@ -1551,8 +1574,8 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
 - [ ] Test coverage > 80%
 - [ ] Code reviewed and approved
 - [ ] **Checkpoint documents completed**:
-  - [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/<US-REF>-HANDOFF.md` updated with final TDD status
-  - [ ] `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution.md` completed with full execution log
+  - [ ] All implementation-plan.md layer checkboxes [x] marked complete
+  - [ ] Git commits follow `TDD-<US-REF>-<PHASE>-<CYCLE>` format
 - [ ] `/docs/05-implementation/user-stories.md` updated to "Implemented" using exact <USER-STORY-REF>
 - [ ] GitHub Issue updated with results
 - [ ] Commits reference exact US-REF (e.g., "feat(US-001): Implement database layer #123")
@@ -1566,9 +1589,9 @@ GitHub Repository Access**: Project MUST be on GitHub with write access. No GitH
 |-------|-------|-------|--------|----------|------------------------------|
 | **PHASE 0** | PM | `/docs/01-requirements/user-stories.md`, GitHub credentials | GitHub Issues, `/docs/05-implementation/user-stories.md`, `/docs/05-implementation/project-status.md` | 1-2 hours | `project-status.md` (initial setup) |
 | **PHASE 1** | PM | `/docs/01-requirements/user-stories.md` (source of truth for US-REF), `/docs/05-implementation/user-stories.md` | Validation: `current-sprint.md` references MATCH `/docs/01-requirements/user-stories.md` exactly, GitHub Issues created with exact US-REF | 15-30 min | `current-sprint.md` (create), `project-status.md` (sprint planning) |
-| **PHASE 2** | BA | User-story (exact US-REF from PRD), current-sprint.md (validated references) | `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<EXACT-US-REF>/<US-REF>.md` enriched, numbering validated | 1-2 hours per story | `<US-REF>.md` (enrichment sections) |
-| **PHASE 3** | Dev-Lead | User-story (exact US-REF), enriched file, PRD/architecture/design docs | `implementation-plan.md`, `<US-REF>-HANDOFF.md`, `tdd-execution.md` templates, BDD tests, numbering pre-validated | 1-2 hours per story | `implementation-plan.md` (create), `<US-REF>-HANDOFF.md` (create), `tdd-execution.md` (create) |
-| **PHASE 4** | TDD-Orchestrator | implementation-plan.md (numbering pre-validated), failing BDD tests, approach | Implemented code, passing BDD tests, >80% coverage, commits reference exact US-REF | 2-5 days per story | `<US-REF>-HANDOFF.md` (TDD cycles), `tdd-execution.md` (execution log), `current-sprint.md` (daily updates) |
+| **PHASE 2** | BA | User-story (exact US-REF from PRD), current-sprint.md (validated references) | `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<EXACT-US-REF>/description.md` enriched, numbering validated | 1-2 hours per story | `description.md` (enrichment sections) |
+| **PHASE 3** | Dev-Lead | User-story (exact US-REF), enriched file, PRD/architecture/design docs | `implementation-plan.md`, `plan-approval.yaml`, BDD scenarios in `features/`, numbering pre-validated | 1-2 hours per story | `implementation-plan.md` (create), `plan-approval.yaml` (create), `features/` (BDD scenarios) |
+| **PHASE 4** | TDD-Orchestrator | implementation-plan.md (numbering pre-validated, approved), failing BDD tests, approach | Implemented code, passing BDD tests, >80% coverage, commits reference exact US-REF | 2-5 days per story | `implementation-plan.md` (checkboxes [x]), git commits (`TDD-<US-REF>-<PHASE>-<CYCLE>`), `current-sprint.md` (daily updates) |
 | **PHASE 5** | Dev-Lead | Handoff from TDD with BDD results, exact US-REF | `/docs/05-implementation/user-stories.md` "Implemented" (exact US-REF), GitHub Issue updated, handoff to QA | 15-30 min | `user-stories.md` (status update) |
 | **PHASE 6** | QA | User-story (exact US-REF), GitHub Issue, BDD files | `/docs/05-implementation/user-stories.md` "Delivered" (exact US-REF), GitHub Issue closed | 1-3 hours per story | `user-stories.md` (validation result) |
 

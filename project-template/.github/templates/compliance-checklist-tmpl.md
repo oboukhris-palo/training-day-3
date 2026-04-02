@@ -13,7 +13,7 @@ status: "draft"
 user_story_ref: ""
 related_documents:
   - type: "implementation_plan"
-    reference: "docs/05-implementation/epics/{EPIC-REF}/user-stories/{US-REF}/implementation-plan.md"
+    reference: "docs/05-implementation/epics/EPIC-001/user-stories/US-001/implementation-plan.md"
   - type: "tech_spec"
     reference: "docs/02-architecture/tech-spec.md"
 
