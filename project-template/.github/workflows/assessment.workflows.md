@@ -100,7 +100,7 @@ Scan `/docs/inputs/` for all client-provided materials:
 - [ ] Identify data stores and schemas
 - [ ] Catalog infrastructure components
 
-**Output:** `INVENTORY-TECHNICAL.md` with technology stack summary
+**Output:** `inventory-technical.md` with technology stack summary
 
 ---
 
@@ -120,7 +120,7 @@ Scan `/docs/inputs/` for all client-provided materials:
 - [ ] Catalog process documentation (SDLC, deployment, incident response)
 - [ ] Map knowledge gaps and undocumented areas
 
-**Output:** `INVENTORY-DOCUMENTATION.md` with coverage analysis
+**Output:** `inventory-documentation.md` with coverage analysis
 
 ---
 
@@ -140,7 +140,7 @@ Scan `/docs/inputs/` for all client-provided materials:
 - [ ] Extract feature requests and backlog
 - [ ] Understand sprint velocity and delivery cadence
 
-**Output:** `INVENTORY-REQUIREMENTS.md` with backlog analysis
+**Output:** `inventory-requirements.md` with backlog analysis
 
 ---
 
@@ -158,7 +158,7 @@ Scan `/docs/inputs/` for all client-provided materials:
 - [ ] Extract user flows and journey maps
 - [ ] Identify UX patterns and conventions
 
-**Output:** `INVENTORY-DESIGN.md` with design maturity assessment
+**Output:** `inventory-design.md` with design maturity assessment
 
 ---
 
@@ -177,7 +177,7 @@ Scan `/docs/inputs/` for all client-provided materials:
 - [ ] Analyze incident patterns and resolution times
 - [ ] Document SLAs/SLOs and compliance status
 
-**Output:** `INVENTORY-OPERATIONS.md` with operational maturity
+**Output:** `inventory-operations.md` with operational maturity
 
 ---
 
@@ -195,7 +195,7 @@ Scan `/docs/inputs/` for all client-provided materials:
 - [ ] Identify cultural and organizational challenges
 - [ ] Document success criteria and expectations
 
-**Output:** `INVENTORY-STAKEHOLDER.md` with sentiment analysis
+**Output:** `inventory-stakeholder.md` with sentiment analysis
 
 ---
 
@@ -343,7 +343,7 @@ Compare available inputs against ideal assessment requirements:
 - [ ] Check API registry access → Download OpenAPI specs
 - [ ] Test monitoring dashboards → Extract metrics
 
-**Output:** Updated YAML with real-time status + `ACCESS-VALIDATION-REPORT.md`
+**Output:** Updated YAML with real-time status + `access-validation-report.md`
 
 ---
 
@@ -361,7 +361,7 @@ Compare available inputs against ideal assessment requirements:
 - [ ] Retention policies documented
 - [ ] Audit trail requirements confirmed
 
-**Output:** `COMPLIANCE-CLEARANCE.md` with sign-off status
+**Output:** `compliance-clearance.md` with sign-off status
 
 ---
 
@@ -381,7 +381,7 @@ With validated access, enrich initial baseline:
 - Replace assumptions with verified data
 - Document evidence sources for each finding
 
-**Output:** `ENRICHED-BASELINE.md` (updated with validated data)
+**Output:** `enriched-baseline.md` (updated with validated data)
 
 ---
 
@@ -733,7 +733,7 @@ Evaluate client maturity across **8 core dimensions**:
 - Prioritized transformation roadmap (draft)
 - Agreed-upon success metrics
 
-**Output:** `VALIDATION-WORKSHOP-SUMMARY.md` with consensus findings
+**Output:** `validation-workshop-summary.md` with consensus findings
 
 ---
 
@@ -923,34 +923,34 @@ Evaluate client maturity across **8 core dimensions**:
 
 #### 1. Assessment Summary
 ```
-/docs/assessment/HANDOFF-PACKAGE/
-├── ai-readiness-report.md          # Full assessment report
-├── EXECUTIVE-SUMMARY.md            # 2-page executive brief
-├── PREREQUISITES-FULFILLMENT.yml   # Final access status
-└── multi-dimensional-assessment.md # 8-dimension scores
+/docs/assessment/handoff-package/
+├── ai-readiness-report.md              # Full assessment report
+├── executive-summary.md                # 2-page executive brief
+├── prerequisites-fulfillment.yml       # Final access status
+└── multi-dimensional-assessment.md     # 8-dimension scores
 ```
 
 #### 2. Documentation Foundation
 ```
-/docs/assessment/HANDOFF-PACKAGE/
-├── TECHNOLOGY-INVENTORY.md         # Complete tech stack
-├── ARCHITECTURE-OVERVIEW.md        # System architecture summary
-├── INTEGRATION-MAP.md              # API and integration points
-└── TEAM-STRUCTURE.md               # Org chart and roles
+/docs/assessment/handoff-package/
+├── technology-inventory.md         # Complete tech stack
+├── architecture-overview.md        # System architecture summary
+├── integration-map.md              # API and integration points
+└── team-structure.md               # Org chart and roles
 ```
 
 #### 3. Strategic Artifacts
 ```
-/docs/assessment/HANDOFF-PACKAGE/
-├── TRANSFORMATION-ROADMAP.md       # Phased implementation plan
-├── SUCCESS-METRICS.md              # KPIs and measurement approach
-├── RISK-REGISTER.md                # Risks and mitigation strategies
-└── ASSUMPTIONS-LOG.md              # Key assumptions and dependencies
+/docs/assessment/handoff-package/
+├── transformation-roadmap.md       # Phased implementation plan
+├── success-metrics.md              # KPIs and measurement approach
+├── risk-register.md                # Risks and mitigation strategies
+└── assumptions-log.md              # Key assumptions and dependencies
 ```
 
 #### 4. Raw Data & Evidence
 ```
-/docs/assessment/HANDOFF-PACKAGE/raw-data/
+/docs/assessment/handoff-package/raw-data/
 ├── inventory/                      # All inventory reports
 ├── interviews/                     # Stakeholder validation notes
 ├── metrics/                        # Extracted KPIs and dashboards
@@ -1006,7 +1006,7 @@ Evaluate client maturity across **8 core dimensions**:
 - Success Metrics → Establishes acceptance criteria and KPIs
 - Stakeholder Interviews → Captures user needs and pain points
 
-**Handoff Artifact:** `ASSESSMENT-TO-DOCUMENTATION-HANDOFF.md`
+**Handoff Artifact:** `assessment-to-documentation-handoff.md`
 
 **Next Steps:**
 1. Documentation team accepts handoff and reviews artifacts
@@ -1024,7 +1024,7 @@ Evaluate client maturity across **8 core dimensions**:
 | **Baseline Assessment** | Custom | `/docs/assessment/baseline-assessment.md` | Initial findings from available inputs |
 | **Multi-Dimensional Assessment** | Custom | `/docs/assessment/multi-dimensional-assessment.md` | 8-dimension maturity scores |
 | **AI Readiness Report** | `recommendation-plan-tmpl.md` | `/docs/assessment/ai-readiness-report.md` | Comprehensive transformation strategy |
-| **Handoff Package** | Custom | `/docs/assessment/HANDOFF-PACKAGE/` | Complete context for documentation phase |
+| **Handoff Package** | Custom | `/docs/assessment/handoff-package/` | Complete context for documentation phase |
 | **Stakeholder Validation** | Custom | `/docs/assessment/interviews/` | Validation notes and workshop summaries |
 
 ---

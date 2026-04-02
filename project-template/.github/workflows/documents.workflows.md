@@ -264,12 +264,12 @@ cp .github/templates/user-story-tmpl.yml \
 
 5. **Migration from External Systems:**
    - **Preserve Original Keys**: When migrating from Jira/ADO, preserve original epic keys if possible
-   - **Mapping File**: Create `EPIC-MIGRATION-MAP.md` documenting old → new key mappings
+   - **Mapping File**: Create `epic-migration-map.md` documenting old → new key mappings
    - **Cross-Reference**: Include original epic ID in `custom_fields` of epic YAML
 
 **Example Migration Mapping:**
 ```markdown
-# EPIC-MIGRATION-MAP.md
+# epic-migration-map.md
 
 | Original System | Original Key | New Epic Key | Theme | Status |
 |-----------------|-------------|--------------|-------|--------|
@@ -317,7 +317,7 @@ cp .github/templates/user-story-tmpl.yml \
 | **Business Context** | ✓/✗ | High/Med/Low | 0-100% | Date | Interview needs |
 | **Technical Specs** | ✓/✗ | High/Med/Low | 0-100% | Date | Architecture work |
 
-**Output:** `INPUT-ASSESSMENT-REPORT.md` with maturity scoring
+**Output:** `input-assessment-report.md` with maturity scoring
 
 #### Step 0.2: Client Maturity Classification
 
@@ -404,7 +404,7 @@ cp .github/templates/user-story-tmpl.yml \
 └── legacy-requirements/           # Old PDF/Word documents
 ```
 
-**Output:** `RAW-REQUIREMENTS-INVENTORY.md` with source traceability
+**Output:** `raw-requirements-inventory.md` with source traceability
 
 #### Step B.1.2: Business Domain Identification
 
@@ -447,7 +447,7 @@ cp .github/templates/user-story-tmpl.yml \
 | Data Management | DATA-001 to DATA-008 | 8 | 31 | High | 90% |
 | Integration & APIs | API-001 to API-006 | 6 | 19 | Low | 40% |
 
-**Output:** `FUNCTIONAL-THEMES-MATRIX.md` with epic-to-theme mappings and epic metadata
+**Output:** `functional-themes-matrix.md` with epic-to-theme mappings and epic metadata
 
 #### Step B.1.3: Narrative Transformation & Business Context Extraction
 
@@ -475,7 +475,7 @@ cp .github/templates/user-story-tmpl.yml \
 
 **PO (`po-business-context-validation`)** → Validate business narratives align with strategic objectives
 
-**Output:** `THEME-NARRATIVES.md` with cleaned business context per theme
+**Output:** `theme-narratives.md` with cleaned business context per theme
 
 ### Phase B.2: Theme-Based PRD Generation
 
