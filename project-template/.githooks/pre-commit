@@ -1,0 +1,135 @@
+#!/bin/bash
+set -e
+
+echo "🔍 [pre-commit] Validating and updating documentation..."
+
+# PHASE 1: Log Agent Action
+echo "  1️⃣  Logging agent action..."
+AGENT_NAME="${AGENT_NAME:-unknown}"
+PHASE_NAME="${PHASE_NAME:-unknown}"
+EPIC_REF="${EPIC_REF:-}"
+US_REF="${US_REF:-}"
+TDD_CYCLE="${TDD_CYCLE:-}"
+
+# Determine log directory based on phase
+if [ "$PHASE_NAME" = "implementation" ] && [ -n "$EPIC_REF" ] && [ -n "$US_REF" ]; then
+  LOG_DIR="logs/05-implementation/epics/${EPIC_REF}/user-stories/${US_REF}"
+else
+  LOG_DIR="logs/${PHASE_NAME}"
+fi
+
+mkdir -p "$LOG_DIR"
+LOG_FILE="$LOG_DIR/agent-${AGENT_NAME}-$(date +%Y%m%d).md"
+
+# Create log file with frontmatter if it does not exist today
+if [ ! -f "$LOG_FILE" ]; then
+  cat > "$LOG_FILE" << 'EOF'
+---
+metadata:
+  templateId: "agent-log"
+  templateVersion: "2.0"
+  documentType: "agent-activity-log"
+  template_source: ".github/templates/agent-log-tmpl.md"
+EOF
+  echo "  title: \"Agent Log: ${AGENT_NAME}\"" >> "$LOG_FILE"
+  echo "  ai_model: \"${MODEL_NAME:-unknown}\"" >> "$LOG_FILE"
+  echo "  agent_name: \"${AGENT_NAME}\"" >> "$LOG_FILE"
+  echo "  date: \"$(date +%Y-%m-%d)\"" >> "$LOG_FILE"
+  echo "  version: \"1.0\"" >> "$LOG_FILE"
+  echo "  status: \"active\"" >> "$LOG_FILE"
+  echo "---" >> "$LOG_FILE"
+  echo "" >> "$LOG_FILE"
+  echo "# Agent Log: ${AGENT_NAME}" >> "$LOG_FILE"
+  echo "" >> "$LOG_FILE"
+fi
+
+# Append action entry
+TIMESTAMP=$(date +%Y-%m-%dT%H:%M:%SZ)
+CHANGED_FILES=$(git diff --cached --name-only | tr '\n' ', ')
+CHANGED_COUNT=$(git diff --cached --name-only | wc -l | tr -d ' ')
+ACTION_SUMMARY="Changes to ${CHANGED_COUNT} files"
+
+cat >> "$LOG_FILE" << EOF
+
+## $TIMESTAMP | $ACTION_SUMMARY
+
+**Status**: in-progress
+
+| Field | Value |
+|-------|-------|
+| **Phase** | ${PHASE_NAME} |
+| **Epic/Story** | ${EPIC_REF}${US_REF:+/}${US_REF} |
+| **Layer/Cycle** | ${TDD_CYCLE} |
+| **Files Changed** | $(echo $CHANGED_FILES | sed 's/,$//') |
+| **Handoff** | Chat-based (read history + checkpoint.yaml) |
+
+EOF
+
+echo "  ✓ Logged to: $LOG_FILE"
+
+# PHASE 2: Update INDEX.md for Modified Folders
+echo "  2️⃣  Updating INDEX.md for modified folders..."
+MODIFIED_DIRS=$(git diff --cached --name-only | xargs -I {} dirname {} | sort -u)
+
+for dir in $MODIFIED_DIRS; do
+  if [ -d "$dir" ]; then
+    if [ -f "$dir/INDEX.md" ] || [ -f "$dir/index.md" ]; then
+      echo "    • Updating index for: $dir"
+      node .github/scripts/update-index.mjs "$dir" 2>/dev/null || {
+        echo "    ⚠️  Index update issue in $dir (non-blocking)"
+      }
+    fi
+  fi
+done
+
+# PHASE 3: Update Root README.md if docs were added
+echo "  3️⃣  Checking root README.md..."
+if echo "$MODIFIED_DIRS" | grep -q "^docs/"; then
+  echo "    • Documentation changes detected"
+  if [ -f "README.md" ]; then
+    echo "    • Root README.md exists and is up to date"
+  fi
+fi
+
+# PHASE 4: Enforce Naming & Validation Conventions
+echo "  4️⃣  Validating compliance..."
+node .github/scripts/enforce-naming.mjs --branch --commits || {
+  echo "❌ Naming convention violation"
+  exit 1
+}
+
+# PHASE 5: Validate Agent Logging Compliance
+echo "  5️⃣  Checking agent logging compliance..."
+node .github/hooks/validate-agent-logs.mjs || {
+  echo "❌ Agent logging not compliant. Use template: .github/templates/agent-log-tmpl.md"
+  exit 1
+}
+
+# PHASE 6: Validate Metadata Frontmatter
+echo "  6️⃣  Checking document metadata compliance..."
+node .github/hooks/validate-metadata-frontmatter.mjs || {
+  echo "❌ Document metadata not compliant. Use template: .github/templates/metadata-frontmatter-standard.md"
+  exit 1
+}
+
+# PHASE 7: Check for Forbidden File References
+echo "  7️⃣  Checking for forbidden artifacts..."
+if git diff --cached --name-only | xargs grep -l "api-design\.md\|tdd-execution\.md" 2>/dev/null | grep -v "enhancement.md"; then
+  echo "❌ Forbidden file references found (api-design.md or tdd-execution.md)"
+  exit 1
+fi
+
+# PHASE 8: Verify description.md Purity
+echo "  8️⃣  Verifying description.md purity..."
+if git diff --cached --name-only | grep "description\.md" | xargs grep -l "Related logs\|/logs/" 2>/dev/null; then
+  echo "❌ description.md contains log references. Keep pure (specification only)."
+  exit 1
+fi
+
+# PHASE 9: Stage All Validated Changes
+echo "  9️⃣  Staging validated changes..."
+git add -A
+
+echo ""
+echo "✅ [pre-commit] All validations passed - ready to commit"
+exit 0

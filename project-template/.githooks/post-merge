@@ -1,0 +1,34 @@
+#!/bin/bash
+
+echo "🔄 [post-merge] Updating documentation indices..."
+
+# Auto-run index update in case other team members added docs
+node .github/scripts/update-index.mjs docs 2>/dev/null || {
+  echo "⚠️  Auto-update of indexes encountered issues. Run: node .github/scripts/update-index.mjs docs"
+}
+
+# Update checkpoint if variables are set
+if [ -n "$AGENT_NAME" ]; then
+  TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+  cat > .github/checkpoint.yaml << EOF
+# Gen-e2 Toolbox Checkpoint - auto-updated on post-merge
+last_update: "${TIMESTAMP}"
+updated_by_agent: "${AGENT_NAME:-unknown}"
+current_phase: "${PHASE_NAME:-unknown}"
+sub_phase: "${TDD_CYCLE:-}"
+active_epic: "${EPIC_REF:-null}"
+active_story: "${US_REF:-null}"
+current_layer: "${LAYER_NAME:-null}"
+current_cycle: "${TDD_CYCLE:-null}"
+last_agent: "${AGENT_NAME:-unknown}"
+ai_model_in_use: "${MODEL_NAME:-unknown}"
+generated_files: []
+blockers: []
+decision_gates_pending: []
+notes: "Auto-updated after merge"
+EOF
+  echo "  ✓ Checkpoint updated"
+fi
+
+echo "✅ [post-merge] Documentation sync complete"
+exit 0

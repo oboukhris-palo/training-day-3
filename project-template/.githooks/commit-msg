@@ -1,0 +1,15 @@
+#!/bin/bash
+
+COMMIT_MSG_FILE=$1
+MSG=$(cat "$COMMIT_MSG_FILE")
+
+echo "🔍 [commit-msg] Validating commit message..."
+
+# Validate commit message format using enforce-naming.mjs
+node .github/scripts/enforce-naming.mjs --commits || {
+  echo "❌ Commit message violates naming policy"
+  exit 1
+}
+
+echo "✅ [commit-msg] Commit message valid"
+exit 0

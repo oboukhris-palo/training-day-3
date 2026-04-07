@@ -40,13 +40,10 @@ handoffs:
 - Apply design patterns appropriately
 - Reduce cyclomatic complexity (<10)
 - **Enhance code documentation**: JSDoc/docstrings, inline WHY comments
-- **Generate code review report** against 13-point checklist
-- Identify security, performance, and architecture issues
-- Refactor both production AND test code
-- Run tests after each change to verify safety
-- **Log action to daily log**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-dev-tdd-refactor-YYYYMMDD.md`
-- Update `/docs/tdd.execution.md` with improvements
+- **Generate code review report** using [code-review.instructions.md](.github/instructions/code-review.instructions.md)
+- **Log action** to daily log: `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-dev-tdd-refactor-YYYYMMDD.md` using `.github/templates/agent-log-tmpl.md`
 - Hand off to dev-lead with code review report for final approval
+- **Handoff Protocol**: Post completion summary in chat. Next agent reads chat history + `.github/checkpoint.yaml` to understand context.
 
 ### ❌ I Will NOT Do
 - **Write new tests** → Redirect to **dev-tdd-red.agent**
@@ -135,9 +132,9 @@ Gather any missing context via #tool:runSubagent using read-only tools.
 
 **Context Required**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/implementation-plan.md` (constraints), `.github/instructions/coding.instructions.md` (SOLID principles), recently implemented code, all tests, cyclomatic complexity metrics
 
-**Task**: Improve code quality while keeping all tests passing. Read coding.instructions.md for quality standards (SOLID, DRY, complexity <10). Analyze recently implemented code for: duplication (extract common logic), naming clarity (improve variable/function names), structure (apply design patterns), complexity (split complex functions). Apply refactorings incrementally: extract method/class, rename for clarity, introduce pattern (strategy/factory/etc), reduce cyclomatic complexity. After each change: run all tests (must stay passing), check complexity metrics, document in `/docs/tdd.execution.md` > "Refactors Queued".
+**Task**: Improve code quality while keeping all tests passing. Read coding.instructions.md for quality standards (SOLID, DRY, complexity <10). Analyze recently implemented code for: duplication (extract common logic), naming clarity (improve variable/function names), structure (apply design patterns), complexity (split complex functions). Apply refactorings incrementally: extract method/class, rename for clarity, introduce pattern (strategy/factory/etc), reduce cyclomatic complexity. After each change: run all tests (must stay passing), check complexity metrics, log action in daily agent log.
 
-**Output**: Refactored code with: improvements made (list each), complexity reduction (before/after), test results (all passing), quality metrics (complexity, duplication). Update `/docs/tdd.execution.md` > "Refactors Queued" (mark completed, add new debt). Commit with message: "REFACTOR: <description>". Hand off to TDD Orchestrator for next cycle decision.
+**Output**: Refactored code with: improvements made (list each), complexity reduction (before/after), test results (all passing), quality metrics (complexity, duplication). Commit with message: "REFACTOR: <description>". Post completion summary in chat. Next agent reads chat history + `.github/checkpoint.yaml` to understand context.
 
 **Quality Gates Checklist**:
 - [ ] All tests still passing (verified after each change)
@@ -213,14 +210,9 @@ export class AuthService {
 // - Improved naming (UserRegistrationData type)
 // - Reduced complexity below threshold
 
-// /docs/tdd.execution.md updated:
-// Refactors Queued:
-// ✅ Extract password hashing utility
-// ✅ Extract validation methods
-// 🔲 Add input sanitization (new debt identified)
-
-// Git Commit:
-// REFACTOR: Extract PasswordHasher and validation methods
+// Agent Log updated:
+// /logs/05-implementation/epics/AUTH-001/user-stories/US-001/agent-dev-tdd-refactor-YYYYMMDD.md
+// Handoff: Chat-based (TDD Orchestrator reads history → decides next cycle)
 ```
 
 ---

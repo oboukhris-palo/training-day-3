@@ -156,11 +156,11 @@ If you catch yourself planning implementation steps for YOU to execute, STOP. TD
 
 **When to Use**: Receive handoff from TDD Orchestrator or GREEN phase (next cycle)
 
-**Context Required**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/implementation-plan.md` (layer TDD approach), `/docs/tdd.execution.md` (next test), failing BDD test (feature file line), code files (existing implementation)
+**Context Required**: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<STORY-REF>/implementation-plan.md` (layer TDD approach), `.github/checkpoint.yaml` (current cycle position), failing BDD test (feature file line), code files (existing implementation)
 
-**Task**: Write one failing unit/integration test supporting BDD assertion. Read implementation-plan.md for layer TDD approach (test patterns, file structure). Identify next unchecked behavior in `/docs/tdd.execution.md` > "Test List (Next)". Write minimal test: Arrange (setup), Act (execute), Assert (expect result). Test must: map to BDD assertion (document which), actually fail (run it), fail for right reason (document why). Use AAA pattern, descriptive name (e.g., `test_register_hashes_password_with_bcrypt`).
+**Task**: Write one failing unit/integration test supporting BDD assertion. Read implementation-plan.md for layer TDD approach (test patterns, file structure). Identify next unchecked `[ ]` checkbox in implementation-plan.md for the current layer. Write minimal test: Arrange (setup), Act (execute), Assert (expect result). Test must: map to BDD assertion (document which), actually fail (run it), fail for right reason (document why). Use AAA pattern, descriptive name (e.g., `test_register_hashes_password_with_bcrypt`).
 
-**Output**: New test file/function with: test code, AAA structure, assertion mapped to BDD feature (document which line), test run result (failing), failure reason (expected X, got Y). Update `/docs/tdd.execution.md` > "Test List (Next)" (check off item). Hand off to GREEN agent with test location.
+**Output**: New test file/function with: test code, AAA structure, assertion mapped to BDD feature (document which line), test run result (failing), failure reason (expected X, got Y). Mark checkbox `[x]` in implementation-plan.md. **Log action** in `/logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-dev-tdd-red-YYYYMMDD.md` using `.github/templates/agent-log-tmpl.md`. Post completion summary in chat — next agent (GREEN) reads chat history + `.github/checkpoint.yaml` to understand context.
 
 **Quality Gates Checklist**:
 - [ ] Test maps to specific BDD assertion (documented)

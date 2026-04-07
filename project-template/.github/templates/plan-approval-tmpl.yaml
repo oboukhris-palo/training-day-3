@@ -5,6 +5,18 @@
 # Status: approved | changes-requested | revoked
 ---
 
+metadata:
+  templateId: "plan-approval"
+  templateVersion: "2.0"
+  documentType: "gate-checkpoint"
+  title: "Plan Approval Gate: {US_REF}"
+  agent_context:
+    phase: "implementation"
+    epic_ref: "{EPIC_REF}"
+    user_story_ref: "{US_REF}"
+    agent_name: "{AGENT_NAME}"
+    model_name: "{MODEL_NAME}"
+
 story: <US-REF>                      # Example: US-001, US-XXX
 plan_version: v1                     # Example: v1, v2, v3 (matches implementation-plan-vX.md)
 

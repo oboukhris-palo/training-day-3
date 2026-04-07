@@ -106,7 +106,7 @@ This document defines the **Implementation & Development Execution Workflow** - 
 - Log before each phase execution (RED, GREEN, REFACTOR)
 - Log all file modifications
 - Log test execution results
-- Log handoff artifact creation
+- Log chat-based handoff summary
 - Log blockers immediately when encountered
 
 **Quality Validation (QA)**:
@@ -149,8 +149,8 @@ This document defines the **Implementation & Development Execution Workflow** - 
 ### Handoff
 - **Next Step**: {awaiting|handoff_to_agent|continue|complete}
 - **Next Agent**: {dev-tdd-green | dev-tdd-refactor | qa}
-- **Handoff Artifact**: {path_to_RED-HO-GREEN or GREEN-HO-REFACTOR JSON}
-- **Instructions for Next Agent**: {Clear, actionable guidance}
+- **Handoff**: Chat-based (next agent reads conversation history + `.github/checkpoint.yaml`)
+- **Instructions for Next Agent**: {Clear, actionable guidance — post in chat}
 
 ---
 ```
@@ -188,7 +188,7 @@ This document defines the **Implementation & Development Execution Workflow** - 
 ### Handoff
 - **Next Step**: handoff_to_agent
 - **Next Agent**: dev-tdd-green
-- **Handoff Artifact**: docs/05-implementation/epics/AUTH-001/user-stories/US-003/tdd-execution/018/RED-HO-GREEN-018.json
+- **Handoff**: Chat-based (dev-tdd-green reads conversation history + `.github/checkpoint.yaml`)
 - **Instructions for Next Agent**: Implement minimal code to make SyncSubscriptionTier test pass. Must update BOTH User.tier AND Subscription.tier in service layer (critical: sync both tiers).
 
 ---

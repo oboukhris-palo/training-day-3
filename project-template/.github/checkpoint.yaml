@@ -1,0 +1,42 @@
+# Gen-e2 Toolbox Checkpoint
+# Single source of truth for "where are we in the project?"
+# Updated on each commit to track current PDLC position
+# Agents: read this file + chat history to understand context (NO file handoffs)
+
+last_update: "YYYY-MM-DDTHH:MM:SSZ"
+updated_by_agent: "{AGENT_NAME}"
+
+# Current PDLC position (helps agents understand context)
+current_phase: "{PHASE_NAME}"           # e.g., "implementation", "requirements", "architecture"
+sub_phase: "{PHASE_DETAIL}"             # e.g., "TDD-RED", "TDD-GREEN", "TDD-REFACTOR"
+
+# Active story/epic context (for agent context recovery)
+active_epic: null                       # e.g., "AUTH-001" (or null if none)
+active_story: null                      # e.g., "US-001" (or null if none)
+current_layer: null                     # e.g., "Layer 1: Database" (or null)
+current_cycle: null                     # e.g., "RED-001" (or null)
+
+# Agent context (for context recovery)
+last_agent: "{AGENT_NAME}"              # Agent who just completed work
+ai_model_in_use: "{MODEL_NAME}"         # e.g., "claude-3.5-sonnet"
+
+# Metadata tracking (for debugging and analysis)
+generated_files: []                     # List of files created/modified in last action
+blockers: []                            # List of blocking issues (if any)
+decision_gates_pending: []              # Pending human decisions
+notes: ""                               # Brief contextual notes
+
+# ============================================================
+# HANDOFF PROTOCOL (v2.0 - Chat-Based, No File Artifacts)
+# ============================================================
+# Handoff happens in CHAT CONVERSATION, not via files.
+#
+# To hand off work:
+#   1. Post summary in chat with context (phase, epic, story, layer, cycle)
+#   2. Next agent reads chat history above + this checkpoint.yaml
+#   3. Next agent reads their .agent.md file for responsibilities
+#   4. Next agent performs work based on chat context + role
+#   5. New agent log created: /logs/{PHASE}/agent-{name}-YYYYMMDD.md
+#
+# FORBIDDEN: Creating handoff.json or tdd-execution.md files
+# ============================================================

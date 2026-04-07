@@ -1,36 +1,22 @@
 # Implementation Plan: {USER-STORY-REF}
 
 ---
-metadata:
-  # Document identification
-  id: "IMPL-{USER-STORY-REF}"               # Unique implementation plan identifier
-  title: "Implementation Plan: {USER-STORY-REF}"  # Human-readable plan title
-  version: "1.0.0"                          # Semantic version
-  date: "{YYYY-MM-DD}"                      # Creation/last update date
-  author: "[Name or Agent]"                 # Document creator
-  
-  # Template and AI tracking
-  template:
-    source: ".github/templates/implementation-plan-tmpl.md"  # Template used
-    compliance: "COMPLIANT"                                  # Template adherence status
-  
-  ai_generation:
-    model: "[LLM-MODEL-NAME]"               # LLM model used (e.g., "claude-3.5-sonnet", "human-created")
-    generation_date: "[YYYY-MM-DD]"         # When AI generated this document
-  
-  # Document relationships
-  related_documents:
-    user_story: "{USER-STORY-REF}"          # Parent user story
-    epic: "{EPIC-REF}"                      # Parent epic
-    dependencies: ["docs/05-implementation/epics/{EPIC-REF}/user-stories/{USER-STORY-REF}/description.md"]
-  
-  # Status tracking
-  status: "Draft"                          # Document lifecycle status
-  required_approvers: ["Dev Lead", "Tech Lead"]  # Who must approve
-  
-  # Classification
-  classification: "Internal"               # Data classification level
-  tags: ["implementation-plan", "{EPIC-REF}", "{USER-STORY-REF}"]
+templateId: "implementation-plan"
+templateVersion: "2.0"
+documentType: "implementation-guide"
+title: "{US_REF}: Implementation Plan"
+author: "{AGENT_NAME}"
+date_created: "{YYYY-MM-DD}"
+version: "1.0"
+status: "draft"
+
+agent_context:
+  phase: "implementation"
+  epic_ref: "{EPIC_REF}"
+  user_story_ref: "{US_REF}"
+  tdd_cycle: "TDD-001"
+  agent_name: "{AGENT_NAME}"
+  model_name: "{MODEL_NAME}"
 ---
 
 **Story ID**: {USER-STORY-REF}  

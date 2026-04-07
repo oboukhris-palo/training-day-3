@@ -340,12 +340,13 @@ compatible_with:
 | `.github/templates/*.template.md` | Document templates | Reference for structure |
 | `.github/templates/plan-approval-tmpl.yaml` | Human validation gate template | Reference for approval files |
 | `.github/workflows/*.workflows.md` | PDLC/Implementation/CI-CD flows | Read-only (workflow definitions) |
+| `.github/checkpoint.yaml` | ⭐ Current PDLC position tracking (context recovery for agents) | Updated on each commit |
 | `.github/workflows/assessment.workflows.md` | **Phase 0**: Client assessment, prerequisites, AI readiness | Reference for discovery phase |
 | `.github/workflows/documents.workflows.md` | **Phases 1-7**: Adaptive PRD generation (Routes A/B/C/D) | Reference for documentation strategy |
 | `.github/workflows/implementation.workflows.md` | **Phase 8**: TDD-driven development with approval gates | Reference for implementation phase |
 | `docs/assessment/` | Assessment phase outputs (prerequisites, AI readiness report) | Generated during Phase 0 |
 | `docs/inputs/` | Client-provided materials (epics, docs, interviews, code) | Input source for Phase 0 assessment |
-| `docs/logs/agent-{agent}-YYYYMMDD.md` | Root-level agent action logs (non-TDD agents) | Append-only daily logs |
+| `logs/agent-{agent}-YYYYMMDD.md` | Root-level agent action logs (non-TDD agents) | Append-only daily logs |
 | `docs/01-requirements/` | Requirements phase documents (requirements, personas, user-stories, business-case) | Generated during Phase 1-2 |
 | `docs/02-architecture/` | Architecture phase documents (architecture-design, tech-spec, design-systems) | Generated during Phase 3-4 |
 | `docs/03-testing/` | Testing phase documents (test-strategies) | Generated during Phase 5 |
@@ -355,7 +356,7 @@ compatible_with:
 | `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` | Layer-by-layer architecture (CURRENT version) | Frozen after approval |
 | `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan-v{N}.md` | IMMUTABLE plan snapshots (historical) | Created when plan modified |
 | `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/plan-approval.yaml` | Human validation gate for TDD execution | Created by dev-lead, updated on changes |
-| `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/logs/agent-{agent}-YYYYMMDD.md` | Per-story TDD agent action logs | Append-only daily logs |
+| `logs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/agent-{agent}-YYYYMMDD.md` | Per-story TDD agent action logs | Append-only daily logs |
 | `docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` | Implementation plan with checkboxes | Update checkboxes as work completes |
 | `.github/agents/CHANGELOG.md` | Agent versioning and migration history (Framework 2.0.0+) | Reference for breaking changes |
 
@@ -463,12 +464,13 @@ When context is tight:
 | `/docs/user-stories/<US-REF>/` | `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/` | Story implementation folder |
 | `/docs/user-stories/<US-REF>/implementation-plan.md` | `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/implementation-plan.md` | Layer-by-layer implementation |
 | `/docs/user-stories/<US-REF>/bdd-scenarios/` | `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/bdd-scenarios/` | BDD feature files |
-| `/docs/user-stories/<US-REF>/tdd-execution/` | `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/tdd-execution/` | Per-cycle handoff artifacts |
 
 **Critical Rules**:
 - ✅ **Read from `/docs/01-requirements/`** when accessing PRD or immutable specifications
 - ✅ **Update `/docs/05-implementation/user-stories.md`** for progress tracking and story status
 - ✅ **Always include epic path** when referencing implementation: `/docs/05-implementation/epics/<EPIC-REF>/user-stories/<US-REF>/`
 - ✅ **Preserve IMMUTABLE snapshots** when plan changes: create `implementation-plan-v1.md`, `v2.md`, etc., keep current as `implementation-plan.md`
+- ✅ **Handoff is chat-based**: Next agent reads conversation history + `.github/checkpoint.yaml` (no file artifacts)
 - ❌ **Never modify** documentation under `/docs/01-*/` (immutable PRD)
 - ❌ **Never reference old paths** in new or modified documentation
+- ❌ **Never create** `tdd-execution.md`, `api-design.md`, `handoff.json` as per-story file artifacts

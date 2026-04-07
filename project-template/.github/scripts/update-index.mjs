@@ -45,7 +45,6 @@ const CONFIG = {
     'implementation-plan.md': 'Layer-by-layer implementation guide with checkboxes',
     'description.md': 'Story definition and acceptance criteria',
     'plan-approval.yaml': 'Human validation gate for implementation',
-    'tdd-execution.md': 'TDD execution summary and cycle links',
     'business-case.md': 'Business justification and ROI analysis',
     'design-systems.md': 'UI/UX design system and components',
     'iteration-planning.md': 'Sprint and iteration planning documents',
@@ -60,9 +59,7 @@ const CONFIG = {
     '05-implementation': 'Phase 8: Implementation status tracking (MUTABLE)',
     'epics': 'Epic organization containers',
     'user-stories': 'User story implementation folders',
-    'bdd-scenarios': 'BDD feature files and scenarios',
-    'logs': 'Agent execution logs and audit trails',
-    'tdd-execution': 'Per-cycle handoff artifacts'
+    'bdd-scenarios': 'BDD feature files and scenarios'
   }
 };
 

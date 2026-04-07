@@ -546,10 +546,11 @@ docs/05-implementation/
 - **Example**: `quick-reference.prompt.md` maps tasks to files/roles for 1-second lookup
 
 #### `.github/templates/*-tmpl.md` (Document Templates)
-- **Purpose**: Canonical structure for user stories, plans, handoffs, audit logs
+- **Purpose**: Canonical structure for user stories, plans, and agent logs
 - **Update Pattern**: Update when document schema changes (new required sections)
-- **Used By**: Developers (copy when creating new user story/plan/handoff)
-- **Example**: `handoff-tmpl.md` ensures consistent cycle-to-cycle transitions
+- **Used By**: Developers (copy when creating new user story/plan)
+- **Example**: `agent-log-tmpl.md` ensures consistent daily agent activity logs
+- **Note**: Handoffs are chat-based (no file artifacts). Agents read conversation history + `.github/checkpoint.yaml`
 
 #### `docs/01-requirements/`, `docs/02-architecture/`, `docs/03-testing/`, `docs/04-planning/` (PDLC Documentation - FROZEN)
 - **Purpose**: Complete requirements, architecture, testing strategy, and planning
